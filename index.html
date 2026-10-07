@@ -3097,12 +3097,31 @@ async function renderAdmin(){const b=$("admBody");if(!st.admin){b.innerHTML=`<di
     <div class="adm-acts"><button type="button" data-adm="deposit">💵 Bakiye yükle</button><button type="button" data-adm="withdraw">🏦 Çekim talepleri</button>${st.campMgr?'<button type="button" data-adm="campnew">🏆 Yeni kampanya</button>':""}<button type="button" data-adm="campaigns">📋 Kampanyalar</button><button type="button" data-adm="airdrop">🪂 Airdrop</button><button type="button" data-adm="aucnew">🔨 Create Auction</button></div>
     <div class="sec-t" style="margin:6px 0 6px;display:flex;justify-content:space-between;align-items:center">COINFORCE coinleri<button type="button" class="r-link" data-admcoin="">+ Yeni coin</button></div>
     <div id="admCoins"><div class="empty">Yükleniyor…</div></div>
+    <div class="sec-t" style="margin:6px 0 6px">DEX coinleri <small class="muted" style="font-weight:500">· DexScreener</small></div>
+    <div class="sub" style="margin:0 0 8px">CoinGecko'da olmayan yeni coinleri sözleşme adresiyle ekle. Coin, havuz likiditesi alt sınırı geçince işleme açılır.</div>
+    <div style="display:flex;gap:8px;margin-bottom:8px"><div class="sel" style="flex:none;width:118px"><select id="dxChain"><option value="solana">Solana</option><option value="ethereum">Ethereum</option><option value="base">Base</option><option value="bsc">BNB</option><option value="arbitrum">Arbitrum</option><option value="polygon">Polygon</option></select></div><input id="dxAddr" placeholder="Sözleşme adresi" autocomplete="off" autocapitalize="off" spellcheck="false" style="flex:1;min-width:0"><button type="button" class="btn btn-ghost" id="dxFind" style="flex:none">Bul</button></div>
+    <div id="dxPrev"></div><div class="err" id="dxErr"></div>
+    <div id="admDex"></div>
     <div class="sec-t" style="margin:6px 0 6px">Kullanıcılar</div>
     <div class="xf-search" style="margin-top:0"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="admQ" placeholder="Kullanıcı adı, isim veya e-posta" autocomplete="off" autocapitalize="off" value="${esc(admQ)}"></div>
     <div id="admUsers"><div class="empty">Yükleniyor…</div></div>`;
-  loadAdmStats();loadAdmUsers();loadAdmCoins()}
+  loadAdmStats();loadAdmUsers();loadAdmCoins();loadAdmDex()}
 let ADMC=[],admCoin=null,acLogo="";
 const ccMono=(sym,img)=>{const t={s:sym||"?",c:colorFor(sym||"?"),img};return coinHTML(t,"sm")};
+let dxTok=null;
+async function loadAdmDex(){const box=$("admDex");if(!box)return;const r=await sb.rpc("admin_dex_coins");if(r.error||!$("admDex"))return;const l=r.data||[];
+  box.innerHTML=l.map(c=>`<div class="adm-u" style="cursor:default">${ccMono(c.symbol,c.image_url)}<div class="mid"><b>${esc(c.name)} <span class="muted">${esc(c.symbol)}</span>${c.listed?"":' <span class="wd-st pending">Bekliyor</span>'}</b><small>${esc(c.chain)} · likidite ${c.liquidity==null?"—":usd(+c.liquidity)}${c.listed?"":" · alt sınır "+usd(+c.min_liquidity)}</small></div><div class="rt">${c.listed?usd(+c.price,decFor(+c.price)):"—"}<small><button type="button" class="r-link" data-dxdel="${esc(c.symbol)}">Kaldır</button></small></div></div>`).join("")}
+document.addEventListener("click",e=>{
+  const f=e.target.closest("#dxFind");if(f){busy(f,async()=>{$("dxErr").textContent="";$("dxPrev").innerHTML="";dxTok=null;const ch=$("dxChain").value,ad=$("dxAddr").value.trim();
+    if(!/^[A-Za-z0-9]{26,70}$/.test(ad)){$("dxErr").textContent="Sözleşme adresi geçersiz";return}
+    try{const j=await (await fetch("https://api.dexscreener.com/tokens/v1/"+ch+"/"+ad)).json(),ps=(Array.isArray(j)?j:j.pairs||[]).filter(p=>p.baseToken&&p.baseToken.address.toLowerCase()===ad.toLowerCase()).sort((a,b)=>((b.liquidity||{}).usd||0)-((a.liquidity||{}).usd||0)),p=ps[0];
+      if(!p){$("dxErr").textContent="Bu zincirde bu adresle coin bulunamadı";return}
+      dxTok={chain:ch,address:p.baseToken.address};const sym=String(p.baseToken.symbol||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,12);
+      $("dxPrev").innerHTML=`<div class="adm-kv"><span>Fiyat</span><b>${usd(+p.priceUsd,decFor(+p.priceUsd))}</b><span>Likidite</span><b>${usd((p.liquidity||{}).usd||0)}</b><span>Piyasa değeri</span><b>${usd(p.marketCap||p.fdv||0)}</b><span>24s hacim</span><b>${usd((p.volume||{}).h24||0)}</b></div>
+        <div style="display:flex;gap:8px;margin:8px 0"><input id="dxSym" value="${esc(sym)}" placeholder="Sembol" maxlength="12" style="flex:none;width:118px;text-transform:uppercase"><input id="dxName" value="${esc(String(p.baseToken.name||sym).slice(0,40))}" placeholder="Ad" maxlength="40" style="flex:1;min-width:0"><button type="button" class="btn btn-accent" id="dxAdd" style="flex:none">Ekle</button></div>`}
+    catch(err){$("dxErr").textContent="DexScreener'a ulaşılamadı, tekrar dene"}});return}
+  const a=e.target.closest("#dxAdd");if(a&&dxTok){busy(a,async()=>{const r=await call("admin_add_dex_coin",{p_symbol:$("dxSym").value,p_name:$("dxName").value,p_chain:dxTok.chain,p_address:dxTok.address},"dxErr");if(r.err)return;toast("Coin eklendi, fiyatı bekleniyor");$("dxPrev").innerHTML="";$("dxAddr").value="";dxTok=null;loadAdmDex()});return}
+  const d=e.target.closest("[data-dxdel]");if(d){if(!confirm(d.dataset.dxdel+" kaldırılsın mı?"))return;busy(d,async()=>{const r=await call("admin_remove_dex_coin",{p_symbol:d.dataset.dxdel},"dxErr");if(!r.err){toast("Kaldırıldı");loadAdmDex()}})}});
 async function loadAdmCoins(){const box=$("admCoins");if(!box)return;const r=await call("admin_coins",{});if(r.err||!$("admCoins"))return;ADMC=r.data||[];
   box.innerHTML=ADMC.length?ADMC.map(c=>{const ch=+c.open_24h>0?(+c.price/+c.open_24h-1)*100:0;return `<button type="button" class="adm-u" data-admcoin="${esc(c.symbol)}">${ccMono(c.symbol,c.image_url)}<div class="mid"><b>${esc(c.name)} <span class="muted">${esc(c.symbol)}</span>${c.paused?' <span class="wd-st rejected">Durduruldu</span>':""}</b><small>${nfmt(+c.holders)} sahip · ${nfmt(+c.trades)} işlem · %${fmtN(+c.sold/+c.supply_max*100,2)} satıldı</small></div><div class="rt">${big(+c.market_cap)} PD<small class="${ch>=0?"up":"down"}">${ch>=0?"+":""}${fmtN(ch,2)}%</small></div></button>`}).join(""):`<div class="empty" style="padding:14px 4px">Henüz coin çıkarmadın.</div>`}
 function renderAdmCoin(){const b=$("admBody"),c=admCoin?ADMC.find(x=>x.symbol===admCoin):null;if(admCoin&&!c){admView="home";return renderAdmin()}
