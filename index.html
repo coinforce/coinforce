@@ -1106,6 +1106,7 @@ nav.bar button svg{width:22px;height:22px}
   <div class="stats" id="dStats"></div>
   <div class="sec-t">Hakkında</div>
   <p class="about" id="dAbout"></p>
+  <a class="ed-ban" id="dX" target="_blank" rel="noopener noreferrer" style="text-decoration:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.300l7.3-8.300L1 2h6.400l4.400 5.900zm-1.100 18.100h1.700L6.500 3.800H4.600z"/></svg><b><span id="dXt"></span><small style="display:block;font-weight:500;color:var(--muted)" data-en="Latest posts on X">X'teki güncel paylaşımlar</small></b><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></a>
   <div class="sec-t" style="margin-top:18px">Topluluk işlemleri</div>
   <div id="dTrades"><div class="hint">Yükleniyor…</div></div>
   <p class="disclaim" data-en="Price data is provided by &lt;a href=&quot;https://www.coingecko.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; style=&quot;color:inherit&quot;&gt;CoinGecko&lt;/a&gt; and may be delayed ~30 seconds. Nothing here is investment advice.">Fiyat verisi <a href="https://www.coingecko.com/" target="_blank" rel="noopener" style="color:inherit">CoinGecko</a> tarafından sağlanır ve ~30 saniye gecikmeli olabilir. Hiçbir içerik yatırım tavsiyesi değildir.</p>
@@ -2021,6 +2022,7 @@ function renderDetail(){
   const hi=t.hi24||Math.max(...t.hist.slice(-120)),lo=t.lo24||Math.min(...t.hist.slice(-120));
   $("dStats").innerHTML=[["Piyasa değeri",big(t.mc)],["24s hacim",t.vol?big(t.vol):"-"],["24s yüksek",usd(hi,t.d)],["24s düşük",usd(lo,t.d)],t.sup?["Dolaşımdaki arz",(t.sup>=1e12?fmtN(t.sup/1e12,1)+"T ":t.sup>=1e9?fmtN(t.sup/1e9,1)+"B ":fmtN(t.sup/1e6,1)+"M ")+t.s]:null,t.ath?["Tüm zamanların zirvesi",usd(t.ath,t.d)]:null,t.ath?["ATH'den uzaklık",fmtN((t.p/t.ath-1)*100,1)+"%"]:null].filter(Boolean).map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join("");
   renderDetailExtras(t);loadCoinTrades(t.s);
+  $("dX").href="https://x.com/search?q="+encodeURIComponent("$"+t.s)+"&f=live";$("dXt").textContent=EN?"What people say about $"+t.s:"$"+t.s+" hakkında ne diyorlar";
   $("dAbout").innerHTML=t.about.replace(/[<>&]/g,"")+(t.credit?`<br><small style="font-size:12px;color:var(--faint)">${t.credit}</small>`:"");
   drawChart();
 }
