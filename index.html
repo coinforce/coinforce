@@ -1959,11 +1959,16 @@ function renderList(){
 const cv=$("chart"),ctx=cv.getContext("2d");let hoverX=null;
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
 // Gerçek fiyat geçmişi (CoinGecko), önbellekli
-const HIST={},R_DAYS={"1S":1,"1G":1,"1H":7,"1A":30,"1Y":365,"Tümü":"max"};
+const GT_NET={ethereum:"eth",polygon:"polygon_pos"},HIST={},R_DAYS={"1S":1,"1G":1,"1H":7,"1A":30,"1Y":365,"Tümü":"max"};
 function loadHist(t,r){if(!t||!t.cg)return;const days=R_DAYS[r],key=t.cg+"|"+days,c=HIST[key];
   if(c&&(c.busy||(Date.now()-c.t<(days===1?12e4:6e5))))return;
   if(t.custom){if(c&&c.busy||(c&&Date.now()-c.t<15e3))return;HIST[key]={t:Date.now(),busy:1,data:c&&c.data};
     sb.rpc("coin_chart",{p_symbol:t.s,p_days:days==="max"?0:days}).then(({data,error})=>{HIST[key]=error?{t:Date.now()-5e3,data:c&&c.data,err:1}:{t:Date.now(),data:(data||[]).map(p=>[+p[0],+p[1]]).filter(p=>p[1]>0)}})
+      .finally(()=>{if(view==="detail"&&cur===t.s)drawChart();if(view==="profile")renderProfile()});return}
+  if(t.dex){HIST[key]={t:Date.now(),busy:1,data:c&&c.data};const q=days===1?["minute",5,288]:days===7?["hour",1,168]:days===30?["hour",4,180]:["day",1,days===365?365:1000];
+    fetch(`https://api.geckoterminal.com/api/v2/networks/${encodeURIComponent(t.dex[0])}/pools/${encodeURIComponent(t.dex[1])}/ohlcv/${q[0]}?aggregate=${q[1]}&limit=${q[2]}&currency=usd`,{headers:{accept:"application/json"}})
+      .then(x=>x.ok?x.json():Promise.reject(x.status)).then(j=>{const l=((((j||{}).data||{}).attributes||{}).ohlcv_list||[]).map(p=>[+p[0]*1e3,+p[4]]).filter(p=>p[1]>0).sort((a,b)=>a[0]-b[0]);if(l.length&&t.p>0)l.push([Date.now(),t.p]);HIST[key]={t:Date.now(),data:l}})
+      .catch(()=>{HIST[key]={t:Date.now()-(days===1?9e4:54e4),data:c&&c.data,err:1}})
       .finally(()=>{if(view==="detail"&&cur===t.s)drawChart();if(view==="profile")renderProfile()});return}
   HIST[key]={t:Date.now(),busy:1,data:c&&c.data};
   fetch(`https://api.coingecko.com/api/v3/coins/${encodeURIComponent(t.cg)}/market_chart?vs_currency=usd&days=${days}`)
@@ -2134,7 +2139,7 @@ async function loadAll(){if(!me)return;const uid=me.id;const q=p=>p.then(r=>{if(
   renderAll();if(view==="rank")renderRank();if(openId==="notifs")renderNotifs();if(openId==="rewards")renderRewards();
 }
 async function loadPrices(){const {data,error}=await sb.from("prices").select("*");if(error||!data)return;
-  data.forEach(r=>{if(r.listed===false)return;let t=find(r.symbol);if(!t){t=newTok(r);T.push(t)}const first=!t.live;if(r.category)t.cat=r.category;if(r.circulating_supply)t.sup=+r.circulating_supply;if(r.ath)t.ath=+r.ath;if(r.volume_24h)t.vol=+r.volume_24h;t.p=+r.price;t.open=+(r.open_24h||r.price);if(r.market_cap)t.mc=+r.market_cap;if(r.max_leverage)t.maxLev=r.max_leverage;if(r.image_url)t.img=r.image_url;if(r.coingecko_id)t.cg=r.coingecko_id;if(r.custom){t.custom=1;t.cg="cc:"+r.symbol;t.n=r.name||t.n;t.img=r.image_url||"";t.credit="COINFORCE tarafından çıkarıldı · fiyat alım ve satımla belirlenir"}if(r.about)t.about=r.about;if(r.high_24h)t.hi24=+r.high_24h;if(r.low_24h)t.lo24=+r.low_24h;if(Array.isArray(r.spark)&&r.spark.length>20)t.spark7=r.spark.map(Number).filter(x=>x>0);if(first){t.hist=genHist(t.p,t.open);t.live=1}})}
+  data.forEach(r=>{if(r.listed===false)return;let t=find(r.symbol);if(!t){t=newTok(r);T.push(t)}const first=!t.live;if(r.category)t.cat=r.category;if(r.circulating_supply)t.sup=+r.circulating_supply;if(r.ath)t.ath=+r.ath;if(r.volume_24h)t.vol=+r.volume_24h;t.p=+r.price;t.open=+(r.open_24h||r.price);if(r.market_cap)t.mc=+r.market_cap;if(r.max_leverage)t.maxLev=r.max_leverage;if(r.image_url)t.img=r.image_url;if(r.coingecko_id)t.cg=r.coingecko_id;if(r.dex_pair&&r.dex_chain&&!r.coingecko_id){t.cg="dx:"+r.symbol;t.dex=[GT_NET[r.dex_chain]||r.dex_chain,r.dex_pair];t.credit="Fiyat: DexScreener · grafik: GeckoTerminal"}if(r.custom){t.custom=1;t.cg="cc:"+r.symbol;t.n=r.name||t.n;t.img=r.image_url||"";t.credit="COINFORCE tarafından çıkarıldı · fiyat alım ve satımla belirlenir"}if(r.about)t.about=r.about;if(r.high_24h)t.hi24=+r.high_24h;if(r.low_24h)t.lo24=+r.low_24h;if(Array.isArray(r.spark)&&r.spark.length>20)t.spark7=r.spark.map(Number).filter(x=>x>0);if(first){t.hist=genHist(t.p,t.open);t.live=1}})}
 const decFor=p=>p>0?Math.min(12,Math.max(2,Math.ceil(-Math.log10(p))+3)):2;
 function newTok(r){const p=+r.price,at=r.listed_at?new Date(r.listed_at).getTime():Date.now(),fresh=Date.now()-at<30*864e5;
   return {s:r.symbol,n:r.name||r.symbol,p,mc:+(r.market_cap||0),c:colorFor(r.symbol),d:decFor(p),age:fresh?at/1e10:0,dyn:1,about:`${r.name||r.symbol}, ${r.symbol} sembolüyle işlem gören bir ${r.category==="meme"?"meme coin":"kripto varlık"}.`}}
