@@ -2395,11 +2395,9 @@ function qrMatrix(text){
     for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(M[y][x])dark++;p+=Math.floor(Math.abs(dark*20-N*N*10)/(N*N))*10;return p};
   let best=0,bp=Infinity;for(let m=0;m<8;m++){apply(m);fmt(m);const p=pen();if(p<bp){bp=p;best=m}apply(m)}
   apply(best);fmt(best);return M}
-function qrSVG(text){const Q=qrMatrix(text),n=Q.length,m=3,W=n+m*2;
-  const inF=(r,c)=>(r<7&&c<7)||(r<7&&c>=n-7)||(r>=n-7&&c<7);const mid=n/2,hole=n*0.13;let d="";
-  for(let r=0;r<n;r++)for(let c=0;c<n;c++){if(!Q[r][c]||inF(r,c))continue;if(Math.abs(r+.5-mid)<hole+1&&Math.abs(c+.5-mid)<hole+1)continue;d+=`<circle cx="${c+m+.5}" cy="${r+m+.5}" r=".45"/>`}
-  const fin=(x,y)=>`<rect x="${x+.5}" y="${y+.5}" width="6" height="6" rx=".4" fill="none" stroke="#000" stroke-width="1"/><rect x="${x+2}" y="${y+2}" width="3" height="3" rx=".2"/>`;
-  return `<svg viewBox="0 0 ${W} ${W}" role="img" aria-label="QR kod"><g fill="#000">${d}${fin(m,m)}${fin(m+n-7,m)}${fin(m,m+n-7)}</g></svg>`}
+function qrSVG(text,logo){const Q=qrMatrix(text),n=Q.length,m=4,W=n+m*2,mid=n/2,hole=n*0.13;let d="";
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++){if(!Q[r][c])continue;if(logo&&Math.abs(r+.5-mid)<hole+1&&Math.abs(c+.5-mid)<hole+1)continue;let e=c;while(e+1<n&&Q[r][e+1]&&!(logo&&Math.abs(r+.5-mid)<hole+1&&Math.abs(e+1.5-mid)<hole+1))e++;d+=`M${c+m} ${r+m}h${e-c+1}v1h-${e-c+1}z`;c=e}
+  return `<svg viewBox="0 0 ${W} ${W}" role="img" aria-label="QR kod" shape-rendering="crispEdges"><rect width="${W}" height="${W}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`}
 function xfList(q,withBal){const Q=q.trim().toUpperCase();const all=[{s:"USDT",n:"Tether",mc:1e20},...T.filter(t=>!t.dyn||t.live)];
   let arr=all.filter(t=>!Q||t.s.includes(Q)||t.n.toUpperCase().includes(Q));
   if(withBal)arr=arr.filter(t=>t.s==="USDT"?st.usdt>0:(st.h[t.s]||0)>0).sort((a,b)=>(b.s==="USDT"?st.usdt:(st.h[b.s]||0)*b.p)-(a.s==="USDT"?st.usdt:(st.h[a.s]||0)*a.p));
@@ -2422,7 +2420,7 @@ async function renderRecvNet(nets){const s=recvSym,n=nets.find(x=>x.code===recvN
     <div class="xf-rows"><div><span>Ağ</span><span>${esc(n.name)}</span></div><div><span>Minimum yatırma</span><span>${px?xfQ(minUsd(n)/px)+" "+s:usd(minUsd(n))}</span></div><div><span>Varış süresi</span><span>Yaklaşık ${n.eta_min} dakika</span></div></div>
     <div class="xf-warn">${EN?`<b>Only valid inside COINFORCE.</b> Send ${s} to this address only from another COINFORCE account, on the <b>${esc(n.name)}</b> network. Don't send from a real wallet or exchange; it won't arrive.`:`<b>Sadece COINFORCE içinde geçerli.</b> Bu adrese yalnızca başka bir COINFORCE hesabından, <b>${esc(n.name)}</b> ağı seçilerek ${s} gönderilebilir. Gerçek bir cüzdandan veya borsadan gönderim yapma; ulaşmaz.`}</div>`;
   const a=await addrFor(n.code);if(recvSym!==s||recvNet!==n.code||!a)return;$("recvAddr").textContent=a;
-  try{$("recvQR").innerHTML=qrSVG(a)+xfCoin(s)}catch(e){$("recvQR").innerHTML=`<div class="ld">QR oluşturulamadı</div>`}}
+  try{$("recvQR").innerHTML=qrSVG(a,1)+xfCoin(s)}catch(e){$("recvQR").innerHTML=`<div class="ld">QR oluşturulamadı</div>`}}
 $("recvBody").addEventListener("input",e=>{if(e.target.id==="recvQ"){recvQ=e.target.value;$("recvList").innerHTML=xfList(recvQ,false)}});
 $("recvBody").addEventListener("click",e=>{const x=e.target.closest("[data-xs]");if(x){recvSym=x.dataset.xs;recvNet=null;renderRecv();return}
   if(e.target.closest("[data-xback]")){recvSym=null;renderRecv();return}
@@ -2827,18 +2825,22 @@ function qrLib(){return window.jsQR?Promise.resolve():new Promise((res,rej)=>{co
 function qrUser(txt){const m=String(txt||"").trim().match(/^coinforce:u:([A-Za-z0-9_.]{3,20})$/);return m?m[1]:""}
 function qrAdd(u){qrStop();$("adQRBox").hidden=true;$("adQRBox").innerHTML="";if(u.toLowerCase()===String(st.prof.handle||"").toLowerCase()){$("adErr").textContent="Bu senin kendi kodun.";return}
   const cur=adUsers();if(!cur.some(x=>x.toLowerCase()===u.toLowerCase()))cur.push(u);$("adUsers").value=cur.join(", ");adAud="users";adN=null;adSync();adCount();toast(`@${u} eklendi`)}
-function qrDecode(src,w,h){const c=document.createElement("canvas"),k=Math.min(1,640/Math.max(w,h));c.width=Math.round(w*k);c.height=Math.round(h*k);const g=c.getContext("2d",{willReadFrequently:true});g.drawImage(src,0,0,c.width,c.height);
-  const d=g.getImageData(0,0,c.width,c.height),r=window.jsQR(d.data,c.width,c.height);return r?r.data:""}
+let qrBD=null;try{if("BarcodeDetector"in window)qrBD=new BarcodeDetector({formats:["qr_code"]})}catch(e){qrBD=null}
+const qrCv=document.createElement("canvas"),qrG=qrCv.getContext("2d",{willReadFrequently:true});
+function qrJs(src,sx,sy,sw,sh,size){qrCv.width=qrCv.height=size;qrG.imageSmoothingEnabled=true;qrG.drawImage(src,sx,sy,sw,sh,0,0,size,size);const d=qrG.getImageData(0,0,size,size),r=window.jsQR&&window.jsQR(d.data,size,size,{inversionAttempts:"attemptBoth"});return r?r.data:""}
+// Önce kadrajın ortası (kullanıcının kareye getirdiği alan), sonra tüm görüntü denenir
+function qrDecode(src,w,h){const s=Math.min(w,h),c=s*.8;return qrJs(src,(w-c)/2,(h-c)/2,c,c,Math.min(600,Math.round(c)))||qrJs(src,(w-s)/2,(h-s)/2,s,s,Math.min(800,Math.round(s)))||(()=>{const k=Math.min(1,1000/Math.max(w,h)),cw=Math.round(w*k),ch=Math.round(h*k);qrCv.width=cw;qrCv.height=ch;qrG.drawImage(src,0,0,cw,ch);const r=window.jsQR&&window.jsQR(qrG.getImageData(0,0,cw,ch).data,cw,ch,{inversionAttempts:"attemptBoth"});return r?r.data:""})()}
+async function qrRead(src,w,h){if(qrBD){try{const r=await qrBD.detect(src);if(r&&r[0])return r[0].rawValue||""}catch(e){}}return qrDecode(src,w,h)}
 $("adMyQR").onclick=()=>{qrStop();const b=$("adQRBox");if(!b.hidden&&b.dataset.k==="my"){b.hidden=true;b.innerHTML="";return}b.dataset.k="my";b.hidden=false;
   let q;try{q=qrSVG("coinforce:u:"+st.prof.handle)}catch(e){q=`<div class="ld">QR oluşturulamadı</div>`}
   b.innerHTML=`<div class="xf-qr" style="margin:10px auto">${q}</div><div class="hint" style="text-align:center">@${esc(st.prof.handle)} · Gönderecek kişi bu kodu “QR okut” ile okutsun.</div>`};
 $("adScan").onclick=async()=>{qrStop();const b=$("adQRBox");b.dataset.k="scan";b.hidden=false;$("adErr").textContent="";
   b.innerHTML=`<div class="qr-cam"><video id="qrVid" playsinline muted></video><i></i></div><div class="hint" style="text-align:center">Alıcının COINFORCE kodunu kareye getir.</div>
     <label class="btn btn-ghost full" style="display:block;text-align:center;color:var(--fg);margin-top:8px">Kamera açılmıyorsa fotoğraf çek<input type="file" id="qrFile" accept="image/*" capture="environment" hidden></label>`;
-  try{await qrLib()}catch(e){$("adErr").textContent=e.message;return}
-  $("qrFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const url=URL.createObjectURL(f),img=new Image();img.onload=()=>{const u=qrUser(qrDecode(img,img.naturalWidth,img.naturalHeight));URL.revokeObjectURL(url);u?qrAdd(u):$("adErr").textContent="Fotoğrafta COINFORCE kodu bulunamadı."};img.src=url});
-  try{qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"},audio:false});const v=$("qrVid");if(!v){qrStop();return}v.srcObject=qrStream;await v.play();
-    const tick=()=>{if(!qrStream||!$("qrVid"))return;if(v.readyState>=2&&v.videoWidth){const t=qrDecode(v,v.videoWidth,v.videoHeight),u=qrUser(t);if(u)return qrAdd(u);if(t)$("adErr").textContent="Bu bir COINFORCE kodu değil."}qrRaf=requestAnimationFrame(tick)};tick()}
+  if(!qrBD){try{await qrLib()}catch(e){$("adErr").textContent=e.message;return}}else qrLib().catch(()=>{});
+  $("qrFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const url=URL.createObjectURL(f),img=new Image();img.onload=async()=>{let t=await qrRead(img,img.naturalWidth,img.naturalHeight);if(!qrUser(t)&&window.jsQR)t=qrDecode(img,img.naturalWidth,img.naturalHeight);const u=qrUser(t);URL.revokeObjectURL(url);u?qrAdd(u):$("adErr").textContent=t?"Bu bir COINFORCE kodu değil.":"Fotoğrafta COINFORCE kodu bulunamadı. Kodu yakından ve net çek."};img.src=url});
+  try{if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error("nocam");qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"},width:{ideal:1280},height:{ideal:720}},audio:false});const v=$("qrVid");if(!v){qrStop();return}v.srcObject=qrStream;await v.play();
+    let busyQ=false,last=0;const tick=async now=>{if(!qrStream||!$("qrVid"))return;if(!busyQ&&now-last>120&&v.readyState>=2&&v.videoWidth){busyQ=true;last=now;try{const t=await qrRead(v,v.videoWidth,v.videoHeight),u=qrUser(t);if(u){busyQ=false;return qrAdd(u)}if(t)$("adErr").textContent="Bu bir COINFORCE kodu değil."}catch(e){}busyQ=false}if(qrStream)qrRaf=requestAnimationFrame(tick)};qrRaf=requestAnimationFrame(tick)}
   catch(e){$("adErr").textContent="Kameraya erişilemedi. İzin ver ya da aşağıdan fotoğraf çek."}};
 // ---------- CF Token + CF AUCTION
 const L=(tr,en)=>EN?en:tr;
