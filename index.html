@@ -2077,6 +2077,25 @@ let tab="tokens",filt="all",cur=null,range="1G",view="home";
 function portfolio(){let v=st.usdt,v0=st.usdt;for(const[s,q]of Object.entries(st.h)){const t=find(s);v+=q*t.p;v0+=q*t.open}
   (st.orders||[]).forEach(o=>{const t=find(o.s);if(o.side==="buy"){v+=o.res;v0+=o.res}else{v+=o.q*t.p;v0+=o.q*t.open}});
   (st.perps||[]).forEach(p=>{const e=perpEq(p);v+=e;v0+=e});return{v,v0}}
+// ---------- Son 24 saat kâr/zarar (sunucudaki saatlik işlem akışlarına göre)
+const FEE24=0.0008;let P24=null,p24Busy=false;
+async function loadP24(){if(!me||p24Busy)return;p24Busy=true;try{const r=await sb.rpc("my_pnl_24h");if(!r.error&&r.data){P24={...r.data,at:Date.now(),off:Date.parse(r.data.now)-Date.now()};renderBal();if(openId==="pnl")renderPnl()}}catch(e){}finally{p24Busy=false}}
+setInterval(()=>{if(!document.hidden&&me)loadP24()},60000);
+function pxAt(t,j,N){if(j<=0)return t.open;if(j>=N)return t.p;const sp=t.spark7&&t.spark7.length>N?t.spark7:null;let px=sp?+sp[sp.length-1-(N-j)]:NaN;if(!(px>0))px=t.open+(t.p-t.open)*j/N;return px}
+// d: toplam 24s K/Z, coins: coin bazında, perp: vadeli (gerçekleşen + açık), series: saatlik K/Z
+function pnl24(){const N=24,F={};if(P24)(P24.flows||[]).forEach(f=>{const r=F[f.s]||(F[f.s]={bq:0,bu:0,sq:0,su:0,h:[]});r.bq+=+f.bq;r.bu+=+f.bu;r.sq+=+f.sq;r.su+=+f.su;r.h.push(f)});
+  const qn={};for(const[k,q]of Object.entries(st.h))qn[k]=(qn[k]||0)+q;(st.orders||[]).forEach(o=>{if(o.side==="sell")qn[o.s]=(qn[o.s]||0)+o.q});
+  const syms=new Set([...Object.keys(qn),...Object.keys(F)]),coins=[],series=new Array(N+1).fill(0);
+  syms.forEach(k=>{const t=find(k);if(!t||t.s==="USDT")return;const f=F[k]||{bq:0,bu:0,sq:0,su:0,h:[]},q=qn[k]||0,q0=Math.max(0,q-f.bq+f.sq);
+    const d=q*t.p-q0*t.open-f.bu*(1+FEE24)+f.su*(1-FEE24);if(!q&&!q0&&!f.bu&&!f.su)return;
+    coins.push({t,q,q0,lq:(st.orders||[]).filter(o=>o.side==="sell"&&o.s===k).reduce((a,o)=>a+o.q,0),d,bu:f.bu,su:f.su,traded:f.bu+f.su>0});
+    for(let j=0;j<=N;j++){let qj=q0,cj=0;f.h.forEach(x=>{if(x.h<j){qj+=+x.bq-+x.sq;cj+=+x.su*(1-FEE24)-+x.bu*(1+FEE24)}});if(j===N)qj=q;series[j]+=Math.max(0,qj)*pxAt(t,j,N)-q0*t.open+cj}});
+  let real=0,unr=0;const off=P24?P24.off:0,t0=Date.now()+off-864e5;
+  if(P24)(P24.closed||[]).forEach(c=>{const t=find(c.s),adj=c.before&&t?(+c.side)*(t.open-+c.entry)*+c.qty:0,v=+c.pnl-adj;real+=v;for(let j=c.h+1;j<=N;j++)series[j]+=v});
+  const oc={};if(P24)(P24.open||[]).forEach(o=>oc[o.id]=Date.parse(o.created_at));
+  (st.perps||[]).forEach(x=>{const t=find(x.s);if(!t)return;const ct=oc[x.id],before=!ct||ct<t0,hc=before?-1:Math.floor((ct-t0)/36e5);
+    unr+=before?x.side*(t.p-t.open)*x.qty:perpPnl(x);for(let j=0;j<=N;j++){if(j<=hc)continue;series[j]+=x.side*(pxAt(t,j,N)-(before?t.open:x.entry))*x.qty}});
+  coins.sort((a,b)=>Math.abs(b.d)-Math.abs(a.d));const d=coins.reduce((a,c)=>a+c.d,0)+real+unr;return{d,coins,real,unr,series,ok:!!P24}}
 // Bakiye para birimi (sadece gösterim; hesap USDT olarak tutulur)
 const CUR_SYM={USD:"$",EUR:"€",TRY:"₺",AED:"AED"};let FX={USD:1,AED:3.6725};
 let CUR=(()=>{try{const c=localStorage.getItem("cf_cur");return CUR_SYM[c]?c:"USD"}catch(e){return "USD"}})();
@@ -2088,11 +2107,11 @@ $("curBtn").addEventListener("click",e=>{e.stopPropagation();renderCurMenu();$("
 $("curMenu").addEventListener("click",e=>{const b=e.target.closest("[data-cur]");if(!b||b.disabled)return;CUR=b.dataset.cur;try{localStorage.setItem("cf_cur",CUR)}catch(err){}$("curMenu").hidden=true;renderBal()});
 document.addEventListener("click",e=>{if(!e.target.closest(".cur-wrap"))$("curMenu").hidden=true});
 function renderBal(){
-  const{v,v0}=portfolio(),r=curRate()||1,cc=curRate()?CUR:"USD",sym=CUR_SYM[cc];const[a,b]=fmtN(v*r,2).split(DEC);
+  const{v,v0}=portfolio(),r=curRate()||1,cc=curRate()?CUR:"USD",sym=CUR_SYM[cc];const[a,b]=fmtN((v+(P24?+P24.earn||0:0))*r,2).split(DEC);
   $("balNum").innerHTML=cc==="AED"?`<span class="cs">AED</span>${a}<span>${DEC}${b}</span>`:`${sym}${a}<span>${DEC}${b}</span>`;
   $("curCode").textContent=cc;
-  const d=v-v0,dp=v0?d/v0*100:0,el=$("balChg");
-  if(v===0){el.textContent="-- 24s";el.className="bal-chg muted"}
+  const P=pnl24(),d=P.ok?P.d:v-v0,tot=v+(P24?+P24.earn||0:0),b0=tot-d,dp=b0>0?d/b0*100:0,el=$("balChg");
+  if(tot===0&&!d){el.textContent="-- 24s";el.className="bal-chg muted"}
   else{el.textContent=`${d>=0?"+":"-"}${curFmt(Math.abs(d))} (${fmtN(Math.abs(dp),2)}%) 24s`;el.className="bal-chg "+(d>=0?"up":"down")}
 }
 
@@ -2315,7 +2334,7 @@ async function loadAll(){if(!me)return;const uid=me.id;const q=p=>p.then(r=>{if(
     for(const k in PCH)PCH[k].t=0;
     if(prof){st.prof={fb:+prof.follower_bonus||0,gb:+prof.following_bonus||0,name:prof.full_name||prof.username,handle:prof.username,bio:prof.bio||"",joined:Date.parse(prof.created_at),custom:1,avatar:prof.avatar_url||""};st.onboarded=prof.onboarded}
   }catch(err){console.error(err);toast("Veriler yüklenemedi: "+errText(err))}
-  renderAll();if(view==="rank")renderRank();if(openId==="notifs")renderNotifs();if(openId==="rewards")renderRewards();
+  renderAll();loadP24();if(view==="rank")renderRank();if(openId==="notifs")renderNotifs();if(openId==="rewards")renderRewards();
 }
 async function loadPrices(){const {data,error}=await sb.from("prices").select("*");if(error||!data)return;
   data.forEach(r=>{if(r.listed===false)return;let t=find(r.symbol);if(!t){t=newTok(r);T.push(t)}const first=!t.live;if(r.category)t.cat=r.category;if(r.circulating_supply)t.sup=+r.circulating_supply;if(r.ath)t.ath=+r.ath;if(r.volume_24h)t.vol=+r.volume_24h;t.p=+r.price;t.open=+(r.open_24h||r.price);if(r.market_cap)t.mc=+r.market_cap;if(r.max_leverage)t.maxLev=r.max_leverage;if(r.image_url)t.img=r.image_url;if(r.coingecko_id)t.cg=r.coingecko_id;if(r.dex_pair&&r.dex_chain&&!r.coingecko_id){t.cg="dx:"+r.symbol;t.dex=[GT_NET[r.dex_chain]||r.dex_chain,r.dex_pair];t.credit="Fiyat: DexScreener · grafik: GeckoTerminal"}if(r.custom){t.custom=1;t.cg="cc:"+r.symbol;t.n=r.name||t.n;t.img=r.image_url||"";t.credit="COINFORCE tarafından çıkarıldı · fiyat alım ve satımla belirlenir"}if(r.about)t.about=r.about;if(r.high_24h)t.hi24=+r.high_24h;if(r.low_24h)t.lo24=+r.low_24h;if(Array.isArray(r.spark)&&r.spark.length>20)t.spark7=r.spark.map(Number).filter(x=>x>0);if(first){t.hist=genHist(t.p,t.open);t.live=1}})}
@@ -3403,28 +3422,33 @@ function pnlChart(pts){if(pts.length<2)return"";const W=600,H=150,p=8,vs=pts.map
     <line x1="0" x2="${W}" y1="${Y(vs[0]).toFixed(1)}" y2="${Y(vs[0]).toFixed(1)}" stroke="var(--line)" stroke-dasharray="4 5"/>
     <path d="${d}L${W} ${H}L0 ${H}Z" fill="url(#pnG)"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
     <circle cx="${X(pts.length-1).toFixed(1)}" cy="${Y(vs[vs.length-1]).toFixed(1)}" r="5" fill="${col}"/></svg>`}
-function renderPnl(){const b=$("pnlBody");if(!b)return;const{v,v0}=portfolio(),d=v-v0,dp=v0?d/v0*100:0,rows=pnlRows();
-  const fixed=v-rows.reduce((a,r)=>a+r.now,0),pts=pnlSeries(rows,fixed),t0=dayStart(),hm=t=>new Date(t).toLocaleTimeString(LOC,{hour:"2-digit",minute:"2-digit"});
-  const cls=x=>x>=0?"up":"down",sg=x=>x>=0?"+":"-",maxAbs=Math.max(...rows.map(r=>Math.abs(r.d)),1e-9);
-  const coinRows=rows.map(r=>{const t=r.t;return `<div class="pn-row">${coinHTML(t,"sm")}<div class="mid"><b>${t.s}</b> <span class="muted" style="font-size:13px">${xfQ(r.q)} ${t.s}${r.lq?` · ${xfQ(r.lq)} satış emrinde`:""}</span>
-      <small>24s önce ${usd(t.open,t.d)} → şimdi ${usd(t.p,t.d)} <span class="${cls(r.pct)}">(${sg(r.pct)}${fmtN(Math.abs(r.pct),2)}%)</span></small>
-      ${r.avg!=null?`<small>Ortalama alış ${usd(r.avg,t.d)} · toplam <span class="${cls(r.pl)}">${sg(r.pl)}${curFmt(Math.abs(r.pl))} (${sg(r.pl)}${fmtN(Math.abs(r.pl/(r.avg*(st.h[t.s]||1))*100),2)}%)</span></small>`:""}
-      <div class="pn-bar"><i style="width:${(Math.abs(r.d)/maxAbs*100).toFixed(1)}%;background:var(--${cls(r.d)})"></i></div></div>
-      <div class="rt"><span class="${cls(r.d)}">${sg(r.d)}${curFmt(Math.abs(r.d))}</span><small class="muted">${curFmt(r.now)}</small></div></div>`}).join("");
+function renderPnl(){const b=$("pnlBody");if(!b)return;if(!P24)loadP24();const{v}=portfolio(),P=pnl24(),earn=P24?+P24.earn||0:0,tot=v+earn,d=P.ok?P.d:0,v0=tot-d,dp=v0>0?d/v0*100:0;
+  const pts=P.series.map((x,i)=>({t:i,v:v0+x})),hm=t=>new Date(t).toLocaleTimeString(LOC,{hour:"2-digit",minute:"2-digit"}),t0=dayStart();
+  const cls=x=>x>=0?"up":"down",sg=x=>x>=0?"+":"-",maxAbs=Math.max(...P.coins.map(r=>Math.abs(r.d)),Math.abs(P.real+P.unr),1e-9);
+  const bar=x=>`<div class="pn-bar"><i style="width:${(Math.abs(x)/maxAbs*100).toFixed(1)}%;background:var(--${cls(x)})"></i></div>`;
+  const coinRows=P.coins.map(r=>{const t=r.t,hq=st.h[t.s]||0,cost=st.cost[t.s]||0,pct=chg(t);
+    const how=r.q0>0&&!r.traded?`24s önce ${usd(t.open,t.d)} → şimdi ${usd(t.p,t.d)} <span class="${cls(pct)}">(${sg(pct)}${fmtN(Math.abs(pct),2)}%)</span>`
+      :`${r.bu?`Alış ${curFmt(r.bu)}`:""}${r.bu&&r.su?" · ":""}${r.su?`Satış ${curFmt(r.su)}`:""}${r.q0>0?` · 24s önce ${xfQ(r.q0)} ${t.s} vardı`:""}`;
+    return `<div class="pn-row">${coinHTML(t,"sm")}<div class="mid"><b>${t.s}</b> <span class="muted" style="font-size:13px">${r.q>0?`${xfQ(r.q)} ${t.s}${r.lq?` · ${xfQ(r.lq)} satış emrinde`:""}`:(EN?"sold":"satıldı")}</span>
+      <small>${how}</small>
+      ${hq>0&&cost>0?`<small>Ortalama alış ${usd(cost/hq,t.d)} · toplam <span class="${cls(hq*t.p-cost)}">${sg(hq*t.p-cost)}${curFmt(Math.abs(hq*t.p-cost))} (${sg(hq*t.p-cost)}${fmtN(Math.abs((hq*t.p-cost)/cost*100),2)}%)</span></small>`:""}
+      ${bar(r.d)}</div>
+      <div class="rt"><span class="${cls(r.d)}">${sg(r.d)}${curFmt(Math.abs(r.d))}</span><small class="muted">${curFmt(r.q*t.p)}</small></div></div>`}).join("");
   const perps=(st.perps||[]).map(x=>{const pl=perpPnl(x),t=find(x.s);return `<div class="pn-row">${coinHTML(t,"sm")}<div class="mid"><b>${x.s}</b> <span class="muted" style="font-size:13px">${x.lev}x ${x.side>0?"Long":"Short"}</span>
       <small>Giriş ${usd(x.entry,t.d)} → şimdi ${usd(t.p,t.d)} · teminat ${curFmt(x.margin)}</small></div><div class="rt"><span class="${cls(pl)}">${sg(pl)}${curFmt(Math.abs(pl))}</span><small class="muted">açık K/Z</small></div></div>`}).join("");
+  const pf=P.real+P.unr,perpSum=(P.real||P.unr||perps)?`<div class="pn-row"><div class="mid"><b>Vadeli işlemler (24s)</b><small>Kapanan: <span class="${cls(P.real)}">${sg(P.real)}${curFmt(Math.abs(P.real))}</span> · açık pozisyonlar: <span class="${cls(P.unr)}">${sg(P.unr)}${curFmt(Math.abs(P.unr))}</span></small>${bar(pf)}</div><div class="rt"><span class="${cls(pf)}">${sg(pf)}${curFmt(Math.abs(pf))}</span></div></div>`:"";
   const today=(st.hist||[]).filter(h=>h.t>=t0&&["buy","sell","swap","perp"].includes(h.k)).slice(0,12).map(h=>{const title={buy:h.s+" alındı",sell:h.s+" satıldı",swap:h.txt,perp:h.txt}[h.k]||"";
       return `<div class="pn-row" style="padding:9px 0"><div class="mid"><b style="font-size:14px">${esc(title)}</b><small>${hm(h.t)}</small></div><div class="rt" style="font-weight:600">${h.k==="perp"?"":(h.k==="buy"?"-":h.k==="sell"?"+":"")+curFmt(Math.abs(h.v))}</div></div>`}).join("");
-  const cash=st.usdt;
-  b.innerHTML=`<h3>Son 24 saat</h3><div class="sub">Varlıklarının son 24 saatteki değişimi ve nereden geldiği.</div>
-    <div class="pn-head"><div><div class="pn-big ${cls(d)}">${sg(d)}${curFmt(Math.abs(d))}</div><div class="pn-sub"><span class="${cls(d)}">${sg(d)}${fmtN(Math.abs(dp),2)}%</span> · ${curFmt(v0)} → ${curFmt(v)}</div></div></div>
-    ${rows.length?pnlChart(pts)+`<div class="pn-axis"><span>24 saat önce</span><span>Şimdi · ${hm(Date.now())}</span></div>`:""}
+  b.innerHTML=`<h3>Son 24 saat</h3><div class="sub">Varlıklarının son 24 saatteki kâr/zararı ve nereden geldiği.</div>
+    <div class="pn-head"><div><div class="pn-big ${cls(d)}">${P.ok?sg(d)+curFmt(Math.abs(d)):"…"}</div><div class="pn-sub">${P.ok?`<span class="${cls(d)}">${sg(d)}${fmtN(Math.abs(dp),2)}%</span> · ${curFmt(v0)} → ${curFmt(tot)}`:"Hesaplanıyor…"}</div></div></div>
+    ${P.ok&&(P.coins.length||pf)?pnlChart(pts)+`<div class="pn-axis"><span>24 saat önce</span><span>Şimdi · ${hm(Date.now())}</span></div>`:""}
     <div class="sec-t" style="margin:14px 0 2px">Coinlere göre</div>
-    ${coinRows||`<div class="empty" style="padding:14px 4px">Elinde coin yok; nakit değeri gün içinde değişmez.</div>`}
-    <div class="pn-row">${usdtCoin}<div class="mid"><b>Nakit (USDT)</b><small>Fiyatı sabit olduğu için değişime etkisi yok</small></div><div class="rt">${curFmt(cash)}</div></div>
-    ${perps?`<div class="sec-t" style="margin:16px 0 2px">Vadeli pozisyonlar</div>${perps}`:""}
+    ${coinRows||`<div class="empty" style="padding:14px 4px">Son 24 saatte elinde coin yoktu; nakit değeri değişmez.</div>`}
+    <div class="pn-row">${usdtCoin}<div class="mid"><b>Nakit (USDT)</b><small>Yatırma, çekme ve transferler kâr/zarar sayılmaz</small></div><div class="rt">${curFmt(st.usdt)}</div></div>
+    ${earn?`<div class="pn-row">${usdtCoin}<div class="mid"><b>Earn (kilitli)</b><small>Faizi süre sonunda eklenir</small></div><div class="rt">${curFmt(earn)}</div></div>`:""}
+    ${perpSum||perps?`<div class="sec-t" style="margin:16px 0 2px">Vadeli</div>${perpSum}${perps}`:""}
     ${today?`<div class="sec-t" style="margin:16px 0 2px">Son 24 saatteki işlemlerin</div>${today}`:""}
-    <div class="pn-note">Değişim, şu an elindeki coinlerin 24 saat önceki fiyatı ile şimdiki fiyatı arasındaki farktır. Son 24 saatte aldığın coinler de 24 saat önceki fiyatla karşılaştırılır. Vadeli pozisyonların açık kâr/zararı bu hesaba dahil değildir, ayrıca gösterilir.</div>`}
+    <div class="pn-note">Kâr/zarar; 24 saat önce elindeki coinlerin fiyat değişimi, son 24 saatte yaptığın alım-satımların sonucu (komisyon dahil), kapanan vadeli pozisyonların kârı ve açık pozisyonların bu süredeki değişiminden oluşur. Yatırma, çekme, transfer ve ödüller kâr sayılmaz.</div>`}
 // ---------- Kartla yatırma (iyzico) ve para çekme
 let CASH=null,wdSym=null,wdMax=false,cdRate=null;
 const tl=v=>"₺"+fmtN(v,2);
