@@ -864,6 +864,18 @@ html:not([data-mode="lite"]) #s-home .bal-top{gap:8px}
   html:not([data-mode="lite"]) .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
   html:not([data-mode="lite"]) body.v-home #s-home{padding-bottom:calc(140px + env(safe-area-inset-bottom,0px))}
 }
+.hn{display:none}
+html:not([data-mode="lite"]) .hn{display:block;margin:18px 0 6px}
+.hn-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.hn-tabs{display:flex;gap:18px}.hn-tabs button{font-size:16px;font-weight:700;color:var(--muted);padding:6px 0;border-bottom:2px solid transparent}.hn-tabs button.on{color:var(--fg);border-color:var(--fg)}
+.hn-row{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+.hn-row:last-child{border-bottom:0}
+.hn-n{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--up);background:rgba(61,220,151,.12);margin-top:1px}
+.hn-row .mid{flex:1;min-width:0}.hn-row b{display:block;font-size:15.5px;font-weight:600;line-height:1.38;overflow-wrap:anywhere}
+.hn-row small{display:block;color:var(--muted);font-size:12.5px;margin-top:6px}
+.hn-row img{flex:none;width:92px;height:62px;border-radius:10px;object-fit:cover;background:var(--surface2)}
+.hn-tr{display:inline-block;font-size:10px;font-weight:800;padding:1px 5px;border-radius:5px;background:rgba(229,72,77,.15);color:#ff6b6b;margin-right:4px;vertical-align:1px}
+#dNews .sec-t{margin:20px 0 4px}
 /* Lite mod: sade arayüz */
 html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[data-mode="lite"] #trType [data-ot="limit"],html[data-mode="lite"] #trType [data-ot="stop"]{display:none!important}
 .sheet{position:fixed;left:50%;bottom:0;width:min(460px,100%);transform:translate(-50%,105%);background:var(--surface);border-radius:26px 26px 0 0;z-index:41;padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px));transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s .28s;visibility:hidden;max-height:88%;overflow:auto}
@@ -1193,6 +1205,7 @@ nav.bar button svg{width:22px;height:22px}
     <div class="pw-card" id="pwBot" role="button" tabindex="0"></div>
     <div class="pw-card" id="pwEv" role="button" tabindex="0"></div>
   </div>
+  <div class="hn" id="homeNews"><div class="hn-h"><div class="hn-tabs"><button type="button" data-hnl="" class="on" data-en="News">Haberler</button><button type="button" data-hnl="tr">Türkçe</button><button type="button" data-hnl="en">English</button></div><button type="button" class="r-link" id="hnAll" data-en="All">Tümü</button></div><div id="hnList"><div class="empty" style="padding:16px 4px">Yükleniyor…</div></div><button type="button" class="btn btn-ghost" id="hnMore" style="width:100%;margin-top:6px;padding:11px" hidden data-en="More news">Daha fazla haber</button></div>
   <div id="topWrap" hidden><div class="sec-t"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.3L21 9l-5 4.4L17.5 20 12 16.6 6.5 20 8 13.4 3 9l6.4-.7z"/></svg>En iyi yatırımcılar</div>
   <div class="rail" id="topRail"></div></div>
   <div id="campWrap" hidden><div class="r-sec-h" style="margin:22px 0 10px"><div class="sec-t" style="margin:0"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10v2h3v3a4 4 0 0 1-4 4h-.3A5 5 0 0 1 13 14.9V17h3v3H8v-3h3v-2.1A5 5 0 0 1 8.3 12H8a4 4 0 0 1-4-4V5h3zm0 4H6v1a2 2 0 0 0 1 1.7zm10 0v2.7A2 2 0 0 0 18 8V7z"/></svg>Hacim kampanyaları</div><button type="button" class="r-link" data-open="campaigns">Tümü <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button></div><div id="campHome"></div></div>
@@ -1244,6 +1257,7 @@ nav.bar button svg{width:22px;height:22px}
   <div class="stats" id="dStats"></div>
   <div class="sec-t">Hakkında</div>
   <p class="about" id="dAbout"></p>
+  <div id="dNews"></div>
   <a class="ed-ban" id="dX" target="_blank" rel="noopener noreferrer" style="text-decoration:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.300l7.3-8.300L1 2h6.400l4.400 5.900zm-1.100 18.100h1.700L6.500 3.800H4.600z"/></svg><b><span id="dXt"></span><small style="display:block;font-weight:500;color:var(--muted)" data-en="Latest posts on X">X'teki güncel paylaşımlar</small></b><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></a>
   <div class="sec-t" style="margin-top:18px">Topluluk işlemleri</div>
   <div id="dTrades"><div class="hint">Yükleniyor…</div></div>
@@ -2217,7 +2231,8 @@ function chartWait(t){if(rangeData(t))return false;const dpr=devicePixelRatio||1
 function onPtr(e){const r=cv.getBoundingClientRect();hoverX=e.clientX-r.left;drawChart()}
 cv.addEventListener("pointermove",onPtr);cv.addEventListener("pointerdown",onPtr);
 ["pointerleave","pointerup","pointercancel"].forEach(ev=>cv.addEventListener(ev,()=>{hoverX=null;drawChart()}));
-function renderDetail(){
+let cnLast="";
+function renderDetail(){if(cur&&cur!==cnLast){cnLast=cur;const b=$("dNews");if(b)b.innerHTML="";loadCoinNews(cur)}
   const t=find(cur);
   $("dCoin").outerHTML=`<div class="coin lg" id="dCoin" style="background:${t.c}">${face(t)}</div>`;
   $("dName").textContent=`${t.n} · ${t.s}`;
@@ -2344,7 +2359,7 @@ async function loadAll(){if(!me)return;const uid=me.id;const q=p=>p.then(r=>{if(
     for(const k in PCH)PCH[k].t=0;
     if(prof){st.prof={fb:+prof.follower_bonus||0,gb:+prof.following_bonus||0,name:prof.full_name||prof.username,handle:prof.username,bio:prof.bio||"",joined:Date.parse(prof.created_at),custom:1,avatar:prof.avatar_url||""};st.onboarded=prof.onboarded}
   }catch(err){console.error(err);toast("Veriler yüklenemedi: "+errText(err))}
-  renderAll();loadP24();loadPR("24h");if(openId==="pnl")loadPR(PR.range);if(view==="rank")renderRank();if(openId==="notifs")renderNotifs();if(openId==="rewards")renderRewards();
+  renderAll();loadP24();loadPR("24h");loadHN();if(openId==="pnl")loadPR(PR.range);if(view==="rank")renderRank();if(openId==="notifs")renderNotifs();if(openId==="rewards")renderRewards();
 }
 async function loadPrices(){const {data,error}=await sb.from("prices").select("*");if(error||!data)return;
   data.forEach(r=>{if(r.listed===false)return;let t=find(r.symbol);if(!t){t=newTok(r);T.push(t)}const first=!t.live;if(r.category)t.cat=r.category;if(r.circulating_supply)t.sup=+r.circulating_supply;if(r.ath)t.ath=+r.ath;if(r.volume_24h)t.vol=+r.volume_24h;t.p=+r.price;t.open=+(r.open_24h||r.price);if(r.market_cap)t.mc=+r.market_cap;if(r.max_leverage)t.maxLev=r.max_leverage;if(r.image_url)t.img=r.image_url;if(r.coingecko_id)t.cg=r.coingecko_id;if(r.dex_pair&&r.dex_chain&&!r.coingecko_id){t.cg="dx:"+r.symbol;t.dex=[GT_NET[r.dex_chain]||r.dex_chain,r.dex_pair];t.credit="Fiyat: DexScreener · grafik: GeckoTerminal"}if(r.custom){t.custom=1;t.cg="cc:"+r.symbol;t.n=r.name||t.n;t.img=r.image_url||"";t.credit="COINFORCE tarafından çıkarıldı · fiyat alım ve satımla belirlenir"}if(r.about)t.about=r.about;if(r.high_24h)t.hi24=+r.high_24h;if(r.low_24h)t.lo24=+r.low_24h;if(Array.isArray(r.spark)&&r.spark.length>20)t.spark7=r.spark.map(Number).filter(x=>x>0);if(first){t.hist=genHist(t.p,t.open);t.live=1}})}
@@ -2775,6 +2790,19 @@ function newsBody(c){if(!c.is_member&&!st.admin)return `<div class="news-join"><
   return `${st.admin?`<div id="cpCompose">${composerHTML("c:"+c.id,"Duyuru paylaş (sadece yöneticiler)")}</div>`:`<div class="hint" style="padding:0 0 10px">🔒 Bu grupta sadece yöneticiler paylaşım yapar.</div>`}
     <div class="news-lang" id="newsLang"><button type="button" data-nl="all" class="chip on">Tümü</button><button type="button" data-nl="tr" class="chip">Türkçe</button><button type="button" data-nl="en" class="chip">English</button></div>
     <div id="cpList"><div class="empty">Haberler yükleniyor…</div></div><button type="button" class="btn btn-ghost full f-more" id="newsMore" hidden>Daha fazla haber</button>`}
+// ---------- Ana sayfa haberleri (Pro) ve coin sayfası haberleri
+const HN={lang:"",items:[],busy:false,at:0,n:8},CN={};
+const hnTime=t=>{const d=new Date(t),m=(Date.now()-d)/6e4;return m<1?(EN?"just now":"şimdi"):m<60*20?tAgo(t)+(EN?" ago":" önce"):d.toLocaleString(LOC,{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})};
+function hnRow(n,i){const u=/^https:\/\//.test(n.url)?esc(n.url):"#",img=/^https:\/\//.test(n.image_url||"")?esc(n.image_url):"",top=i!=null&&i<3;
+  return `<a class="hn-row" href="${u}" target="_blank" rel="noopener noreferrer">${top?`<span class="hn-n">${i+1}</span>`:""}<div class="mid"><b>${esc(n.title)}</b><small>${n.lang==="tr"?'<span class="hn-tr">TR</span>':""}${esc(n.source)} · ${hnTime(n.published_at)}</small></div>${!top&&img?`<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}</a>`}
+async function loadHN(force){if(HN.busy||(!force&&Date.now()-HN.at<12e4&&HN.items.length))return renderHN();HN.busy=true;try{const r=await sb.rpc("news_list",{p_symbol:null,p_lang:HN.lang||null,p_before:null,p_limit:40});if(!r.error){HN.items=r.data||[];HN.at=Date.now()}}catch(e){}finally{HN.busy=false}renderHN()}
+function renderHN(){const L=$("hnList");if(!L)return;const it=HN.items.slice(0,HN.n);L.innerHTML=it.length?it.map((n,i)=>hnRow(n,i)).join(""):`<div class="empty" style="padding:16px 4px">${EN?"No news yet.":"Henüz haber yok."}</div>`;$("hnMore").hidden=HN.items.length<=HN.n}
+$("homeNews").addEventListener("click",e=>{const t=e.target.closest("[data-hnl]");if(t){HN.lang=t.dataset.hnl;HN.n=8;document.querySelectorAll("[data-hnl]").forEach(b=>b.classList.toggle("on",b===t));loadHN(true);return}
+  if(e.target.closest("#hnMore")){HN.n+=10;renderHN();return}if(e.target.closest("#hnAll"))pdNews()});
+setInterval(()=>{if(!document.hidden&&me&&view==="home"&&document.documentElement.dataset.mode!=="lite")loadHN(true)},18e4);
+async function loadCoinNews(sym){const box=$("dNews");if(!box)return;const c=CN[sym];if(c&&Date.now()-c.at<12e4)return renderCoinNews(sym);
+  try{const r=await sb.rpc("news_list",{p_symbol:sym,p_lang:null,p_before:null,p_limit:8});CN[sym]={at:Date.now(),items:r.error?[]:r.data||[]}}catch(e){CN[sym]={at:Date.now(),items:[]}}if(cur===sym)renderCoinNews(sym)}
+function renderCoinNews(sym){const box=$("dNews"),c=CN[sym];if(!box||!c)return;box.innerHTML=c.items.length?`<div class="sec-t">${EN?"News about":"Haberler ·"} ${esc(sym)}</div>${c.items.map(n=>hnRow(n)).join("")}`:""}
 function newsHTML(n){const u=/^https:\/\//.test(n.url)?esc(n.url):"#",img=/^https:\/\//.test(n.image_url||"")?esc(n.image_url):"";
   return `<a class="news" href="${u}" target="_blank" rel="noopener noreferrer"><div class="news-h"><span class="news-src">${esc(n.source)}</span>${n.lang==="tr"?`<span class="news-tr">TR</span>`:""}<span class="muted">· ${tAgo(n.published_at)}</span></div>
     <div class="news-t" translate="no">${esc(n.title)}</div>${n.summary?`<div class="news-s" translate="no">${esc(n.summary)}</div>`:""}${img?`<img class="news-img" src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<div class="news-go">Habere git ↗</div></a>`}
