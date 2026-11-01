@@ -2120,7 +2120,7 @@ function renderBal(){
   const{v,v0}=portfolio(),r=curRate()||1,cc=curRate()?CUR:"USD",sym=CUR_SYM[cc];const[a,b]=fmtN((v+(P24?+P24.earn||0:0))*r,2).split(DEC);
   $("balNum").innerHTML=cc==="AED"?`<span class="cs">AED</span>${a}<span>${DEC}${b}</span>`:`${sym}${a}<span>${DEC}${b}</span>`;
   $("curCode").textContent=cc;
-  const S=PR&&PR.data["24h"],P=S?null:pnl24(),d=S?+S.pnl:P.ok?P.d:v-v0,tot=v+(P24?+P24.earn||0:0),b0=S?+S.base:tot-d,dp=b0>0?d/b0*100:0,el=$("balChg");
+  const S=PR&&PR.data["24h"],P=S?null:pnl24(),d=S?+S.pnl:P.ok?P.d:v-v0,tot=v+(P24?+P24.earn||0:0),cv=Math.max(0,v-st.usdt),b0=cv-d,dp=b0>0?d/b0*100:0,el=$("balChg");
   if(tot===0&&!d){el.textContent="-- 24s";el.className="bal-chg muted"}
   else{el.textContent=`${d>=0?"+":"-"}${curFmt(Math.abs(d))} (${fmtN(Math.abs(dp),2)}%) 24s`;el.className="bal-chg "+(d>=0?"up":"down")}
 }
@@ -3473,17 +3473,16 @@ function renderPnl(){const b=$("pnlBody");if(!b)return;if(!P24)loadP24();const R
   const today=(st.hist||[]).filter(h=>h.t>=t0&&["buy","sell","swap","perp"].includes(h.k)).slice(0,12).map(h=>{const title={buy:h.s+" alındı",sell:h.s+" satıldı",swap:h.txt,perp:h.txt}[h.k]||"";
       return `<div class="pn-row" style="padding:9px 0"><div class="mid"><b style="font-size:14px">${esc(title)}</b><small>${hm(h.t)}</small></div><div class="rt" style="font-weight:600">${h.k==="perp"?"":(h.k==="buy"?"-":h.k==="sell"?"+":"")+curFmt(Math.abs(h.v))}</div></div>`}).join("");
   const RL={"15m":"Son 15 dakika","1h":"Son 1 saat","24h":"Son 24 saat","7d":"Son 1 hafta","30d":"Son 1 ay"}[R],RA={"15m":"15 dk önce","1h":"1 saat önce","24h":"24 saat önce","7d":"1 hafta önce","30d":"1 ay önce"}[R];
-  b.innerHTML=`<h3 style="display:flex;justify-content:space-between;align-items:center">${RL}<span class="pr-live"><i></i>${EN?"live":"canlı"}</span></h3><div class="sub">Varlıklarının bu süredeki kâr/zararı. Yatırma, çekme, transfer ve ödüller kâr sayılmaz.</div>
-    <div class="pn-head"><div><div class="pn-big ${cls(d)}">${D?sg(d)+curFmt(Math.abs(d)):"…"}</div><div class="pn-sub">${D?`<span class="${cls(d)}">${sg(d)}${fmtN(Math.abs(dp),2)}%</span> · ${curFmt(v0)} → ${curFmt(tot)}${Math.abs(fl)>=0.01?` · ${EN?"net deposits":"net yatırma"} ${fl>=0?"+":"-"}${curFmt(Math.abs(fl))}`:""}`:"Hesaplanıyor…"}</div></div></div>
+  const cv=Math.max(0,v-st.usdt),cb=cv-d,cp=cb>0?d/cb*100:0;
+  b.innerHTML=`<h3 style="display:flex;justify-content:space-between;align-items:center">${RL}<span class="pr-live"><i></i>${EN?"live":"canlı"}</span></h3><div class="sub">${EN?"Ups and downs of the money in your active coins and positions.":"Aktif coinlerindeki ve pozisyonlarındaki paranın iniş çıkışı."}</div>
+    <div class="pn-head"><div><div class="pn-big ${cls(d)}">${D?sg(d)+curFmt(Math.abs(d)):"…"}</div><div class="pn-sub">${D?`<span class="${cls(d)}">${sg(d)}${fmtN(Math.abs(cp),2)}%</span> · ${EN?"active coins":"aktif coinler"} ${curFmt(cv)}`:"Hesaplanıyor…"}</div></div></div>
     ${D?prChart(pts)+`<div class="pn-axis"><span>${RA}</span><span>${EN?"Now":"Şimdi"} · ${hm(Date.now())}</span></div>`:`<div style="height:170px"></div>`}
     <div class="pr-tabs">${PR_R.map(([k,tr,en])=>`<button type="button" data-prr="${k}" class="${k===R?"on":""}">${EN?en:tr}</button>`).join("")}</div>
     ${R==="24h"?`<div class="sec-t" style="margin:14px 0 2px">Coinlere göre (24 saat)</div>
     ${coinRows||`<div class="empty" style="padding:14px 4px">Son 24 saatte elinde coin yoktu; nakit değeri değişmez.</div>`}`:""}
-    <div class="pn-row">${usdtCoin}<div class="mid"><b>Nakit (USDT)</b><small>Yatırma, çekme ve transferler kâr/zarar sayılmaz</small></div><div class="rt">${curFmt(st.usdt)}</div></div>
-    ${earn?`<div class="pn-row">${usdtCoin}<div class="mid"><b>Earn (kilitli)</b><small>Faizi süre sonunda eklenir</small></div><div class="rt">${curFmt(earn)}</div></div>`:""}
     ${R==="24h"&&(perpSum||perps)?`<div class="sec-t" style="margin:16px 0 2px">Vadeli</div>${perpSum}${perps}`:""}
     ${R==="24h"&&today?`<div class="sec-t" style="margin:16px 0 2px">Son 24 saatteki işlemlerin</div>${today}`:""}
-    <div class="pn-note">Kâr/zarar = şu anki toplam varlık − seçilen sürenin başındaki varlık − bu süredeki net yatırma (yatırma, çekme, transfer, airdrop, ödül ve CF alımı). Coin fiyat değişimleri, alım-satımlar (komisyon dahil), vadeli işlemler ve Earn faizi bu hesaba girer. Grafiğin üzerinde parmağını gezdirerek o anki kâr/zararı görebilirsin.</div>`}
+    <div class="pn-note">Sadece aktif coinlerindeki ve vadeli pozisyonlarındaki fiyat iniş çıkışından gelen kâr/zarar gösterilir (alım-satım komisyonu dahil). Nakit, yatırma, çekme ve transferler bu rakamı etkilemez. Grafiğin üzerinde parmağını gezdirerek o anki kâr/zararı görebilirsin.</div>`}
 // ---------- Kartla yatırma (iyzico) ve para çekme
 let CASH=null,wdSym=null,wdMax=false,cdRate=null;
 const tl=v=>"₺"+fmtN(v,2);
