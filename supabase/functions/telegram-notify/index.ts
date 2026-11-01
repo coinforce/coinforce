@@ -355,12 +355,13 @@ Deno.serve(async (req) => {
 
   if (url.searchParams.has("setup")) {
     const hook = `${Deno.env.get("SUPABASE_URL")}/functions/v1/telegram-notify`;
-    const set = await tg("setWebhook", {
-      url: hook,
-      secret_token: await hookSecret(),
-      allowed_updates: ["message", "callback_query"],
-      drop_pending_updates: true,
-    });
+    const params = { url: hook, secret_token: await hookSecret(), allowed_updates: ["message", "callback_query"], drop_pending_updates: true };
+    let set = await tg("setWebhook", params);
+    if (!set?.ok && set?.parameters?.retry_after) {
+      await new Promise((r) => setTimeout(r, Math.min(5, set.parameters.retry_after) * 1000 + 300));
+      set = await tg("setWebhook", params);
+    }
+    const info = await tg("getWebhookInfo", {});
     const me = await tg("getMe", {});
     if (me?.ok && me.result?.username) await sb.rpc("tgn_set_bot", { p_username: me.result.username });
     await tg("setMyCommands", {
@@ -371,7 +372,9 @@ Deno.serve(async (req) => {
         { command: "dur", description: "Bildirimleri kapat" },
       ],
     });
-    return json({ webhook: set?.ok === true, bot: me?.result?.username ?? null });
+    const w = info?.result ?? {};
+    const ok = set?.ok === true || (w.url === hook && (w.allowed_updates ?? []).includes("callback_query"));
+    return json({ webhook: ok, bot: me?.result?.username ?? null, ...(ok ? {} : { error: set?.description ?? null }), updates: w.allowed_updates ?? null });
   }
 
   if (url.searchParams.has("run")) return json({ sent: await flush() });
