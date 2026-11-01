@@ -116,7 +116,52 @@ async function renderChart(c: any, range: Range, pts: [number, number][]): Promi
   } catch { return null; }
 }
 
-function caption(c: any, range: Range, pts: [number, number][]) {
+// Teknik gösterge özeti (TradingView tarzı sayım). Yatırım tavsiyesi değildir.
+type Sig = "Al" | "Nötr" | "Sat";
+function technicals(pts: [number, number][]) {
+  const v = pts.map((p) => p[1]);
+  if (v.length < 30) return null;
+  const last = v[v.length - 1];
+  const sma = (n: number) => { const a = v.slice(-Math.min(n, v.length)); return a.reduce((x, y) => x + y, 0) / a.length; };
+  const emaArr = (src: number[], n: number) => { const k = 2 / (n + 1); const out: number[] = []; src.forEach((x, i) => out.push(i ? x * k + out[i - 1] * (1 - k) : x)); return out; };
+  let g = 0, l = 0; for (let i = v.length - 14; i < v.length; i++) { const d = v[i] - v[i - 1]; if (d > 0) g += d; else l -= d; }
+  const rsi = l === 0 ? 100 : 100 - 100 / (1 + g / l);
+  const e12 = emaArr(v, 12), e26 = emaArr(v, 26), macd = e12.map((x, i) => x - e26[i]), sig = emaArr(macd, 9);
+  const mom = last - v[v.length - 11];
+  const w = v.slice(-14), hi = Math.max(...w), lo = Math.min(...w), k = hi > lo ? ((last - lo) / (hi - lo)) * 100 : 50;
+  const m20 = sma(20), sd = Math.sqrt(v.slice(-20).reduce((a, x) => a + (x - m20) ** 2, 0) / 20);
+  const pr = (x: number) => fmtUsd(x);
+  const rows: { name: string; value: string; s: Sig }[] = [
+    { name: "RSI (14)", value: rsi.toFixed(1), s: rsi < 30 ? "Al" : rsi > 70 ? "Sat" : "Nötr" },
+    { name: "Stokastik %K (14)", value: k.toFixed(1), s: k < 20 ? "Al" : k > 80 ? "Sat" : "Nötr" },
+    { name: "MACD (12,26,9)", value: (macd[macd.length - 1] - sig[sig.length - 1] >= 0 ? "+" : "") + ((macd[macd.length - 1] - sig[sig.length - 1]) / last * 100).toFixed(3) + "%", s: macd[macd.length - 1] > sig[sig.length - 1] ? "Al" : "Sat" },
+    { name: "Momentum (10)", value: (mom >= 0 ? "+" : "") + (mom / last * 100).toFixed(2) + "%", s: mom > 0 ? "Al" : mom < 0 ? "Sat" : "Nötr" },
+    { name: "Bollinger (20,2)", value: last > m20 + 2 * sd ? "üst bant üstü" : last < m20 - 2 * sd ? "alt bant altı" : "bant içi", s: last < m20 - 2 * sd ? "Al" : last > m20 + 2 * sd ? "Sat" : "Nötr" },
+    { name: "SMA 10", value: pr(sma(10)), s: last > sma(10) ? "Al" : "Sat" },
+    { name: "SMA 20", value: pr(m20), s: last > m20 ? "Al" : "Sat" },
+    { name: "SMA 50", value: pr(sma(50)), s: last > sma(50) ? "Al" : "Sat" },
+    { name: "EMA 12 / 26", value: e12[e12.length - 1] > e26[e26.length - 1] ? "12 > 26" : "12 < 26", s: e12[e12.length - 1] > e26[e26.length - 1] ? "Al" : "Sat" },
+  ];
+  const buy = rows.filter((r) => r.s === "Al").length, sell = rows.filter((r) => r.s === "Sat").length, neu = rows.length - buy - sell;
+  const sc = (buy - sell) / rows.length;
+  const label = sc <= -0.5 ? "Güçlü sat" : sc <= -0.1 ? "Sat" : sc < 0.1 ? "Nötr" : sc < 0.5 ? "Al" : "Güçlü al";
+  const pct = (n: number) => Math.round((n / rows.length) * 100);
+  return { rows, buy, sell, neu, label, pb: pct(buy), pn: pct(neu), ps: pct(sell) };
+}
+// 24S verisi yetersizse (az işlem gören DEX coinleri) 7G verisine düş
+async function techFor(c: any, p24: [number, number][] | null) {
+  const a = technicals(p24 ?? await series(c, "24h"));
+  if (a) return { ...a, per: "24S" };
+  const b = technicals(await series(c, "7d"));
+  return b ? { ...b, per: "7G" } : null;
+}
+const techIcon = (l: string) => (l.includes("al") || l === "Al" ? (l.startsWith("Güçlü") ? "🟢🟢" : "🟢") : l.includes("sat") || l === "Sat" ? (l.startsWith("Güçlü") ? "🔴🔴" : "🔴") : "⚪");
+function techBar(t: { pb: number; pn: number; ps: number }) {
+  const n = 12, b = Math.round((t.pb / 100) * n), s = Math.round((t.ps / 100) * n), m = Math.max(0, n - b - s);
+  return "🟩".repeat(b) + "⬜".repeat(m) + "🟥".repeat(s);
+}
+
+function caption(c: any, range: Range, pts: [number, number][], t?: (ReturnType<typeof technicals> & { per?: string }) | null) {
   const first = pts[0]?.[1] ?? c.price, last = Number(c.price), ch = first > 0 ? (last / first - 1) * 100 : 0;
   const vals = pts.map((p) => p[1]), hi = Math.max(...vals), lo = Math.min(...vals);
   const L = [
@@ -125,9 +170,11 @@ function caption(c: any, range: Range, pts: [number, number][]) {
     `▲ ${fmtUsd(hi)}   ▼ ${fmtUsd(lo)}`,
   ];
   if (c.market_cap > 0) L.push(`Piyasa değeri: ${fmtBig(c.market_cap)}${c.volume_24h > 0 ? ` · Hacim: ${fmtBig(c.volume_24h)}` : ""}`);
+  if (t) L.push(`\n📊 <b>Teknik görünüm: ${techIcon(t.label)} ${t.label}</b>\n${techBar(t)}\nAl %${t.pb} · Nötr %${t.pn} · Sat %${t.ps}  <i>(${t.rows.length} gösterge, ${t.per ?? "24S"})</i>`);
   if (c.holding) L.push(`\n👜 Pozisyonun: ${fmtUsd(c.holding.value)} (${c.holding.pnl >= 0 ? "+" : "-"}${fmtUsd(Math.abs(c.holding.pnl))})`);
-  L.push(`\n🕒 ${hhmm(Date.now(), true)} · 🔄 ile güncelle`);
-  return L.join("\n");
+  L.push(`\n🕒 ${hhmm(Date.now(), true)} · <i>Yatırım tavsiyesi değildir.</i>`);
+  const out = L.join("\n");
+  return out.length > 1000 ? out.slice(0, 997) + "…" : out;
 }
 
 function chartKb(sym: string, range: Range) {
@@ -135,7 +182,7 @@ function chartKb(sym: string, range: Range) {
   return {
     inline_keyboard: [
       RANGES.map((r) => ({ text: (r === range ? "• " : "") + RLABEL[r], callback_data: `g|${sym}|${r}` })),
-      [{ text: "🔄 Yenile", callback_data: `g|${sym}|${range}|${Date.now() % 100000}` }, { text: "📋 Coinler", callback_data: "l" }],
+      [{ text: "🔄 Yenile", callback_data: `g|${sym}|${range}|${Date.now() % 100000}` }, { text: "ℹ️ Bilgi", callback_data: `i|${sym}` }, { text: "📋 Coinler", callback_data: "l" }],
       [{ text: `🟢 Al ${sym}`, url: link("buy") }, { text: `🔴 Sat ${sym}`, url: link("sell") }],
     ],
   };
@@ -153,8 +200,9 @@ async function showChart(chat: number, symRaw: string, range: Range, editMsg?: n
   const { data: c } = await sb.rpc("tgn_coin", { p_chat: chat, p_sym: symRaw, p_hours: RHOURS[range] });
   if (!c) { if (!editMsg) await send(chat, `"${escH(symRaw)}" bulunamadı. /grafik yazıp listeden seçebilirsin.`); return; }
   const pts = await series(c, range);
+  const t = await techFor(c, range === "24h" ? pts : null);
   const png = await renderChart(c, range, pts);
-  const cap = caption(c, range, pts), kb = JSON.stringify(chartKb(c.symbol, range));
+  const cap = caption(c, range, pts, t), kb = JSON.stringify(chartKb(c.symbol, range));
   if (!png) { await tg("sendMessage", { chat_id: chat, text: cap + "\n\n<i>Grafik şu an oluşturulamadı.</i>", parse_mode: "HTML", reply_markup: JSON.parse(kb) }); return; }
   if (editMsg) {
     const r = await tgForm("editMessageMedia", {
@@ -178,11 +226,38 @@ async function coinList(chat: number, editMsg?: number) {
   await tg("sendMessage", { chat_id: chat, text, parse_mode: "HTML", reply_markup: { inline_keyboard: rows } });
 }
 
+async function coinInfo(chat: number, sym: string) {
+  const { data: c } = await sb.rpc("tgn_coin", { p_chat: chat, p_sym: sym, p_hours: 24 });
+  if (!c) { await send(chat, "Coin bulunamadı."); return; }
+  const t = await techFor(c, null);
+  const ch24 = c.open_24h > 0 ? (c.price / c.open_24h - 1) * 100 : 0;
+  const L: string[] = [`ℹ️ <b>${escH(c.name)} (${escH(c.symbol)})</b>`];
+  const tags = [c.custom ? "COINFORCE coini" : c.dex_chain ? `DEX · ${escH(c.dex_chain)}` : "Spot", c.category ? escH(c.category) : ""].filter(Boolean).join(" · ");
+  if (tags) L.push(`<i>${tags}</i>`);
+  if (c.about) L.push("", escH(String(c.about).replace(/\s+/g, " ").trim()).slice(0, 600) + (String(c.about).length > 600 ? "…" : ""));
+  L.push("", "<b>Piyasa verileri</b>", `Fiyat: ${fmtUsd(c.price)} (${ch24 >= 0 ? "+" : ""}${ch24.toFixed(2)}% 24S)`);
+  if (c.high_24h > 0 && c.low_24h > 0) L.push(`24S aralık: ${fmtUsd(c.low_24h)} – ${fmtUsd(c.high_24h)}`);
+  if (c.market_cap > 0) L.push(`Piyasa değeri: ${fmtBig(c.market_cap)}${c.rank ? ` (#${c.rank} COINFORCE'ta)` : ""}`);
+  if (c.volume_24h > 0) L.push(`24S hacim: ${fmtBig(c.volume_24h)}${c.market_cap > 0 ? ` · hacim/piyasa değeri %${(c.volume_24h / c.market_cap * 100).toFixed(1)}` : ""}`);
+  if (c.dex_liquidity > 0) L.push(`Likidite: ${fmtBig(c.dex_liquidity)}`);
+  if (c.supply > 0) L.push(`Dolaşımdaki arz: ${Number(c.supply).toLocaleString("en-US", { maximumFractionDigits: 0 })} ${escH(c.symbol)}`);
+  if (c.ath > 0) L.push(`Tüm zamanların zirvesi: ${fmtUsd(c.ath)} (zirveden ${((c.price / c.ath - 1) * 100).toFixed(1)}%)`);
+  if (c.holding) L.push("", `👜 Pozisyonun: ${Number(c.holding.qty).toLocaleString("en-US", { maximumFractionDigits: 6 })} ${escH(c.symbol)} · ${fmtUsd(c.holding.value)} (${c.holding.pnl >= 0 ? "+" : "-"}${fmtUsd(Math.abs(c.holding.pnl))})`);
+  if (t) {
+    L.push("", `📊 <b>Teknik görünüm (${t.per}): ${techIcon(t.label)} ${t.label}</b>`, techBar(t), `Al ${t.buy} (%${t.pb}) · Nötr ${t.neu} (%${t.pn}) · Sat ${t.sell} (%${t.ps})`, "");
+    for (const r of t.rows) L.push(`${r.s === "Al" ? "🟢" : r.s === "Sat" ? "🔴" : "⚪"} ${r.name}: ${r.value} → <b>${r.s}</b>`);
+  } else L.push("", "📊 Teknik görünüm için yeterli fiyat geçmişi yok.");
+  L.push("", "<i>Göstergeler geçmiş fiyat hareketinden otomatik hesaplanır; yatırım tavsiyesi değildir. Kripto paralar çok oynaktır, kararını kendin ver.</i>");
+  await tg("sendMessage", { chat_id: chat, text: L.join("\n").slice(0, 4000), parse_mode: "HTML", disable_web_page_preview: true, reply_markup: keyboard([c.symbol]) });
+}
+
 async function onCallback(q: Record<string, any>) {
   const chat: number | undefined = q?.message?.chat?.id, mid: number | undefined = q?.message?.message_id;
   const d = String(q?.data ?? "");
   if (!chat) return;
   if (d === "l") { await tg("answerCallbackQuery", { callback_query_id: q.id }); await coinList(chat); return; }
+  const im = d.match(/^i\|([A-Z0-9]{1,20})$/);
+  if (im) { await tg("answerCallbackQuery", { callback_query_id: q.id }); await coinInfo(chat, im[1]); return; }
   const m = d.match(/^g\|([A-Z0-9]{1,20})\|(1h|24h|7d)(\|\d+)?$/);
   if (!m) { await tg("answerCallbackQuery", { callback_query_id: q.id }); return; }
   await tg("answerCallbackQuery", { callback_query_id: q.id, text: `${m[1]} · ${RLABEL[m[2] as Range]} yükleniyor…` });
@@ -203,7 +278,8 @@ const HELP = [
   "",
   "Bağlamak için uygulamada <b>Ayarlar › Telegram bildirimleri</b> bölümündeki butona dokun.",
   "",
-  "/grafik — coin seç, grafiği burada gör",
+  "/grafik — coin seç, grafik + bilgi + teknik görünüm",
+  "/bilgi BTC — coin hakkında detaylı bilgi",
   "/ozet — anlık hesap özeti",
   "/dur — bildirimleri kapat (bağlantıyı kaldırır)",
 ].join("\n");
@@ -247,6 +323,7 @@ async function onMessage(msg: Record<string, any>) {
     } else await coinList(chat);
     return;
   }
+  if ((cmd === "/bilgi" || cmd === "/info") && arg) { await coinInfo(chat, arg.split(/\s+/)[0]); return; }
   if (!text.startsWith("/") && /^\$?[A-Za-z0-9]{2,20}$/.test(text)) {
     await showChart(chat, text.replace(/^\$/, ""), "24h");
     return;
@@ -289,6 +366,7 @@ Deno.serve(async (req) => {
     await tg("setMyCommands", {
       commands: [
         { command: "grafik", description: "Coin grafiği" },
+        { command: "bilgi", description: "Coin bilgisi (ör. /bilgi BTC)" },
         { command: "ozet", description: "Hesap özeti" },
         { command: "dur", description: "Bildirimleri kapat" },
       ],
@@ -302,12 +380,13 @@ Deno.serve(async (req) => {
     const { data: c } = await sb.rpc("tgn_coin", { p_chat: 0, p_sym: url.searchParams.get("preview") ?? "BTC", p_hours: RHOURS[r] ?? 24 });
     if (!c) return json({ found: false });
     const pts = await series(c, RANGES.includes(r) ? r : "24h");
+    const t = await techFor(c, r === "24h" ? pts : null);
     const png = await renderChart(c, RANGES.includes(r) ? r : "24h", pts);
     if (url.searchParams.has("img") && png) {
       const b = new Uint8Array(await png.arrayBuffer()); let bin = ""; for (let i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
       return new Response(btoa(bin), { headers: { "content-type": "text/plain" } });
     }
-    return json({ found: true, points: pts.length, png: png ? png.size : 0, caption: caption(c, RANGES.includes(r) ? r : "24h", pts) });
+    return json({ found: true, points: pts.length, png: png ? png.size : 0, caption: caption(c, RANGES.includes(r) ? r : "24h", pts, t), tech: t });
   }
 
   if (req.method === "POST") {
