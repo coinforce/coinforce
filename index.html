@@ -76,6 +76,16 @@ h2{font-size:20px;font-weight:700;margin:6px 0 14px;text-wrap:balance}
 .pn-big{font-size:28px;font-weight:800;letter-spacing:-.02em}
 .pn-sub{color:var(--muted);font-size:13px}
 .pn-chart{display:block;width:100%;height:150px;margin:10px 0 2px}
+.pr-wrap{position:relative;touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+.pr-wrap .pr-line{position:absolute;top:10px;bottom:2px;width:1px;background:var(--muted);pointer-events:none;display:none}
+.pr-wrap .pr-dot{position:absolute;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;border:2px solid var(--surface);pointer-events:none;display:none}
+.pr-wrap .pr-tip{position:absolute;top:0;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:5px 9px;font-size:12px;white-space:nowrap;pointer-events:none;display:none;z-index:2}
+.pr-wrap .pr-tip b{display:block;font-size:13.5px}
+.pr-wrap.on .pr-line,.pr-wrap.on .pr-dot,.pr-wrap.on .pr-tip{display:block}
+.pr-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:6px 0 12px}
+.pr-tabs button{height:34px;border-radius:10px;font-size:13px;font-weight:600;color:var(--muted);background:var(--surface2)}
+.pr-tabs button.on{color:var(--bg);background:var(--fg)}
+.pr-live{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted)}.pr-live i{width:6px;height:6px;border-radius:50%;background:var(--up);animation:frPulse 1.6s infinite}
 .pn-axis{display:flex;justify-content:space-between;color:var(--muted);font-size:11.5px;margin-bottom:8px}
 .pn-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
 .pn-row .mid{flex:1;min-width:0}.pn-row .mid b{font-size:15px}
@@ -2110,7 +2120,7 @@ function renderBal(){
   const{v,v0}=portfolio(),r=curRate()||1,cc=curRate()?CUR:"USD",sym=CUR_SYM[cc];const[a,b]=fmtN((v+(P24?+P24.earn||0:0))*r,2).split(DEC);
   $("balNum").innerHTML=cc==="AED"?`<span class="cs">AED</span>${a}<span>${DEC}${b}</span>`:`${sym}${a}<span>${DEC}${b}</span>`;
   $("curCode").textContent=cc;
-  const P=pnl24(),d=P.ok?P.d:v-v0,tot=v+(P24?+P24.earn||0:0),b0=tot-d,dp=b0>0?d/b0*100:0,el=$("balChg");
+  const S=PR&&PR.data["24h"],P=S?null:pnl24(),d=S?+S.pnl:P.ok?P.d:v-v0,tot=v+(P24?+P24.earn||0:0),b0=S?+S.base:tot-d,dp=b0>0?d/b0*100:0,el=$("balChg");
   if(tot===0&&!d){el.textContent="-- 24s";el.className="bal-chg muted"}
   else{el.textContent=`${d>=0?"+":"-"}${curFmt(Math.abs(d))} (${fmtN(Math.abs(dp),2)}%) 24s`;el.className="bal-chg "+(d>=0?"up":"down")}
 }
@@ -2334,7 +2344,7 @@ async function loadAll(){if(!me)return;const uid=me.id;const q=p=>p.then(r=>{if(
     for(const k in PCH)PCH[k].t=0;
     if(prof){st.prof={fb:+prof.follower_bonus||0,gb:+prof.following_bonus||0,name:prof.full_name||prof.username,handle:prof.username,bio:prof.bio||"",joined:Date.parse(prof.created_at),custom:1,avatar:prof.avatar_url||""};st.onboarded=prof.onboarded}
   }catch(err){console.error(err);toast("Veriler yüklenemedi: "+errText(err))}
-  renderAll();loadP24();if(view==="rank")renderRank();if(openId==="notifs")renderNotifs();if(openId==="rewards")renderRewards();
+  renderAll();loadP24();loadPR("24h");if(openId==="pnl")loadPR(PR.range);if(view==="rank")renderRank();if(openId==="notifs")renderNotifs();if(openId==="rewards")renderRewards();
 }
 async function loadPrices(){const {data,error}=await sb.from("prices").select("*");if(error||!data)return;
   data.forEach(r=>{if(r.listed===false)return;let t=find(r.symbol);if(!t){t=newTok(r);T.push(t)}const first=!t.live;if(r.category)t.cat=r.category;if(r.circulating_supply)t.sup=+r.circulating_supply;if(r.ath)t.ath=+r.ath;if(r.volume_24h)t.vol=+r.volume_24h;t.p=+r.price;t.open=+(r.open_24h||r.price);if(r.market_cap)t.mc=+r.market_cap;if(r.max_leverage)t.maxLev=r.max_leverage;if(r.image_url)t.img=r.image_url;if(r.coingecko_id)t.cg=r.coingecko_id;if(r.dex_pair&&r.dex_chain&&!r.coingecko_id){t.cg="dx:"+r.symbol;t.dex=[GT_NET[r.dex_chain]||r.dex_chain,r.dex_pair];t.credit="Fiyat: DexScreener · grafik: GeckoTerminal"}if(r.custom){t.custom=1;t.cg="cc:"+r.symbol;t.n=r.name||t.n;t.img=r.image_url||"";t.credit="COINFORCE tarafından çıkarıldı · fiyat alım ve satımla belirlenir"}if(r.about)t.about=r.about;if(r.high_24h)t.hi24=+r.high_24h;if(r.low_24h)t.lo24=+r.low_24h;if(Array.isArray(r.spark)&&r.spark.length>20)t.spark7=r.spark.map(Number).filter(x=>x>0);if(first){t.hist=genHist(t.p,t.open);t.live=1}})}
@@ -3422,8 +3432,31 @@ function pnlChart(pts){if(pts.length<2)return"";const W=600,H=150,p=8,vs=pts.map
     <line x1="0" x2="${W}" y1="${Y(vs[0]).toFixed(1)}" y2="${Y(vs[0]).toFixed(1)}" stroke="var(--line)" stroke-dasharray="4 5"/>
     <path d="${d}L${W} ${H}L0 ${H}Z" fill="url(#pnG)"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
     <circle cx="${X(pts.length-1).toFixed(1)}" cy="${Y(vs[vs.length-1]).toFixed(1)}" r="5" fill="${col}"/></svg>`}
-function renderPnl(){const b=$("pnlBody");if(!b)return;if(!P24)loadP24();const{v}=portfolio(),P=pnl24(),earn=P24?+P24.earn||0:0,tot=v+earn,d=P.ok?P.d:0,v0=tot-d,dp=v0>0?d/v0*100:0;
-  const pts=P.series.map((x,i)=>({t:i,v:v0+x})),hm=t=>new Date(t).toLocaleTimeString(LOC,{hour:"2-digit",minute:"2-digit"}),t0=dayStart();
+// ---------- Kâr/zarar: seçilebilir süre (15 dk · 1 saat · 24 saat · 1 hafta · 1 ay), 10 saniyede bir yenilenir
+const PR_R=[["15m","15 dk","15m"],["1h","1 saat","1h"],["24h","24 saat","24h"],["7d","1 hafta","1W"],["30d","1 ay","1M"]];
+var PR={range:"24h",data:{},busy:{},scrub:false};
+async function loadPR(r){if(!me||PR.busy[r])return;PR.busy[r]=1;try{const x=await sb.rpc("my_pnl_range",{p_range:r});if(!x.error&&x.data){PR.data[r]={...x.data,at:Date.now()};if(r==="24h")renderBal();if(openId==="pnl"&&PR.range===r&&!PR.scrub)renderPnl()}}catch(e){}finally{PR.busy[r]=0}}
+setInterval(()=>{if(document.hidden||!me)return;if(openId==="pnl"){loadPR(PR.range);if(PR.range!=="24h")loadPR("24h");loadP24()}else if(view==="home")loadPR("24h")},10000);
+function prPts(D){const pts=(D.points||[]).map(p=>({t:Date.parse(p.t),v:+p.v}));pts.unshift({t:Date.parse(D.from),v:0});pts.push({t:Date.parse(D.now),v:+D.pnl});return pts}
+const prFmtT=(t,r)=>{const d=new Date(t);return r==="7d"||r==="30d"?d.toLocaleString(LOC,{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}):d.toLocaleTimeString(LOC,{hour:"2-digit",minute:"2-digit"})};
+function prChart(pts){if(pts.length<2)return"";const W=600,H=160,p=10,vs=pts.map(x=>x.v);let mn=Math.min(0,...vs),mx=Math.max(0,...vs);if(mx-mn<1e-6){mn-=1;mx+=1}
+  const t0=pts[0].t,t1=pts[pts.length-1].t||t0+1,X=t=>(t-t0)/Math.max(1,t1-t0)*W,Y=v=>p+(mx-v)/(mx-mn)*(H-p*2),up=vs[vs.length-1]>=0,col=up?"var(--up)":"var(--down)";
+  const d=pts.map((x,i)=>(i?"L":"M")+X(x.t).toFixed(1)+" "+Y(x.v).toFixed(1)).join("");PR.geo={pts,X,Y,W,H,col};
+  return `<div class="pr-wrap" id="prWrap"><svg class="pn-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:${H}px"><defs><linearGradient id="prG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${up?"#3ddc97":"#ff6b6b"}" stop-opacity=".28"/><stop offset="1" stop-color="${up?"#3ddc97":"#ff6b6b"}" stop-opacity="0"/></linearGradient></defs>
+    <line x1="0" x2="${W}" y1="${Y(0).toFixed(1)}" y2="${Y(0).toFixed(1)}" stroke="var(--line)" stroke-dasharray="4 5"/>
+    <path d="${d}L${W} ${H}L0 ${H}Z" fill="url(#prG)"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    <circle cx="${X(t1).toFixed(1)}" cy="${Y(vs[vs.length-1]).toFixed(1)}" r="4.5" fill="${col}"/></svg><i class="pr-line"></i><i class="pr-dot"></i><div class="pr-tip"></div></div>`}
+function prScrub(e){const w=$("prWrap"),G=PR.geo;if(!w||!G)return;const r=w.getBoundingClientRect(),x=Math.min(Math.max(0,(e.clientX-r.left)/r.width),1)*G.W;
+  let k=0,best=1e18;G.pts.forEach((pt,i)=>{const dx=Math.abs(G.X(pt.t)-x);if(dx<best){best=dx;k=i}});const pt=G.pts[k],px=G.X(pt.t)/G.W*r.width,py=G.Y(pt.v)/G.H*r.height;
+  w.classList.add("on");const L=w.querySelector(".pr-line"),D=w.querySelector(".pr-dot"),T=w.querySelector(".pr-tip");L.style.left=px+"px";D.style.left=px+"px";D.style.top=(py+10)+"px";D.style.background=pt.v>=0?"var(--up)":"var(--down)";
+  T.innerHTML=`<b class="${pt.v>=0?"up":"down"}">${pt.v>=0?"+":"-"}${curFmt(Math.abs(pt.v))}</b>${prFmtT(pt.t,PR.range)}`;T.style.left=Math.min(Math.max(px,60),r.width-60)+"px"}
+$("pnlBody").addEventListener("pointerdown",e=>{const w=e.target.closest("#prWrap");if(!w)return;PR.scrub=true;try{w.setPointerCapture(e.pointerId)}catch(_){}prScrub(e)});
+$("pnlBody").addEventListener("pointermove",e=>{if(PR.scrub||(e.pointerType==="mouse"&&e.target.closest("#prWrap")))prScrub(e)});
+const prEnd=()=>{if(!PR.scrub){const w=$("prWrap");if(w)w.classList.remove("on");return}PR.scrub=false;const w=$("prWrap");if(w)w.classList.remove("on")};
+$("pnlBody").addEventListener("pointerup",prEnd);$("pnlBody").addEventListener("pointercancel",prEnd);$("pnlBody").addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")prEnd()});
+$("pnlBody").addEventListener("click",e=>{const b=e.target.closest("[data-prr]");if(!b)return;PR.range=b.dataset.prr;renderPnl();loadPR(PR.range)});
+function renderPnl(){const b=$("pnlBody");if(!b)return;if(!P24)loadP24();const R=PR.range,D=PR.data[R];if(!D||Date.now()-D.at>10000)loadPR(R);const{v}=portfolio(),P=pnl24(),earn=P24?+P24.earn||0:0,tot=D?+D.equity:v+earn,d=D?+D.pnl:0,v0=D?+D.start_equity:tot,base=D?+D.base:0,dp=base>0?d/base*100:0,fl=D?+D.flows:0;
+  const pts=D?prPts(D):[],hm=t=>new Date(t).toLocaleTimeString(LOC,{hour:"2-digit",minute:"2-digit"}),t0=dayStart();
   const cls=x=>x>=0?"up":"down",sg=x=>x>=0?"+":"-",maxAbs=Math.max(...P.coins.map(r=>Math.abs(r.d)),Math.abs(P.real+P.unr),1e-9);
   const bar=x=>`<div class="pn-bar"><i style="width:${(Math.abs(x)/maxAbs*100).toFixed(1)}%;background:var(--${cls(x)})"></i></div>`;
   const coinRows=P.coins.map(r=>{const t=r.t,hq=st.h[t.s]||0,cost=st.cost[t.s]||0,pct=chg(t);
@@ -3439,16 +3472,18 @@ function renderPnl(){const b=$("pnlBody");if(!b)return;if(!P24)loadP24();const{v
   const pf=P.real+P.unr,perpSum=(P.real||P.unr||perps)?`<div class="pn-row"><div class="mid"><b>Vadeli işlemler (24s)</b><small>Kapanan: <span class="${cls(P.real)}">${sg(P.real)}${curFmt(Math.abs(P.real))}</span> · açık pozisyonlar: <span class="${cls(P.unr)}">${sg(P.unr)}${curFmt(Math.abs(P.unr))}</span></small>${bar(pf)}</div><div class="rt"><span class="${cls(pf)}">${sg(pf)}${curFmt(Math.abs(pf))}</span></div></div>`:"";
   const today=(st.hist||[]).filter(h=>h.t>=t0&&["buy","sell","swap","perp"].includes(h.k)).slice(0,12).map(h=>{const title={buy:h.s+" alındı",sell:h.s+" satıldı",swap:h.txt,perp:h.txt}[h.k]||"";
       return `<div class="pn-row" style="padding:9px 0"><div class="mid"><b style="font-size:14px">${esc(title)}</b><small>${hm(h.t)}</small></div><div class="rt" style="font-weight:600">${h.k==="perp"?"":(h.k==="buy"?"-":h.k==="sell"?"+":"")+curFmt(Math.abs(h.v))}</div></div>`}).join("");
-  b.innerHTML=`<h3>Son 24 saat</h3><div class="sub">Varlıklarının son 24 saatteki kâr/zararı ve nereden geldiği.</div>
-    <div class="pn-head"><div><div class="pn-big ${cls(d)}">${P.ok?sg(d)+curFmt(Math.abs(d)):"…"}</div><div class="pn-sub">${P.ok?`<span class="${cls(d)}">${sg(d)}${fmtN(Math.abs(dp),2)}%</span> · ${curFmt(v0)} → ${curFmt(tot)}`:"Hesaplanıyor…"}</div></div></div>
-    ${P.ok&&(P.coins.length||pf)?pnlChart(pts)+`<div class="pn-axis"><span>24 saat önce</span><span>Şimdi · ${hm(Date.now())}</span></div>`:""}
-    <div class="sec-t" style="margin:14px 0 2px">Coinlere göre</div>
-    ${coinRows||`<div class="empty" style="padding:14px 4px">Son 24 saatte elinde coin yoktu; nakit değeri değişmez.</div>`}
+  const RL={"15m":"Son 15 dakika","1h":"Son 1 saat","24h":"Son 24 saat","7d":"Son 1 hafta","30d":"Son 1 ay"}[R],RA={"15m":"15 dk önce","1h":"1 saat önce","24h":"24 saat önce","7d":"1 hafta önce","30d":"1 ay önce"}[R];
+  b.innerHTML=`<h3 style="display:flex;justify-content:space-between;align-items:center">${RL}<span class="pr-live"><i></i>${EN?"live":"canlı"}</span></h3><div class="sub">Varlıklarının bu süredeki kâr/zararı. Yatırma, çekme, transfer ve ödüller kâr sayılmaz.</div>
+    <div class="pn-head"><div><div class="pn-big ${cls(d)}">${D?sg(d)+curFmt(Math.abs(d)):"…"}</div><div class="pn-sub">${D?`<span class="${cls(d)}">${sg(d)}${fmtN(Math.abs(dp),2)}%</span> · ${curFmt(v0)} → ${curFmt(tot)}${Math.abs(fl)>=0.01?` · ${EN?"net deposits":"net yatırma"} ${fl>=0?"+":"-"}${curFmt(Math.abs(fl))}`:""}`:"Hesaplanıyor…"}</div></div></div>
+    ${D?prChart(pts)+`<div class="pn-axis"><span>${RA}</span><span>${EN?"Now":"Şimdi"} · ${hm(Date.now())}</span></div>`:`<div style="height:170px"></div>`}
+    <div class="pr-tabs">${PR_R.map(([k,tr,en])=>`<button type="button" data-prr="${k}" class="${k===R?"on":""}">${EN?en:tr}</button>`).join("")}</div>
+    ${R==="24h"?`<div class="sec-t" style="margin:14px 0 2px">Coinlere göre (24 saat)</div>
+    ${coinRows||`<div class="empty" style="padding:14px 4px">Son 24 saatte elinde coin yoktu; nakit değeri değişmez.</div>`}`:""}
     <div class="pn-row">${usdtCoin}<div class="mid"><b>Nakit (USDT)</b><small>Yatırma, çekme ve transferler kâr/zarar sayılmaz</small></div><div class="rt">${curFmt(st.usdt)}</div></div>
     ${earn?`<div class="pn-row">${usdtCoin}<div class="mid"><b>Earn (kilitli)</b><small>Faizi süre sonunda eklenir</small></div><div class="rt">${curFmt(earn)}</div></div>`:""}
-    ${perpSum||perps?`<div class="sec-t" style="margin:16px 0 2px">Vadeli</div>${perpSum}${perps}`:""}
-    ${today?`<div class="sec-t" style="margin:16px 0 2px">Son 24 saatteki işlemlerin</div>${today}`:""}
-    <div class="pn-note">Kâr/zarar; 24 saat önce elindeki coinlerin fiyat değişimi, son 24 saatte yaptığın alım-satımların sonucu (komisyon dahil), kapanan vadeli pozisyonların kârı ve açık pozisyonların bu süredeki değişiminden oluşur. Yatırma, çekme, transfer ve ödüller kâr sayılmaz.</div>`}
+    ${R==="24h"&&(perpSum||perps)?`<div class="sec-t" style="margin:16px 0 2px">Vadeli</div>${perpSum}${perps}`:""}
+    ${R==="24h"&&today?`<div class="sec-t" style="margin:16px 0 2px">Son 24 saatteki işlemlerin</div>${today}`:""}
+    <div class="pn-note">Kâr/zarar = şu anki toplam varlık − seçilen sürenin başındaki varlık − bu süredeki net yatırma (yatırma, çekme, transfer, airdrop, ödül ve CF alımı). Coin fiyat değişimleri, alım-satımlar (komisyon dahil), vadeli işlemler ve Earn faizi bu hesaba girer. Grafiğin üzerinde parmağını gezdirerek o anki kâr/zararı görebilirsin.</div>`}
 // ---------- Kartla yatırma (iyzico) ve para çekme
 let CASH=null,wdSym=null,wdMax=false,cdRate=null;
 const tl=v=>"₺"+fmtN(v,2);
