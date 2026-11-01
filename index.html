@@ -894,6 +894,28 @@ html:not([data-mode="lite"]) .hn{display:block;margin:18px 0 6px}
 .hn-row img{flex:none;width:92px;height:62px;border-radius:10px;object-fit:cover;background:var(--surface2)}
 .hn-tr{display:inline-block;font-size:10px;font-weight:800;padding:1px 5px;border-radius:5px;background:rgba(229,72,77,.15);color:#ff6b6b;margin-right:4px;vertical-align:1px}
 #dNews .sec-t{margin:20px 0 4px}
+.td-u{display:flex;align-items:center;gap:10px;padding:2px 0 12px;border-bottom:1px solid var(--line)}
+.td-u .nm{flex:1;min-width:0;display:flex;align-items:center;gap:6px;font-weight:700;font-size:17px;color:var(--fg)}.td-u .nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.td-u .btn{padding:9px 18px;font-size:14.5px;border-radius:12px}
+.td-c{display:flex;align-items:center;gap:12px;margin:14px 0 4px}
+.td-c .coin{width:48px;height:48px;font-size:16px}
+.td-c .mid{flex:1;min-width:0}.td-c .mid b{font-size:19px;display:flex;align-items:center;gap:4px}
+.td-st{display:inline-block;font-size:12px;font-weight:700;padding:3px 8px;border-radius:7px;background:var(--surface2);color:var(--muted);margin-top:4px}.td-st.open{color:var(--up);background:rgba(61,220,151,.14)}
+.td-c .rt{text-align:right}.td-c .rt b{display:block;font-size:19px}.td-c .rt small{font-size:13px;font-weight:600}
+.td-ch{position:relative;height:200px;margin:14px 0 0}
+.td-ch svg{width:100%;height:100%;display:block;overflow:visible}
+.td-m{position:absolute;width:20px;height:20px;margin-left:-10px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:10.5px;color:#fff;border:2px solid var(--surface);z-index:2}
+.td-m.b{background:#22b07a}.td-m.s{background:#ef4f4f}
+.td-ml{position:absolute;width:1.5px;height:14px;margin-left:-.75px}.td-ml.b{background:#3ddc97}.td-ml.s{background:#ff5c5c}
+.td-r{display:flex;justify-content:flex-end;gap:6px;margin:6px 0 12px}.td-r button{padding:6px 12px;border-radius:9px;font-weight:700;font-size:13px;color:var(--muted)}.td-r button.on{background:var(--surface2);color:var(--fg)}
+.td-box{background:var(--surface2);border-radius:18px;overflow:hidden}
+.td-pl{display:flex;justify-content:space-between;align-items:center;padding:16px 16px 12px;font-weight:800}.td-pl .v{font-size:26px}.td-pl .p{font-size:19px}
+.td-av{display:flex;justify-content:space-between;padding:12px 16px 14px;border-top:1px dashed var(--line);font-size:14px;color:var(--muted)}.td-av b{color:var(--fg);margin-left:6px}
+.td-share{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-top:1px solid var(--line);font-weight:700;color:var(--fg)}
+.td-tx{display:flex;justify-content:space-between;color:var(--muted);font-size:13.5px;margin:14px 2px 4px}
+.td-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.td-row i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:11px;color:#fff}
+.td-row .mid{flex:1}.td-row small{display:block;color:var(--muted);font-size:12px}
 /* Lite mod: sade arayüz */
 html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[data-mode="lite"] #trType [data-ot="limit"],html[data-mode="lite"] #trType [data-ot="stop"]{display:none!important}
 .sheet{position:fixed;left:50%;bottom:0;width:min(460px,100%);transform:translate(-50%,105%);background:var(--surface);border-radius:26px 26px 0 0;z-index:41;padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px));transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s .28s;visibility:hidden;max-height:88%;overflow:auto}
@@ -1777,6 +1799,7 @@ nav.bar button svg{width:22px;height:22px}
   <div class="grab"></div>
   <div id="arBody"></div>
 </div>
+<div class="sheet tall" id="sh-trader" role="dialog" aria-label="Yatırımcı"><div class="grab"></div><div id="tdBody"></div></div>
 <div class="sheet" id="sh-more" role="dialog" aria-label="Daha fazla">
   <div class="grab"></div><h3 data-en="More">Daha Fazla</h3>
   <div class="more-g"><button type="button" data-open="withdraw"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg></span><em data-en="Withdraw">Çek</em></button><button type="button" data-open="send"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-8-6 16-2-7z"/></svg></span><em data-en="Send">Gönder</em></button><button type="button" data-open="airdrop"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a8 8 0 0 0-8 8h16a8 8 0 0 0-8-8zM4 11l8 9 8-9M12 11v9"/></svg></span><em data-en="Airdrop">Airdrop</em></button><button type="button" data-open="swap"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v14M3 14l4 4 4-4M17 20V6M13 10l4-4 4 4"/></svg></span><em data-en="Swap">Takas</em></button><button type="button" data-open="history"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><em data-en="History">Geçmiş</em></button><button type="button" data-open="rewards"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-3.5-5-1.2C7 8 9 8 12 8zm0 0c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z"/></svg></span><em data-en="Rewards">Ödüller</em></button><button type="button" data-go="rank" data-more><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V6M16 20v-6M20 20H3"/></svg></span><em data-en="Ranking">Sıralama</em></button><button type="button" data-go="rank" data-more><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14.5c2.4 0 4 1.5 4.5 4"/></svg></span><em data-en="Communities">Topluluk</em></button><button type="button" data-open="settings"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><em data-en="Settings">Ayarlar</em></button></div>
@@ -2187,7 +2210,7 @@ function renderBal(){
 function colorFor(h){let x=0;for(const c of String(h))x=(x*31+c.charCodeAt(0))>>>0;return ["#8e5cf7","#e84393","#2e86de","#e6a817","#27ae60","#e67e22","#d9534f","#16a085","#6c5ce7","#00a8a8"][x%10]}
 let TOPT=[];async function loadTop(){try{const r=await sb.rpc("top_traders",{p_limit:10});if(!r.error&&r.data){TOPT=r.data.map(x=>({id:x.user_id,n:x.full_name||x.username,h:x.username,a:x.avatar_url,g:+x.pnl,c:+x.cost,p:x.pct==null?null:+x.pct,k:+x.positions}));renderTop()}}catch(e){}}
 function renderTop(){const top=TOPT.filter(r=>r.g>0).slice(0,6);$("topWrap").hidden=!top.length;
-  $("topRail").innerHTML=top.map(r=>`<button type="button" class="tcard" data-user="${r.id}"><div class="who">${avHTML(r)}${esc(r.h)}</div><div class="res"><span class="up">+${usd(r.g)}</span>${r.p!=null?`<small class="up" style="font-weight:600;font-size:12.5px">+${fmtN(r.p,2)}%</small>`:""}</div><div style="padding:0 12px 11px;margin-top:-6px;font-size:11.5px;color:var(--muted)">${r.k} ${EN?"open positions":"açık pozisyon"} · ${EN?"cost":"maliyet"} ${usd(r.c,0)}</div></button>`).join("")}
+  $("topRail").innerHTML=top.map(r=>`<button type="button" class="tcard" data-trader="${r.id}"><div class="who">${avHTML(r)}${esc(r.h)}</div><div class="res"><span class="up">+${usd(r.g)}</span>${r.p!=null?`<small class="up" style="font-weight:600;font-size:12.5px">+${fmtN(r.p,2)}%</small>`:""}</div><div style="padding:0 12px 11px;margin-top:-6px;font-size:11.5px;color:var(--muted)">${r.k} ${EN?"open positions":"açık pozisyon"} · ${EN?"cost":"maliyet"} ${usd(r.c,0)}</div></button>`).join("")}
 function initial(n){return (String(n||"?").trim().charAt(0)||"?").toLocaleUpperCase("tr-TR")}
 
 // ---------- token list
@@ -3866,6 +3889,41 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-favedit]")
 // alt menü yüksekliği (Pro çekmecesi menünün tam üstüne otursun)
 function navH(){const n=$("nav");if(n&&n.offsetHeight){const pb=parseFloat(getComputedStyle(n).paddingBottom)||0;document.documentElement.style.setProperty("--nav-h",(n.offsetHeight-pb+6)+"px")}}
 addEventListener("resize",navH);setTimeout(navH,300);
+// ---------- Yatırımcı kartı: en çok kazandırdığı coin, işlem noktaları ve K/Z
+const TD={id:null,data:null,range:"7D"};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-trader]");if(!b)return;e.stopPropagation();openTrader(b.dataset.trader)},true);
+async function openTrader(id){TD.id=id;TD.data=null;TD.range="7D";$("tdBody").innerHTML=`<div class="empty" style="padding:40px 0">${EN?"Loading…":"Yükleniyor…"}</div>`;openSheet("trader");
+  const r=await sb.rpc("trader_best_coin",{p_user:id});if(TD.id!==id)return;if(r.error){$("tdBody").innerHTML=`<div class="empty">${esc(errText(r.error))}</div>`;return}TD.data=r.data;renderTrader();tdHist()}
+const TD_R={"7D":"1H","1M":"1A","ALL":"Tümü"};
+function tdHist(){const D=TD.data;if(!D||!D.coin)return;const t=find(D.coin.symbol);if(!t)return;const rk=TD_R[TD.range];loadHist(t,rk);let n=0;const iv=setInterval(()=>{n++;const c=t.cg&&HIST[t.cg+"|"+R_DAYS[rk]];if((c&&!c.busy)||n>20){clearInterval(iv);if(openId==="trader"&&TD.data===D)renderTrader()}},300)}
+function tdChart(t,D){const rk=TD_R[TD.range],c=t.cg&&HIST[t.cg+"|"+R_DAYS[rk]];let pts=(c&&c.data||[]).map(p=>[+p[0],+p[1]]).filter(p=>p[1]>0);
+  const tr=(D.trades||[]).map(x=>({t:Date.parse(x.t),s:x.s,p:+x.p}));
+  if(pts.length<2){pts=tr.map(x=>[x.t,x.p]);pts.push([Date.now(),t.p])}if(pts.length<2)return`<div class="empty" style="padding:70px 0">${EN?"No chart data":"Grafik verisi yok"}</div>`;
+  const t0=pts[0][0],t1=Math.max(pts[pts.length-1][0],t0+1),vis=tr.filter(x=>x.t>=t0&&x.t<=t1),ps=pts.map(p=>p[1]).concat(vis.map(x=>x.p));let mn=Math.min(...ps),mx=Math.max(...ps);if(mx-mn<mx*1e-6){mn*=.99;mx*=1.01}
+  const W=600,H=200,X=x=>(x-t0)/(t1-t0)*W,Y=v=>38+(mx-v)/(mx-mn)*(H-76),up=pts[pts.length-1][1]>=pts[0][1];
+  const d=pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+" "+Y(p[1]).toFixed(1)).join("");
+  const mk=vis.map(x=>{const cx=X(x.t)/W*100,cy=Y(x.p),b=x.s==="buy";return `<i class="td-m ${b?"b":"s"}" style="left:${cx.toFixed(2)}%;top:${(b?cy+14:cy-34).toFixed(1)}px">${b?"B":"S"}</i><i class="td-ml ${b?"b":"s"}" style="left:${cx.toFixed(2)}%;top:${(b?cy:cy-14).toFixed(1)}px"></i>`}).join("");
+  const ly=Y(t.p);
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="${up?"var(--up)":"var(--down)"}" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><line x1="0" x2="${W}" y1="${ly}" y2="${ly}" stroke="var(--up)" stroke-dasharray="5 6" opacity=".6" vector-effect="non-scaling-stroke"/></svg>${mk}`}
+function renderTrader(){const D=TD.data,b=$("tdBody");if(!D)return;const u=D.user,c=D.coin,mine=me&&u.id===me.id,fol=u.following||(st.friendsP||[]).some(p=>p.id===u.id);
+  const head=`<div class="td-u"><button type="button" class="nm" data-user="${u.id}">${avHTML({id:u.id,a:u.avatar_url,h:u.username,n:u.full_name||u.username},"width:40px;height:40px;font-size:16px")}<span>${esc(u.username)}</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button>${mine?"":fol?`<button type="button" class="btn btn-ghost" data-tdunf="${u.id}">${EN?"Following":"Takiptesin"}</button>`:`<button type="button" class="btn btn-accent" data-tdfol="${u.id}">${EN?"Follow":"Takip et"}</button>`}</div>`;
+  if(!c){b.innerHTML=head+`<div class="empty" style="padding:30px 0">${EN?"No coin trades yet.":"Henüz coin işlemi yok."}</div>`;return}
+  const t=find(c.symbol),ch=t?chg(t):0,dlt=t?t.p-t.open:0,cls=x=>x>=0?"up":"down",sg=x=>x>=0?"+":"-",pl=+c.pnl,pc=c.pct==null?null:+c.pct,dd=x=>x==null?"—":usd(+x,decFor(+x));
+  b.innerHTML=head+`<div class="td-c">${t?coinHTML(t):""}<div class="mid"><b data-open-tok="${esc(c.symbol)}" style="cursor:pointer">${esc(c.symbol)}<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></b><span class="td-st${c.open?" open":""}">${c.open?(EN?"Open":"Açık"):(EN?"Closed":"Kapalı")}</span></div>
+    <div class="rt"><b>${t?usd(t.p,t.d):"—"}</b><small class="${cls(ch)}">${ch>=0?"▲":"▼"} ${t?usd(Math.abs(dlt),t.d):""} (${fmtN(Math.abs(ch),2)}%)</small></div></div>
+    <div class="td-ch">${t?tdChart(t,D):""}</div>
+    <div class="td-r">${["7D","1M","ALL"].map(k=>`<button type="button" data-tdr="${k}" class="${k===TD.range?"on":""}">${EN?k:{"7D":"7G","1M":"1A","ALL":"Tümü"}[k]}</button>`).join("")}</div>
+    <div class="td-box"><div class="td-pl"><span class="v ${cls(pl)}">${sg(pl)}${usd(Math.abs(pl))}</span>${pc!=null?`<span class="p ${cls(pc)}">${pc>=0?"▲":"▼"} ${fmtN(Math.abs(pc),2)}%</span>`:""}</div>
+      <div class="td-av"><span>${EN?"Avg. entry":"Ort. giriş"}<b>${dd(c.avg_entry)}</b></span><span>${EN?"Avg. exit":"Ort. çıkış"}<b>${dd(c.avg_exit)}</b></span></div>
+      <button type="button" class="td-share" data-tdshare><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>${EN?"Share":"Paylaş"}</button></div>
+    <div class="td-tx"><span>${nfmt(+c.trades)} ${EN?"transactions":"işlem"}</span><span>${usd(+c.invested)} ${EN?"invested":"yatırıldı"}</span></div>
+    ${(D.trades||[]).slice(-8).reverse().map(x=>`<div class="td-row"><i style="background:${x.s==="buy"?"#22b07a":"#ef4f4f"}">${x.s==="buy"?"B":"S"}</i><div class="mid">${x.s==="buy"?(EN?"Buy":"Alış"):(EN?"Sell":"Satış")} · ${usd(+x.p,decFor(+x.p))}<small>${new Date(x.t).toLocaleString(LOC,{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"})}</small></div><b>${usd(+x.u)}</b></div>`).join("")}`}
+$("tdBody").addEventListener("click",e=>{const r=e.target.closest("[data-tdr]");if(r){TD.range=r.dataset.tdr;renderTrader();tdHist();return}
+  const f=e.target.closest("[data-tdfol]");if(f){busy(f,async()=>{await follow(f.dataset.tdfol);if(TD.data){TD.data.user.following=true;renderTrader()}});return}
+  const uf=e.target.closest("[data-tdunf]");if(uf){busy(uf,async()=>{await unfollow(uf.dataset.tdunf);if(TD.data){TD.data.user.following=false;renderTrader()}});return}
+  if(e.target.closest("[data-tdshare]")){const D=TD.data,c=D&&D.coin;if(!c)return;const txt=`@${D.user.username} · ${c.symbol} ${+c.pnl>=0?"+":"-"}${usd(Math.abs(+c.pnl))}${c.pct!=null?` (${fmtN(+c.pct,2)}%)`:""} · COINFORCE`;
+    if(navigator.share)navigator.share({text:txt,url:location.origin+location.pathname}).catch(()=>{});else{try{navigator.clipboard.writeText(txt);toast(EN?"Copied":"Kopyalandı")}catch(_){}}return}
+  if(e.target.closest("[data-open-tok],[data-user]"))closeSheet()});
 function renderMode(){document.querySelectorAll("#sh-mode .md-opt").forEach(b=>b.classList.toggle("on",b.dataset.mode===MODE))}
 $("sh-mode").addEventListener("click",e=>{const b=e.target.closest("[data-mode]");if(!b)return;const m=b.dataset.mode;
   if(m==="web3"){toast(EN?"Web3 mode is coming soon":"Web3 modu yakında geliyor");return}
