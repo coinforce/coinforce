@@ -1206,7 +1206,7 @@ nav.bar button svg{width:22px;height:22px}
     <div class="pw-card" id="pwEv" role="button" tabindex="0"></div>
   </div>
   <div class="hn" id="homeNews"><div class="hn-h"><div class="hn-tabs"><button type="button" data-hnl="" class="on" data-en="News">Haberler</button><button type="button" data-hnl="tr">Türkçe</button><button type="button" data-hnl="en">English</button></div><button type="button" class="r-link" id="hnAll" data-en="All">Tümü</button></div><div id="hnList"><div class="empty" style="padding:16px 4px">Yükleniyor…</div></div><button type="button" class="btn btn-ghost" id="hnMore" style="width:100%;margin-top:6px;padding:11px" hidden data-en="More news">Daha fazla haber</button></div>
-  <div id="topWrap" hidden><div class="sec-t"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.3L21 9l-5 4.4L17.5 20 12 16.6 6.5 20 8 13.4 3 9l6.4-.7z"/></svg>En iyi yatırımcılar</div>
+  <div id="topWrap" hidden><div class="sec-t"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.3L21 9l-5 4.4L17.5 20 12 16.6 6.5 20 8 13.4 3 9l6.4-.7z"/></svg>En iyi yatırımcılar<small class="muted" style="font-weight:500;font-size:12.5px;margin-left:6px" data-en="· open positions P&amp;L">· açık pozisyon kârı</small></div>
   <div class="rail" id="topRail"></div></div>
   <div id="campWrap" hidden><div class="r-sec-h" style="margin:22px 0 10px"><div class="sec-t" style="margin:0"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10v2h3v3a4 4 0 0 1-4 4h-.3A5 5 0 0 1 13 14.9V17h3v3H8v-3h3v-2.1A5 5 0 0 1 8.3 12H8a4 4 0 0 1-4-4V5h3zm0 4H6v1a2 2 0 0 0 1 1.7zm10 0v2.7A2 2 0 0 0 18 8V7z"/></svg>Hacim kampanyaları</div><button type="button" class="r-link" data-open="campaigns">Tümü <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button></div><div id="campHome"></div></div>
 
@@ -2141,8 +2141,9 @@ function renderBal(){
 
 // ---------- top trades
 function colorFor(h){let x=0;for(const c of String(h))x=(x*31+c.charCodeAt(0))>>>0;return ["#8e5cf7","#e84393","#2e86de","#e6a817","#27ae60","#e67e22","#d9534f","#16a085","#6c5ce7","#00a8a8"][x%10]}
-function renderTop(){const top=LB.filter(r=>r.g>0).slice(0,6);$("topWrap").hidden=!top.length;
-  $("topRail").innerHTML=top.map(r=>`<button type="button" class="tcard" data-user="${r.id}"><div class="who">${avHTML(r)}${esc(r.h)}</div><div class="res"><span class="up">+${usd(r.g)}</span></div></button>`).join("")}
+let TOPT=[];async function loadTop(){try{const r=await sb.rpc("top_traders",{p_limit:10});if(!r.error&&r.data){TOPT=r.data.map(x=>({id:x.user_id,n:x.full_name||x.username,h:x.username,a:x.avatar_url,g:+x.pnl,c:+x.cost,p:x.pct==null?null:+x.pct,k:+x.positions}));renderTop()}}catch(e){}}
+function renderTop(){const top=TOPT.filter(r=>r.g>0).slice(0,6);$("topWrap").hidden=!top.length;
+  $("topRail").innerHTML=top.map(r=>`<button type="button" class="tcard" data-user="${r.id}"><div class="who">${avHTML(r)}${esc(r.h)}</div><div class="res"><span class="up">+${usd(r.g)}</span>${r.p!=null?`<small class="up" style="font-weight:600;font-size:12.5px">+${fmtN(r.p,2)}%</small>`:""}</div><div style="padding:0 12px 11px;margin-top:-6px;font-size:11.5px;color:var(--muted)">${r.k} ${EN?"open positions":"açık pozisyon"} · ${EN?"cost":"maliyet"} ${usd(r.c,0)}</div></button>`).join("")}
 function initial(n){return (String(n||"?").trim().charAt(0)||"?").toLocaleUpperCase("tr-TR")}
 
 // ---------- token list
@@ -3830,7 +3831,7 @@ addEventListener("touchend",()=>{touching=false;touchAt=Date.now()},{passive:tru
 addEventListener("touchcancel",()=>{touching=false},{passive:true,capture:true});
 function tick(){tickN++;
   T.forEach(t=>{t.hist.push(t.p);if(t.hist.length>200)t.hist.shift()});
-  if(tickN%15===0){loadPrices();if(me){loadAll();loadLB()}}
+  if(tickN%15===0){loadPrices();if(me){loadAll();loadLB();loadTop()}}
   if(!me)return;
   if(touching||Date.now()-touchAt<700)return;
   renderBal();if(view==="home")renderList();if(view==="detail"&&hoverX==null){renderDetail()}if(view==="search"&&!$("q").value)renderSearch();if(view==="profile")renderProfile();
@@ -4067,7 +4068,7 @@ $("suPw").addEventListener("input",()=>$("pwMeter").dataset.s=pwScore($("suPw").
 async function enter(user){
   me=user;st=fresh();st.watch=loadWatch();
   $("auth").hidden=true;$("app").removeAttribute("aria-hidden");["liPw","suPw"].forEach(id=>$(id).value="");
-  go("home");await loadPrices();await Promise.all([loadAll(),loadLB()]);loadVIP();loadFX();if(!window.__fxT)window.__fxT=setInterval(loadFX,300000);subscribe();renderAll();$("boot").hidden=true;
+  go("home");await loadPrices();await Promise.all([loadAll(),loadLB()]);loadTop();loadVIP();loadFX();if(!window.__fxT)window.__fxT=setInterval(loadFX,300000);subscribe();renderAll();$("boot").hidden=true;
   if(!st.onboarded)startOnb();payReturn();
 }
 $("loginForm").addEventListener("submit",e=>{e.preventDefault();busy($("liGo"),async()=>{
