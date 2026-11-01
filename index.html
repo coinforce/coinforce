@@ -676,6 +676,11 @@ nav.bar .mid-btn span{width:46px;height:46px;border-radius:16px;background:linea
 .ac-sec{margin-top:14px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .ac-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}.ac-row span{color:var(--muted)}.ac-row b{font-weight:600;text-align:right;word-break:break-all}
 .ac-row .ac-ok{color:var(--up)}.ac-row .ac-no{color:var(--muted)}.ac-copy{color:var(--accent);font-weight:700;margin-left:6px}
+.api-k{padding:12px 0;border-bottom:1px solid var(--line)}.api-k .xf-lbl{margin-bottom:6px}
+.api-v{display:flex;align-items:center;gap:8px}.api-v code{flex:1;min-width:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;word-break:break-all;line-height:1.45}
+.api-v code.mask{color:var(--muted);letter-spacing:1px}.api-v .xf-copy,.api-v .pw-eye{width:40px;height:40px;border-radius:50%;background:var(--surface2)}
+.api-meta{padding:10px 0 2px;font-size:12px;color:var(--muted)}
+.api-warn{display:flex;gap:8px;align-items:flex-start;margin:10px 0 12px;padding:10px 12px;border-radius:12px;background:rgba(240,185,11,.1);font-size:12.5px;line-height:1.45}.api-warn i{color:#f0b90b;font-style:normal;font-weight:800}
 .tg-hero{display:flex;gap:12px;align-items:center;margin:4px 0 14px}.tg-ic{width:46px;height:46px;border-radius:14px;background:#229ED9;display:grid;place-items:center;flex:none}.tg-ic svg{width:26px;height:26px;fill:#fff}
 .tg-st{font-size:13px;color:var(--muted)}.tg-st b{color:var(--up)}
 .tg-opt{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.tg-opt small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
@@ -3922,8 +3927,8 @@ $("proTheme").onclick=()=>$("themeBtn").click();
   const mo=new MutationObserver(cp);[$("navAv"),$("notifBadge")].forEach(x=>x&&mo.observe(x,{attributes:true,childList:true,characterData:true,subtree:true}));cp()})();
 // ---------- Earn
 let eaDays=30,EAP=[];
-let ACI=null;
-async function loadAcct(){$("acBody").innerHTML=`<h3>${EN?"Account info":"Hesap bilgileri"}</h3><div class="empty">…</div>`;const r=await sb.rpc("my_account_info");if(r.error){$("acBody").innerHTML=`<h3>${EN?"Account info":"Hesap bilgileri"}</h3><div class="empty">${esc(errText(r.error))}</div>`;return}ACI=r.data||{};renderAcct()}
+let ACI=null,API=null,APS=null,APV=false;
+async function loadAcct(){$("acBody").innerHTML=`<h3>${EN?"Account info":"Hesap bilgileri"}</h3><div class="empty">…</div>`;APS=null;APV=false;const [r,k,s]=await Promise.all([sb.rpc("my_account_info"),sb.rpc("my_api_keys"),sb.rpc("my_api_secret")]);if(r.error){$("acBody").innerHTML=`<h3>${EN?"Account info":"Hesap bilgileri"}</h3><div class="empty">${esc(errText(r.error))}</div>`;return}ACI=r.data||{};API=k.error?{err:errText(k.error)}:(k.data||{});APS=s.error?null:((s.data||{}).secret||null);renderAcct()}
 function renderAcct(){const a=ACI||{},dt=v=>v?new Date(v).toLocaleString(LOC,{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"—",d=v=>v?new Date(v).toLocaleDateString(LOC,{day:"2-digit",month:"long",year:"numeric"}):"—";
   const row=(k,v)=>`<div class="ac-row"><span>${k}</span><b>${v}</b></div>`,yes=(b,t,f)=>b?`<span class="ac-ok">● ${t}</span>`:`<span class="ac-no">${f}</span>`;
   const days=a.created_at?Math.max(1,Math.floor((Date.now()-Date.parse(a.created_at))/864e5)):0,vol=st.vol||{};
@@ -3941,6 +3946,7 @@ function renderAcct(){const a=ACI||{},dt=v=>v?new Date(v).toLocaleString(LOC,{da
   ${row(EN?"Member since":"Üyelik tarihi",`${d(a.created_at)} <span class="muted" style="font-weight:500">· ${days} ${EN?"days":"gün"}</span>`)}
   ${row(EN?"Last sign-in":"Son giriş",dt(a.last_sign_in))}
   ${a.referred_by?row(EN?"Invited by":"Davet eden",`<span translate="no">@${esc(a.referred_by)}</span>`):""}
+  ${acctApi(dt)}
   <div class="ac-sec">${EN?"Balance":"Bakiye"}</div>
   ${row(EN?"Total assets":"Toplam varlık",usd(+a.equity||0))}
   ${row(EN?"Cash (USDT)":"Nakit (USDT)",usd(+a.usdt||0))}
@@ -3957,7 +3963,28 @@ function renderAcct(){const a=ACI||{},dt=v=>v?new Date(v).toLocaleString(LOC,{da
   ${row(EN?"Auto-trade rules":"Otomatik al-sat",a.auto_trades||0)}
   ${row(EN?"Invites":"Davetler",`${a.referrals||0} · ${usd(+a.referral_earned||0)}`)}
   ${row("Telegram",yes(a.telegram,EN?"Connected":"Bağlı",EN?"Not connected":"Bağlı değil"))}`}
-$("sh-acct").addEventListener("click",async e=>{if(e.target.closest("[data-accopy]")&&ACI){try{await navigator.clipboard.writeText(ACI.id);toast(EN?"Account ID copied":"Hesap ID kopyalandı")}catch(_){toast(ACI.id)}}});
+// ---------- API anahtarları (her hesaba bir API Key + Secret Key)
+const API_EYE=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
+function acctApi(dt){const k=API||{},h=`<div class="ac-sec">${EN?"API keys":"API anahtarları"}</div>`;
+  if(k.err)return h+`<div class="ac-row"><span>${esc(k.err)}</span><button type="button" class="ac-copy" data-apiretry>${EN?"Retry":"Tekrar dene"}</button></div>`;
+  if(!k.api_key)return "";
+  const show=APV&&APS;
+  return h+`<div class="api-k"><div class="xf-lbl">API Key</div><div class="api-v"><code translate="no">${esc(k.api_key)}</code><button type="button" class="xf-copy" data-apicp="key" aria-label="${EN?"Copy API Key":"API Key'i kopyala"}">${COPY}</button></div></div>
+  <div class="api-k"><div class="xf-lbl">Secret Key</div><div class="api-v"><code translate="no"${show?"":` class="mask"`}>${show?esc(APS):"•".repeat(24)}</code><button type="button" class="pw-eye${show?" on":""}" data-apieye aria-label="${show?(EN?"Hide Secret Key":"Secret Key'i gizle"):(EN?"Show Secret Key":"Secret Key'i göster")}">${API_EYE}</button><button type="button" class="xf-copy" data-apicp="secret" aria-label="${EN?"Copy Secret Key":"Secret Key'i kopyala"}">${COPY}</button></div></div>
+  <div class="api-meta">${EN?"Created":"Oluşturulma"}: ${dt(k.created_at)}</div>
+  <div class="api-warn"><i>!</i><span>${EN?"Never share your Secret Key with anyone. The COINFORCE team will never ask you for it.":"Secret Key'ini kimseyle paylaşma. COINFORCE ekibi bunu asla senden istemez."}</span></div>
+  <button type="button" class="btn btn-ghost full" data-apiregen>${EN?"Regenerate keys":"Anahtarları yenile"}</button>
+  <div class="set-confirm" id="apiConfirm" hidden><p>${EN?"Your current API Key and Secret Key will stop working immediately and new ones will be created.":"Mevcut API Key ve Secret Key hemen geçersiz olur, yenileri oluşturulur."}</p><div class="grid2" style="margin:0"><button class="btn btn-ghost" type="button" data-apino>${EN?"Cancel":"Vazgeç"}</button><button class="btn" type="button" data-apiyes style="background:var(--down);color:#fff">${EN?"Regenerate":"Yenile"}</button></div></div>`}
+async function apiSecret(){if(APS)return APS;const r=await call("my_api_secret");if(r.err)return null;APS=(r.data||{}).secret||null;return APS}
+async function apiCopy(v,lbl){try{await navigator.clipboard.writeText(v);toast(EN?`${lbl} copied`:`${lbl} kopyalandı`);return true}catch(_){toast(EN?"Couldn't copy — select it and copy manually":"Kopyalanamadı, seçip elle kopyala");return false}}
+$("sh-acct").addEventListener("click",async e=>{if(e.target.closest("[data-accopy]")&&ACI){try{await navigator.clipboard.writeText(ACI.id);toast(EN?"Account ID copied":"Hesap ID kopyalandı")}catch(_){toast(ACI.id)}return}
+  if(e.target.closest("[data-apiretry]")){loadAcct();return}
+  const cp=e.target.closest("[data-apicp]");if(cp&&API&&API.api_key){if(cp.dataset.apicp==="key"){apiCopy(API.api_key,"API Key");return}
+    const s=await apiSecret();if(s&&!(await apiCopy(s,"Secret Key"))){APV=true;renderAcct()}return}
+  const eye=e.target.closest("[data-apieye]");if(eye){busy(eye,async()=>{if(APV){APV=false;renderAcct();return}if(await apiSecret()){APV=true;renderAcct()}});return}
+  if(e.target.closest("[data-apiregen]")){$("apiConfirm").hidden=false;return}
+  if(e.target.closest("[data-apino]")){$("apiConfirm").hidden=true;return}
+  const y=e.target.closest("[data-apiyes]");if(y)busy(y,async()=>{const r=await call("my_api_regenerate");if(r.err)return;const d=r.data||{};API={api_key:d.api_key,created_at:d.created_at};APS=d.secret||null;APV=true;renderAcct();toast(EN?"New API keys created":"Yeni API anahtarların oluşturuldu")})});
 let TG=null;
 const TG_SVG=`<svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1-1 .2-1.5L20.6 2.8c.9-.3 1.6.2 1.3 1.5z"/></svg>`;
 async function loadTg(){$("tgBody").innerHTML=`<h3>Telegram</h3><div class="empty">…</div>`;const r=await sb.rpc("tg_notify_get");if(r.error){$("tgBody").innerHTML=`<h3>Telegram</h3><div class="empty">${esc(errText(r.error))}</div>`;return}TG=r.data||{};renderTg()}
