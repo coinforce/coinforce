@@ -403,6 +403,24 @@ nav.bar .mid-btn span{width:46px;height:46px;border-radius:16px;background:linea
 .cd-ta{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;font-size:16px;color:var(--fg);resize:none;margin-bottom:6px}
 /* user profile */
 .lbr-link{cursor:pointer}
+.lpod{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:8px;margin:18px 0 10px}
+.lp{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;padding:0 2px;color:var(--fg);text-align:center}
+.lp-rk{height:26px;display:grid;place-items:center}.lp-rk svg{height:26px;width:auto}
+.lp-av{margin:2px 0 4px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#c0c7d2,#6b7481)}
+.lp1 .lp-av{background:linear-gradient(135deg,#fff1b8,#f2c14e,#a8761d);box-shadow:0 0 22px rgba(242,193,78,.35)}
+.lp3 .lp-av{background:linear-gradient(135deg,#f3c08a,#cd7f32,#6e3f18)}
+.lp .av{display:block}
+.lp b.nm-v{display:flex;align-items:center;justify-content:center;gap:3px;max-width:100%;font-size:14px}.lp b.nm-v>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lp small{color:var(--muted);font-size:11.5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lp .g{font-weight:800;font-size:14px;margin-top:2px}
+.lp-base{display:grid;place-items:center;width:100%;margin-top:8px;border-radius:14px 14px 4px 4px;font-style:normal;font-weight:900;font-size:22px;color:var(--muted);background:linear-gradient(180deg,var(--surface2),transparent)}
+.lp1 .lp-base{height:74px;color:#f2c14e;background:linear-gradient(180deg,rgba(242,193,78,.28),rgba(242,193,78,.03))}
+.lp2 .lp-base{height:54px;color:#c0c7d2;background:linear-gradient(180deg,rgba(192,199,210,.22),rgba(192,199,210,.03))}
+.lp3 .lp-base{height:42px;color:#cd7f32;background:linear-gradient(180deg,rgba(205,127,50,.24),rgba(205,127,50,.03))}
+.lp.me .lp-base{outline:2px solid var(--accent);outline-offset:-2px}
+.lp-empty{opacity:.35}
+.lb-row{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-top:8px}
+.lb-row .rk{width:24px;text-align:center;font-weight:800;color:var(--muted)}
 .lbr-link:active{opacity:.7}
 .upage{position:fixed;inset:0;z-index:36;}
 #userPage{z-index:37}
@@ -1317,7 +1335,7 @@ nav.bar button svg{width:22px;height:22px}
       <button type="button" class="me-share" id="meShare" aria-label="Sıralamanı paylaş"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button>
     </div>
     <div id="lbList"></div>
-    <p class="muted" style="font-size:12px;margin:16px 0 0">Kâr = toplam portföy değeri − yüklenen bakiye − ödüller. Sadece bakiye yüklemiş kullanıcılar listelenir.</p>
+    <p class="muted" style="font-size:12px;margin:16px 0 0">İlk 5 yatırımcı. Kâr = toplam portföy değeri − yüklenen bakiye − ödüller. Bot hesapları listelenmez.</p>
 </div>
     <div id="aucLB" hidden></div>
   </div>
@@ -2280,12 +2298,14 @@ function loadFrames(){sb.rpc("frame_users").then(({data,error})=>{if(error||!Arr
 function setAv(el,url,ini){if(!el)return;const u=safeUrl(url),key=u||("i:"+ini);if(el.dataset.av===key)return;el.dataset.av=key;el.classList.toggle("has-photo",!!u);el.innerHTML=u?`<img class="av-img" src="${u}" alt="" decoding="async">`:esc(ini)}
 function renderRank(){
   $("fCount").textContent=st.friends.length;
-  let list=LB.slice();if(rFilter==="friends")list=list.filter(p=>st.friends.includes(p.h)||(me&&p.id===me.id));
-  const myIdx=LB.findIndex(p=>me&&p.id===me.id),pnl=myPnl();
+  let list=LB.filter(p=>!BOT.has(p.id)&&String(p.h||"").toLowerCase()!=="coinforce_bot");if(rFilter==="friends")list=list.filter(p=>st.friends.includes(p.h)||(me&&p.id===me.id));
+  const myIdx=LB.filter(p=>!BOT.has(p.id)&&String(p.h||"").toLowerCase()!=="coinforce_bot").findIndex(p=>me&&p.id===me.id),pnl=myPnl();
   setAv($("meAv"),st.prof.avatar,initial(st.prof.name));
   $("meRank").innerHTML=`<b>#</b> ${myIdx>=0?myIdx+1:"-"}`;
   const mv=$("meVal");mv.textContent=(pnl>0.005?"+":pnl<-0.005?"-":"")+usd(Math.abs(pnl));mv.className="me-val "+(pnl>0.005?"up":pnl<-0.005?"down":"");
-  $("lbList").innerHTML=list.length?list.map((p,i)=>{const mine=me&&p.id===me.id;return `<div class="lbr lbr-link${mine?" me":""}" data-user="${p.id}"><span class="rk">${i<3?laurel(i+1):i+1+"."}</span>${avHTML(p)}<div class="nm"><b class="nm-v"><span>${esc(p.n)}${mine?" (sen)":""}</span>${vipTag(p.id,1)}</b><small>@${esc(p.h)}</small></div><div class="rt"><span class="g ${p.g>=0?"up":"down"}">${p.g>=0?"+":"-"}${usd(Math.abs(p.g))}</span></div></div>`}).join("")
+  list=list.slice(0,5);const gv=g=>`<span class="g ${g>=0?"up":"down"}">${g>=0?"+":"-"}${usd(Math.abs(g))}</span>`;
+  const pod=(p,i)=>p?`<button type="button" class="lp lp${i+1}${me&&p.id===me.id?" me":""}" data-user="${p.id}"><span class="lp-rk">${laurel(i+1)}</span><span class="lp-av">${avHTML(p,i===0?"width:72px;height:72px;font-size:26px":"width:58px;height:58px;font-size:21px")}</span><b class="nm-v"><span>${esc(p.n)}</span>${vipTag(p.id,1)}</b><small>@${esc(p.h)}</small>${gv(p.g)}<i class="lp-base">${i+1}</i></button>`:`<div class="lp lp${i+1} lp-empty"><i class="lp-base">${i+1}</i></div>`;
+  $("lbList").innerHTML=list.length?`<div class="lpod">${pod(list[1],1)}${pod(list[0],0)}${pod(list[2],2)}</div>`+list.slice(3).map((p,k)=>{const i=k+3,mine=me&&p.id===me.id;return `<div class="lbr lbr-link lb-row${mine?" me":""}" data-user="${p.id}"><span class="rk">${i+1}</span>${avHTML(p)}<div class="nm"><b class="nm-v"><span>${esc(p.n)}${mine?" (sen)":""}</span>${vipTag(p.id,1)}</b><small>@${esc(p.h)}</small></div><div class="rt">${gv(p.g)}</div></div>`}).join("")
     :`<div class="empty">${rFilter==="friends"?"Takip ettiğin kimse sıralamada değil.":"Sıralama henüz boş.<br>Bakiye yükleyip işlem yapan kullanıcılar burada görünür."}</div>`;
   renderFriends();
 }
