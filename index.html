@@ -751,6 +751,19 @@ nav.bar button.on .nav-av{box-shadow:0 0 0 2px var(--surface2),0 0 0 4px var(--a
 /* sheets */
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 .scrim.show{opacity:1;pointer-events:auto}
+.scrim.dim{background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.mode-btn svg{width:20px;height:20px}
+#sh-mode .md-h{font-size:26px;font-weight:800;margin:6px 2px 16px}
+.md-list{display:grid;gap:12px}
+.md-opt{display:flex;align-items:center;gap:18px;width:100%;text-align:left;padding:20px 18px;border-radius:18px;border:1.5px solid var(--line);background:transparent;color:var(--fg);transition:border-color .15s,background .15s}
+.md-opt:active{background:var(--surface2)}
+.md-opt.on{border-color:var(--fg)}
+.md-opt i{flex:none;width:34px;display:grid;place-items:center}.md-opt i svg{width:30px;height:30px}
+.md-opt b{display:flex;align-items:flex-start;gap:4px;font-size:19px;font-weight:700;margin-bottom:4px}
+.md-opt small{display:block;color:var(--muted);font-size:14px;line-height:1.45}
+.md-dot{width:8px;height:8px;border-radius:50%;background:#e5484d;display:inline-block;margin-top:2px}
+/* Lite mod: sade arayüz */
+html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[data-mode="lite"] #trType [data-ot="limit"],html[data-mode="lite"] #trType [data-ot="stop"]{display:none!important}
 .sheet{position:fixed;left:50%;bottom:0;width:min(460px,100%);transform:translate(-50%,105%);background:var(--surface);border-radius:26px 26px 0 0;z-index:41;padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px));transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s .28s;visibility:hidden;max-height:88%;overflow:auto}
 .sheet.show{transform:translate(-50%,0);visibility:visible;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
 .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 14px;position:relative;touch-action:none;cursor:grab}
@@ -1030,6 +1043,7 @@ nav.bar button svg{width:22px;height:22px}
   <div class="top">
     <div class="logo"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="lgA2" cx=".3" cy=".25" r="1"><stop offset="0" stop-color="#2a1d4e"/><stop offset="1" stop-color="#0b0a17"/></radialGradient><linearGradient id="lgB2" gradientUnits="userSpaceOnUse" x1="20" y1="80" x2="80" y2="20"><stop offset="0" stop-color="#b58cff"/><stop offset="1" stop-color="#5de0c5"/></linearGradient></defs><rect width="100" height="100" rx="24" fill="url(#lgA2)"/><g transform="translate(50 50) scale(1) translate(-50 -50)"><path d="M71 65 A26 26 0 1 1 64 28" fill="none" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round"/><path d="M64 28 L76 17" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round"/><path d="M66 16 H77 V27" fill="none" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></g></svg>COINFORCE</div>
     <div class="top-r"><button class="icon-btn bell" type="button" data-open="notifs" aria-label="Bildirimler"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="badge" id="notifBadge" hidden>0</span></button>
+    <button class="icon-btn mode-btn" id="modeBtn" type="button" data-open="mode" aria-label="Mod seç"><span id="modeIc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3"/></svg></span></button>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Temayı değiştir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button></div>
   </div>
   <div class="cols h-cols"><div class="col-a">
@@ -1573,6 +1587,15 @@ nav.bar button svg{width:22px;height:22px}
   <div class="wd-cap" style="margin-top:12px"><span class="muted" id="adSumL">Toplam</span><b id="adSum">—</b></div>
   <div class="err" id="adErr"></div>
   <button class="btn btn-accent full" type="button" id="adGo">Airdrop gönder</button>
+</div>
+<div class="sheet" id="sh-mode" role="dialog" aria-label="Mod seç">
+  <div class="grab"></div>
+  <h3 class="md-h" data-en="Select Mode">Mod Seç</h3>
+  <div class="md-list">
+    <button type="button" class="md-opt" data-mode="pro"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3"/></svg></i><span><b>Pro</b><small data-en="For experienced traders, with a full range of powerful features.">Deneyimli yatırımcılar için; tüm güçlü özellikler açık.</small></span></button>
+    <button type="button" class="md-opt" data-mode="lite"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5L12 5l10 4.5-10 4.5z"/><path d="M6 11.3V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.7"/></svg></i><span><b>Lite</b><small data-en="For beginners, or those who prefer a simple and easy-to-use interface.">Yeni başlayanlar ya da sade, kolay bir arayüz isteyenler için.</small></span></button>
+    <button type="button" class="md-opt" data-mode="web3"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L3 12l8 9 8-9z"/><path d="M3 12h16M11 3v18"/><path d="M19.5 2.5v4M17.5 4.5h4"/></svg></i><span><b>Web3<em class="md-dot"></em></b><small data-en="Trade on-chain with full transparency and freedom. Coming soon.">Zincir üstünde tam şeffaflık ve özgürlükle işlem yap. Yakında.</small></span></button>
+  </div>
 </div>
 <div class="sheet" id="sh-banner" role="dialog" aria-label="Banner">
   <div class="grab"></div>
@@ -3337,7 +3360,7 @@ function payReturn(){if(!PAY_IN)return;try{history.replaceState(null,"",location
 
 // ---------- sheets
 let openId=null;
-function openSheet(id){closeSheet(true);openId=id;$("sh-"+id).classList.add("show");$("scrim").classList.add("show");if(id==="swap")renderSwap();if(id==="history")renderHistory();if(id==="edit")fillEdit();if(id==="rewards")renderRewards();if(id==="notifs")renderNotifs();if(id==="campaigns")renderCampList();if(id==="campnew")fillCampNew();if(id==="deposit")renderDep();if(id==="commnew")fillCommNew();if(id==="recv"){recvSym=null;recvQ="";renderRecv()}if(id==="send"){sendSym=null;renderSend();loadPending()}if(id==="alert")openAlert();if(id==="withdraw")openWithdraw();if(id==="pnl")renderPnl();if(id==="admin")openAdmin();if(id==="banner")openBanner();if(id==="airdrop")openAirdrop();if(id==="cf")openCFBuy();if(id==="myauc")openMyAuc();if(id==="aucnew")openAucNew();if(id==="card")openCard();if(id==="settings"){$("logoutWho").textContent="@"+(st.prof.handle||"");$("resetConfirm").hidden=true;$("setThemeVal").textContent=themeName()}}
+function openSheet(id){closeSheet(true);openId=id;$("scrim").classList.toggle("dim",id==="mode");if(id==="mode")renderMode();$("sh-"+id).classList.add("show");$("scrim").classList.add("show");if(id==="swap")renderSwap();if(id==="history")renderHistory();if(id==="edit")fillEdit();if(id==="rewards")renderRewards();if(id==="notifs")renderNotifs();if(id==="campaigns")renderCampList();if(id==="campnew")fillCampNew();if(id==="deposit")renderDep();if(id==="commnew")fillCommNew();if(id==="recv"){recvSym=null;recvQ="";renderRecv()}if(id==="send"){sendSym=null;renderSend();loadPending()}if(id==="alert")openAlert();if(id==="withdraw")openWithdraw();if(id==="pnl")renderPnl();if(id==="admin")openAdmin();if(id==="banner")openBanner();if(id==="airdrop")openAirdrop();if(id==="cf")openCFBuy();if(id==="myauc")openMyAuc();if(id==="aucnew")openAucNew();if(id==="card")openCard();if(id==="settings"){$("logoutWho").textContent="@"+(st.prof.handle||"");$("resetConfirm").hidden=true;$("setThemeVal").textContent=themeName()}}
 function closeSheet(keepScrim){if(openId==="airdrop")qrStop();if(openId)$("sh-"+openId).classList.remove("show");openId=null;if(!keepScrim)$("scrim").classList.remove("show")}
 $("scrim").onclick=()=>closeSheet();
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
@@ -3442,6 +3465,15 @@ $("swGo").onclick=()=>busy($("swGo"),async()=>{
 let tt;function toast(m){$("toastT").textContent=m;$("toast").classList.add("show");clearTimeout(tt);tt=setTimeout(()=>$("toast").classList.remove("show"),2400)}
 
 // theme
+// ---------- Mod (Pro / Lite / Web3)
+const MODE_IC={"pro": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3\"/></svg>", "lite": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 9.5L12 5l10 4.5-10 4.5z\"/><path d=\"M6 11.3V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.7\"/></svg>", "web3": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 3L3 12l8 9 8-9z\"/><path d=\"M3 12h16M11 3v18\"/><path d=\"M19.5 2.5v4M17.5 4.5h4\"/></svg>"};
+let MODE=(()=>{try{const m=localStorage.getItem("cf_mode");return m==="lite"?"lite":"pro"}catch(e){return "pro"}})();
+function applyMode(){document.documentElement.dataset.mode=MODE;$("modeIc").innerHTML=MODE_IC[MODE];
+  if(MODE==="lite"){if(otype!=="market"){otype="market";try{syncOType()}catch(e){}}const pt=document.querySelector('[data-tab="perps"].on');if(pt){const tk=document.querySelector('[data-tab="tokens"]');if(tk)tk.click()}}}
+function renderMode(){document.querySelectorAll("#sh-mode .md-opt").forEach(b=>b.classList.toggle("on",b.dataset.mode===MODE))}
+$("sh-mode").addEventListener("click",e=>{const b=e.target.closest("[data-mode]");if(!b)return;const m=b.dataset.mode;
+  if(m==="web3"){toast(EN?"Web3 mode is coming soon":"Web3 modu yakında geliyor");return}
+  MODE=m;try{localStorage.setItem("cf_mode",m)}catch(e){}applyMode();renderMode();setTimeout(()=>closeSheet(),180);toast(m==="lite"?(EN?"Lite mode on":"Lite mod açıldı"):(EN?"Pro mode on":"Pro mod açıldı"))});
 $("themeBtn").onclick=()=>{const r=document.documentElement,light=r.dataset.theme?r.dataset.theme==="light":matchMedia("(prefers-color-scheme: light)").matches;r.dataset.theme=light?"dark":"light";if(view==="detail")drawChart();if(view==="profile")renderProfile()};
 addEventListener("resize",()=>{if(view==="detail")drawChart();if(view==="profile")renderProfile()});
 
@@ -3471,6 +3503,7 @@ function fmtQ(q){return fmtN(q,q>=1000?2:6)}
 function runEngine(){}
 // ----- order entry
 let otype="market";
+try{applyMode()}catch(e){}
 function syncOType(){const cc=!!(find(cur)||{}).custom;if(cc)otype="market";[...$("trType").children].forEach(b=>{b.classList.toggle("on",b.dataset.ot===otype);b.hidden=cc&&b.dataset.ot!=="market"});$("trPxWrap").hidden=otype==="market"}
 $("trType").addEventListener("click",e=>{const b=e.target.closest("[data-ot]");if(!b)return;otype=b.dataset.ot;syncOType();if(otype!=="market"&&!$("trPx").value){const t=find(cur);const f=otype==="limit"?(trSide==="buy"?.98:1.02):(trSide==="buy"?1.02:.97);$("trPx").value=inp(t.p*f,t.d)}renderTrade()});
 $("trPx").addEventListener("input",renderTrade);
