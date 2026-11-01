@@ -814,6 +814,46 @@ html:not([data-mode="lite"]) nav.bar .mid-btn span{width:40px;height:40px;border
 .more-g span{width:54px;height:54px;border-radius:18px;background:var(--surface2);display:grid;place-items:center}.more-g span svg{width:24px;height:24px}
 .more-g em{font-style:normal;font-size:12.5px;font-weight:600}
 @media (min-width:760px){html:not([data-mode="lite"]) .pro-disc{display:none}html:not([data-mode="lite"]) body.v-home #s-home{padding-bottom:0}}
+html:not([data-mode="lite"]) .pro-q{grid-template-rows:auto auto;row-gap:16px}
+html:not([data-mode="lite"]) #s-home .bal{padding:2px 0 0;margin-bottom:0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+html:not([data-mode="lite"]) #s-home .bal .bal-acts{display:none}
+html:not([data-mode="lite"]) #s-home .bal-num{font-size:30px}
+html:not([data-mode="lite"]) #s-home .bal-top{gap:8px}
+.ea-prod{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.ea-prod button{padding:14px 8px;border-radius:14px;border:1.5px solid var(--line);color:var(--fg);text-align:center}
+.ea-prod button.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.ea-prod b{display:block;font-size:20px;color:var(--up)}.ea-prod small{color:var(--muted);font-size:12.5px}
+.ea-est{font-size:13.5px;color:var(--muted);margin:-4px 0 10px;min-height:18px}.ea-est b{color:var(--fg)}
+.ea-row{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:var(--surface2);margin-bottom:8px}
+.ea-row .mid{flex:1;min-width:0}.ea-row small{display:block;color:var(--muted);font-size:12.5px}
+.ea-row .r-link{font-size:13px}
+.gb-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gb-2 .fld{margin-bottom:10px}
+.gb-px{font-size:13.5px;color:var(--muted);margin:-6px 0 12px}
+.gb-card{padding:13px;border-radius:14px;background:var(--surface2);margin-bottom:8px}
+.gb-card .h{display:flex;align-items:center;gap:8px}.gb-card .h .coin{width:30px;height:30px;font-size:12px}.gb-card .h b{flex:1}
+.gb-card .kv{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;margin:10px 0;font-size:13px;color:var(--muted)}.gb-card .kv b{color:var(--fg);font-weight:600}
+.gb-card .acts{display:flex;gap:8px}.gb-card .acts button{flex:1;height:36px;border-radius:10px;background:var(--surface);font-weight:600;font-size:13.5px;color:var(--fg)}
+.st-pill{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:8px;background:var(--surface);color:var(--muted)}.st-pill.live{color:var(--up);background:rgba(61,220,151,.14)}.st-pill.err{color:var(--down);background:rgba(255,92,92,.14)}
+.ar-card{padding:14px;border-radius:16px;background:var(--surface2);margin-bottom:10px;cursor:pointer}
+.ar-card .h{display:flex;justify-content:space-between;align-items:center;gap:8px}.ar-card h4{margin:6px 0 2px;font-size:17px}
+.ar-card .pool{font-size:22px;font-weight:800;margin-top:6px}.ar-card .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-top:4px}
+.ar-card .me{margin-top:10px;font-size:13.5px}.ar-card .btn{margin-top:10px;width:100%;padding:11px}
+.ar-lb .row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}.ar-lb .row.me{background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:10px;padding-inline:8px}
+.ar-lb .rk{width:26px;text-align:center;font-weight:800}.ar-lb .mid{flex:1;min-width:0;font-weight:600}.ar-lb .rt{text-align:right;font-size:13.5px}.ar-lb .rt small{display:block;color:var(--up);font-weight:700}
+.fav-bar{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin:-2px 0 2px}
+.fav-bar .r-link{font-size:13.5px}
+#tokList.grid2 .tok.fsel{position:relative}
+.fchk{position:absolute;right:10px;bottom:10px;width:24px;height:24px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center}
+.tok.fsel.on .fchk{background:var(--fg);border-color:var(--fg)}.tok.fsel.on .fchk::after{content:"";width:10px;height:6px;border-left:2.4px solid var(--bg);border-bottom:2.4px solid var(--bg);transform:translateY(-1px) rotate(-45deg)}
+@media (max-width:759px){
+  html:not([data-mode="lite"]) nav.bar{left:0;right:0;bottom:0;width:100%;margin:0;border:0;border-radius:0;background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none;padding:4px 6px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:none}
+  html:not([data-mode="lite"]) nav.bar button.on{background:transparent;color:var(--fg)}
+  html:not([data-mode="lite"]) body:not(.v-home) nav.bar{border-top:1px solid var(--line)}
+  html:not([data-mode="lite"]) .pro-disc{bottom:calc(var(--nav-h,64px) + env(safe-area-inset-bottom,0px));width:100%;border-radius:18px 18px 0 0;border:0;border-top:1px solid var(--line);padding-bottom:4px}
+  html:not([data-mode="lite"]) .pro-disc::after{content:"";position:absolute;left:16px;right:16px;bottom:0;height:1px;background:var(--line)}
+  html:not([data-mode="lite"]) .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  html:not([data-mode="lite"]) body.v-home #s-home{padding-bottom:calc(140px + env(safe-area-inset-bottom,0px))}
+}
 /* Lite mod: sade arayüz */
 html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[data-mode="lite"] #trType [data-ot="limit"],html[data-mode="lite"] #trType [data-ot="stop"]{display:none!important}
 .sheet{position:fixed;left:50%;bottom:0;width:min(460px,100%);transform:translate(-50%,105%);background:var(--surface);border-radius:26px 26px 0 0;z-index:41;padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px));transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s .28s;visibility:hidden;max-height:88%;overflow:auto}
@@ -1129,9 +1169,13 @@ nav.bar button svg{width:22px;height:22px}
   </div>
 
   <div class="pro-q">
-    <button type="button" data-open="recv"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/><circle cx="17" cy="15" r="1.2" fill="currentColor"/></svg></span><em data-en="Deposit">Para Yatır</em></button>
-    <button type="button" data-open="campaigns"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v3a4 4 0 0 1-8 0z"/><path d="M8 5H5v1a3 3 0 0 0 3 3M16 5h3v1a3 3 0 0 1-3 3M12 11v4M8.5 20h7M10 15h4l1 5H9z"/></svg><i class="pq-tag" data-en="NEW">YENİ</i></span><em data-en="Campaigns">Kampanyalar</em></button>
-    <button type="button" data-go="auction"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6M11 7l6 6M12.5 5.5l-6 6M9.5 14.5l-6 6M13.5 9.5l-4 4"/></svg><i class="pq-tag">CF</i></span><em>CF Auction</em></button>
+    <button type="button" data-open="recv"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg></span><em data-en="Deposit">Para Yatır</em></button>
+    <button type="button" data-open="withdraw"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg></span><em data-en="Withdraw">Çek</em></button>
+    <button type="button" data-open="send"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-8-6 16-2-7z"/></svg></span><em data-en="Send">Gönder</em></button>
+    <button type="button" data-open="earn"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2"/><path d="M15.5 8.5c-.5-1.2-1.8-2-3.5-2-2 0-3.5 1.1-3.5 2.7 0 3.6 7 1.9 7 5.4 0 1.6-1.5 2.9-3.5 2.9-1.8 0-3.2-.9-3.6-2.3"/><path d="M19 4l1.2 1.2M20.5 3v2.5"/></svg><i class="pq-tag">APR</i></span><em data-en="Earn">Earn</em></button>
+    <button type="button" data-open="grid"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 16l4-5 3 3 4-6 3 4"/><path d="M3 8h18M3 12h18" stroke-dasharray="2 3" opacity=".6"/></svg></span><em data-en="Grid Bot">Grid Bot</em></button>
+    <button type="button" data-open="arena"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v3a4 4 0 0 1-8 0z"/><path d="M8 5H5v1a3 3 0 0 0 3 3M16 5h3v1a3 3 0 0 1-3 3M12 11v4M9 20h6M10 15h4l1 5H9z"/></svg><i class="pq-tag" data-en="NEW">YENİ</i></span><em data-en="Futures Arena">Futures Arena</em></button>
+    <button type="button" data-go="auction"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6M11 7l6 6M12.5 5.5l-6 6M9.5 14.5l-6 6M13.5 9.5l-4 4"/></svg><i class="pq-tag">CF</i></span><em data-en="CF Auction">CF Auction</em></button>
     <button type="button" data-open="more"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="2.6"/><circle cx="17" cy="7" r="2.6"/><circle cx="7" cy="17" r="2.6"/><circle cx="17" cy="17" r="2.6"/></svg></span><em data-en="More">Daha Fazla</em></button>
   </div>
   <div class="pro-w">
@@ -1661,6 +1705,36 @@ nav.bar button svg{width:22px;height:22px}
   <div class="err" id="adErr"></div>
   <button class="btn btn-accent full" type="button" id="adGo">Airdrop gönder</button>
 </div>
+<div class="sheet tall" id="sh-earn" role="dialog" aria-label="Earn">
+  <div class="grab"></div><h3>Earn</h3>
+  <div class="sub" data-en="Lock USDT and get it back with interest when the term ends.">USDT'ni kilitle, süre sonunda faiziyle birlikte geri al.</div>
+  <div class="ea-prod" id="eaProd"></div>
+  <label class="fld"><span data-en="Amount (USDT)">Tutar (USDT)</span><div style="display:flex;gap:8px"><input id="eaAmt" inputmode="decimal" placeholder="0" style="flex:1"><button type="button" class="btn btn-ghost" id="eaMax" style="padding:0 16px;font-size:14px">Maks</button></div></label>
+  <div class="ea-est" id="eaEst"></div>
+  <div class="err" id="eaErr"></div>
+  <button type="button" class="btn btn-accent full" id="eaGo" style="width:100%" data-en="Subscribe">Kilitle</button>
+  <div class="sec-t" style="margin:20px 0 8px" data-en="My Earn">Kayıtlarım</div>
+  <div id="eaList"></div>
+</div>
+<div class="sheet tall" id="sh-grid" role="dialog" aria-label="Grid Bot">
+  <div class="grab"></div><h3>Grid Bot</h3>
+  <div class="sub" data-en="The bot buys each time the price drops a step and sells the same lot one step higher.">Bot, fiyat her basamak düştüğünde alır; aynı alımı bir basamak yukarıda satar. Fiyat aralıkta gidip geldikçe kâr eder.</div>
+  <div class="gb-form">
+    <label class="fld"><span>Coin</span><div class="sel"><select id="gbSym"></select></div></label>
+    <div class="gb-px" id="gbPx"></div>
+    <div class="gb-2"><label class="fld"><span data-en="Lower price">Alt fiyat</span><input id="gbLo" inputmode="decimal"></label><label class="fld"><span data-en="Upper price">Üst fiyat</span><input id="gbHi" inputmode="decimal"></label></div>
+    <div class="gb-2"><label class="fld"><span data-en="Grids">Izgara sayısı</span><input id="gbN" inputmode="numeric" value="10"></label><label class="fld"><span data-en="Investment (USDT)">Toplam tutar (USDT)</span><input id="gbInv" inputmode="decimal" placeholder="100"></label></div>
+    <div class="ea-est" id="gbEst"></div>
+    <div class="err" id="gbErr"></div>
+    <button type="button" class="btn btn-accent" id="gbGo" style="width:100%" data-en="Create bot">Botu başlat</button>
+  </div>
+  <div class="sec-t" style="margin:20px 0 8px" data-en="My bots">Botlarım</div>
+  <div id="gbList"></div>
+</div>
+<div class="sheet tall" id="sh-arena" role="dialog" aria-label="Futures Arena">
+  <div class="grab"></div>
+  <div id="arBody"></div>
+</div>
 <div class="sheet" id="sh-more" role="dialog" aria-label="Daha fazla">
   <div class="grab"></div><h3 data-en="More">Daha Fazla</h3>
   <div class="more-g"><button type="button" data-open="withdraw"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg></span><em data-en="Withdraw">Çek</em></button><button type="button" data-open="send"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-8-6 16-2-7z"/></svg></span><em data-en="Send">Gönder</em></button><button type="button" data-open="airdrop"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a8 8 0 0 0-8 8h16a8 8 0 0 0-8-8zM4 11l8 9 8-9M12 11v9"/></svg></span><em data-en="Airdrop">Airdrop</em></button><button type="button" data-open="swap"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v14M3 14l4 4 4-4M17 20V6M13 10l4-4 4 4"/></svg></span><em data-en="Swap">Takas</em></button><button type="button" data-open="history"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><em data-en="History">Geçmiş</em></button><button type="button" data-open="rewards"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-3.5-5-1.2C7 8 9 8 12 8zm0 0c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z"/></svg></span><em data-en="Rewards">Ödüller</em></button><button type="button" data-go="rank" data-more><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V6M16 20v-6M20 20H3"/></svg></span><em data-en="Ranking">Sıralama</em></button><button type="button" data-go="rank" data-more><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14.5c2.4 0 4 1.5 4.5 4"/></svg></span><em data-en="Communities">Topluluk</em></button><button type="button" data-open="settings"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><em data-en="Settings">Ayarlar</em></button></div>
@@ -2055,6 +2129,8 @@ function renderList(){
   $("tokList").innerHTML=(arr.length?arr.map(t=>tokRow(t,{perp:tab==="perps"})).join(""):"")+(wa.length?`<div class="sec-t" style="margin:16px 0 8px">CF Auction</div>`+wa.map(a=>{const c=aucCur(a);return `<div class="tok" data-auc="${a.id}" role="button" tabindex="0">${aucImg(a,"sm wl")}<div class="mid"><div class="sym">${esc(aT(a))}</div><div class="sub">${a.status==="ended"?L("Sona erdi","Ended"):aucLeft(a)}</div></div><div class="rt"><div class="px">${c!=null?cfT(c):cfT(a.start_price)}</div><div class="sub">${c!=null?(a.status==="ended"?L("Kazanan teklif","Winning bid"):L("Güncel teklif","Current bid")):L("Başlangıç","Starting bid")}</div></div></div>`}).join(""):"")
     ||`<div class="empty">İzleme listen boş.<br>Bir tokenin sayfasında yıldıza dokunarak ekle.</div>`;
   $("tokList").classList.toggle("grid2",tab==="watch"&&document.documentElement.dataset.mode!=="lite"&&arr.length>0);
+  if(tab==="watch"&&document.documentElement.dataset.mode!=="lite"&&arr.length){const L=$("tokList");if(favEdit){L.innerHTML=`<div class="fav-bar"><button type="button" class="r-link" data-favrm style="color:var(--down)">${EN?"Remove":"Çıkar"} (${favSel.size})</button><button type="button" class="r-link" data-favedit="0">${EN?"Done":"Bitti"}</button></div>`+arr.map(t=>{const c=chg(t);return `<div class="tok fsel${favSel.has(t.s)?" on":""}" data-fsel="${t.s}" role="button" tabindex="0">${coinHTML(t)}<div class="mid"><div class="sym">${t.s}</div></div><div class="rt"><div class="px">${usd(t.p,t.d)}</div><div class="ch ${c>=0?"up":"down"}">${pct(c)}</div></div><span class="fchk"></span></div>`}).join("")}
+    else L.insertAdjacentHTML("afterbegin",`<div class="fav-bar"><span class="muted" style="font-size:13px">${arr.length} ${EN?"favorites":"favori"}</span><button type="button" class="r-link" data-favedit="1">${EN?"Edit":"Düzenle"}</button></div>`)}
 }
 
 // ---------- detail
@@ -3438,7 +3514,7 @@ function payReturn(){if(!PAY_IN)return;try{history.replaceState(null,"",location
 
 // ---------- sheets
 let openId=null;
-function openSheet(id){closeSheet(true);openId=id;$("scrim").classList.toggle("dim",id==="mode");if(id==="mode")renderMode();$("sh-"+id).classList.add("show");$("scrim").classList.add("show");if(id==="swap")renderSwap();if(id==="history")renderHistory();if(id==="edit")fillEdit();if(id==="rewards")renderRewards();if(id==="notifs")renderNotifs();if(id==="campaigns")renderCampList();if(id==="campnew")fillCampNew();if(id==="deposit")renderDep();if(id==="commnew")fillCommNew();if(id==="recv"){recvSym=null;recvQ="";renderRecv()}if(id==="send"){sendSym=null;renderSend();loadPending()}if(id==="alert")openAlert();if(id==="withdraw")openWithdraw();if(id==="pnl")renderPnl();if(id==="admin")openAdmin();if(id==="banner")openBanner();if(id==="airdrop")openAirdrop();if(id==="cf")openCFBuy();if(id==="myauc")openMyAuc();if(id==="aucnew")openAucNew();if(id==="card")openCard();if(id==="settings"){$("logoutWho").textContent="@"+(st.prof.handle||"");$("resetConfirm").hidden=true;$("setThemeVal").textContent=themeName()}}
+function openSheet(id){closeSheet(true);openId=id;$("scrim").classList.toggle("dim",id==="mode");if(id==="mode")renderMode();if(id==="earn")loadEarn();if(id==="grid")openGrid();if(id==="arena"){arOpen=null;$("arBody").innerHTML=`<h3>Futures Arena</h3><div class="empty">…</div>`;loadArenas()}$("sh-"+id).classList.add("show");$("scrim").classList.add("show");if(id==="swap")renderSwap();if(id==="history")renderHistory();if(id==="edit")fillEdit();if(id==="rewards")renderRewards();if(id==="notifs")renderNotifs();if(id==="campaigns")renderCampList();if(id==="campnew")fillCampNew();if(id==="deposit")renderDep();if(id==="commnew")fillCommNew();if(id==="recv"){recvSym=null;recvQ="";renderRecv()}if(id==="send"){sendSym=null;renderSend();loadPending()}if(id==="alert")openAlert();if(id==="withdraw")openWithdraw();if(id==="pnl")renderPnl();if(id==="admin")openAdmin();if(id==="banner")openBanner();if(id==="airdrop")openAirdrop();if(id==="cf")openCFBuy();if(id==="myauc")openMyAuc();if(id==="aucnew")openAucNew();if(id==="card")openCard();if(id==="settings"){$("logoutWho").textContent="@"+(st.prof.handle||"");$("resetConfirm").hidden=true;$("setThemeVal").textContent=themeName()}}
 function closeSheet(keepScrim){if(openId==="airdrop")qrStop();if(openId)$("sh-"+openId).classList.remove("show");openId=null;if(!keepScrim)$("scrim").classList.remove("show")}
 $("scrim").onclick=()=>closeSheet();
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
@@ -3546,7 +3622,7 @@ let tt;function toast(m){$("toastT").textContent=m;$("toast").classList.add("sho
 // ---------- Mod (Pro / Lite / Web3)
 const MODE_IC={"pro": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3\"/></svg>", "lite": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 9.5L12 5l10 4.5-10 4.5z\"/><path d=\"M6 11.3V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.7\"/></svg>", "web3": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 3L3 12l8 9 8-9z\"/><path d=\"M3 12h16M11 3v18\"/><path d=\"M19.5 2.5v4M17.5 4.5h4\"/></svg>"};
 let MODE=(()=>{try{const m=localStorage.getItem("cf_mode");return m==="lite"?"lite":"pro"}catch(e){return "pro"}})();
-function applyMode(){document.documentElement.dataset.mode=MODE;$("modeIc").innerHTML=MODE_IC[MODE];$("ptMode").textContent=MODE==="lite"?"Lite":"Pro";try{renderList();renderProW()}catch(e){}
+function applyMode(){document.documentElement.dataset.mode=MODE;$("modeIc").innerHTML=MODE_IC[MODE];$("ptMode").textContent=MODE==="lite"?"Lite":"Pro";setTimeout(()=>{try{navH()}catch(e){}},50);try{renderList();renderProW()}catch(e){}
   if(MODE==="lite"){if(otype!=="market"){otype="market";try{syncOType()}catch(e){}}const pt=document.querySelector('[data-tab="perps"].on');if(pt){const tk=document.querySelector('[data-tab="tokens"]');if(tk)tk.click()}}}
 // ---------- Pro ana sayfa: widget kartları, Daha Fazla, Keşfet çekmecesi
 let pwI=0;
@@ -3558,8 +3634,8 @@ function renderProW(){if(document.documentElement.dataset.mode==="lite"||view!==
   const g=[...T].filter(t=>!t.custom&&t.live&&t.mc>5e8).sort((a,b)=>chg(b)-chg(a))[0],mk=["BTC","ETH","SOL"].map(find).filter(Boolean);if(g&&!mk.includes(g))mk.push(g);
   if(mk.length){const t=mk[pwI%mk.length],c=chg(t);$("pwMkt").dataset.sym=t.s;
     $("pwMkt").innerHTML=`<small><span>${EN?"Market":"Piyasa"} · ${t===g&&pwI%mk.length===mk.length-1?(EN?"Top gainer":"En çok yükselen"):"24s"}</span></small><div style="display:flex;align-items:center;gap:8px">${coinHTML(t)}<b class="pw-t">${t.s}/USDT</b></div><div class="pw-big">${usd(t.p,t.d)}</div><div class="${c>=0?"up":"down"}" style="font-weight:700;font-size:13.5px">${pct(c)}</div><div class="pw-row"><button type="button" class="b-up" data-pwtr="buy">${EN?"Buy":"Al"}</button><button type="button" class="b-dn" data-pwtr="sell">${EN?"Sell":"Sat"}</button></div>${pwDots(mk.length,pwI)}`}
-  const bl=["BTC","ETH","SOL"].map(find).filter(Boolean);if(bl.length){const t=bl[Math.floor(pwI/2)%bl.length],c=chg(t);$("pwBot").dataset.sym=t.s;
-    $("pwBot").innerHTML=`<small><span>${EN?"Trading Bot":"Otomatik Al-Sat"}</span></small><b class="pw-t">${t.s}/USDT</b><div style="font-size:13.5px;color:var(--muted)">${EN?"Trend · 24h":"Trend · 24s"} <b class="${c>=0?"up":"down"}" style="font-size:16px">${pct(c)}</b></div>${pwSpark(t)}${pwDots(bl.length,Math.floor(pwI/2))}`}
+  const ag=(st.grids||[]).filter(g=>g.active&&find(g.symbol)),bl=ag.length?ag.map(g=>find(g.symbol)):["BTC","ETH","SOL"].map(find).filter(Boolean);if(bl.length){const k=Math.floor(pwI/2)%bl.length,t=bl[k],c=chg(t),g=ag[k];$("pwBot").dataset.sym=t.s;
+    $("pwBot").innerHTML=`<small><span>Grid Bot</span></small><b class="pw-t">${t.s}/USDT</b><div style="font-size:13.5px;color:var(--muted)">${g?(EN?"Grid profit ":"Grid kârı ")+`<b class="${+g.realized>=0?"up":"down"}" style="font-size:16px">${+g.realized>=0?"+":""}${usd(+g.realized)}</b>`:`Spot Grid · 24s <b class="${c>=0?"up":"down"}" style="font-size:16px">${pct(c)}</b>`}</div>${pwSpark(t)}${pwDots(bl.length,Math.floor(pwI/2))}`}
   const ev=[];(st.camps||[]).filter(c=>campState(c)!=="ended").forEach(c=>ev.push({k:"camp",id:c.id,tag:c.symbol||"COINFORCE",img:"",t:c.title,sub:EN?"Volume campaign":"Hacim kampanyası"}));
   (AUC||[]).filter(a=>a.status==="live").slice(0,4).forEach(a=>ev.push({k:"auc",id:a.id,tag:"CF AUCTION",img:logoUrl(a.image),t:aT(a),sub:(EN?"Current bid ":"Güncel teklif ")+fmtN(+(a.current_bid||a.start_price),0)+" CF"}));
   const E=$("pwEv");delete E.dataset.camp;delete E.dataset.auc;delete E.dataset.go;
@@ -3567,10 +3643,11 @@ function renderProW(){if(document.documentElement.dataset.mode==="lite"||view!==
   const e=ev[Math.floor(pwI/2)%ev.length];E.dataset[e.k]=e.id;
   E.innerHTML=`<span class="pw-tag">${e.img?`<img src="${e.img}" alt="" referrerpolicy="no-referrer">`:`<img src="cf-token.svg?v=1" alt="">`}${esc(e.tag)}</span><div class="pw-t">${esc(e.t)}</div><small style="margin-top:auto"><span>${esc(e.sub)}</span></small>${pwDots(ev.length,Math.floor(pwI/2))}`}
 setInterval(()=>{if(document.hidden||view!=="home")return;pwI++;renderProW()},5000);
-let pwAucLoaded=false;function pwLoadAuc(){if(pwAucLoaded)return;pwAucLoaded=true;loadAuctions(true).then(renderProW).catch(()=>{})}
+let pwAucLoaded=false;function pwLoadAuc(){if(pwAucLoaded)return;pwAucLoaded=true;sb.rpc("my_grid_bots").then(r=>{if(!r.error){st.grids=r.data||[];renderProW()}});loadAuctions(true).then(renderProW).catch(()=>{})}
 document.addEventListener("click",e=>{
   const tb=e.target.closest("[data-pwtr]");if(tb){const s=$("pwMkt").dataset.sym;if(s){prev="home";go("detail",s);openTrade(tb.dataset.pwtr)}return}
-  const m=e.target.closest("#pwMkt,#pwBot");if(m&&m.dataset.sym){prev="home";go("detail",m.dataset.sym);if(m.id==="pwBot")setTimeout(()=>{const a=$("dAuto");if(a)a.scrollIntoView({behavior:"smooth",block:"center"})},300);return}
+  const bt=e.target.closest("#pwBot");if(bt&&bt.dataset.sym){openSheet("grid");openGrid(bt.dataset.sym);return}
+  const m=e.target.closest("#pwMkt");if(m&&m.dataset.sym){prev="home";go("detail",m.dataset.sym);return}
   const pd=e.target.closest("[data-pd]");if(pd){const k=pd.dataset.pd;document.querySelectorAll(".pd-tabs [data-pd]").forEach(b=>b.classList.toggle("on",b===pd));
     if(k==="notifs")openSheet("notifs");else if(k==="news")pdNews();else go(k);return}});
 async function pdNews(){const {data}=await sb.rpc("communities_list",{p_id:null});const n=(data||[]).find(c=>c.kind==="news");if(n)openComm(n.id);else go("rank")}
@@ -3579,6 +3656,71 @@ $("proTheme").onclick=()=>$("themeBtn").click();
 // avatar ve bildirim rozetini üst bara yansıt
 (()=>{const cp=()=>{const a=$("navAv"),p=$("proAv");if(a&&p){p.className=a.className;p.style.cssText=a.style.cssText;p.innerHTML=a.innerHTML}const b=$("notifBadge"),q=$("proBadge");if(b&&q){q.hidden=b.hidden;q.textContent=b.textContent}};
   const mo=new MutationObserver(cp);[$("navAv"),$("notifBadge")].forEach(x=>x&&mo.observe(x,{attributes:true,childList:true,characterData:true,subtree:true}));cp()})();
+// ---------- Earn
+let eaDays=30,EAP=[];
+async function loadEarn(){$("eaErr").textContent="";const [p,m]=await Promise.all([sb.rpc("earn_products"),sb.rpc("my_earn")]);EAP=p.data||[];if(p.error){$("eaProd").innerHTML=`<div class="empty">${esc(errText(p.error))}</div>`;return}
+  if(!EAP.some(x=>x.days===eaDays)&&EAP[0])eaDays=EAP[0].days;renderEarnProd();renderEarnList(m.data||[])}
+function renderEarnProd(){$("eaProd").innerHTML=EAP.map(x=>`<button type="button" data-eadays="${x.days}" class="${x.days===eaDays?"on":""}"><b>%${fmtN(+x.apr,+x.apr%1?1:0)}</b><small>${x.days} ${EN?"days":"gün"} · ${EN?"APR":"yıllık"}</small></button>`).join("");eaEst()}
+function eaEst(){const p=EAP.find(x=>x.days===eaDays),a=parseAmt($("eaAmt").value);$("eaEst").innerHTML=p&&a>0?`${EN?"Estimated interest":"Tahmini faiz"}: <b class="up">+${usd(a*p.apr/100*p.days/365)}</b> · ${EN?"returns":"dönüş"} ${new Date(Date.now()+p.days*864e5).toLocaleDateString(LOC)}`:(p?`${EN?"Yearly rate":"Yıllık oran"} %${fmtN(+p.apr,1)} · ${EN?"min":"en az"} $10`:"")}
+function renderEarnList(l){$("eaList").innerHTML=l.length?l.map(e=>{const act=e.status==="active",left=Date.parse(e.ends_at)-Date.parse(e.now);return `<div class="ea-row"><div class="mid"><b>${usd(+e.amount)} · ${e.days} ${EN?"days":"gün"} · %${fmtN(+e.apr,1)}</b><small>${act?(EN?"Ends in ":"Bitişe ")+durTxt(left):e.status==="paid"?(EN?"Paid with interest":"Faiziyle ödendi"):(EN?"Redeemed early (no interest)":"Erken çekildi (faizsiz)")}</small></div><div class="rt" style="text-align:right"><b class="up">+${usd(+e.interest)}</b>${act?`<small><button type="button" class="r-link" data-earedeem="${e.id}">${EN?"Redeem early":"Erken çek"}</button></small>`:""}</div></div>`}).join(""):`<div class="empty" style="padding:14px 4px">${EN?"No Earn positions yet.":"Henüz kaydın yok."}</div>`}
+$("sh-earn").addEventListener("input",e=>{if(e.target.id==="eaAmt")eaEst()});
+$("sh-earn").addEventListener("click",e=>{const d=e.target.closest("[data-eadays]");if(d){eaDays=+d.dataset.eadays;renderEarnProd();return}
+  if(e.target.closest("#eaMax")){$("eaAmt").value=fmtN(Math.floor((st.usdt||0)*100)/100,2);eaEst();return}
+  const g=e.target.closest("#eaGo");if(g){busy(g,async()=>{$("eaErr").textContent="";const r=await call("earn_subscribe",{p_days:eaDays,p_amount:parseAmt($("eaAmt").value)},"eaErr");if(r.err)return;toast(EN?"Locked":"Kilitlendi");$("eaAmt").value="";loadAll();loadEarn()});return}
+  const rd=e.target.closest("[data-earedeem]");if(rd){if(!confirm(EN?"Redeem now? No interest will be paid.":"Şimdi çekilsin mi? Faiz ödenmez, sadece ana para döner."))return;busy(rd,async()=>{const r=await call("earn_redeem",{p_id:rd.dataset.earedeem},"eaErr");if(!r.err){toast(EN?"Returned to balance":"Bakiyene döndü");loadAll();loadEarn()}})}});
+// ---------- Grid Bot
+let gbSel="";
+function openGrid(sym){const l=[...T].filter(t=>!t.custom&&t.live&&t.p>0).sort((a,b)=>b.mc-a.mc);if(sym&&l.some(t=>t.s===sym))gbSel=sym;if(!gbSel||!l.some(t=>t.s===gbSel))gbSel=(l[0]||{}).s||"";
+  $("gbSym").innerHTML=l.map(t=>`<option value="${t.s}" ${t.s===gbSel?"selected":""}>${t.s} · ${esc(t.n)}</option>`).join("");gbPrefill();loadGrids()}
+function gbPrefill(){const t=find(gbSel);if(!t)return;$("gbPx").innerHTML=`${EN?"Current price":"Güncel fiyat"}: <b>${usd(t.p,t.d)}</b>`;const dg=t.p<1?Math.max(4,t.d):2;$("gbLo").value=String(+(t.p*.9).toFixed(dg));$("gbHi").value=String(+(t.p*1.1).toFixed(dg));gbEst()}
+const gbNum=v=>{v=String(v||"").trim().replace(/\s/g,"");if(/,/.test(v)&&!/\./.test(v))v=v.replace(",",".");return parseFloat(v)||0};
+function gbEst(){const lo=gbNum($("gbLo").value),hi=gbNum($("gbHi").value),n=parseInt($("gbN").value,10)||0,inv=parseAmt($("gbInv").value);
+  if(!(lo>0&&hi>lo&&n>=2)){$("gbEst").textContent="";return}const step=(hi-lo)/n,pp=step/((lo+hi)/2)*100;
+  $("gbEst").innerHTML=`${EN?"Step":"Basamak"}: <b>${usd(step,step<1?6:2)}</b> · ${EN?"profit per cycle":"döngü başı kâr"} ≈ <b class="up">%${fmtN(pp,2)}</b>${inv>0?` · ${EN?"per grid":"ızgara başı"} <b>${usd(inv/n)}</b>`:""}`}
+async function loadGrids(){const r=await sb.rpc("my_grid_bots");const l=r.error?[]:r.data||[];st.grids=l;
+  $("gbList").innerHTML=r.error?`<div class="empty">${esc(errText(r.error))}</div>`:l.length?l.map(g=>{const t=find(g.symbol),held=+g.held_qty*+g.cur_price,cost=+g.open_lots*+g.per_usd,unr=held-cost;
+    return `<div class="gb-card"><div class="h">${t?coinHTML(t):""}<b>${esc(g.symbol)}/USDT</b><span class="st-pill ${g.active?"live":g.last_error?"err":""}">${g.active?(EN?"Running":"Çalışıyor"):g.last_error?(EN?"Stopped (error)":"Durdu (hata)"):(EN?"Stopped":"Durduruldu")}</span></div>
+      <div class="kv"><span>${EN?"Range":"Aralık"}</span><b>${usd(+g.lower_px,+g.lower_px<1?6:2)} – ${usd(+g.upper_px,+g.upper_px<1?6:2)}</b><span>${EN?"Grids · investment":"Izgara · tutar"}</span><b>${g.grids} · ${usd(+g.invest_usd)}</b>
+      <span>${EN?"Grid profit":"Grid kârı"}</span><b class="${+g.realized>=0?"up":"down"}">${+g.realized>=0?"+":""}${usd(+g.realized)}</b><span>${EN?"Open lots (unrealized)":"Açık alım (anlık)"}</span><b>${g.open_lots} · <span class="${unr>=0?"up":"down"}">${unr>=0?"+":""}${usd(unr)}</span></b>
+      <span>${EN?"Trades":"İşlem"}</span><b>${g.buys} ${EN?"buys":"alış"} · ${g.sells} ${EN?"sells":"satış"}</b><span>${EN?"Started":"Başladı"}</span><b>${ago(Date.now()-Date.parse(g.created_at))} ${EN?"ago":"önce"}</b></div>
+      ${g.last_error?`<div class="err" style="margin:0 0 8px">${esc(g.last_error)}</div>`:""}${g.active?`<div class="acts"><button type="button" data-gbstop="${g.id}">${EN?"Stop":"Durdur"}</button><button type="button" data-gbstop="${g.id}" data-sell="1">${EN?"Stop & sell":"Durdur ve sat"}</button></div>`:""}</div>`}).join(""):`<div class="empty" style="padding:14px 4px">${EN?"No bots yet.":"Henüz botun yok."}</div>`;renderProW()}
+$("gbSym").onchange=e=>{gbSel=e.target.value;gbPrefill()};
+$("sh-grid").addEventListener("input",e=>{if(/^gb(Lo|Hi|N|Inv)$/.test(e.target.id))gbEst()});
+$("sh-grid").addEventListener("click",e=>{const g=e.target.closest("#gbGo");if(g){busy(g,async()=>{$("gbErr").textContent="";const r=await call("start_grid_bot",{p_symbol:gbSel,p_lower:gbNum($("gbLo").value),p_upper:gbNum($("gbHi").value),p_grids:parseInt($("gbN").value,10)||0,p_invest:parseAmt($("gbInv").value)},"gbErr");if(r.err)return;toast(EN?"Grid bot started":"Grid bot başladı");loadGrids()});return}
+  const sp=e.target.closest("[data-gbstop]");if(sp){const sell=!!sp.dataset.sell;if(!confirm(sell?(EN?"Stop the bot and sell its coins?":"Bot durdurulsun ve elindeki coinler satılsın mı?"):(EN?"Stop the bot? Coins it bought stay in your account.":"Bot durdurulsun mu? Aldığı coinler hesabında kalır.")))return;busy(sp,async()=>{const r=await call("stop_grid_bot",{p_id:sp.dataset.gbstop,p_sell:sell},"gbErr");if(!r.err){toast(EN?"Stopped":"Durduruldu");loadAll();loadGrids()}})}});
+// ---------- Futures Arena
+let AR=[],arOpen=null;
+async function loadArenas(){const r=await sb.rpc("arenas_list");AR=r.error?[]:r.data||[];if(r.error){$("arBody").innerHTML=`<h3>Futures Arena</h3><div class="empty">${esc(errText(r.error))}</div>`;return}if(arOpen)return loadArenaLB(arOpen);renderArenas()}
+const arState=a=>a.state==="live"?`<span class="st-pill live">${EN?"Live":"Canlı"}</span>`:a.state==="upcoming"?`<span class="st-pill">${EN?"Upcoming":"Yakında"}</span>`:`<span class="st-pill">${EN?"Ended":"Bitti"}</span>`;
+function renderArenas(){const mgr=st.admin||st.campMgr;
+  $("arBody").innerHTML=`<h3>Futures Arena</h3><div class="sub">${EN?"Join, trade futures, climb the board. Ranking is by futures trading volume from the moment you join; prizes are paid to your balance when the arena ends.":"Katıl, vadeli işlem yap, sıralamada yüksel. Sıralama katıldığın andan itibaren yaptığın vadeli işlem hacmine göredir; arena bitince ödüller bakiyene yatar."}</div>
+  ${AR.length?AR.map(a=>{const left=a.state==="upcoming"?Date.parse(a.starts_at)-Date.parse(a.now):Date.parse(a.ends_at)-Date.parse(a.now);return `<div class="ar-card" data-arena="${a.id}"><div class="h">${arState(a)}<small class="muted">${a.state==="ended"?new Date(a.ends_at).toLocaleDateString(LOC):(a.state==="live"?(EN?"Ends in ":"Bitişe "):(EN?"Starts in ":"Başlamasına "))+durTxt(left)}</small></div>
+    <h4>${esc(a.title)}</h4><div class="pool">${usd(+a.pool)}</div><div class="meta"><span>${EN?"Prize pool":"Ödül havuzu"} · ${a.prizes.length} ${EN?"winners":"kişi"}</span><span>${nfmt(+a.players)} ${EN?"players":"katılımcı"}</span></div>
+    ${a.joined?`<div class="me">${EN?"Your rank":"Sıran"}: <b>${a.my_rank||"—"}</b> · ${EN?"volume":"hacim"} <b>${usd(+a.my_score||0)}</b>${a.my_prize?` · <b class="up">+${usd(+a.my_prize)}</b>`:""}</div>`:a.state!=="ended"?`<button type="button" class="btn btn-accent" data-arjoin="${a.id}">${EN?"Join":"Katıl"}</button>`:""}</div>`}).join(""):`<div class="empty" style="padding:24px 4px">${EN?"No arena right now.":"Şu an açık arena yok."}</div>`}
+  ${mgr?`<div class="sec-t" style="margin:18px 0 8px">${EN?"New arena":"Yeni arena"}</div>
+    <label class="fld"><span>${EN?"Title":"Başlık"}</span><input id="arT" maxlength="80" placeholder="Haftalık Futures Arena"></label>
+    <div class="gb-2"><label class="fld"><span>${EN?"Start":"Başlangıç"}</span><input id="arS" type="datetime-local"></label><label class="fld"><span>${EN?"End":"Bitiş"}</span><input id="arE" type="datetime-local"></label></div>
+    <label class="fld"><span>${EN?"Prizes (USDT, 1st, 2nd, …)":"Ödüller (USDT; 1., 2., 3. … virgülle)"}</span><input id="arP" placeholder="1000, 500, 250"></label>
+    <div class="err" id="arErr"></div><button type="button" class="btn btn-ghost" id="arNew" style="width:100%">${EN?"Create arena":"Arena oluştur"}</button>`:""}`;
+  if(mgr){const p=d=>new Date(d-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,16);$("arS").value=p(Date.now());$("arE").value=p(Date.now()+7*864e5)}}
+async function loadArenaLB(id){arOpen=id;const a=AR.find(x=>x.id===id);if(!a){arOpen=null;return renderArenas()}const r=await sb.rpc("arena_leaderboard",{p_id:id});const l=r.error?[]:r.data||[];
+  $("arBody").innerHTML=`<div class="xf-h"><button type="button" class="xf-back" data-arback aria-label="Geri">${BACK}</button><h3>${esc(a.title)}</h3></div>${arState(a)} <span class="muted" style="font-size:13px">${EN?"Prize pool":"Ödül havuzu"} ${usd(+a.pool)}</span>
+   ${!a.joined&&a.state!=="ended"?`<button type="button" class="btn btn-accent" data-arjoin="${a.id}" style="width:100%;margin-top:12px">${EN?"Join":"Katıl"}</button>`:""}
+   ${(st.admin||st.campMgr)&&!a.settled?`<button type="button" class="r-link" data-ardel="${a.id}" style="margin-top:10px">${EN?"Delete arena":"Arenayı sil"}</button>`:""}
+   <div class="ar-lb" style="margin-top:12px">${l.length?l.map(x=>`<div class="row${x.me?" me":""}"><span class="rk">${x.rank}</span>${avHTML({id:x.user_id,a:x.avatar_url,h:x.username,n:x.username},"width:30px;height:30px;font-size:12px")}<span class="mid">@${esc(x.username)}</span><span class="rt">${usd(+x.score)}${a.prizes[x.rank-1]?`<small>${usd(+a.prizes[x.rank-1])}</small>`:""}</span></div>`).join(""):`<div class="empty">${EN?"No players yet.":"Henüz katılımcı yok."}</div>`}</div>`}
+$("sh-arena").addEventListener("click",e=>{const j=e.target.closest("[data-arjoin]");if(j){e.stopPropagation();busy(j,async()=>{const r=await call("join_arena",{p_id:j.dataset.arjoin});if(!r.err){toast(EN?"You joined":"Katıldın");loadArenas()}});return}
+  if(e.target.closest("[data-arback]")){arOpen=null;renderArenas();return}
+  const d=e.target.closest("[data-ardel]");if(d){if(!confirm(EN?"Delete this arena?":"Arena silinsin mi?"))return;busy(d,async()=>{const r=await call("admin_delete_arena",{p_id:d.dataset.ardel});if(!r.err){arOpen=null;loadArenas()}});return}
+  const n=e.target.closest("#arNew");if(n){busy(n,async()=>{$("arErr").textContent="";const pr=$("arP").value.split(/[;,\s]+/).filter(Boolean).map(x=>gbNum(x));const r=await call("admin_create_arena",{p_title:$("arT").value,p_starts:$("arS").value?new Date($("arS").value).toISOString():null,p_ends:$("arE").value?new Date($("arE").value).toISOString():null,p_prizes:pr},"arErr");if(!r.err){toast(EN?"Arena created":"Arena oluşturuldu");loadArenas()}});return}
+  const c=e.target.closest("[data-arena]");if(c&&!e.target.closest("button"))loadArenaLB(c.dataset.arena)});
+// ---------- Favoriler: düzenleme modu
+let favEdit=false;const favSel=new Set();
+document.addEventListener("click",e=>{const t=e.target.closest("[data-favedit]");if(t){favEdit=t.dataset.favedit==="1";favSel.clear();renderList();return}
+  const f=e.target.closest("[data-fsel]");if(f){const k=f.dataset.fsel;favSel.has(k)?favSel.delete(k):favSel.add(k);f.classList.toggle("on",favSel.has(k));const n=document.querySelector("[data-favrm]");if(n)n.textContent=(EN?"Remove":"Çıkar")+` (${favSel.size})`;return}
+  const r=e.target.closest("[data-favrm]");if(r){if(!favSel.size)return;st.watch=st.watch.filter(s=>!favSel.has(s));save();toast(EN?"Removed from favorites":"Favorilerden çıkarıldı");favEdit=false;favSel.clear();renderList()}});
+// alt menü yüksekliği (Pro çekmecesi menünün tam üstüne otursun)
+function navH(){const n=$("nav");if(n&&n.offsetHeight){const pb=parseFloat(getComputedStyle(n).paddingBottom)||0;document.documentElement.style.setProperty("--nav-h",(n.offsetHeight-pb+6)+"px")}}
+addEventListener("resize",navH);setTimeout(navH,300);
 function renderMode(){document.querySelectorAll("#sh-mode .md-opt").forEach(b=>b.classList.toggle("on",b.dataset.mode===MODE))}
 $("sh-mode").addEventListener("click",e=>{const b=e.target.closest("[data-mode]");if(!b)return;const m=b.dataset.mode;
   if(m==="web3"){toast(EN?"Web3 mode is coming soon":"Web3 modu yakında geliyor");return}
