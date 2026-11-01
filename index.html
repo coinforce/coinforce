@@ -762,6 +762,58 @@ nav.bar button.on .nav-av{box-shadow:0 0 0 2px var(--surface2),0 0 0 4px var(--a
 .md-opt b{display:flex;align-items:flex-start;gap:4px;font-size:19px;font-weight:700;margin-bottom:4px}
 .md-opt small{display:block;color:var(--muted);font-size:14px;line-height:1.45}
 .md-dot{width:8px;height:8px;border-radius:50%;background:#e5484d;display:inline-block;margin-top:2px}
+/* ---- Pro mod ana sayfa */
+.pro-top,.pro-q,.pro-w,.pro-disc,.nb-l{display:none}
+html:not([data-mode="lite"]) #s-home>.top{display:none}
+html:not([data-mode="lite"]) .pro-top{display:flex;align-items:center;gap:10px;margin:0 0 18px}
+.pt-av .nav-av{width:38px;height:38px;font-size:15px}
+.pt-ic{width:38px;height:38px;display:grid;place-items:center;color:var(--fg);position:relative}.pt-ic svg{width:23px;height:23px}
+.pt-bell .badge{position:absolute;top:-2px;right:-6px}
+.pt-mode{margin:0 auto;display:flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:20px;background:var(--surface2);color:var(--fg);font-size:16px}
+.pt-mode i{width:8px;height:8px;border-radius:50%;background:#e5484d}.pt-mode svg{width:16px;height:16px}
+html:not([data-mode="lite"]) .pro-q{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:20px 0 18px}
+.pro-q button{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--fg)}
+.pro-q span{position:relative;width:60px;height:60px;border-radius:20px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center}.pro-q span svg{width:26px;height:26px}
+.pro-q em{font-style:normal;font-size:12.5px;font-weight:600;text-align:center;line-height:1.2}
+.pq-tag{position:absolute;top:-9px;right:-14px;font-style:normal;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:8px;background:#7ee8a8;color:#0b1a12;letter-spacing:.3px}
+html:not([data-mode="lite"]) .pro-w{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.pw-card{position:relative;min-height:150px;padding:13px 13px 22px;border-radius:18px;background:var(--surface);border:1px solid var(--line);overflow:hidden;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.pw-card>small{color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between}
+.pw-card .pw-t{font-weight:700;font-size:15px;line-height:1.3}
+.pw-card .pw-big{font-size:20px;font-weight:800}
+.pw-card .pw-row{display:flex;gap:6px;margin-top:auto}.pw-row button{flex:1;height:30px;border-radius:9px;font-weight:700;font-size:13px}
+.pw-row .b-up{background:rgba(61,220,151,.14);color:var(--up)}.pw-row .b-dn{background:rgba(255,92,92,.14);color:var(--down)}
+.pw-card .coin{width:30px;height:30px;font-size:12px}
+.pw-card svg.pw-sp{width:100%;height:46px;margin-top:auto}
+.pw-dots{position:absolute;left:13px;bottom:9px;display:flex;gap:4px}.pw-dots i{width:4px;height:4px;border-radius:2px;background:var(--faint)}.pw-dots i.on{width:12px;background:var(--muted)}
+.pw-tag{align-self:flex-start;display:flex;align-items:center;gap:6px;padding:4px 10px 4px 5px;border:1px solid var(--line);border-radius:10px;font-weight:700;font-size:13px}
+.pw-tag img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+.pw-card:empty{display:none}
+html:not([data-mode="lite"]) #s-home .col-b{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:4px 14px 10px;margin-top:14px}
+html:not([data-mode="lite"]) #s-home .col-b .tabs{margin:0 -14px 12px;padding-inline:14px}
+html:not([data-mode="lite"]) #s-home .col-b .chips{margin-inline:-14px;padding-inline:14px}
+#tokList.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#tokList.grid2 .tok{flex-wrap:wrap;gap:4px 8px;padding:12px;border-radius:14px;background:var(--surface2);align-items:center}
+#tokList.grid2 .tok .coin{width:26px;height:26px;font-size:11px}
+#tokList.grid2 .tok .mid{flex:1;min-width:0}#tokList.grid2 .tok .mid .sub{display:none}
+#tokList.grid2 .tok svg{display:none}
+#tokList.grid2 .tok .rt{flex-basis:100%;text-align:left}#tokList.grid2 .tok .rt .px{font-size:17px}
+#tokList.grid2>.sec-t,#tokList.grid2>.empty,#tokList.grid2>[data-auc]{grid-column:1/-1}
+html:not([data-mode="lite"]) .pro-disc{display:flex;align-items:center;position:fixed;left:50%;transform:translateX(-50%);width:min(460px,100%);bottom:calc(88px + env(safe-area-inset-bottom,0px));z-index:29;background:var(--surface);border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:14px 10px 10px 16px}
+.pd-grab{position:absolute;top:5px;left:50%;width:34px;height:4px;margin-left:-17px;border-radius:2px;background:var(--line)}
+.pd-tabs{flex:1;display:flex;gap:20px;overflow-x:auto;scrollbar-width:none}.pd-tabs::-webkit-scrollbar{display:none}
+.pd-tabs button{flex:none;font-size:15.5px;color:var(--muted);font-weight:600}.pd-tabs button.on{color:var(--fg)}
+.pd-up{flex:none;width:30px;height:30px;display:grid;place-items:center;color:var(--fg)}.pd-up svg{width:18px;height:18px}
+body:not(.v-home) .pro-disc{display:none!important}
+html:not([data-mode="lite"]) body.v-home #s-home{padding-bottom:70px}
+html:not([data-mode="lite"]) .nb-l{display:block;font-size:10.5px;font-weight:600;margin-top:2px}
+html:not([data-mode="lite"]) nav.bar button{grid-template-rows:auto auto;align-content:center}
+html:not([data-mode="lite"]) nav.bar .mid-btn span{width:40px;height:40px;border-radius:14px}
+.more-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 8px;margin-top:14px}
+.more-g button{display:flex;flex-direction:column;align-items:center;gap:7px;color:var(--fg)}
+.more-g span{width:54px;height:54px;border-radius:18px;background:var(--surface2);display:grid;place-items:center}.more-g span svg{width:24px;height:24px}
+.more-g em{font-style:normal;font-size:12.5px;font-weight:600}
+@media (min-width:760px){html:not([data-mode="lite"]) .pro-disc{display:none}html:not([data-mode="lite"]) body.v-home #s-home{padding-bottom:0}}
 /* Lite mod: sade arayüz */
 html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[data-mode="lite"] #trType [data-ot="limit"],html[data-mode="lite"] #trType [data-ot="stop"]{display:none!important}
 .sheet{position:fixed;left:50%;bottom:0;width:min(460px,100%);transform:translate(-50%,105%);background:var(--surface);border-radius:26px 26px 0 0;z-index:41;padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px));transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s .28s;visibility:hidden;max-height:88%;overflow:auto}
@@ -990,7 +1042,7 @@ nav.bar button svg{width:22px;height:22px}
 </style>
 
 </head>
-<body>
+<body class="v-home">
 <div class="boot" id="boot">Yükleniyor…</div>
 <div class="auth" id="auth" hidden>
   <div class="auth-in">
@@ -1046,6 +1098,13 @@ nav.bar button svg{width:22px;height:22px}
     <button class="icon-btn mode-btn" id="modeBtn" type="button" data-open="mode" aria-label="Mod seç"><span id="modeIc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3"/></svg></span></button>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Temayı değiştir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button></div>
   </div>
+  <div class="pro-top">
+    <button type="button" class="pt-av" data-go="profile" aria-label="Hesabım"><span class="nav-av" id="proAv">E</span></button>
+    <button type="button" class="pt-ic pt-bell" data-open="notifs" aria-label="Bildirimler"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="badge" id="proBadge" hidden>0</span></button>
+    <button type="button" class="pt-mode" data-open="mode"><i></i><b id="ptMode">Pro</b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+    <button type="button" class="pt-ic" data-go="search" aria-label="Ara"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+    <button type="button" class="pt-ic" id="proTheme" aria-label="Tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+  </div>
   <div class="cols h-cols"><div class="col-a">
   <div class="inst" id="inst" hidden>
     <img src="apple-touch-icon.png" alt="" width="40" height="40">
@@ -1069,6 +1128,17 @@ nav.bar button svg{width:22px;height:22px}
     <div class="bal-acts"><button class="btn btn-accent" type="button" data-open="recv">Yatır</button><button class="btn btn-ghost" type="button" data-open="withdraw">Çek</button><button class="btn btn-ghost" type="button" data-open="send">Gönder</button></div>
   </div>
 
+  <div class="pro-q">
+    <button type="button" data-open="recv"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/><circle cx="17" cy="15" r="1.2" fill="currentColor"/></svg></span><em data-en="Deposit">Para Yatır</em></button>
+    <button type="button" data-open="campaigns"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v3a4 4 0 0 1-8 0z"/><path d="M8 5H5v1a3 3 0 0 0 3 3M16 5h3v1a3 3 0 0 1-3 3M12 11v4M8.5 20h7M10 15h4l1 5H9z"/></svg><i class="pq-tag" data-en="NEW">YENİ</i></span><em data-en="Campaigns">Kampanyalar</em></button>
+    <button type="button" data-go="auction"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6M11 7l6 6M12.5 5.5l-6 6M9.5 14.5l-6 6M13.5 9.5l-4 4"/></svg><i class="pq-tag">CF</i></span><em>CF Auction</em></button>
+    <button type="button" data-open="more"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="2.6"/><circle cx="17" cy="7" r="2.6"/><circle cx="7" cy="17" r="2.6"/><circle cx="17" cy="17" r="2.6"/></svg></span><em data-en="More">Daha Fazla</em></button>
+  </div>
+  <div class="pro-w">
+    <div class="pw-card" id="pwMkt" role="button" tabindex="0"></div>
+    <div class="pw-card" id="pwBot" role="button" tabindex="0"></div>
+    <div class="pw-card" id="pwEv" role="button" tabindex="0"></div>
+  </div>
   <div id="topWrap" hidden><div class="sec-t"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.3L21 9l-5 4.4L17.5 20 12 16.6 6.5 20 8 13.4 3 9l6.4-.7z"/></svg>En iyi yatırımcılar</div>
   <div class="rail" id="topRail"></div></div>
   <div id="campWrap" hidden><div class="r-sec-h" style="margin:22px 0 10px"><div class="sec-t" style="margin:0"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10v2h3v3a4 4 0 0 1-4 4h-.3A5 5 0 0 1 13 14.9V17h3v3H8v-3h3v-2.1A5 5 0 0 1 8.3 12H8a4 4 0 0 1-4-4V5h3zm0 4H6v1a2 2 0 0 0 1 1.7zm10 0v2.7A2 2 0 0 0 18 8V7z"/></svg>Hacim kampanyaları</div><button type="button" class="r-link" data-open="campaigns">Tümü <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button></div><div id="campHome"></div></div>
@@ -1262,13 +1332,16 @@ nav.bar button svg{width:22px;height:22px}
   <button class="btn btn-buy" type="button" data-trade="buy">Al</button>
 </div>
 
+<div class="pro-disc" id="proDisc"><i class="pd-grab"></i><div class="pd-tabs">
+  <button type="button" data-pd="search" class="on" data-en="Discover">Keşfet</button><button type="button" data-pd="rank" data-en="Communities">Topluluk</button><button type="button" data-pd="news" data-en="News">Haberler</button><button type="button" data-pd="notifs" data-en="Announcements">Duyurular</button><button type="button" data-pd="auction">Auction</button></div>
+  <button type="button" class="pd-up" data-pd="rank" aria-label="Aç"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button></div>
 <nav class="bar" id="nav" aria-label="Ana gezinme">
-  <button type="button" data-go="home" class="on" aria-label="Ana sayfa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2 3 10.4V20a1 1 0 0 0 1 1h5v-6h6v6h5a1 1 0 0 0 1-1v-9.6z"/></svg></button>
-  <button type="button" data-go="search" aria-label="Keşfet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg></button>
+  <button type="button" data-go="home" class="on" aria-label="Ana sayfa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2 3 10.4V20a1 1 0 0 0 1 1h5v-6h6v6h5a1 1 0 0 0 1-1v-9.6z"/></svg><small class="nb-l" data-en="Home">Ana Sayfa</small></button>
+  <button type="button" data-go="search" aria-label="Keşfet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg><small class="nb-l" data-en="Markets">Piyasalar</small></button>
   <button type="button" class="mid-btn" data-open="swap" aria-label="Takas"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v14M3 14l4 4 4-4M17 20V6M13 10l4-4 4 4"/></svg></span></button>
-  <button type="button" data-go="rank" aria-label="Sıralama"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14.5c2.4 0 4 1.5 4.5 4"/></svg></button>
-  <button type="button" data-go="auction" aria-label="Auction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6M11 7l6 6M12.5 5.5l-6 6M9.5 14.5l-6 6M4 20.5h9M13.5 9.5l-4 4"/></svg></button>
-  <button type="button" data-go="profile" aria-label="Hesabım"><span class="nav-av" id="navAv">E</span></button>
+  <button type="button" data-go="rank" aria-label="Sıralama"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14.5c2.4 0 4 1.5 4.5 4"/></svg><small class="nb-l" data-en="Social">Topluluk</small></button>
+  <button type="button" data-go="auction" aria-label="Auction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6M11 7l6 6M12.5 5.5l-6 6M9.5 14.5l-6 6M4 20.5h9M13.5 9.5l-4 4"/></svg><small class="nb-l" data-en="Auction">Auction</small></button>
+  <button type="button" data-go="profile" aria-label="Hesabım"><span class="nav-av" id="navAv">E</span><small class="nb-l" data-en="Account">Hesap</small></button>
 </nav>
 
 <div class="upage" id="userPage" hidden role="dialog" aria-label="Kullanıcı profili">
@@ -1587,6 +1660,10 @@ nav.bar button svg{width:22px;height:22px}
   <div class="wd-cap" style="margin-top:12px"><span class="muted" id="adSumL">Toplam</span><b id="adSum">—</b></div>
   <div class="err" id="adErr"></div>
   <button class="btn btn-accent full" type="button" id="adGo">Airdrop gönder</button>
+</div>
+<div class="sheet" id="sh-more" role="dialog" aria-label="Daha fazla">
+  <div class="grab"></div><h3 data-en="More">Daha Fazla</h3>
+  <div class="more-g"><button type="button" data-open="withdraw"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg></span><em data-en="Withdraw">Çek</em></button><button type="button" data-open="send"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-8-6 16-2-7z"/></svg></span><em data-en="Send">Gönder</em></button><button type="button" data-open="airdrop"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a8 8 0 0 0-8 8h16a8 8 0 0 0-8-8zM4 11l8 9 8-9M12 11v9"/></svg></span><em data-en="Airdrop">Airdrop</em></button><button type="button" data-open="swap"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v14M3 14l4 4 4-4M17 20V6M13 10l4-4 4 4"/></svg></span><em data-en="Swap">Takas</em></button><button type="button" data-open="history"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><em data-en="History">Geçmiş</em></button><button type="button" data-open="rewards"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-3.5-5-1.2C7 8 9 8 12 8zm0 0c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z"/></svg></span><em data-en="Rewards">Ödüller</em></button><button type="button" data-go="rank" data-more><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V6M16 20v-6M20 20H3"/></svg></span><em data-en="Ranking">Sıralama</em></button><button type="button" data-go="rank" data-more><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14.5c2.4 0 4 1.5 4.5 4"/></svg></span><em data-en="Communities">Topluluk</em></button><button type="button" data-open="settings"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><em data-en="Settings">Ayarlar</em></button></div>
 </div>
 <div class="sheet" id="sh-mode" role="dialog" aria-label="Mod seç">
   <div class="grab"></div>
@@ -1977,6 +2054,7 @@ function renderList(){
   const wa=tab==="watch"?MYA.filter(a=>a.watching):[];
   $("tokList").innerHTML=(arr.length?arr.map(t=>tokRow(t,{perp:tab==="perps"})).join(""):"")+(wa.length?`<div class="sec-t" style="margin:16px 0 8px">CF Auction</div>`+wa.map(a=>{const c=aucCur(a);return `<div class="tok" data-auc="${a.id}" role="button" tabindex="0">${aucImg(a,"sm wl")}<div class="mid"><div class="sym">${esc(aT(a))}</div><div class="sub">${a.status==="ended"?L("Sona erdi","Ended"):aucLeft(a)}</div></div><div class="rt"><div class="px">${c!=null?cfT(c):cfT(a.start_price)}</div><div class="sub">${c!=null?(a.status==="ended"?L("Kazanan teklif","Winning bid"):L("Güncel teklif","Current bid")):L("Başlangıç","Starting bid")}</div></div></div>`}).join(""):"")
     ||`<div class="empty">İzleme listen boş.<br>Bir tokenin sayfasında yıldıza dokunarak ekle.</div>`;
+  $("tokList").classList.toggle("grid2",tab==="watch"&&document.documentElement.dataset.mode!=="lite"&&arr.length>0);
 }
 
 // ---------- detail
@@ -3079,7 +3157,7 @@ $("rewList").addEventListener("click",e=>{const b=e.target.closest("[data-claim]
 
 // ---------- navigation
 function go(v,tok){
-  view=v;["home","detail","search","rank","profile","auction"].forEach(s=>$("s-"+s).hidden=s!==v);
+  document.body.classList.toggle("v-home",v==="home");  view=v;["home","detail","search","rank","profile","auction"].forEach(s=>$("s-"+s).hidden=s!==v);
   $("dAct").hidden=v!=="detail";$("nav").hidden=v==="detail";
   [...$("nav").children].forEach(b=>b.classList.toggle("on",b.dataset.go===v));
   if(tok){cur=tok;renderDetail()}
@@ -3468,8 +3546,39 @@ let tt;function toast(m){$("toastT").textContent=m;$("toast").classList.add("sho
 // ---------- Mod (Pro / Lite / Web3)
 const MODE_IC={"pro": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3\"/></svg>", "lite": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 9.5L12 5l10 4.5-10 4.5z\"/><path d=\"M6 11.3V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.7\"/></svg>", "web3": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 3L3 12l8 9 8-9z\"/><path d=\"M3 12h16M11 3v18\"/><path d=\"M19.5 2.5v4M17.5 4.5h4\"/></svg>"};
 let MODE=(()=>{try{const m=localStorage.getItem("cf_mode");return m==="lite"?"lite":"pro"}catch(e){return "pro"}})();
-function applyMode(){document.documentElement.dataset.mode=MODE;$("modeIc").innerHTML=MODE_IC[MODE];
+function applyMode(){document.documentElement.dataset.mode=MODE;$("modeIc").innerHTML=MODE_IC[MODE];$("ptMode").textContent=MODE==="lite"?"Lite":"Pro";try{renderList();renderProW()}catch(e){}
   if(MODE==="lite"){if(otype!=="market"){otype="market";try{syncOType()}catch(e){}}const pt=document.querySelector('[data-tab="perps"].on');if(pt){const tk=document.querySelector('[data-tab="tokens"]');if(tk)tk.click()}}}
+// ---------- Pro ana sayfa: widget kartları, Daha Fazla, Keşfet çekmecesi
+let pwI=0;
+function pwSpark(t){const h=(t.spark7&&t.spark7.length>24?t.spark7.slice(-48).concat([t.p]):(t.hist||[]).slice(-48)).filter(x=>x>0);if(h.length<2)return"";const mn=Math.min(...h),mx=Math.max(...h)||1,W=160,H=46,up=h[h.length-1]>=h[0],col=up?"var(--up)":"var(--down)";
+  const pts=h.map((v,i)=>[(i/(h.length-1)*W).toFixed(1),(H-3-(mx===mn?.5:(v-mn)/(mx-mn))*(H-6)).toFixed(1)]),id="pwg"+Math.random().toString(36).slice(2,7);
+  return `<svg class="pw-sp" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${up?"#3ddc97":"#ff5c5c"}" stop-opacity=".35"/><stop offset="1" stop-color="${up?"#3ddc97":"#ff5c5c"}" stop-opacity="0"/></linearGradient></defs><path d="M${pts.map(p=>p.join(" ")).join("L")}L${W} ${H}L0 ${H}z" fill="url(#${id})"/><polyline points="${pts.map(p=>p.join(",")).join(" ")}" fill="none" stroke="${col}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`}
+const pwDots=(n,i)=>n>1?`<div class="pw-dots">${Array.from({length:n},(_,k)=>`<i class="${k===i%n?"on":""}"></i>`).join("")}</div>`:"";
+function renderProW(){if(document.documentElement.dataset.mode==="lite"||view!=="home"||!T.length)return;
+  const g=[...T].filter(t=>!t.custom&&t.live&&t.mc>5e8).sort((a,b)=>chg(b)-chg(a))[0],mk=["BTC","ETH","SOL"].map(find).filter(Boolean);if(g&&!mk.includes(g))mk.push(g);
+  if(mk.length){const t=mk[pwI%mk.length],c=chg(t);$("pwMkt").dataset.sym=t.s;
+    $("pwMkt").innerHTML=`<small><span>${EN?"Market":"Piyasa"} · ${t===g&&pwI%mk.length===mk.length-1?(EN?"Top gainer":"En çok yükselen"):"24s"}</span></small><div style="display:flex;align-items:center;gap:8px">${coinHTML(t)}<b class="pw-t">${t.s}/USDT</b></div><div class="pw-big">${usd(t.p,t.d)}</div><div class="${c>=0?"up":"down"}" style="font-weight:700;font-size:13.5px">${pct(c)}</div><div class="pw-row"><button type="button" class="b-up" data-pwtr="buy">${EN?"Buy":"Al"}</button><button type="button" class="b-dn" data-pwtr="sell">${EN?"Sell":"Sat"}</button></div>${pwDots(mk.length,pwI)}`}
+  const bl=["BTC","ETH","SOL"].map(find).filter(Boolean);if(bl.length){const t=bl[Math.floor(pwI/2)%bl.length],c=chg(t);$("pwBot").dataset.sym=t.s;
+    $("pwBot").innerHTML=`<small><span>${EN?"Trading Bot":"Otomatik Al-Sat"}</span></small><b class="pw-t">${t.s}/USDT</b><div style="font-size:13.5px;color:var(--muted)">${EN?"Trend · 24h":"Trend · 24s"} <b class="${c>=0?"up":"down"}" style="font-size:16px">${pct(c)}</b></div>${pwSpark(t)}${pwDots(bl.length,Math.floor(pwI/2))}`}
+  const ev=[];(st.camps||[]).filter(c=>campState(c)!=="ended").forEach(c=>ev.push({k:"camp",id:c.id,tag:c.symbol||"COINFORCE",img:"",t:c.title,sub:EN?"Volume campaign":"Hacim kampanyası"}));
+  (AUC||[]).filter(a=>a.status==="live").slice(0,4).forEach(a=>ev.push({k:"auc",id:a.id,tag:"CF AUCTION",img:logoUrl(a.image),t:aT(a),sub:(EN?"Current bid ":"Güncel teklif ")+fmtN(+(a.current_bid||a.start_price),0)+" CF"}));
+  const E=$("pwEv");delete E.dataset.camp;delete E.dataset.auc;delete E.dataset.go;
+  if(!ev.length){E.dataset.go="auction";E.innerHTML=`<span class="pw-tag"><img src="cf-token.svg?v=1" alt="">CF AUCTION</span><div class="pw-t">${EN?"Rare digital assets. Real-time bidding.":"Nadir dijital varlıklar. Canlı açık artırma."}</div><small style="margin-top:auto"><span>${EN?"Powered by CF Token":"CF Token ile"}</span></small>`;return}
+  const e=ev[Math.floor(pwI/2)%ev.length];E.dataset[e.k]=e.id;
+  E.innerHTML=`<span class="pw-tag">${e.img?`<img src="${e.img}" alt="" referrerpolicy="no-referrer">`:`<img src="cf-token.svg?v=1" alt="">`}${esc(e.tag)}</span><div class="pw-t">${esc(e.t)}</div><small style="margin-top:auto"><span>${esc(e.sub)}</span></small>${pwDots(ev.length,Math.floor(pwI/2))}`}
+setInterval(()=>{if(document.hidden||view!=="home")return;pwI++;renderProW()},5000);
+let pwAucLoaded=false;function pwLoadAuc(){if(pwAucLoaded)return;pwAucLoaded=true;loadAuctions(true).then(renderProW).catch(()=>{})}
+document.addEventListener("click",e=>{
+  const tb=e.target.closest("[data-pwtr]");if(tb){const s=$("pwMkt").dataset.sym;if(s){prev="home";go("detail",s);openTrade(tb.dataset.pwtr)}return}
+  const m=e.target.closest("#pwMkt,#pwBot");if(m&&m.dataset.sym){prev="home";go("detail",m.dataset.sym);if(m.id==="pwBot")setTimeout(()=>{const a=$("dAuto");if(a)a.scrollIntoView({behavior:"smooth",block:"center"})},300);return}
+  const pd=e.target.closest("[data-pd]");if(pd){const k=pd.dataset.pd;document.querySelectorAll(".pd-tabs [data-pd]").forEach(b=>b.classList.toggle("on",b===pd));
+    if(k==="notifs")openSheet("notifs");else if(k==="news")pdNews();else go(k);return}});
+async function pdNews(){const {data}=await sb.rpc("communities_list",{p_id:null});const n=(data||[]).find(c=>c.kind==="news");if(n)openComm(n.id);else go("rank")}
+$("sh-more").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.go){closeSheet()}});
+$("proTheme").onclick=()=>$("themeBtn").click();
+// avatar ve bildirim rozetini üst bara yansıt
+(()=>{const cp=()=>{const a=$("navAv"),p=$("proAv");if(a&&p){p.className=a.className;p.style.cssText=a.style.cssText;p.innerHTML=a.innerHTML}const b=$("notifBadge"),q=$("proBadge");if(b&&q){q.hidden=b.hidden;q.textContent=b.textContent}};
+  const mo=new MutationObserver(cp);[$("navAv"),$("notifBadge")].forEach(x=>x&&mo.observe(x,{attributes:true,childList:true,characterData:true,subtree:true}));cp()})();
 function renderMode(){document.querySelectorAll("#sh-mode .md-opt").forEach(b=>b.classList.toggle("on",b.dataset.mode===MODE))}
 $("sh-mode").addEventListener("click",e=>{const b=e.target.closest("[data-mode]");if(!b)return;const m=b.dataset.mode;
   if(m==="web3"){toast(EN?"Web3 mode is coming soon":"Web3 modu yakında geliyor");return}
@@ -3493,7 +3602,7 @@ function tick(){tickN++;
 }
 function renderTradeSoft(){const e=$("trErr").textContent;renderTrade();$("trErr").textContent=e}
 function renderSwapSoft(){const e=$("swErr").textContent;renderSwap();$("swErr").textContent=e}
-function renderAll(){renderBal();renderTop();renderCampHome();renderPromoArt();setAv($("navAv"),st.prof.avatar,initial(st.prof.name));renderList();if(view==="detail")renderDetail();if(view==="profile")renderProfile();if(view==="search")renderSearch();renderBadge()}
+function renderAll(){try{renderProW();pwLoadAuc()}catch(e){}renderBal();renderTop();renderCampHome();renderPromoArt();setAv($("navAv"),st.prof.avatar,initial(st.prof.name));renderList();if(view==="detail")renderDetail();if(view==="profile")renderProfile();if(view==="search")renderSearch();renderBadge()}
 // ---------- engine: orders, alerts, perps
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const maxLev=t=>t.maxLev||(t.mc>5e10?50:t.mc>5e9?25:10);
