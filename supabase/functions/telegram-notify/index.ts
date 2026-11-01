@@ -21,8 +21,25 @@ async function tg(method: string, body: Record<string, unknown>) {
   });
   return await r.json().catch(() => ({ ok: false }));
 }
-const send = (chat: number, text: string) =>
-  tg("sendMessage", { chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: true });
+const APP_URL = Deno.env.get("COINFORCE_APP_URL") ?? "https://coinforce.github.io/coinforce/";
+// Al/Sat butonları uygulamayı o coinin işlem ekranında açar; emir uygulamanın içinde verilir.
+function keyboard(syms?: string[] | null) {
+  const list = (syms ?? []).filter((x) => /^[A-Z0-9]{1,20}$/.test(x)).slice(0, 5);
+  if (!list.length) return undefined;
+  const link = (sym: string, side: string) => `${APP_URL}?coin=${encodeURIComponent(sym)}&side=${side}`;
+  return {
+    inline_keyboard: list.map((sym) => [
+      { text: `🟢 Al ${sym}`, url: link(sym, "buy") },
+      { text: `🔴 Sat ${sym}`, url: link(sym, "sell") },
+    ]),
+  };
+}
+const send = (chat: number, text: string, syms?: string[] | null) => {
+  const kb = keyboard(syms);
+  return tg("sendMessage", {
+    chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: true, ...(kb ? { reply_markup: kb } : {}),
+  });
+};
 
 const HELP = [
   "<b>COINFORCE bildirim botu</b>",
@@ -31,6 +48,8 @@ const HELP = [
   "• Fiyat alarmları ve uygulama bildirimleri",
   "• Günlük kar/zarar özeti",
   "• Kripto haberleri (isteğe bağlı)",
+  "",
+  "Mesajlardaki 🟢 Al / 🔴 Sat butonları COINFORCE'u o coinin işlem ekranında açar.",
   "",
   "Bağlamak için uygulamada <b>Ayarlar › Telegram bildirimleri</b> bölümündeki butona dokun.",
   "",
@@ -59,8 +78,9 @@ async function onMessage(msg: Record<string, any>) {
     return;
   }
   if (cmd === "/ozet" || cmd === "/özet" || cmd === "/durum") {
-    const { data } = await sb.rpc("tgn_summary", { p_chat: chat });
-    await send(chat, data ? String(data) : "Bu sohbet bir hesaba bağlı değil. Uygulamadan bağlayabilirsin.");
+    const { data } = await sb.rpc("tgn_summary2", { p_chat: chat });
+    if (data?.text) await send(chat, String(data.text), data.syms);
+    else await send(chat, "Bu sohbet bir hesaba bağlı değil. Uygulamadan bağlayabilirsin.");
     return;
   }
   if (cmd === "/dur" || cmd === "/stop") {
@@ -77,8 +97,8 @@ async function flush() {
     const { data, error } = await sb.rpc("tgn_outbox_take", { p_limit: 25 });
     if (error || !Array.isArray(data) || !data.length) break;
     const done: number[] = [];
-    for (const m of data as { id: number; chat_id: number; body: string }[]) {
-      const r = await send(m.chat_id, m.body);
+    for (const m of data as { id: number; chat_id: number; body: string; syms: string[] | null }[]) {
+      const r = await send(m.chat_id, m.body, m.syms);
       // 403: kullanıcı botu engelledi → tekrar deneme
       if (r?.ok || r?.error_code === 403 || r?.error_code === 400) done.push(m.id);
       if (r?.ok) sent++;

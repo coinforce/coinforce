@@ -3760,6 +3760,8 @@ $("cdGo").onclick=()=>busy($("cdGo"),async()=>{const err=$("cdErr");err.textCont
   $("cdId").value="";location.href=data.paymentPageUrl});
 // iyzico'dan dönüş
 const PAY_IN=new URLSearchParams(location.search).get("pay");
+const TG_IN=(()=>{const q=new URLSearchParams(location.search),c=(q.get("coin")||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,20),sd=q.get("side");return c?{c,sd:sd==="buy"||sd==="sell"?sd:null}:null})();
+function tgReturn(){if(!TG_IN)return;try{history.replaceState(null,"",location.pathname)}catch(e){}const t=find(TG_IN.c);if(!t){toast((EN?"Coin not found: ":"Coin bulunamadı: ")+TG_IN.c);return}prev="home";go("detail",t.s);if(TG_IN.sd)setTimeout(()=>openTrade(TG_IN.sd),250)}
 function payReturn(){if(!PAY_IN)return;try{history.replaceState(null,"",location.pathname)}catch(e){}
   toast(PAY_IN==="ok"?"Ödemen alındı, USDT hesabına geçti":PAY_IN==="wait"?"Ödemen kontrol ediliyor; onaylanınca hesabına geçecek":"Ödeme tamamlanmadı")}
 
@@ -4363,7 +4365,7 @@ async function enter(user){
   me=user;st=fresh();st.watch=loadWatch();
   $("auth").hidden=true;$("app").removeAttribute("aria-hidden");["liPw","suPw"].forEach(id=>$(id).value="");
   go("home");await loadPrices();await Promise.all([loadAll(),loadLB()]);loadTop();loadVIP();loadFX();if(!window.__fxT)window.__fxT=setInterval(loadFX,300000);subscribe();renderAll();$("boot").hidden=true;
-  if(!st.onboarded)startOnb();payReturn();
+  if(!st.onboarded)startOnb();payReturn();tgReturn();
 }
 $("loginForm").addEventListener("submit",e=>{e.preventDefault();busy($("liGo"),async()=>{
   const id=$("liId").value.trim().replace(/^@/,""),pw=$("liPw").value,err=$("liErr");
