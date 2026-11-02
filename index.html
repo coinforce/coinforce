@@ -1153,6 +1153,19 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
   .rail{flex-wrap:wrap;overflow:visible}
   .rail>.tcard{flex:1 1 calc(50% - 10px)}
 }
+/* View: çizim araçları */
+.vw-chw{position:relative}
+.vw-tl{position:absolute;left:6px;top:8px;z-index:4;display:flex;flex-direction:column;gap:1px;padding:4px;border-radius:12px;background:rgba(13,16,22,.88);border:1px solid var(--vw-line);max-height:calc(100% - 16px);overflow-y:auto;scrollbar-width:none;backdrop-filter:blur(4px)}.vw-tl::-webkit-scrollbar{display:none}
+.vw-tl>button{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:#aeb6c4}.vw-tl>button svg{width:18px;height:18px}.vw-tl>button:hover{color:#fff}.vw-tl>button.on{background:#262c38;color:#7aa2ff}
+.vw-tl .emp{display:flex;flex-wrap:wrap;gap:2px;width:128px;padding:4px;margin:2px 0;border-radius:8px;background:#161a22}.vw-tl .emp button{width:28px;height:28px;font-size:17px;border-radius:7px}.vw-tl .emp button.on{background:#262c38}
+.vw-ch.drw{cursor:crosshair}
+.drl{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}.drl svg{position:absolute;inset:0;width:100%;height:100%}
+.drl .dpt{position:absolute;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:#0d1016;border:2px solid #7aa2ff}
+.drl .dlb{position:absolute;transform:translateY(-130%);padding:1px 6px;border-radius:5px;background:#f5b942;color:#1a1204;font-size:10.5px;font-weight:700}
+.drl .dtx{position:absolute;transform:translate(-4px,-50%);padding:2px 7px;border-radius:6px;background:rgba(122,162,255,.18);border:1px solid #7aa2ff;color:#e8ebf1;font-size:12.5px;font-weight:600;white-space:nowrap}
+.drl .dem{position:absolute;transform:translate(-50%,-50%);font-size:22px;line-height:1}
+.drl .drl-m{position:absolute;transform:translate(-50%,-50%);padding:4px 9px;border-radius:8px;color:#fff;font-size:11.5px;font-weight:700;text-align:center;white-space:nowrap}
+.vw-max .vw-chw,.vw-cw:fullscreen .vw-chw{flex:1;display:flex;flex-direction:column;min-height:0}
 /* Geniş ve ultra geniş monitörler (27–34 inç, 2560x1440 / 3440x1440 / 3840x2160): arayüz büyütülür, içerik genişler */
 @media (min-width:1700px){.app{max-width:1400px}.vw-body{grid-template-columns:250px minmax(0,1fr) 380px}}
 @media (min-width:2200px){body{zoom:1.25}.app{max-width:1500px}}
@@ -4280,7 +4293,7 @@ function vwCoins(){const out=[],seen=new Set(),add=(t,pos)=>{if(t&&!seen.has(t.s
   Object.entries(st.h||{}).filter(([k,q])=>{const t=find(k);return t&&q*t.p>=1}).sort((a,b)=>b[1]*find(b[0]).p-a[1]*find(a[0]).p).forEach(([k])=>add(find(k),true));
   (st.perps||[]).forEach(x=>add(find(x.s),true));(st.watch||[]).forEach(k=>add(find(k),false));
   [...T].filter(t=>t.live).sort((a,b)=>b.mc-a.mc).slice(0,12).forEach(t=>add(t,false));return out}
-function openView(sym){const L=vwCoins();VW.sym=sym&&find(sym)?sym:(L[0]&&L[0].t.s)||"BTC";VW.tab="tr";VW.max=false;$("viewPage").hidden=false;document.documentElement.style.overflow="hidden";renderView();vwLoad();vwLoadFeed(VW.sym);
+function openView(sym){const L=vwCoins();VW.sym=sym&&find(sym)?sym:(L[0]&&L[0].t.s)||"BTC";VW.tab="tr";VW.max=false;VW.tool="cur";VW.zoom=null;VW.ruler=null;vwDrLoad(VW.sym);$("viewPage").hidden=false;document.documentElement.style.overflow="hidden";renderView();vwLoad();vwLoadFeed(VW.sym);
   clearInterval(VW.live);VW.live=setInterval(()=>{if($("viewPage").hidden){clearInterval(VW.live);return}vwTick();VW.hl++;if(VW.range!=="live"&&VW.hl%2)return;if(!VW.scrub)vwRenderLive();if(VW.hl%60===0)vwLoad(true);if(VW.hl%20===0)vwLoadFeed(VW.sym)},1000)}
 function closeView(){if($("viewPage").hidden)return;if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});$("viewPage").classList.remove("vw-max");$("viewPage").hidden=true;clearInterval(VW.live);document.documentElement.style.overflow=""}
 function vwLoad(force){const t=find(VW.sym);if(!t)return;const rk=VW.range==="live"?"1G":VW.range;if(force){const c=t.cg&&HIST[t.cg+"|"+R_DAYS[rk]];if(c)c.t=0}loadHist(t,rk);if(rk!=="1G")loadHist(t,"1G");let n=0;const iv=setInterval(()=>{n++;const c=t.cg&&HIST[t.cg+"|"+R_DAYS[rk]];if((c&&!c.busy)||n>25){clearInterval(iv);if(!$("viewPage").hidden&&!VW.scrub){vwRenderChart();vwRenderSide()}}},300)}
@@ -4310,7 +4323,7 @@ function renderView(){const t=find(VW.sym);if(!t)return;const L=vwCoins();
   <div class="vw-main">
     <div class="vw-cw" id="vwCw"><div class="vw-mx"><b>${t.s}/USDT · <span id="vwMxP"></span></b><button type="button" class="x" data-vwfs aria-label="Kapat"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
       <div class="vw-rg">${VW_R.map(([k,en])=>`<button type="button" data-vwr="${k}" class="${k===VW.range?"on":""}">${k==="live"?`<i class="vw-ld"></i>`:""}${EN?en:(k==="live"?"Canlı":k)}</button>`).join("")}<span class="sp"></span><button type="button" class="ty${VW.type==="line"?" on":""}" data-vwt="line" aria-label="Çizgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 8-9"/></svg></button><button type="button" class="ty${VW.type==="candle"?" on":""}" data-vwt="candle" aria-label="Mum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3v4M7 15v6M17 3v6M17 17v4"/><rect x="5" y="7" width="4" height="8" rx="1"/><rect x="15" y="9" width="4" height="8" rx="1"/></svg></button><button type="button" class="fs" data-vwfs aria-label="Tam ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
-      <div class="vw-ch" id="vwCh"></div></div>
+      <div class="vw-chw"><div class="vw-tl" id="vwTl">${vwToolsHTML()}</div><div class="vw-ch" id="vwCh"></div></div></div>
     <div class="vw-bt"><div class="vw-tabs">${[["tr",EN?"Trades":"İşlemler"],["pos",EN?"Positions":"Pozisyonlar"],["ord",EN?"Orders":"Emirler"],["ov",EN?"Overview":"Genel Bakış"],["news",EN?"News":"Haberler"],["tech",EN?"Technicals":"Teknikler"]].map(([k,l])=>`<button type="button" data-vwtab="${k}" class="${k===VW.tab?"on":""}">${l}</button>`).join("")}</div><div class="vw-sec" id="vwSide"></div></div></div>
   <div class="vw-side">${vwTrHTML(t)}</div></div>`;
   vwRenderLive();vwRenderSide();vwTrUpd()}
@@ -4335,7 +4348,7 @@ async function vwLoadFeed(sym){const r=await sb.rpc("trade_feed",{p_symbol:sym,p
 function vwRenderLive(){const t=find(VW.sym);if(!t)return;const c=chg(t),d=t.p-t.open,el=$("vwPx");if(el)el.innerHTML=`<div class="big">${usd(t.p,t.d)}</div><div class="chg ${c>=0?"up":"down"}">${d>=0?"+":"-"}${usd(Math.abs(d),t.d)} · ${c>=0?"+":""}${fmtN(c,2)}%</div>`;
   const st_=$("vwSt");if(st_){const it=(a,b)=>`<div class="it"><span>${a}</span><b>${b}</b></div>`;st_.innerHTML=it(EN?"Market cap":"Piyasa değeri",t.mc?big(t.mc):"—")+it(EN?"24h vol":"24s hacim",t.vol?big(t.vol):"—")+it(EN?"Supply":"Arz",t.sup?big(t.sup).replace("$",""):"—")+it(EN?"24h high":"24s yüksek",t.hi24?usd(t.hi24,t.d):"—")+it(EN?"24h low":"24s düşük",t.lo24?usd(t.lo24,t.d):"—")+it("ATH",t.ath?usd(t.ath,t.d):"—")}
   const mp=$("vwMxP");if(mp)mp.textContent=usd(t.p,t.d);vwRenderChart();vwTrUpd()}
-function vwRenderChart(){const box=$("vwCh"),t=find(VW.sym);if(!box||!t||VW.scrub)return;const pts=vwSeries(t,VW.range);if(pts.length<2){box.innerHTML=`<div class="empty" style="padding-top:120px">${EN?"Loading chart…":"Grafik yükleniyor…"}</div>`;return}
+function vwRenderChart(){const box=$("vwCh"),t=find(VW.sym);if(!box||!t||VW.scrub||VW.dg)return;let pts=vwSeries(t,VW.range);if(VW.zoom){const f=pts.filter(p=>p[0]>=VW.zoom[0]&&p[0]<=VW.zoom[1]);if(f.length>=2)pts=f}if(pts.length<2){box.innerHTML=`<div class="empty" style="padding-top:120px">${EN?"Loading chart…":"Grafik yükleniyor…"}</div>`;return}
   const W=1000,H=400,padB=22,cand=VW.type==="candle"?vwCandles(pts,Math.min(80,Math.max(24,Math.floor(pts.length/3)))):null,vals=cand?cand.flatMap(c=>[c.h,c.l]):pts.map(p=>p[1]);
   let mn=Math.min(...vals),mx=Math.max(...vals);const pad=(mx-mn)*.08||mx*.01;mn-=pad;mx+=pad;const t0=pts[0][0],t1=pts[pts.length-1][0]||t0+1,X=x=>(x-t0)/Math.max(1,t1-t0)*(W-60),Y=v=>(mx-v)/(mx-mn)*(H-padB);
   const up=pts[pts.length-1][1]>=pts[0][1],col=up?"#22c38e":"#f05252";let body="";
@@ -4343,12 +4356,54 @@ function vwRenderChart(){const box=$("vwCh"),t=find(VW.sym);if(!box||!t||VW.scru
   else{const d=pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+" "+Y(p[1]).toFixed(1)).join("");body=`<defs><linearGradient id="vwG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".35"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs><path d="${d}L${X(t1)} ${H-padB}L0 ${H-padB}Z" fill="url(#vwG)"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>`}
   const grid=[0,1,2,3,4].map(i=>{const v=mn+(mx-mn)*(i+.5)/5;return{v,y:Y(v)}}),ly=Y(t.p),dd=t.p<1?Math.max(4,t.d):2,fy=v=>fmtN(v,v<1?dd:2);
   const xt=[0,1,2,3,4].map(i=>t0+(t1-t0)*(i+.5)/5),fx=x=>{const d=new Date(x);return VW.range==="live"?d.toLocaleTimeString(LOC,{hour:"2-digit",minute:"2-digit",second:"2-digit"}):VW.range==="1G"?d.toLocaleTimeString(LOC,{hour:"2-digit",minute:"2-digit"}):d.toLocaleDateString(LOC,{day:"numeric",month:"short"})};
-  VW.geo={pts,X,Y,W,H,padB,t0,t1};
+  VW.geo={pts,X,Y,W,H,padB,t0,t1,mn,mx};
   box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${grid.map(g=>`<line x1="0" x2="${W-60}" y1="${g.y}" y2="${g.y}" stroke="#1c2029" vector-effect="non-scaling-stroke"/>`).join("")}${body}<line x1="0" x2="${W-60}" y1="${ly}" y2="${ly}" stroke="${col}" stroke-dasharray="4 5" opacity=".7" vector-effect="non-scaling-stroke"/></svg>
     ${grid.map(g=>`<span class="ax" style="top:${(g.y/H*100).toFixed(2)}%">${fy(g.v)}</span>`).join("")}<span class="last" style="top:${(ly/H*100).toFixed(2)}%;background:${col}">${fy(t.p)}</span>
-    ${xt.map(x=>`<span class="xl" style="left:${(X(x)/W*100).toFixed(2)}%">${fx(x)}</span>`).join("")}<i class="cl"></i><i class="chz"></i><div class="tip"></div>${vwBubbles(t,t0,t1,X,Y,W,H,mn,mx)}`}
+    ${xt.map(x=>`<span class="xl" style="left:${(X(x)/W*100).toFixed(2)}%">${fx(x)}</span>`).join("")}<i class="cl"></i><i class="chz"></i><div class="tip"></div><div class="drl" id="vwDr">${vwDrawHTML()}</div>${vwBubbles(t,t0,t1,X,Y,W,H,mn,mx)}`}
 function vwBubbles(t,t0,t1,X,Y,W,H,mn,mx){const f=VW.feed[t.s];if(!f)return"";const seen={};return f.rows.filter(x=>{const ts=Date.parse(x.created_at);return ts>=t0&&ts<=t1&&+x.price>=mn&&+x.price<=mx}).slice(0,40).map(x=>{const ts=Date.parse(x.created_at),sell=x.side==="sell",k=Math.round(X(ts)/14)+"_"+Math.round(Y(+x.price)/14);if(seen[k])return"";seen[k]=1;
   return `<span class="bub ${sell?"s":"b"}" title="@${esc(x.username)} · ${sell?(EN?"Sell":"Satış"):(EN?"Buy":"Alış")} ${kUsd(x.amount)}" style="left:${(X(ts)/W*100).toFixed(2)}%;top:${(Y(+x.price)/H*100).toFixed(2)}%">${avHTML({n:x.full_name||x.username,h:x.username,a:x.avatar_url})}</span>`}).join("")}
+
+// ----- Çizim araçları (imleç, trend çizgisi, yatay çizgi, kutu, fırça, metin, emoji, cetvel, yakınlaştırma, mıknatıs)
+VW.tool="cur";VW.mag=false;VW.dr={};VW.tmp=null;VW.ruler=null;VW.zoom=null;VW.dg=false;VW.emo="🚀";
+const VW_TOOLS=[["cur","İmleç","Cursor",'<path d="M5 3l14 8-6 2-3 6z"/>'],["tl","Trend çizgisi","Trend line",'<circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M6.5 17.5l11-11"/>'],["h","Yatay çizgi","Horizontal line",'<path d="M3 12h18"/><circle cx="12" cy="12" r="2"/>'],["rc","Fiyat bölgesi","Price zone",'<rect x="4" y="6" width="16" height="12" rx="1.5"/>'],["br","Fırça","Brush",'<path d="M4 17c3 3 6-6 9-2s4-8 7-6"/>'],["tx","Metin","Text",'<path d="M5 6h14M12 6v13"/>'],["em","Emoji","Emoji",'<circle cx="12" cy="12" r="9"/><path d="M8 14c1 2 7 2 8 0M9 9.5h.01M15 9.5h.01"/>'],["rl","Cetvel","Measure",'<path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/>'],["zm","Yakınlaştır","Zoom",'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/>'],["mag","Mıknatıs","Magnet",'<path d="M6 4v8a6 6 0 0 0 12 0V4h-4v8a2 2 0 0 1-4 0V4z"/>'],["del","Çizimleri sil","Clear drawings",'<path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/>']];
+const VW_EMO=["🚀","🔥","💎","⚠️","😀","🐂","🐻"];
+function vwToolsHTML(){return VW_TOOLS.map(([k,tr,en,ic])=>{const on=k==="mag"?VW.mag:k==="zm"?(VW.tool==="zm"||!!VW.zoom):VW.tool===k;
+  return `<button type="button" data-vwdr="${k}" class="${on?"on":""}" title="${EN?en:tr}" aria-label="${EN?en:tr}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></button>`+(k==="em"&&VW.tool==="em"?`<div class="emp">${VW_EMO.map(e=>`<button type="button" data-vwem="${e}"${e===VW.emo?' class="on"':""}>${e}</button>`).join("")}</div>`:"")}).join("")}
+function vwTlUpd(){const el=$("vwTl");if(el)el.innerHTML=vwToolsHTML();const c=$("vwCh");if(c)c.classList.toggle("drw",VW.tool!=="cur")}
+function vwDrLoad(sym){if(VW.dr[sym])return;try{VW.dr[sym]=JSON.parse(localStorage.getItem("cf_dr:"+sym)||"[]")}catch(e){VW.dr[sym]=[]}if(!Array.isArray(VW.dr[sym]))VW.dr[sym]=[]}
+function vwDrSave(sym){try{localStorage.setItem("cf_dr:"+sym,JSON.stringify((VW.dr[sym]||[]).slice(-60)))}catch(e){}}
+function vwPt(e){const G=VW.geo,box=$("vwCh");if(!G||!box)return null;const r=box.getBoundingClientRect();let xv=Math.min(Math.max(0,(e.clientX-r.left)/r.width),1)*G.W,yv=Math.min(Math.max(0,(e.clientY-r.top)/r.height),1)*G.H;xv=Math.min(xv,G.W-60);yv=Math.min(yv,G.H-G.padB);
+  let t=G.t0+xv/(G.W-60)*(G.t1-G.t0),v=G.mx-yv/(G.H-G.padB)*(G.mx-G.mn);
+  if(VW.mag){let b=1e18,k=null;G.pts.forEach(p=>{const d=Math.abs(G.X(p[0])-xv);if(d<b){b=d;k=p}});if(k){t=k[0];v=k[1]}}
+  return [t,v]}
+function vwDrawHTML(){const G=VW.geo;if(!G)return"";vwDrLoad(VW.sym);const T=find(VW.sym),d2=T?(T.p<1?Math.max(4,T.d):2):2,fp=v=>fmtN(v,v<1?d2:2),L=(VW.dr[VW.sym]||[]).concat(VW.tmp?[VW.tmp]:[]).concat(VW.ruler?[VW.ruler]:[]);
+  const PX=a=>(G.X(a[0])/G.W*100).toFixed(2)+"%",PY=a=>(G.Y(a[1])/G.H*100).toFixed(2)+"%",cx=a=>G.X(a[0]).toFixed(1),cy=a=>G.Y(a[1]).toFixed(1),dot=a=>`<i class="dpt" style="left:${PX(a)};top:${PY(a)}"></i>`;let svg="",html="";
+  for(const d of L){
+    if(d.k==="tl"){svg+=`<line x1="${cx(d.a)}" y1="${cy(d.a)}" x2="${cx(d.b)}" y2="${cy(d.b)}" stroke="#7aa2ff" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round"/>`;html+=dot(d.a)+dot(d.b)}
+    else if(d.k==="h"){const y=cy([0,d.v]);svg+=`<line x1="0" x2="${G.W-60}" y1="${y}" y2="${y}" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="6 4" vector-effect="non-scaling-stroke"/>`;html+=`<span class="dlb" style="left:6px;top:${PY([0,d.v])}">${fp(d.v)}</span>`}
+    else if(d.k==="rc"){const x=Math.min(G.X(d.a[0]),G.X(d.b[0])),y=Math.min(G.Y(d.a[1]),G.Y(d.b[1])),w=Math.abs(G.X(d.a[0])-G.X(d.b[0])),h=Math.abs(G.Y(d.a[1])-G.Y(d.b[1]));svg+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" fill="rgba(122,162,255,.16)" stroke="#7aa2ff" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`}
+    else if(d.k==="br"){svg+=`<polyline points="${d.p.map(q=>cx(q)+","+cy(q)).join(" ")}" fill="none" stroke="#c792ea" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`}
+    else if(d.k==="tx"){html+=`<span class="dtx" style="left:${PX(d.a)};top:${PY(d.a)}">${esc(d.s)}</span>`}
+    else if(d.k==="em"){html+=`<span class="dem" style="left:${PX(d.a)};top:${PY(d.a)}">${d.e}</span>`}
+    else if(d.k==="rl"){const dv=d.b[1]-d.a[1],pc=d.a[1]?(d.b[1]/d.a[1]-1)*100:0,ms=Math.abs(d.b[0]-d.a[0]),mm=Math.round(ms/6e4),tm=mm>=1440?Math.floor(mm/1440)+(EN?"d ":" g ")+Math.floor(mm%1440/60)+(EN?"h":" sa"):mm>=60?Math.floor(mm/60)+(EN?"h ":" sa ")+mm%60+(EN?"m":" dk"):mm+(EN?"m":" dk"),up=dv>=0,c=up?"#22c38e":"#f05252";
+      svg+=`<rect x="${Math.min(G.X(d.a[0]),G.X(d.b[0])).toFixed(1)}" y="${Math.min(G.Y(d.a[1]),G.Y(d.b[1])).toFixed(1)}" width="${Math.abs(G.X(d.a[0])-G.X(d.b[0])).toFixed(1)}" height="${Math.abs(G.Y(d.a[1])-G.Y(d.b[1])).toFixed(1)}" fill="${up?"rgba(34,195,142,.14)":"rgba(240,82,82,.14)"}" stroke="${c}" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>`;
+      html+=`<span class="drl-m" style="left:${((G.X(d.a[0])+G.X(d.b[0]))/2/G.W*100).toFixed(2)}%;top:${((G.Y(d.a[1])+G.Y(d.b[1]))/2/G.H*100).toFixed(2)}%;background:${c}">${up?"+":"-"}${fp(Math.abs(dv))} (${up?"+":""}${fmtN(pc,2)}%)<br>${tm}</span>`}
+    else if(d.k==="zm"){svg+=`<rect x="${Math.min(G.X(d.a[0]),G.X(d.b[0])).toFixed(1)}" y="0" width="${Math.abs(G.X(d.a[0])-G.X(d.b[0])).toFixed(1)}" height="${G.H-G.padB}" fill="rgba(255,255,255,.08)" stroke="#9aa4b2" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>`}}
+  return `<svg viewBox="0 0 ${G.W} ${G.H}" preserveAspectRatio="none">${svg}</svg>${html}`}
+function vwDraw(){const el=$("vwDr");if(el)el.innerHTML=vwDrawHTML()}
+function vwDrawDown(e){const a=vwPt(e);if(!a)return;const k=VW.tool;e.preventDefault();try{e.target.setPointerCapture(e.pointerId)}catch(_){}
+  if(k==="rl")VW.ruler=null;
+  if(k==="h"){vwDrLoad(VW.sym);VW.dr[VW.sym].push({k:"h",v:a[1]});vwDrSave(VW.sym);vwDrDone();return}
+  if(k==="em"){vwDrLoad(VW.sym);VW.dr[VW.sym].push({k:"em",a,e:VW.emo});vwDrSave(VW.sym);vwDrDone();return}
+  VW.dg=true;VW.ds=a;VW.tmp=k==="br"?{k:"br",p:[a]}:{k,a,b:a};if(k==="rl"){VW.ruler=VW.tmp;VW.tmp=null}vwDraw()}
+function vwDrawMove(e){if(!VW.dg)return;const b=vwPt(e);if(!b)return;if(VW.tmp){if(VW.tmp.k==="br")VW.tmp.p.push(b);else VW.tmp.b=b}else if(VW.ruler)VW.ruler.b=b;vwDraw()}
+function vwDrawUp(e){if(!VW.dg)return;VW.dg=false;const k=VW.tool,tm=VW.tmp,rl=VW.ruler;VW.tmp=null;
+  if(k==="zm"&&tm){const a=tm.a[0],b=tm.b[0];if(Math.abs(b-a)>(VW.geo.t1-VW.geo.t0)*.03){VW.zoom=[Math.min(a,b),Math.max(a,b)]}VW.tool="cur";vwTlUpd();vwRenderChart();return}
+  if(k==="rl"){if(rl&&rl.a[0]===rl.b[0]&&rl.a[1]===rl.b[1])VW.ruler=null;VW.tool="cur";vwTlUpd();vwDraw();return}
+  if(k==="tx"&&tm){const s=prompt(EN?"Text:":"Metin:","");if(s&&s.trim()){vwDrLoad(VW.sym);VW.dr[VW.sym].push({k:"tx",a:tm.a,s:s.trim().slice(0,40)});vwDrSave(VW.sym)}vwDrDone();return}
+  if(tm&&((tm.k==="tl"||tm.k==="rc")&&(tm.a[0]!==tm.b[0]||tm.a[1]!==tm.b[1])||(tm.k==="br"&&tm.p.length>2))){vwDrLoad(VW.sym);VW.dr[VW.sym].push(tm);vwDrSave(VW.sym)}
+  vwDrDone()}
+function vwDrDone(){VW.tool="cur";VW.dg=false;VW.tmp=null;vwTlUpd();vwDraw()}
 function vwScrub(e){const box=$("vwCh"),G=VW.geo;if(!box||!G)return;const r=box.getBoundingClientRect(),xr=Math.min(Math.max(0,(e.clientX-r.left)/r.width),1)*G.W;
   let k=0,b=1e18;G.pts.forEach((p,i)=>{const d=Math.abs(G.X(p[0])-xr);if(d<b){b=d;k=i}});const p=G.pts[k],px=G.X(p[0])/G.W*r.width,py=G.Y(p[1])/G.H*r.height;
   box.classList.add("on");box.querySelector(".cl").style.left=px+"px";const hz=box.querySelector(".chz");hz.style.top=py+"px";const tp=box.querySelector(".tip"),t=find(VW.sym),ch=(p[1]/G.pts[0][1]-1)*100;
@@ -4370,12 +4425,18 @@ function vwRenderSide(){const el=$("vwSide"),t=find(VW.sym);if(!el||!t)return;co
 document.addEventListener("click",e=>{if(e.target.closest("[data-view]")){openView();return}});
 $("viewPage").addEventListener("click",e=>{const g=x=>e.target.closest(x);
   if(g("[data-vwx]")){closeView();return}
-  const c=g("[data-vws]");if(c){VW.sym=c.dataset.vws;VW.max=false;VW.ot="market";renderView();vwLoad();vwLoadFeed(VW.sym);return}
-  const r=g("[data-vwr]");if(r){VW.range=r.dataset.vwr;document.querySelectorAll("[data-vwr]").forEach(b=>b.classList.toggle("on",b===r));vwRenderChart();vwLoad();return}
+  const c=g("[data-vws]");if(c){VW.sym=c.dataset.vws;VW.zoom=null;VW.ruler=null;VW.tool="cur";VW.max=false;VW.ot="market";renderView();vwLoad();vwLoadFeed(VW.sym);return}
+  const r=g("[data-vwr]");if(r){VW.range=r.dataset.vwr;VW.zoom=null;document.querySelectorAll("[data-vwr]").forEach(b=>b.classList.toggle("on",b===r));vwRenderChart();vwLoad();return}
   const ty=g("[data-vwt]");if(ty){VW.type=ty.dataset.vwt;document.querySelectorAll("[data-vwt]").forEach(b=>b.classList.toggle("on",b===ty));vwRenderChart();return}
   const tb=g("[data-vwtab]");if(tb){VW.tab=tb.dataset.vwtab;document.querySelectorAll("[data-vwtab]").forEach(b=>b.classList.toggle("on",b===tb));vwRenderSide();return}
   if(g("[data-vwfs]")){const cw=$("vwCw"),pg=$("viewPage");if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});return}if(pg.classList.contains("vw-max")){pg.classList.remove("vw-max");setTimeout(vwRenderChart,50);return}
     if(cw.requestFullscreen&&!/iPhone|iPad/.test(navigator.userAgent)){cw.requestFullscreen().then(()=>{try{screen.orientation.lock("landscape").catch(()=>{})}catch(_){}setTimeout(vwRenderChart,100)}).catch(()=>{pg.classList.add("vw-max");setTimeout(vwRenderChart,50)})}else{pg.classList.add("vw-max");setTimeout(vwRenderChart,50)}return}
+  const dr=g("[data-vwdr]");if(dr){const k=dr.dataset.vwdr;
+    if(k==="mag")VW.mag=!VW.mag;else if(k==="del"){VW.dr[VW.sym]=[];VW.ruler=null;VW.zoom=null;vwDrSave(VW.sym);VW.tool="cur";vwRenderChart()}
+    else if(k==="zm"&&VW.zoom){VW.zoom=null;VW.tool="cur";vwRenderChart()}
+    else{VW.tool=VW.tool===k?"cur":k;if(VW.tool!=="rl")VW.ruler=null}
+    vwTlUpd();vwDraw();return}
+  const em=g("[data-vwem]");if(em){VW.emo=em.dataset.vwem;vwTlUpd();return}
   const sd=g("[data-vwside]");if(sd){VW.side=sd.dataset.vwside;VW.max=false;trSide=VW.side;document.querySelectorAll("[data-vwside]").forEach(b=>b.classList.toggle("on",b===sd));$("vwPre").innerHTML=(VW.side==="buy"?[10,50,100,500]:[25,50,75,100]).map(v=>`<button type="button" data-vwp="${v}">${VW.side==="buy"?v:v+"%"}</button>`).join("");$("vwAmt").value="";$("vwErr").textContent="";vwTrUpd();return}
   const ot=g("[data-vwot]");if(ot){VW.ot=ot.dataset.vwot;document.querySelectorAll("[data-vwot]").forEach(b=>b.classList.toggle("on",b===ot));$("vwErr").textContent="";vwTrUpd();return}
   const pp=g("[data-vwp]");if(pp){const t=find(VW.sym),f=+pp.dataset.vwp;VW.max=VW.side==="sell"&&f===100;trSide=VW.side;
@@ -4394,8 +4455,9 @@ async function vwGo(){const t=find(VW.sym),err=$("vwErr");err.textContent="";trS
     r=await call("market_trade",{p_symbol:t.s,p_side:"sell",p_qty:VW.max||q>=have*.99999?have:Math.min(q,have)},"vwErr")}
   if(r.err)return;$("vwAmt").value="";VW.max=false;await loadAll();toast(`${fmtN(+r.data.qty,6)} ${t.s} ${VW.side==="buy"?(EN?"bought":"alındı"):(EN?"sold":"satıldı")}`);vwTrUpd();vwLoadFeed(t.s);if(VW.tab==="pos"||VW.tab==="ord")vwRenderSide()}
 document.addEventListener("fullscreenchange",()=>{if(!$("viewPage").hidden)setTimeout(vwRenderChart,80)});
-$("viewPage").addEventListener("pointerdown",e=>{if(!e.target.closest("#vwCh"))return;VW.scrub=true;try{e.target.setPointerCapture(e.pointerId)}catch(_){}vwScrub(e)});
-$("viewPage").addEventListener("pointermove",e=>{if(VW.scrub||(e.pointerType==="mouse"&&e.target.closest("#vwCh")))vwScrub(e)});
+$("viewPage").addEventListener("pointerdown",e=>{if(!e.target.closest("#vwCh"))return;if(VW.tool!=="cur"){vwDrawDown(e);return}VW.scrub=true;try{e.target.setPointerCapture(e.pointerId)}catch(_){}vwScrub(e)});
+$("viewPage").addEventListener("pointermove",e=>{if(VW.dg){vwDrawMove(e);return}if(VW.tool!=="cur")return;if(VW.scrub||(e.pointerType==="mouse"&&e.target.closest("#vwCh")))vwScrub(e)});
+$("viewPage").addEventListener("pointerup",vwDrawUp);$("viewPage").addEventListener("pointercancel",e=>{if(VW.dg){VW.dg=false;VW.tmp=null;VW.ruler=null;vwDraw()}});
 const vwEnd=()=>{VW.scrub=false;const b=$("vwCh");if(b)b.classList.remove("on")};$("viewPage").addEventListener("pointerup",vwEnd);$("viewPage").addEventListener("pointercancel",vwEnd);$("viewPage").addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")vwEnd()});
 addEventListener("resize",()=>{if(!$("viewPage").hidden)vwRenderChart()});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("viewPage").hidden&&!document.fullscreenElement){if($("viewPage").classList.contains("vw-max")){$("viewPage").classList.remove("vw-max");vwRenderChart()}else closeView()}});
