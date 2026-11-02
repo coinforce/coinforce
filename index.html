@@ -1153,6 +1153,11 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
   .rail{flex-wrap:wrap;overflow:visible}
   .rail>.tcard{flex:1 1 calc(50% - 10px)}
 }
+/* Geniş ve ultra geniş monitörler (27–34 inç, 2560x1440 / 3440x1440 / 3840x2160): arayüz büyütülür, içerik genişler */
+@media (min-width:1700px){.app{max-width:1400px}.vw-body{grid-template-columns:250px minmax(0,1fr) 380px}}
+@media (min-width:2200px){body{zoom:1.25}.app{max-width:1500px}}
+@media (min-width:3000px){body{zoom:1.6}.app{max-width:1800px}.vw-body{grid-template-columns:260px minmax(0,1fr) 400px}}
+@media (min-width:3700px){body{zoom:1.8}}
 .hold-dlg{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.6);backdrop-filter:blur(3px)}
 .hold-dlg.show{display:flex}
 .hold-box{width:100%;max-width:360px;background:var(--surface);color:var(--fg);border:1px solid rgba(255,107,107,.35);border-radius:22px;padding:24px 20px 18px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
