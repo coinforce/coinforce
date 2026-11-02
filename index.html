@@ -341,14 +341,14 @@ nav.bar .mid-btn span{width:46px;height:46px;border-radius:16px;background:linea
 .vip.sm svg{width:11px;height:11px}
 .p-name .vip{font-size:13px;vertical-align:4px}
 /* Kimliği doğrulanmış hesap: isim/etiket sağında yeşil yuvarlak tik */
-.ver{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px;margin-left:6px;border-radius:50%;color:#fff;background:linear-gradient(135deg,#3ddc84,#12a15f);box-shadow:0 0 0 1px rgba(61,220,132,.35),0 2px 8px rgba(18,161,95,.35);vertical-align:middle}
-.ver svg{width:12px;height:12px}
-.ver.sm{width:15px;height:15px;margin-left:5px}
-.ver.sm svg{width:10px;height:10px}
+.ver{display:inline-flex;align-items:center;justify-content:center;flex:none;width:15px;height:15px;margin-left:5px;border-radius:50%;color:#ecd08a;background:linear-gradient(135deg,#17130b,#0b0b0b);border:1px solid #a98a43;box-shadow:inset 0 0 0 1px rgba(255,240,200,.05),0 0 8px -3px #a98a43;vertical-align:middle}
+.ver svg{width:9px;height:9px}
+.ver.sm{width:12px;height:12px;margin-left:4px}
+.ver.sm svg{width:7px;height:7px}
 .post-h .ver,.tf-h .ver{margin-left:0}
-.p-name .ver{width:22px;height:22px;vertical-align:3px}
-.p-name .ver svg,.up-name .ver svg{width:14px;height:14px}
-.up-name .ver{width:21px;height:21px;vertical-align:2px}
+.p-name .ver{width:18px;height:18px;vertical-align:3px}
+.p-name .ver svg,.up-name .ver svg{width:11px;height:11px}
+.up-name .ver{width:17px;height:17px;vertical-align:2px}
 /* transfers */
 .bal{flex-wrap:wrap}
 .bal-acts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;width:100%}
@@ -2567,7 +2567,7 @@ function laurel(n){const col=["#f2b705","#b8c2cc","#d0803a"][n-1];
   return `<span class="laurel"><svg viewBox="0 0 40 30" aria-hidden="true">${leaf}<g transform="translate(40 0) scale(-1 1)">${leaf}</g></svg><b style="color:${col}">${n}</b></span>`}
 let VIP=new Set(),BOT=new Set(),CEO=new Set(),VER=new Set();
 // Kimliği doğrulanmış hesap: VIP++/CEO/BOT etiketinin sağında, etiket yoksa ismin sağında yeşil yuvarlak tik
-const verTick=(id,sm)=>VER.has(id)?`<span class="ver${sm?" sm":""}" role="img" title="${EN?"Verified":"Kimliği doğrulandı"}" aria-label="${EN?"Verified":"Kimliği doğrulandı"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12.5l3.6 3.6 7.4-8.2"/></svg></span>`:"";
+const verTick=(id,sm)=>VER.has(id)?`<span class="ver${sm?" sm":""}" role="img" title="${EN?"Verified":"Kimliği doğrulandı"}" aria-label="${EN?"Verified":"Kimliği doğrulandı"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12.5l3.6 3.6 7.4-8.2"/></svg></span>`:"";
 let VLV=new Map();
 const vlvOf=id=>me&&id===me.id?vipEff():VLV.get(id)||0;
 const vlvTag=(id,sm)=>{const n=vlvOf(id);return n?`<span class="vlv vlv-${Math.ceil(n/3)}${sm?" sm":""}" title="VIP ${n}"><i></i>VIP ${n}</span>`:""};
