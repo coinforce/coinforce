@@ -52,12 +52,14 @@ async function isInternal(req: Request): Promise<boolean> {
   return !!internalKey && safeEqual(got, internalKey);
 }
 
-// Arka planda bitirilebilecek işler (yanıt beklemesin)
-function later(p: Promise<unknown>) {
+// Arka planda bitirilebilecek işler (yanıt beklemesin). supabase-js sorgu nesneleri yalnızca "thenable"dır
+// (.catch yoktur); Promise.resolve ile gerçek Promise'e çevrilir. Buradaki bir hata webhook yanıtını asla bozmaz.
+function later(p: PromiseLike<unknown>) {
+  const pr = Promise.resolve(p).catch(() => {});
   // deno-lint-ignore no-explicit-any
   const er = (globalThis as any).EdgeRuntime;
-  if (er?.waitUntil) er.waitUntil(p.catch(() => {}));
-  else return p.catch(() => {});
+  if (er?.waitUntil) er.waitUntil(pr);
+  return pr;
 }
 
 // Bildirim kuyruğunu gönderir (tgn_tick → ?run)

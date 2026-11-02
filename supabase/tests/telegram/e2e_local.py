@@ -140,6 +140,8 @@ def main():
     # 7) Spot piyasa alımı (anında)
     usdt0 = float(db(f"select usdt from public.accounts where user_id = '{ALICE}'"))
     mock_reset(); t0 = time.time(); u = msg(T_ALICE, "/buy BTC 100"); s, _ = send(u); ms = (time.time() - t0) * 1000
+    done = db(f"select (done_at is not null)::text from public.telegram_updates where update_id = {u['update_id']}")
+    check(31, "Webhook normal güncellemede HTTP 200 döner ve güncelleme 'bitti' olarak işaretlenir", s == 200 and done == "true", f"HTTP {s} · done={done}")
     usdt1 = float(db(f"select usdt from public.accounts where user_id = '{ALICE}'"))
     btc = db(f"select coalesce(sum(qty),0) from public.holdings where user_id = '{ALICE}' and symbol = 'BTC'")
     check(7, "/buy BTC 100 anında gerçekleşir", "Alındı" in last_text() and abs((usdt0 - usdt1) - 100) < 0.01 and float(btc) > 0, f"{ms:.0f} ms, USDT {usdt0}->{usdt1}, BTC {btc}")

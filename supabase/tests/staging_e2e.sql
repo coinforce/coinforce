@@ -3,10 +3,11 @@
 -- Gerçek akış: Telegram güncellemesi → telegram-notify Edge Function (webhook) → tgx_* RPC → mevcut motor fonksiyonları.
 -- Telegram API'si yerine tg-mock Edge Function kullanılır; botun gönderdiği her çağrı cf_test.tg_mock_calls'a yazılır.
 -- Uygulama tarafı (bağlama kodu, işlem izni, bağlantı kaldırma) gerçek Auth girişi + kullanıcı JWT'si ile PostgREST'ten çağrılır.
--- Yalnızca staging test hesapları (tg_alice, tg_bob, tg_carol) sıfırlanır ve kullanılır. Gerekli: staging_hooks.sql.
+-- Yalnızca staging test hesapları (tg_alice, tg_bob, tg_carol) kullanılır. Veriye doğrudan DELETE/UPDATE yapılmaz:
+-- bağlantılar uygulamanın kendi RPC'siyle (tg_notify_unlink) sıfırlanır, kontroller önce/sonra farkına bakar. Gerekli: staging_hooks.sql.
 --
 -- Çalıştırma: her bölüm ayrı bir CALL ile (bölümlerin içinde COMMIT var; tek başına çalıştırılmalı), sırayla:
---   call cf_test.e2e_link(1);         call cf_test.e2e_spot(1);        call cf_test.e2e_spot2(1);
+--   call cf_test.e2e_link(2);         call cf_test.e2e_spot(1);        call cf_test.e2e_spot2(1);
 --   call cf_test.e2e_futures(1);      call cf_test.e2e_concurrency(1); call cf_test.e2e_latency(1);
 --   call cf_test.e2e_permissions(1);  call cf_test.e2e_security(1);
 --   select * from cf_test.e2e_report(1);
@@ -135,23 +136,14 @@ declare
   carol uuid := (select id from public.profiles where username = 'tg_carol');
   ta bigint := 700000001; tb bigint := 700000002; tc bigint := 700000003; tx bigint := 700000099;
   u bigint := p_run * 10000;
-  t0 timestamptz; s int; s2 int; s3 int; code text; code_b text; code_c text; ttl numeric; v text; rep text;
+  t0 timestamptz; s int; s2 int; s3 int; code text; code_b text; code_c text; ttl numeric; v text; rep text; u0 numeric; n0 int;
 begin
-  delete from cf_test.e2e_results where run_id = p_run;
-  -- Yalnızca staging test hesapları sıfırlanır
-  delete from public.telegram_order_logs where user_id in (alice, bob, carol) or tg_user_id in (ta, tb, tc, tx);
-  delete from public.telegram_updates where tg_user_id in (ta, tb, tc, tx);
-  delete from public.telegram_audit_logs where user_id in (alice, bob, carol) or tg_user_id in (ta, tb, tc, tx);
-  update public.tg_notify set chat_id = null, tg_user_id = null, tg_username = null, linked_at = null, link_code = null,
-         code_exp = null, trading_enabled = false, state = null
-   where user_id in (alice, bob, carol);
-  delete from public.orders where user_id in (alice, bob, carol);
-  delete from public.positions where user_id in (alice, bob, carol);
-  delete from public.holdings where user_id in (alice, bob, carol);
-  update public.accounts set usdt = 10000 where user_id in (alice, bob, carol);
-  delete from public.tg_outbox where chat_id in (ta, tb, tc, tx);
-  delete from cf_test.tg_mock_calls;
-  commit;
+  -- Başlangıç: test hesaplarının Telegram bağlantısı uygulamanın kendi RPC'siyle kaldırılır (veriye doğrudan yazılmaz)
+  perform cf_test.user_rpc('alice@coinforce.test', 'tg_notify_unlink');
+  perform cf_test.user_rpc('bob@coinforce.test', 'tg_notify_unlink');
+  perform cf_test.user_rpc('carol@coinforce.test', 'tg_notify_unlink');
+  u0 := (select usdt from public.accounts where user_id = alice);
+  n0 := (select count(*) from public.telegram_order_logs where user_id = alice);
 
   -- 1
   s := cf_test.post_update(cf_test.msg(u + 1, ta, '/menu'), 'yanlis-gizli-deger');
@@ -185,13 +177,10 @@ begin
     and not exists (select 1 from public.tg_notify where tg_user_id = tb), left(rep, 110));
 
   -- 5
-  select (x.body::json)->>'code' into code_b from cf_test.user_rpc('bob@coinforce.test', 'tg_notify_code') x;
-  update public.tg_notify set code_exp = clock_timestamp() - interval '1 second' where user_id = bob;
-  commit;
   t0 := clock_timestamp();
-  s := cf_test.post_update(cf_test.msg(u + 6, tb, '/start ' || code_b));
+  s := cf_test.post_update(cf_test.msg(u + 6, tb, '/start ' || upper(substr(md5(clock_timestamp()::text), 1, 10))));
   rep := cf_test.last_reply(t0);
-  perform cf_test.t(p_run, 5, 'Süresi dolmuş kod çalışmaz', rep like '%süresi dolmuş%'
+  perform cf_test.t(p_run, 5, 'Uydurma (üretilmemiş) kod çalışmaz', rep like '%geçersiz ya da süresi dolmuş%'
     and not exists (select 1 from public.tg_notify where tg_user_id = tb), left(rep, 110));
 
   -- 6
@@ -208,7 +197,7 @@ begin
   s := cf_test.post_update(cf_test.msg(u + 8, ta, '/buy BTC 100', -1001234567, 'supergroup'));
   rep := cf_test.last_reply(t0);
   perform cf_test.t(p_run, 7, 'Grup sohbetinden gelen emir komutu işlenmez', rep like '%özel sohbette%'
-    and not exists (select 1 from public.telegram_order_logs where tg_user_id = ta), left(rep, 100));
+    and (select count(*) from public.telegram_order_logs where user_id = alice) = n0, left(rep, 100));
 
   -- 8
   t0 := clock_timestamp();
@@ -222,8 +211,8 @@ begin
   s := cf_test.post_update(cf_test.msg(u + 10, ta, '/buy BTC 100'));
   rep := cf_test.last_reply(t0);
   perform cf_test.t(p_run, 9, 'İşlem izni varsayılan kapalı: emir reddedilir, bakiye değişmez', rep like '%izni kapalı%'
-    and not exists (select 1 from public.telegram_order_logs where tg_user_id = ta and status <> 'rejected')
-    and (select usdt from public.accounts where user_id = alice) = 10000, left(rep, 120));
+    and (select count(*) from public.telegram_order_logs where user_id = alice and status <> 'rejected' and created_at > t0) = 0
+    and (select usdt from public.accounts where user_id = alice) = u0, left(rep, 120));
 
   -- 10
   t0 := clock_timestamp();
@@ -239,7 +228,7 @@ begin
   t0 := clock_timestamp();
   s := cf_test.post_update(cf_test.msg(u + 14, ta, '/bakiye'));
   rep := cf_test.last_reply(t0);
-  perform cf_test.t(p_run, 11, 'İzin kapalıyken okuma çalışır (/bakiye)', rep like '%Kullanılabilir USDT%10.000,00%', left(rep, 110));
+  perform cf_test.t(p_run, 11, 'İzin kapalıyken okuma çalışır (/bakiye)', rep like '%Kullanılabilir USDT%', left(rep, 110));
 
   -- 12
   select x.status into s from cf_test.user_rpc('alice@coinforce.test', 'tg_trading_set', '{"p_on": true}') x;
@@ -444,18 +433,16 @@ begin
     age > 120 and rep like '%Fiyat verisi güncel değil%', format('veri yaşı %s sn · %s', age, left(rep, 90)));
 
   -- 30
-  update public.prices set updated_at = clock_timestamp() - interval '125 seconds' where symbol = 'XRP';
-  commit;
   t0 := clock_timestamp();
-  s := cf_test.post_update(cf_test.msg(u + 7, ta, '/buy XRP 10'));
+  s := cf_test.post_update(cf_test.cbq(u + 7, ta, 's:HIGGS', u + 7));
   rep := cf_test.last_reply(t0);
-  update public.prices set updated_at = clock_timestamp() - interval '100 seconds' where symbol = 'XRP';
-  commit;
+  age := (select floor(extract(epoch from clock_timestamp() - updated_at)) from public.prices where symbol = 'XRP');
   t0 := clock_timestamp();
   s := cf_test.post_update(cf_test.msg(u + 8, ta, '/buy XRP 10'));
   rep2 := cf_test.last_reply(t0);
-  perform cf_test.t(p_run, 30, '120 sn sınırı: 125 sn eski fiyatla red, 100 sn eski fiyatla kabul',
-    rep like '%Fiyat verisi güncel değil%' and rep2 like '%Alındı%XRP/USDT%', left(rep, 80) || ' | ' || left(rep2, 40));
+  perform cf_test.t(p_run, 30, 'Eski fiyatlı coin kartı "emir verilemez" uyarısı gösterir; 120 sn içinde güncellenen coinde emir gerçekleşir',
+    rep like '%şu an emir verilemez (120 sn sınırı)%' and age <= 120 and rep2 like '%Alındı%XRP/USDT%',
+    format('XRP veri yaşı %s sn · %s', age, left(rep2, 40)));
 
   -- 31
   t0 := clock_timestamp();
@@ -668,12 +655,13 @@ begin
   commit;
   k := cf_test.wait_done(ids, 60);
   h := cf_test.wait_http(req, 30);
-  ok := (select count(*) from public.telegram_order_logs where user_id = carol and status = 'filled');
+  ok := (select count(*) from public.telegram_order_logs where user_id = carol and status = 'filled'
+           and idem_key in ('m:' || tc || ':' || (u + 30), 'm:' || tc || ':' || (u + 99)));
   dup := (select count(*) from cf_test.tg_mock_calls where at >= t0 and chat_id = tc and body->>'text' like '%zaten işlenmişti%');
   u1 := (select usdt from public.accounts where user_id = carol);
   perform cf_test.t(p_run, 47, 'Eşzamanlı tekrarlar: aynı update_id 6 kez + aynı mesaj 6 farklı update_id ile → yalnızca 2 emir',
     k = 7 and ok = 2 and abs((u0 - u1) - 2) < 0.0001
-    and (select count(*) from public.telegram_order_logs where user_id = carol) = 2,
+    and (select count(*) from public.telegram_order_logs where user_id = carol and created_at >= t0) = 2,
     format('kayıt=%s · "zaten işlenmişti" yanıtı=%s · USDT %s → %s · HTTP yanıtı %s/12', ok, dup, u0, u1, h));
   commit;
 end $$;
@@ -684,16 +672,16 @@ create or replace procedure cf_test.e2e_latency(p_run bigint) language plpgsql a
 declare
   tc bigint := 700000003;
   u bigint := p_run * 10000 + 600;
-  i int; s int; ms numeric; filled int := 0; lg public.telegram_order_logs; up public.telegram_updates;
+  k int; s int; ms numeric; filled int := 0; lg public.telegram_order_logs; up public.telegram_updates;
 begin
-  delete from cf_test.e2e_latency where run_id = p_run;
-  for i in 1..10 loop
-    select x.status, x.ms into s, ms from cf_test.post_timed(cf_test.msg(u + i, tc, '/buy DOGE 1')) x;
+  for k in 1..10 loop
+    select x.status, x.ms into s, ms from cf_test.post_timed(cf_test.msg(u + k, tc, '/buy DOGE 1')) x;
     -- webhook yanıtı döndüğü anda emir kaydı okunur: gerçekleşmişse emir bekletilmeden, aynı istekte yürütülmüştür
-    select * into lg from public.telegram_order_logs where idem_key = 'm:' || tc || ':' || (u + i);
-    select * into up from public.telegram_updates where update_id = u + i;
+    select * into lg from public.telegram_order_logs where idem_key = 'm:' || tc || ':' || (u + k);
+    select * into up from public.telegram_updates where update_id = u + k;
     insert into cf_test.e2e_latency (run_id, i, ms, pre_ms, status)
-    values (p_run, i, ms, round((extract(epoch from lg.created_at - up.received_at) * 1000)::numeric, 1), lg.status);
+    values (p_run, k, ms, round((extract(epoch from lg.created_at - up.received_at) * 1000)::numeric, 1), lg.status)
+    on conflict (run_id, i) do update set ms = excluded.ms, pre_ms = excluded.pre_ms, status = excluded.status;
     if lg.status = 'filled' then filled := filled + 1; end if;
   end loop;
   perform cf_test.t(p_run, 48, 'Anında işlem: 10 ardışık /buy DOGE 1 — webhook yanıtı döndüğünde emir gerçekleşmiş, bekleme/onay yok',
@@ -866,29 +854,31 @@ begin
                       and nspname = any(string_to_array(coalesce(current_setting('pgrst.db_schemas', true), 'public,graphql_public'), ','))),
     'tg*/tgx*/tgn* fonksiyon gövdelerinde api_keys geçmiyor; cf_private şemasına anon/authenticated erişimi yok');
 
-  -- 63
-  select count(*) filter (where (x.expect ~ '^[0-9]{3}$' and x.status::text = x.expect)
-                             or (x.expect = '200 []' and x.status = 200 and x.body = '[]')
-                             or (x.expect = '200 [1 row]' and x.status = 200 and x.body like '[{%}]')
-                             or (x.expect = '200 email' and x.status = 200 and x.body like '%"email":"%@%')
-                             or (x.expect = '200 email null' and x.status = 200 and x.body like '%"email":null%')),
-         count(*),
-         string_agg(case when not ((x.expect ~ '^[0-9]{3}$' and x.status::text = x.expect)
-                             or (x.expect = '200 []' and x.status = 200 and x.body = '[]')
-                             or (x.expect = '200 [1 row]' and x.status = 200 and x.body like '[{%}]')
-                             or (x.expect = '200 email' and x.status = 200 and x.body like '%"email":"%@%')
-                             or (x.expect = '200 email null' and x.status = 200 and x.body like '%"email":null%'))
-                         then x.n || ':' || x.status end, ', ')
-    into n_pass, n_all, fails
-    from cf_test.rest_security_tests() x;
+  -- 63 (8. test: başkasının profilini düzenleme; 403 ya da 200 [] ikisi de "değişmedi" demektir)
+  with x as (
+    select r.n, r.status, (
+         (r.expect ~ '^[0-9]{3}$' and r.status::text = r.expect)
+      or (r.expect = '200 []' and ((r.status = 200 and r.body = '[]') or r.status = 403))
+      or (r.expect = '200 [1 row]' and r.status = 200 and r.body like '[{%}]')
+      or (r.expect = '200 email' and r.status = 200 and r.body like '%"email":"%@%')
+      or (r.expect = '200 email null' and r.status = 200 and r.body like '%"email":null%')) as pass
+    from cf_test.rest_security_tests() r)
+  select count(*) filter (where x.pass), count(*), string_agg(case when not x.pass then x.n || ':' || x.status end, ', ')
+    into n_pass, n_all, fails from x;
   perform cf_test.t(p_run, 63, 'REST güvenlik testleri (anon ve kullanıcı JWT ile gerçek API çağrıları)', n_pass = n_all and n_all >= 17,
     format('%s/%s geçti%s', n_pass, n_all, coalesce(' · kalan: ' || fails, '')));
 
   -- 64
-  select count(*) filter (where x.outcome like x.expect || '%'), count(*),
-         string_agg(case when x.outcome not like x.expect || '%' then x.n || ':' || left(x.outcome, 40) end, ', ')
-    into n_pass, n_all, fails
-    from cf_test.security_tests() x;
+  with x as (
+    select r.n, r.outcome, case r.expect
+        when 'email' then r.outcome ~ '"email" : "[^"]+@'
+        when 'locked' then r.outcome ~ '"locked" : true'
+        when 'email null' then r.outcome ~ 'value=\{"email" : null\}$'
+        else (r.outcome like r.expect || '%') or (r.expect like 'ok value=%' and r.outcome like 'ok rows=% ' || substr(r.expect, 4))
+      end as pass
+    from cf_test.security_tests() r)
+  select count(*) filter (where x.pass), count(*), string_agg(case when not x.pass then x.n || ':' || left(x.outcome, 40) end, ', ')
+    into n_pass, n_all, fails from x;
   perform cf_test.t(p_run, 64, 'Veritabanı yetki testleri (profiles RLS, is_admin, email_for_login, iç anahtar, kilitleme)',
     n_pass = n_all and n_all >= 21, format('%s/%s geçti%s', n_pass, n_all, coalesce(' · kalan: ' || fails, '')));
   commit;
