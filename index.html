@@ -1171,6 +1171,34 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
 .vw-sty .sw{display:grid;grid-template-columns:repeat(4,22px);gap:6px}.vw-sty .sw button{width:22px;height:22px;border-radius:50%;border:2px solid transparent;box-shadow:0 0 0 1px rgba(255,255,255,.2)}.vw-sty .sw button.on{border-color:#0d1016;box-shadow:0 0 0 2px #fff}
 .vw-sty .wd{display:flex;gap:6px;align-items:center}.vw-sty .wd button{flex:1;height:28px;border-radius:8px;background:#161a22;display:grid;place-items:center;color:#aeb6c4;font-size:15px;min-width:28px}.vw-sty .wd button.on{background:#262c38;color:#7aa2ff}.vw-sty .wd i{display:block;border-radius:50%;background:currentColor}
 .vw-tl>button:disabled{opacity:.3}.vw-tl>button.dl:not(:disabled):hover{color:#f05252}
+.vip-card{position:relative;display:block;width:100%;text-align:left;margin:16px 0 4px;padding:20px 20px 16px;border-radius:22px;background:linear-gradient(135deg,#1b1a17,#121212);border:1px solid #6b5a33;color:#f1dba0;overflow:hidden}
+.vip-card::after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(240,210,138,.16),transparent 70%)}
+.vip-card h4{margin:0;font-size:21px;font-weight:600;color:#f0d28a;display:flex;align-items:center;gap:8px}.vip-card h4 svg{width:18px;height:18px}
+.vip-card p{margin:8px 0 0;color:#fff;font-size:15px}.vip-card .vc-n{margin-top:12px;font-size:22px;color:#f0d28a}.vip-card .vc-n small{color:#777;font-size:20px}
+.vip-card .vc-bar{height:6px;border-radius:4px;background:#2a2a2a;margin:8px 0 14px;overflow:hidden}.vip-card .vc-bar i{display:block;height:100%;background:linear-gradient(90deg,#c9a24d,#f0d28a);border-radius:4px}
+.vip-card .vc-f{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;color:#fff}.vip-card .vc-f span{display:flex;align-items:center;gap:6px}.vip-card .vc-f svg{width:17px;height:17px;color:#f0d28a;flex:none}
+.vip-card .vc-x{position:absolute;right:12px;top:12px;width:30px;height:30px;display:grid;place-items:center;color:#8a8a8a;z-index:1}.vip-card .vc-x svg{width:20px;height:20px}
+.vipp{position:fixed;inset:0;z-index:38;background:#0c0c0c;color:#eee;overflow-y:auto;overscroll-behavior:contain;--g:#f0d28a;--g2:#c9a24d}
+.vipp[hidden]{display:none}.vipp .vp-in{max-width:560px;margin:0 auto;padding-bottom:40px}
+.vipp .vp-top{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:rgba(12,12,12,.92);backdrop-filter:blur(8px);font-weight:600}
+.vipp .vp-top button{width:36px;height:36px;display:grid;place-items:center;color:#fff}.vipp .vp-top svg{width:22px;height:22px}
+.vipp .vp-hero{padding:40px 24px 28px;text-align:center;background:radial-gradient(120% 80% at 50% 0,#6b4a12 0,#2a1d08 45%,#0c0c0c 100%)}
+.vipp .vp-brand{font-size:13px;letter-spacing:.18em;font-weight:700;color:#f6e3b0}.vipp .vp-hero h1{margin:22px 0 14px;font-size:34px;line-height:1.2;font-weight:700;color:#fff}
+.vipp .vp-hero p{margin:0 auto;color:#e8e0cc;font-size:15px;max-width:380px}.vipp .vp-hero p b{color:var(--g)}
+.vipp .vp-bar{display:flex;align-items:center;gap:10px;margin:22px auto 6px;max-width:380px;font-size:12.5px;color:#cfc6b0}.vipp .vp-bar div{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden}.vipp .vp-bar i{display:block;height:100%;background:var(--g)}
+.vipp .gb{display:block;width:100%;max-width:310px;margin:14px auto 0;padding:14px;border-radius:30px;font-weight:700;font-size:15px;background:linear-gradient(180deg,#f3d995,#c9a24d);color:#2a1d08}
+.vipp .gb.o{background:none;border:1px solid var(--g2);color:var(--g)}
+.vipp .vp-acc{display:flex;align-items:center;gap:12px;padding:22px 18px 14px}.vipp .vp-acc .t{flex:1;min-width:0}.vipp .vp-acc b{display:block;font-size:16px;color:#fff}.vipp .vp-acc small{color:#777;font-size:12.5px}
+.vipp .vp-hex{width:62px;height:70px;flex:none;display:grid;place-items:center;text-align:center;font-size:12px;color:#ddd;background:linear-gradient(160deg,#3a3a3a,#1a1a1a);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}.vipp .vp-hex em{font-style:normal;font-size:10px;color:#888;display:block}
+.vipp .vp-note{margin:0 14px;padding:10px 14px;border-radius:10px;background:#16181f;display:flex;justify-content:space-between;font-size:12.5px;color:#9fb0ff}
+.vipp h3{margin:26px 18px 12px;font-size:15px;font-weight:700;color:#fff}
+.vipp .vp-m{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;padding:0 18px}.vipp .vp-m span{display:block;font-size:12.5px;color:#777}.vipp .vp-m b{font-size:16px;color:#fff}
+.vipp .vp-core{text-align:center;font-size:24px;font-weight:700;margin:40px 0 18px;color:#fff}
+.vipp .vp-c{margin:0 14px 12px;padding:18px;border-radius:16px;background:linear-gradient(135deg,#1c1c1c,#121212);border:1px solid #232323}.vipp .vp-c b{font-size:17px;color:#fff;display:flex;align-items:center;gap:6px}.vipp .vp-c b i{color:#f5a623;font-style:normal;font-size:12px}.vipp .vp-c p{margin:6px 0 0;color:#b7b7b7;font-size:13.5px}
+.vipp .vp-up{text-align:center;font-size:22px;line-height:1.4;font-weight:700;margin:44px 18px 18px;color:#fff}.vipp .vp-up b{color:var(--g)}
+.vipp .vp-tb{margin:0 14px;border:1px solid #3a3320;border-radius:12px;overflow:hidden;font-size:13px}.vipp .vp-tb div{display:grid;grid-template-columns:.8fr 1.2fr 1fr;padding:10px 12px;text-align:center;border-top:1px solid #1d1d1d}.vipp .vp-tb div:first-child{background:#151515;border:0;font-weight:700;color:#fff}.vipp .vp-tb div.me{background:rgba(240,210,138,.1);color:var(--g)}
+.vipp .vp-soon{margin:10px 18px 0;font-size:12px;color:#8a8a8a;text-align:center}
+@media (min-width:900px){.vipp .vp-in{max-width:680px}}
 /* Geniş ve ultra geniş monitörler (27–34 inç, 2560x1440 / 3440x1440 / 3840x2160): arayüz büyütülür, içerik genişler */
 @media (min-width:1700px){.app{max-width:1400px}.vw-body{grid-template-columns:250px minmax(0,1fr) 380px}}
 @media (min-width:2200px){body{zoom:1.25}.app{max-width:1500px}}
@@ -1579,6 +1607,7 @@ nav.bar button svg{width:22px;height:22px}
     <span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2zM5 9v10h14V9zm2 2h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2H7zm4 0h2v2h-2z"/></svg><span id="pJoined"></span></span>
     <span id="pVolWrap" hidden title="Sadece sen görürsün"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 20V10h3v10zm6.5 0V4h3v16zM17 20v-7h3v7z"/></svg><span id="pVol"></span><svg viewBox="0 0 24 24" fill="currentColor" style="width:13px;height:13px;opacity:.7"><path d="M6 10V8a6 6 0 0 1 12 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h8V8a4 4 0 0 0-8 0z"/></svg></span>
   </div>
+  <div id="vipCardBox"></div>
   <div class="p-port">
     <div class="p-port-head">
       <div><div class="p-lbl">Pozisyon değeri</div><div class="p-val" id="pVal">$0<span>,00</span></div><div class="p-chg" id="pChg">--</div></div>
@@ -1635,6 +1664,7 @@ nav.bar button svg{width:22px;height:22px}
   </div>
 </div>
 
+<div class="vipp" id="vipPage" hidden role="dialog" aria-label="VIP"></div>
 <div class="vw" id="viewPage" hidden role="dialog" aria-label="View"><div id="vwIn"></div></div>
 <div class="upage" id="aucPage" hidden role="dialog" aria-label="CF Auction">
   <div class="upage-in"><div class="back-row"><button class="icon-btn" type="button" id="aucBack" aria-label="Geri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div><div id="aucBody"></div></div>
@@ -2784,7 +2814,7 @@ function banCss(b){b=String(b||"");const m=b.match(/^cat:([a-z0-9]+)$/);if(m&&BA
   if(/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(b))return `background:#131824 url("${b}") center/cover no-repeat`;return""}
 function bannerFor(id,uname){const n=String(uname||"").toLowerCase();return CEO.has(id)||n==="coinforcedeluxe"?"ban-ceo":BOT.has(id)||n==="coinforce_bot"?"ban-bot":n==="egmnnarsln"?"ban-partner":n==="pedrigavifrenki"?"ban-wheel":""}
 let paAt=0;
-function renderProfile(){if(me&&Date.now()-paAt>15000){paAt=Date.now();loadPA(me.id,"pAucs")}const bn=me?bannerFor(me.id,st.prof.handle):"";$("pBand").classList.toggle("ban-ceo",bn==="ban-ceo");$("pBand").classList.toggle("ban-partner",bn==="ban-partner");$("pBand").classList.toggle("ban-wheel",bn==="ban-wheel");$("pBand").style.cssText=banCss(st.banner);setTb($("pBand"),st.banner);if($("pFrame").dataset.k!==(st.frame||"")){$("pFrame").dataset.k=st.frame||"";$("pFrame").className="fr"+(st.frame?" fr-"+st.frame:"");$("pFrame").innerHTML=frameSVG(st.frame)}$("pAdmin").hidden=!st.admin;$("setAdmin").hidden=!st.admin;
+function renderProfile(){vipCardUpd();if(me&&Date.now()-paAt>15000){paAt=Date.now();loadPA(me.id,"pAucs")}const bn=me?bannerFor(me.id,st.prof.handle):"";$("pBand").classList.toggle("ban-ceo",bn==="ban-ceo");$("pBand").classList.toggle("ban-partner",bn==="ban-partner");$("pBand").classList.toggle("ban-wheel",bn==="ban-wheel");$("pBand").style.cssText=banCss(st.banner);setTb($("pBand"),st.banner);if($("pFrame").dataset.k!==(st.frame||"")){$("pFrame").dataset.k=st.frame||"";$("pFrame").className="fr"+(st.frame?" fr-"+st.frame:"");$("pFrame").innerHTML=frameSVG(st.frame)}$("pAdmin").hidden=!st.admin;$("setAdmin").hidden=!st.admin;
   const p=st.prof,ini=(p.name||"?").trim().charAt(0).toLocaleUpperCase("tr-TR")||"?";
   setAv($("pAv"),st.prof.avatar,ini);setAv($("navAv"),st.prof.avatar,ini);
   $("pName").innerHTML=esc(p.name)+(me?vipTag(me.id):"");$("pFollowing").textContent=cnt(st.friends.length+(p.gb||0));$("pFollowers").textContent=cnt((st.followers||0)+(p.fb||0));$("pHandle").textContent="@"+p.handle;
@@ -4368,6 +4398,46 @@ function vwRenderChart(){const box=$("vwCh"),t=find(VW.sym);if(!box||!t||VW.scru
 function vwBubbles(t,t0,t1,X,Y,W,H,mn,mx){const f=VW.feed[t.s];if(!f)return"";const seen={};return f.rows.filter(x=>{const ts=Date.parse(x.created_at);return ts>=t0&&ts<=t1&&+x.price>=mn&&+x.price<=mx}).slice(0,40).map(x=>{const ts=Date.parse(x.created_at),sell=x.side==="sell",k=Math.round(X(ts)/14)+"_"+Math.round(Y(+x.price)/14);if(seen[k])return"";seen[k]=1;
   return `<span class="bub ${sell?"s":"b"}" title="@${esc(x.username)} · ${sell?(EN?"Sell":"Satış"):(EN?"Buy":"Alış")} ${kUsd(x.amount)}" style="left:${(X(ts)/W*100).toFixed(2)}%;top:${(Y(+x.price)/H*100).toFixed(2)}%">${avHTML({n:x.full_name||x.username,h:x.username,a:x.avatar_url})}</span>`}).join("")}
 
+
+// ----- VIP: SOL tutarak seviye (profil kartı + VIP sayfası). Seviye yalnızca cüzdandaki SOL miktarından hesaplanır.
+const VIP_SOL=[1e3,2500,5e3,1e4,2e4,35e3,5e4,75e3,1e5,15e4,25e4,5e5],VIP_BASE=.08;
+const vipHave=()=>st.h&&st.h.SOL||0,vipLv=()=>{const h=vipHave();let n=0;VIP_SOL.forEach((v,i)=>{if(h>=v)n=i+1});return n};
+const vipFmt=v=>fmtN(v,v>=1e3||v%1===0?0:2),vipDisc=n=>Math.round(n*75/12);
+const VIP_IC={pct:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/></svg>',db:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="11" cy="6" rx="7" ry="3"/><path d="M4 6v6c0 1.7 3.1 3 7 3M4 12v6c0 1.7 3.1 3 7 3M18 15v6M15 18h6"/></svg>',cr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l4.5 4L12 5l4.5 8L21 9l-2 10H5z"/></svg>',x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
+function vipCardUpd(){const box=$("vipCardBox");if(!box)return;let hid=false;try{hid=!!(me&&localStorage.getItem("cf_vipx:"+me.id))}catch(e){}
+  if(!me||hid){box.innerHTML="";return}
+  const lv=vipLv(),have=vipHave(),nx=VIP_SOL[lv],pc=nx?Math.min(100,have/nx*100):100;
+  const key=lv+"|"+Math.floor(have*100)+"|"+EN;if(box.dataset.k===key)return;box.dataset.k=key;
+  box.innerHTML=`<div class="vip-card" role="button" tabindex="0" data-vip><button type="button" class="vc-x" data-vipx aria-label="${EN?"Close":"Kapat"}">${VIP_IC.x}</button>
+   <h4>${lv?`VIP ${lv}`:EN?"Unlock COINFORCE VIP":"COINFORCE VIP'in kilidini aç"} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></h4>
+   <p>${nx?(EN?`Hold ${vipFmt(nx-have)} more SOL to unlock VIP ${lv+1}`:`VIP ${lv+1} için ${vipFmt(nx-have)} SOL daha tut`):(EN?"You reached the top level":"En üst seviyedesin")}</p>
+   <div class="vc-n">${vipFmt(have)} <small>${nx?"/"+vipFmt(nx)+" SOL":"SOL"}</small></div><div class="vc-bar"><i style="width:${pc}%"></i></div>
+   <div class="vc-f"><span>${VIP_IC.pct}${EN?"Fee Discounts":"Komisyon indirimi"}</span><span>${VIP_IC.db}${EN?"Higher Returns":"Ek avantajlar"}</span><span>${VIP_IC.cr}${EN?"Tiered Privileges":"Kademeli ayrıcalıklar"}</span></div></div>`}
+function vipPageHTML(){const lv=vipLv(),have=vipHave(),nx=VIP_SOL[lv],pc=nx?Math.min(100,have/nx*100):100,p=st.prof||{},T=(a,b)=>EN?b:a;
+  const rows=VIP_SOL.map((v,i)=>{const n=i+1,d=vipDisc(n);return `<div class="${n===lv?"me":""}"><span>VIP ${n}</span><span>${vipFmt(v)} SOL</span><span>${fmtN(VIP_BASE*(1-d/100),3)}% <small>(-${d}%)</small></span></div>`}).join("");
+  const cards=[[T("Çerçeve ve banner ayrıcalıkları","Frames & banners"),T("İşlem hacmine göre 10 kademede profil çerçevesi ve banner aç.","Unlock 10 tiers of profile frames and banners by trading volume.")],[T("Kampanya ödülleri","Campaign rewards"),T("Kampanyalarda hacmine göre kademeli ödüller kazan.","Earn tiered rewards in campaigns based on your volume.")],[T("Doğrulanmış hesap","Verified account"),T("Kimliğini doğrula, ismin yanında yeşil tik ve çekim hakkı kazan.","Verify your identity to get the green tick and withdrawals.")],[T("VIP++ rozeti","VIP++ badge"),T("Seçkin hesaplara yönetim tarafından verilen özel rozet.","A special badge granted by the team to standout accounts.")]].map(c=>`<div class="vp-c"><b>${c[0]} <i>›</i></b><p>${c[1]}</p></div>`).join("");
+  return `<div class="vp-in"><div class="vp-top"><button type="button" data-vipclose aria-label="${T("Geri","Back")}">${BACK}</button><span>${T("VIP Ayrıcalıkları","VIP Privileges")}</span><span style="width:36px"></span></div>
+  <div class="vp-hero"><div class="vp-brand">COINFORCE · VIP</div><h1>${T("Alım Satımın Ötesinde,<br>Ayrıcalığa","Beyond Trading,<br>Into Privilege")}</h1>
+   <p>${nx?T(`VIP ${lv+1} ve özel avantajlar için <b>${vipFmt(nx-have)} SOL</b> daha tut.`,`Hold <b>${vipFmt(nx-have)} SOL</b> more to unlock VIP ${lv+1} and exclusive benefits.`):T("En üst seviyedesin.","You are at the top level.")}</p>
+   <div class="vp-bar"><div><i style="width:${pc}%"></i></div><span>${vipFmt(have)}${nx?"/"+vipFmt(nx):""} SOL</span></div>
+   <button type="button" class="gb" data-vipbuy>${T("SOL Al","Buy SOL")}</button></div>
+  <div class="vp-acc">${avHTML({n:p.name||"?",h:p.handle||"",a:p.avatar},"width:46px;height:46px;font-size:18px")}<div class="t"><b>${esc(p.name||"")}</b><small>${T(`Şu anki seviyen VIP ${lv}.`,`Your current level is VIP ${lv}.`)}</small></div><div class="vp-hex"><span>${lv?"VIP "+lv:T("Kilitli","Locked")}<em>${lv}</em></span></div></div>
+  <div class="vp-note"><span>${T("VIP ayrıcalıklarına eriş","Become a VIP to access benefits")}</span><span>${VIP_IC.pct}</span></div>
+  <h3>${T("VIP Ayrıcalıkları","VIP Privileges")}</h3>
+  <div class="vp-m"><div><span>${T("SOL Bakiyen","SOL Holdings")}</span><b>${vipFmt(have)} SOL</b></div><div style="text-align:right"><span>${T("Toplam işlem hacmi","Total trading volume")}</span><b>${usd(myVol(),0)}</b></div><div><span>${T("Sonraki seviye","Next level")}</span><b>${nx?"VIP "+(lv+1):"—"}</b></div><div style="text-align:right"><span>${T("Kalan","Remaining")}</span><b>${nx?vipFmt(nx-have)+" SOL":"—"}</b></div></div>
+  <div class="vp-core">${T("Temel Ayrıcalıklar","Core Privileges")}</div>${cards}
+  <div class="vp-up">${T("VIP Seviyeni Yükselt!<br>Komisyonda <b>%75</b>'e Kadar İndirim","Upgrade Your VIP Level!<br>Unlock Up to a <b>75%</b> Fee Discount")}</div>
+  <div class="vp-tb"><div><span>${T("Seviye","Level")}</span><span>${T("Gereken SOL","SOL required")}</span><span>${T("Komisyon","Fee")}</span></div>${rows}</div>
+  <p class="vp-soon">${T("Komisyon indirimleri yakında etkinleşecek; şu an tüm işlemlerde %0,08 uygulanır.","Fee discounts are coming soon; the standard 0.08% currently applies to all trades.")}</p>
+  <div class="vp-up" style="font-size:20px">${T("Alım Satımın Ötesinde, Ayrıcalığa","Beyond Trading, Into Privilege")}</div><button type="button" class="gb" data-vipbuy>${T("Şimdi Yükselt","Upgrade Now")}</button></div>`}
+function openVip(){const pg=$("vipPage");pg.innerHTML=vipPageHTML();pg.hidden=false;pg.scrollTop=0;document.body.style.overflow="hidden"}
+function closeVip(){$("vipPage").hidden=true;document.body.style.overflow=""}
+document.addEventListener("click",e=>{const g=q=>e.target.closest(q);
+  if(g("[data-vipx]")){try{localStorage.setItem("cf_vipx:"+me.id,"1")}catch(_){}$("vipCardBox").innerHTML="";e.stopPropagation();return}
+  if(g("[data-vip]")){openVip();return}
+  if(g("[data-vipclose]")){closeVip();return}
+  if(g("[data-vipbuy]")){closeVip();prev="profile";go("detail","SOL");openTrade("buy")}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("vipPage").hidden)closeVip();if((e.key==="Enter"||e.key===" ")&&e.target.matches&&e.target.matches(".vip-card")){e.preventDefault();openVip()}});
 // ----- Çizim araçları: imleç, trend çizgisi, yatay çizgi, kutu, kalem, fosforlu kalem, metin, emoji, cetvel, silgi,
 // yakınlaştırma, mıknatıs, geri al / ileri al. Çizimler fiyat/zaman koordinatında tutulur; kullanıcı silene kadar kalıcıdır
 // (tarayıcıda ve hesapta; her cihazda aynı).
