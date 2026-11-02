@@ -340,6 +340,15 @@ nav.bar .mid-btn span{width:46px;height:46px;border-radius:16px;background:linea
 .vip.sm{font-size:10px;padding:2px 6px 2px 4px;margin-left:6px;border-radius:6px}
 .vip.sm svg{width:11px;height:11px}
 .p-name .vip{font-size:13px;vertical-align:4px}
+/* Kimliği doğrulanmış hesap: isim/etiket sağında yeşil yuvarlak tik */
+.ver{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px;margin-left:6px;border-radius:50%;color:#fff;background:linear-gradient(135deg,#3ddc84,#12a15f);box-shadow:0 0 0 1px rgba(61,220,132,.35),0 2px 8px rgba(18,161,95,.35);vertical-align:middle}
+.ver svg{width:12px;height:12px}
+.ver.sm{width:15px;height:15px;margin-left:5px}
+.ver.sm svg{width:10px;height:10px}
+.post-h .ver,.tf-h .ver{margin-left:0}
+.p-name .ver{width:22px;height:22px;vertical-align:3px}
+.p-name .ver svg,.up-name .ver svg{width:14px;height:14px}
+.up-name .ver{width:21px;height:21px;vertical-align:2px}
 /* transfers */
 .bal{flex-wrap:wrap}
 .bal-acts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;width:100%}
@@ -2445,9 +2454,12 @@ function myPnl(){const mine=me&&LB.find(x=>x.id===me.id);return mine?mine.g:0}
 function laurel(n){const col=["#f2b705","#b8c2cc","#d0803a"][n-1];
   const leaf=`<g fill="${col}"><path d="M8 26c-4-3-5.5-8-4-13 1 4 3 7 6 9z"/><path d="M5 12c-.5-3 .5-6 3-8 0 3-.5 5-2 7z"/><path d="M4.5 18c-2-1-3-3.5-3-6 1.5 1 2.5 3 3.5 5z"/></g>`;
   return `<span class="laurel"><svg viewBox="0 0 40 30" aria-hidden="true">${leaf}<g transform="translate(40 0) scale(-1 1)">${leaf}</g></svg><b style="color:${col}">${n}</b></span>`}
-let VIP=new Set(),BOT=new Set(),CEO=new Set();
-const vipTag=(id,sm)=>CEO.has(id)?`<span class="ceo-tag${sm?" sm":""}" title="COINFORCE CEO"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>CEO</span>`:BOT.has(id)?`<span class="bot-tag${sm?" sm":""}" title="Otomatik işlem yapan bot hesabı">🤖 BOT</span>`:VIP.has(id)?`<span class="vip${sm?" sm":""}" title="Yönetici"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>VIP++</span>`:"";
-async function loadVIP(){loadFrames();sb.rpc("ceo_users").then(({data,error})=>{if(!error&&Array.isArray(data)&&data.length){CEO=new Set(data.map(x=>typeof x==="string"?x:x.ceo_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&CEO.has(userData.id))renderUser();if(view==="profile")renderProfile()}});sb.rpc("bot_users").then(({data,error})=>{if(!error&&Array.isArray(data)&&data.length){BOT=new Set(data.map(x=>typeof x==="string"?x:x.bot_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&BOT.has(userData.id))renderUser()}});const {data,error}=await sb.rpc("vip_users");if(!error&&Array.isArray(data)){VIP=new Set(data.map(x=>typeof x==="string"?x:x.vip_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank()}}
+let VIP=new Set(),BOT=new Set(),CEO=new Set(),VER=new Set();
+// Kimliği doğrulanmış hesap: VIP++/CEO/BOT etiketinin sağında, etiket yoksa ismin sağında yeşil yuvarlak tik
+const verTick=(id,sm)=>VER.has(id)?`<span class="ver${sm?" sm":""}" role="img" title="${EN?"Verified":"Kimliği doğrulandı"}" aria-label="${EN?"Verified":"Kimliği doğrulandı"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12.5l3.6 3.6 7.4-8.2"/></svg></span>`:"";
+const vipTag=(id,sm)=>(CEO.has(id)?`<span class="ceo-tag${sm?" sm":""}" title="COINFORCE CEO"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>CEO</span>`:BOT.has(id)?`<span class="bot-tag${sm?" sm":""}" title="Otomatik işlem yapan bot hesabı">🤖 BOT</span>`:VIP.has(id)?`<span class="vip${sm?" sm":""}" title="Yönetici"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>VIP++</span>`:"")+verTick(id,sm);
+async function loadVER(){const {data,error}=await sb.rpc("verified_users");if(error||!Array.isArray(data))return;VER=new Set(data.map(x=>typeof x==="string"?x:x.verified_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&VER.has(userData.id))renderUser();if(view==="profile")renderProfile()}
+async function loadVIP(){loadFrames();loadVER();sb.rpc("ceo_users").then(({data,error})=>{if(!error&&Array.isArray(data)&&data.length){CEO=new Set(data.map(x=>typeof x==="string"?x:x.ceo_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&CEO.has(userData.id))renderUser();if(view==="profile")renderProfile()}});sb.rpc("bot_users").then(({data,error})=>{if(!error&&Array.isArray(data)&&data.length){BOT=new Set(data.map(x=>typeof x==="string"?x:x.bot_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&BOT.has(userData.id))renderUser()}});const {data,error}=await sb.rpc("vip_users");if(!error&&Array.isArray(data)){VIP=new Set(data.map(x=>typeof x==="string"?x:x.vip_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank()}}
 const safeUrl=u=>/^https:\/\//.test(u||"")?String(u).replace(/"/g,"%22"):"";
 let FRM={};const frOf=h=>FRM[String(h||"").toLowerCase()]||"",frIn=h=>{const k=frOf(h);return k?`<span class="fr fr-${k}">${frameSVG(k)}</span>`:""};
 const avHTML=(p,style="")=>safeUrl(p.a)?`<span class="av av-photo${frOf(p.h)?" has-fr":""}" style="${style}"><img class="av-img" src="${safeUrl(p.a)}" alt="" decoding="async">${frIn(p.h)}</span>`:`<span class="av av-g${frOf(p.h)?" has-fr":""}" style="background-color:${colorFor(p.h)};${style}">${esc(initial(p.n))}${frIn(p.h)}</span>`;
@@ -3999,13 +4011,15 @@ let KYC=null;
 const KYC_ST={none:["Doğrulanmadı","Not verified"],pending:["İncelemede","In review"],approved:["Doğrulandı ✓","Verified ✓"],rejected:["Reddedildi","Rejected"]};
 function kycT(tr,en){return EN?en:tr}
 // Ekranı çizmeden durumu yeniler (Ayarlar satırı ve para çekme ekranı için); hata olursa engellemez, kontrolü sunucu yapar.
-async function kycPeek(){try{const r=await sb.rpc("kyc_status");KYC=!r.error&&r.data?r.data:null;const e=$("setKycVal");if(e&&KYC)e.textContent=(KYC_ST[KYC.status]||KYC_ST.none)[EN?1:0]}catch(e){KYC=null}}
+async function kycPeek(){try{const r=await sb.rpc("kyc_status");KYC=!r.error&&r.data?r.data:null;const e=$("setKycVal");if(e&&KYC)e.textContent=(KYC_ST[KYC.status]||KYC_ST.none)[EN?1:0];kycTick()}catch(e){KYC=null}}
+// Kendi hesabı yeni onaylandıysa tiki hemen göster
+function kycTick(){if(KYC&&KYC.status==="approved"&&me&&!VER.has(me.id))loadVER()}
 function wdKycNeed(){const s=KYC&&KYC.status;return !!s&&s!=="approved"}
 function wdKyc(){if(!wdKycNeed())return"";
   if(KYC.status==="pending")return `<div class="kyc-wait">⏳ ${kycT("Kimlik doğrulaman inceleniyor. Onaylanınca para çekme talebi oluşturabilirsin.","Your identity verification is in review. You can request withdrawals once it's approved.")}</div>`;
   return `<div class="kyc-no" style="display:flex;gap:12px;align-items:center;justify-content:space-between"><span>${kycT("Para çekmek için önce kimliğini doğrula. Doğrulanan hesaplara 5.000 USDT işlem hacmi eklenir.","Verify your identity before withdrawing. Verified accounts get 5,000 USDT of trading volume.")}</span><button type="button" class="btn btn-accent" data-open="kyc" style="flex:none">${kycT("Doğrula","Verify")}</button></div>`}
 async function loadKyc(){const h=`<h3>${kycT("Kimlik doğrulama","Identity verification")}</h3>`;$("kycBody").innerHTML=h+`<div class="empty">…</div>`;const r=await sb.rpc("kyc_status");if(r.error){$("kycBody").innerHTML=h+`<div class="empty">${esc(errText(r.error))}</div>`;return}KYC=r.data||{};renderKyc()}
-function renderKyc(){const k=KYC||{},s=k.status||"none",e=$("setKycVal");if(e)e.textContent=(KYC_ST[s]||KYC_ST.none)[EN?1:0];
+function renderKyc(){const k=KYC||{},s=k.status||"none",e=$("setKycVal");if(e)e.textContent=(KYC_ST[s]||KYC_ST.none)[EN?1:0];kycTick();
   const head=`<h3>${kycT("Kimlik doğrulama","Identity verification")}</h3><div class="sub">${kycT("Kimliğini doğrula, hesabına <b>5.000 USDT işlem hacmi</b> eklensin. Bu hacim çerçeve ve banner kademelerine sayılır, bakiyeni değiştirmez. Para çekmek için de kimlik doğrulaması gerekir.","Verify your identity to get <b>5,000 USDT of trading volume</b>. It counts toward frame and banner tiers and doesn't change your balance. Withdrawals also require verification.")}</div>`;
   let body;
   if(s==="approved")body=`<div class="kyc-ok">✅ ${kycT("Kimliğin doğrulandı.","Your identity is verified.")}${k.bonus_given?`<br><small>${kycT("5.000 USDT işlem hacmi hesabına eklendi.","5,000 USDT of trading volume was added.")}</small>`:""}</div>`;
@@ -4052,7 +4066,7 @@ $("sh-kyc").addEventListener("click",e=>{
   const ok=e.target.closest("[data-kyok]"),rj=e.target.closest("[data-kyrej]");if(!ok&&!rj)return;
   const id=(ok||rj).dataset[ok?"kyok":"kyrej"],reason=(($("kyr-"+id)||{}).value||"").trim();
   if(rj&&reason.length<3){toast(kycT("Reddetmek için sebep yaz.","Write a reason to reject."));return}
-  busy(ok||rj,async()=>{const r=await call("admin_kyc_decide",{p_id:id,p_approve:!!ok,p_reason:reason||null});if(r.err)return;toast(ok?kycT("Onaylandı, 5.000 USDT hacim eklendi","Approved, 5,000 USDT volume added"):kycT("Reddedildi","Rejected"));loadAdminKyc()})});
+  busy(ok||rj,async()=>{const r=await call("admin_kyc_decide",{p_id:id,p_approve:!!ok,p_reason:reason||null});if(r.err)return;toast(ok?kycT("Onaylandı, 5.000 USDT hacim eklendi","Approved, 5,000 USDT volume added"):kycT("Reddedildi","Rejected"));loadAdminKyc();if(ok)loadVER()})});
 $("sh-kyc").addEventListener("change",e=>{if(e.target.id!=="kyType")return;const tc=e.target.value==="tc";$("kyBackW").hidden=!tc;$("kyNumL").textContent=tc?kycT("T.C. kimlik no","Turkish ID number"):kycT("Pasaport no","Passport number");$("kyNum").inputMode=tc?"numeric":"text"});
 let TG=null;
 const TG_SVG=`<svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1-1 .2-1.5L20.6 2.8c.9-.3 1.6.2 1.3 1.5z"/></svg>`;
@@ -4597,7 +4611,7 @@ $("pwGo").onclick=()=>busy($("pwGo"),async()=>{const e=$("pwErr"),o=$("pwOld").v
   const {error}=await sb.auth.updateUser({password:n});if(error)return e.textContent=errText(error);
   ["pwOld","pwNew","pwNew2"].forEach(i=>$(i).value="");recovering=false;$("pwOld").closest("label").hidden=false;closeSheet();toast("Şifren güncellendi")});
 $("pwOld").closest(".sheet").addEventListener("input",()=>$("pwErr").textContent="");
-$("logoutBtn").onclick=async()=>{closeSheet();closeUser();closeComm();for(const k in ADDR)delete ADDR[k];PCH={};VIP=new Set();sb.removeAllChannels();await sb.auth.signOut();me=null;st=fresh();LB=[];showAuth("login");$("liId").value=""};
+$("logoutBtn").onclick=async()=>{closeSheet();closeUser();closeComm();for(const k in ADDR)delete ADDR[k];PCH={};VIP=new Set();VER=new Set();sb.removeAllChannels();await sb.auth.signOut();me=null;st=fresh();LB=[];showAuth("login");$("liId").value=""};
 let recovering=false;
 sb.auth.onAuthStateChange((ev,session)=>{if(ev==="PASSWORD_RECOVERY"){recovering=true;setTimeout(()=>{openSheet("pw");$("pwOld").closest("label").hidden=true;toast("Yeni şifreni belirle")},400)}});
 // ---------- device: Dynamic Island tespiti (ana ekran uygulamasında üst güvenli alan ≥ 54pt)

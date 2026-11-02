@@ -1184,3 +1184,21 @@ begin
     format('ikinci hesap: %s · doğrulanmamış çekim: %s · doğrulanmış çekim: %s', left(e1, 60), left(e2, 60), left(e3, 50)));
   commit;
 end $$;
+
+-- ════════════════════════════════════════════════════════════════════════════════════════════════
+-- 12) Doğrulanmış hesap tiki (migration 80, test 82). e2e_kyc'den sonra çalışır (tg_bob onaylı, tg_carol değil).
+create or replace procedure cf_test.e2e_verified(p_run bigint) language plpgsql as $$
+declare
+  bob   uuid := (select id from public.profiles where username = 'tg_bob');
+  carol uuid := (select id from public.profiles where username = 'tg_carol');
+  alice uuid := (select id from public.profiles where username = 'tg_alice');
+  s1 int; s2 int; b text;
+begin
+  select x.status, x.body into s1, b from cf_test.user_rpc('carol@coinforce.test', 'verified_users') x;
+  select x.status into s2 from cf_test.rest('POST', '/rest/v1/rpc/verified_users', null, '{}') x;
+  perform cf_test.t(p_run, 82, 'Doğrulanmış hesaplar listesi: onaylı hesap var; doğrulanmamış ve incelemedeki hesap yok; kimlik bilgisi dönmez; giriş yapmamış çağrı reddedilir',
+    s1 = 200 and b like '%' || bob::text || '%' and b not like '%' || carol::text || '%' and b not like '%' || alice::text || '%'
+    and b not like '%10000000078%' and b not like '%Bob Test%' and s2 in (401, 403),
+    format('HTTP %s · gövde: %s · anonim: HTTP %s', s1, left(b, 120), s2));
+  commit;
+end $$;
