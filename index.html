@@ -2884,7 +2884,7 @@ async function loadAll(){if(!me)return;const uid=me.id;const q=p=>p.then(r=>{if(
   renderAll();loadP24();loadPR("24h");loadHN();if(openId==="pnl")loadPR(PR.range);if(view==="rank")renderRank();if(openId==="notifs")renderNotifs();if(openId==="rewards")renderRewards();
 }
 async function loadPrices(){const {data,error}=await sb.from("prices").select("*");if(error||!data)return;
-  data.forEach(r=>{if(r.listed===false)return;let t=find(r.symbol);if(!t){t=newTok(r);T.push(t)}const first=!t.live;if(r.category)t.cat=r.category;if(r.circulating_supply)t.sup=+r.circulating_supply;if(r.ath)t.ath=+r.ath;if(r.volume_24h)t.vol=+r.volume_24h;t.p=+r.price;t.open=+(r.open_24h||r.price);if(r.market_cap)t.mc=+r.market_cap;if(r.max_leverage)t.maxLev=r.max_leverage;if(r.image_url)t.img=r.image_url;if(r.coingecko_id)t.cg=r.coingecko_id;if(r.dex_pair&&r.dex_chain&&!r.coingecko_id){t.cg="dx:"+r.symbol;t.dex=[GT_NET[r.dex_chain]||r.dex_chain,r.dex_pair];t.credit="Fiyat: DexScreener · grafik: GeckoTerminal"}if(r.custom){t.custom=1;t.cg="cc:"+r.symbol;t.n=r.name||t.n;t.img=r.image_url||"";t.credit="COINFORCE tarafından çıkarıldı · fiyat alım ve satımla belirlenir"}if(r.about)t.about=r.about;if(r.high_24h)t.hi24=+r.high_24h;if(r.low_24h)t.lo24=+r.low_24h;if(Array.isArray(r.spark)&&r.spark.length>20)t.spark7=r.spark.map(Number).filter(x=>x>0);if(first){t.hist=genHist(t.p,t.open);t.live=1}})}
+  data.forEach(r=>{if(r.listed===false)return;let t=find(r.symbol);if(!t){t=newTok(r);T.push(t)}const first=!t.live;if(r.category)t.cat=r.category;if(r.circulating_supply)t.sup=+r.circulating_supply;if(r.ath)t.ath=+r.ath;if(r.volume_24h)t.vol=+r.volume_24h;t.p=+r.price;t.open=+(r.open_24h||r.price);if(r.market_cap)t.mc=+r.market_cap;if(r.max_leverage)t.maxLev=r.max_leverage;if(r.image_url)t.img=r.image_url;if(r.coingecko_id)t.cg=r.coingecko_id;if(r.dex_pair&&r.dex_chain&&!r.coingecko_id){t.cg="dx:"+r.symbol;t.dex=[GT_NET[r.dex_chain]||r.dex_chain,r.dex_pair];t.credit="Fiyat: DexScreener · grafik: GeckoTerminal"}if(r.custom){t.custom=1;t.cg="cc:"+r.symbol;t.n=r.name||t.n;t.img=r.image_url||"";t.credit="COINFORCE tarafından çıkarıldı · fiyat alım ve satımla belirlenir"}if(r.about)t.about=r.about;if(r.high_24h)t.hi24=+r.high_24h;if(r.low_24h)t.lo24=+r.low_24h;if(Array.isArray(r.spark)&&r.spark.length>20)t.spark7=r.spark.map(Number).filter(x=>x>0);if(first){t.hist=genHist(t.p,t.open);t.live=1}});adLogoSave()}
 const decFor=p=>p>0?Math.min(12,Math.max(2,Math.ceil(-Math.log10(p))+3)):2;
 function newTok(r){const p=+r.price,at=r.listed_at?new Date(r.listed_at).getTime():Date.now(),fresh=Date.now()-at<30*864e5;
   return {s:r.symbol,n:r.name||r.symbol,p,mc:+(r.market_cap||0),c:colorFor(r.symbol),d:decFor(p),age:fresh?at/1e10:0,dyn:1,about:`${r.name||r.symbol}, ${r.symbol} sembolüyle işlem gören bir ${r.category==="meme"?"meme coin":"kripto varlık"}.`}}
@@ -5537,8 +5537,12 @@ const ADS=[
 ];
 let AD=null;
 function adLogo(i){const g=document.querySelector("#auth .auth-brand svg");return g?g.outerHTML.replace(/id="([^"]+)"/g,`id="$1Ad${i}"`).replace(/url\(#([^)]+)\)/g,`url(#$1Ad${i})`):""}
-function adCoin(s){return find(s)||{s,n:s,c:"#3b2f73",img:s==="FOREVER"?"coins/forever.png":""}}
-function adOrbit(){return["SOL","BONK","WIF","TRUMP","PENGU","FOREVER"].map((s,i)=>`<div style="--r:${i*60}deg"><span><i data-adc="${s}">${coinHTML(adCoin(s),"adc")}</i></span></div>`).join("")}
+const AD_SYMS=["SOL","BONK","WIF","TRUMP","PENGU","FOREVER"];
+function adLogoLoad(){try{const o=JSON.parse(localStorage.getItem("cf_adlogos")||"{}");return o&&typeof o==="object"?o:{}}catch(e){return{}}}
+function adLogoSave(){try{const o=adLogoLoad();let ch=0;AD_SYMS.forEach(s=>{const t=find(s),u=t&&t.img&&/^https:\/\//.test(t.img)?t.img:"";if(u&&o[s]!==u){o[s]=u;ch=1}});if(ch)localStorage.setItem("cf_adlogos",JSON.stringify(o))}catch(e){}}
+function adCoin(s){const t=find(s);if(t&&t.img)return t;const u=adLogoLoad()[s]||(s==="FOREVER"?"coins/forever.png":"");return Object.assign({s,n:s,c:"#3b2f73"},t||{},{img:u})}
+function adPreload(){const o=adLogoLoad();AD_SYMS.forEach(s=>{const u=o[s]||(s==="FOREVER"?"coins/forever.png":"");if(u){const i=new Image();i.decoding="async";i.referrerPolicy="no-referrer";i.src=u}})}
+function adOrbit(){return["SOL","BONK","WIF","TRUMP","PENGU","FOREVER"].map((s,i)=>`<div style="--r:${i*60}deg"><span><i data-adc="${s}">${coinHTML(adCoin(s),"adc").replace('loading="lazy"','loading="eager"')}</i></span></div>`).join("")}
 function adHeroFomo(){const T3=EN?["$100K → $500","$500K → $5,000","$1M → $10,000"]:["$100 bin → $500","$500 bin → $5.000","$1 milyon → $10.000"];
   return `<div class="ad-orb"><svg viewBox="0 0 200 200"><defs><linearGradient id="adRg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9945ff"/><stop offset="1" stop-color="#14f195"/></linearGradient></defs><circle cx="100" cy="100" r="84" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="12"/><circle class="ad-ring" cx="100" cy="100" r="84" fill="none" stroke="url(#adRg)" stroke-width="12" stroke-linecap="round" pathLength="100" transform="rotate(-90 100 100)"/></svg>
     <div class="ad-core"><small>${EN?"up to":"en fazla"}</small><b data-count="10000" data-pre="$">$10.000</b><span>${EN?"reward":"ödül"}</span></div><div class="ad-sat">${adOrbit()}</div></div>
@@ -5567,11 +5571,11 @@ function adsStart(){
   const all=ADS.filter(a=>!a.until||Date.now()<Date.parse(a.until));if(!all.length)return;
   const list=[adsPick(all)];
   try{sessionStorage.setItem("cf_ads_at",String(Date.now()))}catch(e){}
-  const el=$("ads");el.innerHTML=adsHTML(list);el.hidden=false;el.classList.remove("out");
+  adPreload();const el=$("ads");el.innerHTML=adsHTML(list);el.hidden=false;el.classList.remove("out");
   AD={list,i:-1,el:0,last:performance.now(),done:false,skip:false,rm:!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)};
   adsShow(0);try{el.focus({preventScroll:true})}catch(e){}
   [800,2000,4000].forEach(ms=>setTimeout(adsFaces,ms));requestAnimationFrame(adsLoop)}
-function adsFaces(){if(!AD||AD.done)return;document.querySelectorAll("#ads [data-adc]").forEach(n=>{const t=find(n.dataset.adc);if(t&&t.img&&!n.querySelector("img"))n.innerHTML=coinHTML(t,"adc")})}
+function adsFaces(){if(!AD||AD.done)return;document.querySelectorAll("#ads [data-adc]").forEach(n=>{const t=find(n.dataset.adc);if(t&&t.img&&!n.querySelector("img"))n.innerHTML=coinHTML(t,"adc").replace('loading="lazy"','loading="eager"')})}
 function adsShow(i){AD.i=i;document.querySelectorAll("#ads .ad-sc").forEach((s,j)=>{s.classList.toggle("on",j===i);s.setAttribute("aria-hidden",j===i?"false":"true")});
   document.querySelectorAll("#ads .ad-seg b").forEach((b,j)=>{b.style.width=j<i?"100%":"0%"});
   const s=document.querySelector(`#ads .ad-sc[data-i="${i}"]`);if(s)s.querySelectorAll("[data-count]").forEach(adCount)}
