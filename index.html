@@ -1199,6 +1199,9 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
 .vipp .vp-tb{margin:0 14px;border:1px solid #3a3320;border-radius:12px;overflow:hidden;font-size:13px}.vipp .vp-tb div{display:grid;grid-template-columns:.8fr 1.2fr 1fr;padding:10px 12px;text-align:center;border-top:1px solid #1d1d1d}.vipp .vp-tb div:first-child{background:#151515;border:0;font-weight:700;color:#fff}.vipp .vp-tb div.me{background:rgba(240,210,138,.1);color:var(--g)}
 .vipp .vp-soon{margin:10px 18px 0;font-size:12px;color:#8a8a8a;text-align:center}
 @media (min-width:900px){.vipp .vp-in{max-width:680px}}
+.vlv{display:inline-flex;align-items:center;gap:4px;flex:none;margin-left:6px;padding:1px 9px 1px 7px;border-radius:6px;font-size:10.5px;font-weight:600;letter-spacing:.14em;line-height:1.5;text-transform:uppercase;vertical-align:middle;white-space:nowrap;color:var(--vc);background:linear-gradient(135deg,#17130b,#0b0b0b);border:1px solid var(--vb);box-shadow:inset 0 0 0 1px rgba(255,240,200,.05),0 0 10px -4px var(--vb)}
+.vlv i{width:5px;height:5px;transform:rotate(45deg);background:var(--vc);flex:none}.vlv.sm{font-size:9.5px;padding:0 7px 0 5px;letter-spacing:.1em}
+.vlv-1{--vc:#d7b36a;--vb:#7a6232}.vlv-2{--vc:#ecd08a;--vb:#a98a43}.vlv-3{--vc:#d9dde6;--vb:#8d94a3}.vlv-4{--vc:#9fe7ff;--vb:#4fa8c6}
 /* Geniş ve ultra geniş monitörler (27–34 inç, 2560x1440 / 3440x1440 / 3840x2160): arayüz büyütülür, içerik genişler */
 @media (min-width:1700px){.app{max-width:1400px}.vw-body{grid-template-columns:250px minmax(0,1fr) 380px}}
 @media (min-width:2200px){body{zoom:1.25}.app{max-width:1500px}}
@@ -2564,9 +2567,13 @@ function laurel(n){const col=["#f2b705","#b8c2cc","#d0803a"][n-1];
 let VIP=new Set(),BOT=new Set(),CEO=new Set(),VER=new Set();
 // Kimliği doğrulanmış hesap: VIP++/CEO/BOT etiketinin sağında, etiket yoksa ismin sağında yeşil yuvarlak tik
 const verTick=(id,sm)=>VER.has(id)?`<span class="ver${sm?" sm":""}" role="img" title="${EN?"Verified":"Kimliği doğrulandı"}" aria-label="${EN?"Verified":"Kimliği doğrulandı"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12.5l3.6 3.6 7.4-8.2"/></svg></span>`:"";
-const vipTag=(id,sm)=>(CEO.has(id)?`<span class="ceo-tag${sm?" sm":""}" title="COINFORCE CEO"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>CEO</span>`:BOT.has(id)?`<span class="bot-tag${sm?" sm":""}" title="Otomatik işlem yapan bot hesabı">🤖 BOT</span>`:VIP.has(id)?`<span class="vip${sm?" sm":""}" title="Yönetici"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>VIP++</span>`:"")+verTick(id,sm);
+let VLV=new Map();
+const vlvOf=id=>me&&id===me.id?vipLv():VLV.get(id)||0;
+const vlvTag=(id,sm)=>{const n=vlvOf(id);return n?`<span class="vlv vlv-${Math.ceil(n/3)}${sm?" sm":""}" title="VIP ${n}"><i></i>VIP ${n}</span>`:""};
+const vipTag=(id,sm)=>(CEO.has(id)?`<span class="ceo-tag${sm?" sm":""}" title="COINFORCE CEO"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>CEO</span>`:BOT.has(id)?`<span class="bot-tag${sm?" sm":""}" title="Otomatik işlem yapan bot hesabı">🤖 BOT</span>`:VIP.has(id)?`<span class="vip${sm?" sm":""}" title="Yönetici"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>VIP++</span>`:"")+(CEO.has(id)||BOT.has(id)?"":vlvTag(id,sm))+verTick(id,sm);
 async function loadVER(){const {data,error}=await sb.rpc("verified_users");if(error||!Array.isArray(data))return;VER=new Set(data.map(x=>typeof x==="string"?x:x.verified_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&VER.has(userData.id))renderUser();if(view==="profile")renderProfile()}
-async function loadVIP(){loadFrames();loadVER();sb.rpc("ceo_users").then(({data,error})=>{if(!error&&Array.isArray(data)&&data.length){CEO=new Set(data.map(x=>typeof x==="string"?x:x.ceo_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&CEO.has(userData.id))renderUser();if(view==="profile")renderProfile()}});sb.rpc("bot_users").then(({data,error})=>{if(!error&&Array.isArray(data)&&data.length){BOT=new Set(data.map(x=>typeof x==="string"?x:x.bot_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&BOT.has(userData.id))renderUser()}});const {data,error}=await sb.rpc("vip_users");if(!error&&Array.isArray(data)){VIP=new Set(data.map(x=>typeof x==="string"?x:x.vip_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank()}}
+async function loadVLV(){const {data,error}=await sb.rpc("vip_levels");if(error||!Array.isArray(data))return;VLV=new Map(data.map(x=>[x.user_id,+x.lvl]));renderAll();if(view==="rank")renderRank();if(userData)renderUser();if(view==="profile")renderProfile()}
+async function loadVIP(){loadFrames();loadVER();loadVLV();sb.rpc("ceo_users").then(({data,error})=>{if(!error&&Array.isArray(data)&&data.length){CEO=new Set(data.map(x=>typeof x==="string"?x:x.ceo_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&CEO.has(userData.id))renderUser();if(view==="profile")renderProfile()}});sb.rpc("bot_users").then(({data,error})=>{if(!error&&Array.isArray(data)&&data.length){BOT=new Set(data.map(x=>typeof x==="string"?x:x.bot_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank();if(userData&&BOT.has(userData.id))renderUser()}});const {data,error}=await sb.rpc("vip_users");if(!error&&Array.isArray(data)){VIP=new Set(data.map(x=>typeof x==="string"?x:x.vip_users||Object.values(x)[0]));renderAll();if(view==="rank")renderRank()}}
 const safeUrl=u=>/^https:\/\//.test(u||"")?String(u).replace(/"/g,"%22"):"";
 let FRM={};const frOf=h=>FRM[String(h||"").toLowerCase()]||"",frIn=h=>{const k=frOf(h);return k?`<span class="fr fr-${k}">${frameSVG(k)}</span>`:""};
 const avHTML=(p,style="")=>safeUrl(p.a)?`<span class="av av-photo${frOf(p.h)?" has-fr":""}" style="${style}"><img class="av-img" src="${safeUrl(p.a)}" alt="" decoding="async">${frIn(p.h)}</span>`:`<span class="av av-g${frOf(p.h)?" has-fr":""}" style="background-color:${colorFor(p.h)};${style}">${esc(initial(p.n))}${frIn(p.h)}</span>`;
@@ -3945,7 +3952,8 @@ $("depGo").onclick=()=>busy($("depGo"),async()=>{
 
 // trade
 let trSide="buy",trUsd=true;
-const feeRate=()=>trSide==="buy"&&st.hist.length<100&&!st.hist.some(h=>h.k==="buy")?0:.0008;
+const vipRate=()=>.0008*(1-vipDisc(vipLv())/100),feeTxt=r=>fmtN(r*100,r*1e4%1?4:2).replace(/(,|\.)?0+$/,"");
+const feeRate=()=>trSide==="buy"&&st.hist.length<100&&!st.hist.some(h=>h.k==="buy")?0:vipRate();
 function openTrade(side){trSide=side;trUsd=true;trMax=false;$("trAmt").value="";otype="market";$("trPx").value="";syncOType();openSheet("trade");renderTrade()}
 function num(s){return parseFloat(String(s).replace(/\s/g,"").replace(/\./g,"").replace(",","."))||parseFloat(s)||0}
 const inp=(v,d)=>(+v).toFixed(d).replace(".",DEC);
@@ -3958,7 +3966,7 @@ function renderTrade(){
   $("trAmt").placeholder=trUsd?"$0":"0";
   $("trUnit").textContent=trUsd?`${t.s} ile gir`:"USD ile gir";
   if(otype!=="market")return renderTradePending(t,a);
-  $("trSum").innerHTML=`<div><span>Fiyat</span><span>${usd(t.p,t.d)}</span></div><div><span>${feeRate()?"Komisyon (%0,08)":"Komisyon (ilk alım ücretsiz)"}</span><span>${usd(fee)}</span></div><div><span>${trSide==="buy"?"Toplam ödeme":"Alacağın tutar"}</span><span style="font-weight:700">${usd(trSide==="buy"?v+fee:v-fee)}</span></div>`;
+  $("trSum").innerHTML=`<div><span>Fiyat</span><span>${usd(t.p,t.d)}</span></div><div><span>${feeRate()?"Komisyon (%"+feeTxt(feeRate())+(vipLv()?" · VIP "+vipLv():"")+")":"Komisyon (ilk alım ücretsiz)"}</span><span>${usd(fee)}</span></div><div><span>${trSide==="buy"?"Toplam ödeme":"Alacağın tutar"}</span><span style="font-weight:700">${usd(trSide==="buy"?v+fee:v-fee)}</span></div>`;
   const g=$("trGo");g.className="btn full "+(trSide==="buy"?"btn-buy":"btn-sell");g.style.background=trSide==="sell"?"var(--down)":"";g.style.color=trSide==="sell"?"#fff":"";
   g.textContent=trSide==="buy"?`${t.s} al`:`${t.s} sat`;
   $("trErr").textContent="";
@@ -3995,7 +4003,7 @@ function renderSwap(){
   $("swToBal").textContent="Bakiye: "+fmtN(balOf(swTo),swTo==="USDT"?2:6);
   const a=parseAmt($("swAmt").value),out=a*priceOf(swFrom)/priceOf(swTo)*(1-.0008);
   $("swOut").value=a?fmtN(out,swTo==="USDT"?2:6):"";
-  $("swSum").innerHTML=`<div><span>Kur</span><span>1 ${swFrom} = ${fmtN(priceOf(swFrom)/priceOf(swTo),swTo==="USDT"?2:6)} ${swTo}</span></div><div><span>Komisyon</span><span>%0,08</span></div>`;
+  $("swSum").innerHTML=`<div><span>Kur</span><span>1 ${swFrom} = ${fmtN(priceOf(swFrom)/priceOf(swTo),swTo==="USDT"?2:6)} ${swTo}</span></div><div><span>Komisyon</span><span>%${feeTxt(vipRate())}</span></div>`;
   $("swErr").textContent="";
 }
 $("swAmt").addEventListener("input",renderSwap);
@@ -4428,7 +4436,7 @@ function vipPageHTML(){const lv=vipLv(),have=vipHave(),nx=VIP_SOL[lv],pc=nx?Math
   <div class="vp-core">${T("Temel Ayrıcalıklar","Core Privileges")}</div>${cards}
   <div class="vp-up">${T("VIP Seviyeni Yükselt!<br>Komisyonda <b>%75</b>'e Kadar İndirim","Upgrade Your VIP Level!<br>Unlock Up to a <b>75%</b> Fee Discount")}</div>
   <div class="vp-tb"><div><span>${T("Seviye","Level")}</span><span>${T("Gereken SOL","SOL required")}</span><span>${T("Komisyon","Fee")}</span></div>${rows}</div>
-  <p class="vp-soon">${T("Komisyon indirimleri yakında etkinleşecek; şu an tüm işlemlerde %0,08 uygulanır.","Fee discounts are coming soon; the standard 0.08% currently applies to all trades.")}</p>
+  <p class="vp-soon">${T("Komisyon indirimi piyasa, limit/stop ve takas işlemlerinde otomatik uygulanır. Seviyen cüzdanındaki SOL miktarına göre anında güncellenir.","The fee discount applies automatically to market, limit/stop orders and swaps. Your level updates instantly with your SOL balance.")}</p>
   <div class="vp-up" style="font-size:20px">${T("Alım Satımın Ötesinde, Ayrıcalığa","Beyond Trading, Into Privilege")}</div><button type="button" class="gb" data-vipbuy>${T("Şimdi Yükselt","Upgrade Now")}</button></div>`}
 function openVip(){const pg=$("vipPage");pg.innerHTML=vipPageHTML();pg.hidden=false;pg.scrollTop=0;document.body.style.overflow="hidden"}
 function closeVip(){$("vipPage").hidden=true;document.body.style.overflow=""}
@@ -4914,7 +4922,7 @@ $("pwGo").onclick=()=>busy($("pwGo"),async()=>{const e=$("pwErr"),o=$("pwOld").v
   const {error}=await sb.auth.updateUser({password:n});if(error)return e.textContent=errText(error);
   ["pwOld","pwNew","pwNew2"].forEach(i=>$(i).value="");recovering=false;$("pwOld").closest("label").hidden=false;closeSheet();toast("Şifren güncellendi")});
 $("pwOld").closest(".sheet").addEventListener("input",()=>$("pwErr").textContent="");
-$("logoutBtn").onclick=async()=>{closeSheet();closeUser();closeComm();for(const k in ADDR)delete ADDR[k];PCH={};VIP=new Set();VER=new Set();VW.dr={};VW.uh={};VW.dirty={};VW.srvLoaded=false;sb.removeAllChannels();await sb.auth.signOut();me=null;st=fresh();LB=[];showAuth("login");$("liId").value=""};
+$("logoutBtn").onclick=async()=>{closeSheet();closeUser();closeComm();for(const k in ADDR)delete ADDR[k];PCH={};VIP=new Set();VER=new Set();VLV=new Map();VW.dr={};VW.uh={};VW.dirty={};VW.srvLoaded=false;sb.removeAllChannels();await sb.auth.signOut();me=null;st=fresh();LB=[];showAuth("login");$("liId").value=""};
 let recovering=false;
 sb.auth.onAuthStateChange((ev,session)=>{if(ev==="PASSWORD_RECOVERY"){recovering=true;setTimeout(()=>{openSheet("pw");$("pwOld").closest("label").hidden=true;toast("Yeni şifreni belirle")},400)}});
 // ---------- device: Dynamic Island tespiti (ana ekran uygulamasında üst güvenli alan ≥ 54pt)

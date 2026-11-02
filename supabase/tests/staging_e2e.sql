@@ -1229,3 +1229,37 @@ begin
   perform cf_test.t(p_run, 84, 'Çizimlerin hepsi silinince kayıt kalkar', a7 like '%"n"%0%' and a2 not like '%BTC%', format('%s | %s', left(a7, 30), left(a2, 40)));
   commit;
 end $$;
+
+-- ===== 14. VIP seviyeleri ve komisyon indirimi (migration 82) =====
+create or replace procedure cf_test.e2e_vip(p_run bigint) language plpgsql as $$
+declare
+  ua uuid := (select id from auth.users where email = 'alice@coinforce.test');
+  ub uuid := (select id from auth.users where email = 'bob@coinforce.test');
+  uc uuid := (select id from auth.users where email = 'carol@coinforce.test');
+  la int; lb int; lc int; fa numeric; fb numeric; fc numeric;
+  v1 text; s1 int; m1 text; m2 text; m3 text; px numeric; ra numeric; rb numeric; rc numeric; src text; ok_src boolean;
+begin
+  insert into public.holdings (user_id, symbol, qty, cost) values (ua, 'SOL', 600000, 1), (ub, 'SOL', 1000, 1) on conflict do nothing;
+  la := public._vip_level(ua); lb := public._vip_level(ub); lc := public._vip_level(uc);
+  fa := public._vip_fee(ua); fb := public._vip_fee(ub); fc := public._vip_fee(uc);
+  perform cf_test.t(p_run, 85, 'VIP seviyesi SOL miktarından hesaplanır; komisyon VIP12 %75, VIP1 %6 indirimli, SOL yoksa %0,08',
+    la = 12 and lb = 1 and lc = 0 and abs(fa - 0.0002) < 1e-9 and abs(fb - 0.000752) < 1e-9 and abs(fc - 0.0008) < 1e-9,
+    format('seviyeler %s/%s/%s | oranlar %s/%s/%s', la, lb, lc, fa, fb, fc));
+  select x.body into v1 from cf_test.user_rpc('bob@coinforce.test', 'vip_levels') x;
+  select x.status into s1 from cf_test.rest('POST', '/rest/v1/rpc/vip_levels', null, '{}') x;
+  perform cf_test.t(p_run, 86, 'vip_levels yalnızca seviye döner (miktar yok), giriş yapmamış reddedilir',
+    v1 like '%"lvl":12%' and v1 like '%"lvl":1%' and v1 not like '%600000%' and v1 not like '%qty%' and s1 in (401, 403), format('%s | anonim %s', left(v1, 200), s1));
+  px := public._price('SOL');
+  select x.body into m1 from cf_test.user_rpc('alice@coinforce.test', 'market_trade', jsonb_build_object('p_symbol', 'SOL', 'p_side', 'sell', 'p_qty', 10)) x;
+  select x.body into m2 from cf_test.user_rpc('bob@coinforce.test', 'market_trade', jsonb_build_object('p_symbol', 'SOL', 'p_side', 'sell', 'p_qty', 10)) x;
+  ra := ((m1::json)->>'fee')::numeric / (10 * px); rb := ((m2::json)->>'fee')::numeric / (10 * px);
+  perform cf_test.t(p_run, 87, 'Piyasa satışında komisyon VIP seviyesine göre uygulanır (VIP12 %0,02; VIP1 %0,0752)',
+    abs(ra - 0.0002) < 1e-7 and abs(rb - 0.000752) < 1e-7, format('alice %s | bob %s | %s | %s', ra, rb, left(m1, 90), left(m2, 90)));
+  select x.body into m3 from cf_test.user_rpc('alice@coinforce.test', 'swap', jsonb_build_object('p_from', 'SOL', 'p_to', 'USDT', 'p_amount', 10)) x;
+  rc := ((m3::json)->>'out')::numeric / (10 * px);
+  select prosrc into src from pg_proc where proname = 'run_engine' and pronamespace = 'public'::regnamespace;
+  ok_src := src like '%_vip_fee(o.user_id)%' and src not like '%fee := val * 0.0008%';
+  perform cf_test.t(p_run, 88, 'Takasta komisyon indirimi uygulanır ve limit/stop motoru indirimli oranı kullanır',
+    abs(rc - (1 - 0.0002)) < 1e-7 and ok_src, format('takas oranı %s | motor yamalı %s | %s', rc, ok_src, left(m3, 60)));
+  commit;
+end $$;
