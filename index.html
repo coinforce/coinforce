@@ -1203,6 +1203,28 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
 .vlv{display:inline-flex;align-items:center;gap:4px;flex:none;margin-left:6px;padding:1px 9px 1px 7px;border-radius:6px;font-size:10.5px;font-weight:600;letter-spacing:.14em;line-height:1.5;text-transform:uppercase;vertical-align:middle;white-space:nowrap;color:var(--vc);background:linear-gradient(135deg,#17130b,#0b0b0b);border:1px solid var(--vb);box-shadow:inset 0 0 0 1px rgba(255,240,200,.05),0 0 10px -4px var(--vb)}
 .vlv i{width:5px;height:5px;transform:rotate(45deg);background:var(--vc);flex:none}.vlv.sm{font-size:9.5px;padding:0 7px 0 5px;letter-spacing:.1em}
 .vlv-1{--vc:#d7b36a;--vb:#7a6232}.vlv-2{--vc:#ecd08a;--vb:#a98a43}.vlv-3{--vc:#d9dde6;--vb:#8d94a3}.vlv-4{--vc:#9fe7ff;--vb:#4fa8c6}
+.wl{position:fixed;inset:0;z-index:79;background:#000;color:#fff;overflow-y:auto;overscroll-behavior:contain;font-family:inherit}.wl[hidden]{display:none}
+.wl-sc{max-width:480px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top,0px)) 20px calc(110px + env(safe-area-inset-bottom,0px))}.wl-sc[hidden]{display:none}
+.wl-top{display:flex;justify-content:center}.wl-pill{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:99px;background:#1a1a1a;font-weight:700;letter-spacing:.06em;font-size:15px}.wl-pill svg{width:18px;height:18px;color:#b6ff2e}
+.wl-h{margin:30px 0 14px;text-align:center;font-size:clamp(34px,10vw,46px);line-height:1.08;font-weight:800;letter-spacing:-.02em}.wl-s{margin:0 0 26px;text-align:center;font-size:16px;color:#e6e6e6}
+.wl-ph{border:3px solid #fff;border-radius:44px 44px 0 0;border-bottom:0;padding:22px 20px 8px;background:#000;max-height:560px;overflow:hidden;position:relative}
+.wl-ph::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,#000)}
+.wl-search{display:flex;align-items:center;gap:10px;width:100%;padding:13px 16px;border-radius:99px;background:#161616;color:#8d8d8d;font-size:14px;text-align:left}.wl-search svg{width:18px;height:18px;flex:none}
+.wl-est{margin-top:22px;color:#9a9a9a;font-size:14px}.wl-est b{display:block;margin:6px 0 4px;color:#fff;font-size:34px;font-weight:800;letter-spacing:-.01em}.wl-est b small{font-size:14px;font-weight:600;margin-left:4px}.wl-est em{font-style:normal;color:#b6ff2e;font-size:14px}.wl-est i{font-style:normal;font-size:11px;margin-left:6px;color:#6a6a6a}
+.wl-ch{height:150px;margin:8px -4px 0}.wl-ch svg{width:100%;height:100%;display:block}
+.wl-rg{display:flex;justify-content:space-between;padding:8px 14px;font-size:14px;color:#8a8a8a}.wl-rg span{padding:7px 14px;border-radius:99px}.wl-rg span.on{background:#1c1c1c;color:#fff;font-weight:700}
+.wl-tb{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:8px 0 6px;font-size:14px}.wl-tb::-webkit-scrollbar{display:none}.wl-tb button{padding:9px 14px;border-radius:99px;color:#8a8a8a;white-space:nowrap}.wl-tb button.on{background:#1c1c1c;color:#fff;font-weight:600}
+.wl-r{display:flex;align-items:center;justify-content:space-between;width:100%;padding:17px 0;text-align:left;color:#fff;font-size:15px;font-weight:600}.wl-r small{color:#7a7a7a;font-weight:500;margin-left:5px}
+.wl-c{min-width:78px;text-align:center;padding:9px 8px;border-radius:7px;font-weight:700;font-size:14px}.wl-c.up{background:#18260a;color:#b6ff2e}.wl-c.dn{background:#2a0f1d;color:#ff4d94}
+.wl-bt{display:flex;gap:14px;margin:22px 0 0;position:sticky;bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:2}.wl-b{flex:1;padding:19px;border-radius:99px;font-size:20px;font-weight:800}.wl-b1{background:#163506;color:#b6ff2e}.wl-b2{background:#b6ff2e;color:#000}
+.wl-nv{position:fixed;left:0;right:0;bottom:0;z-index:3;display:flex;justify-content:center;gap:0;padding:8px 6px calc(10px + env(safe-area-inset-bottom,0px));background:#000;border-top:1px solid #1a1a1a}
+.wl-nv button{flex:1;max-width:96px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:13px;color:#7c7c7c;padding-top:4px}.wl-nv button svg{width:26px;height:26px}.wl-nv button.on{color:#fff}
+.wl-nv button.tr{margin-top:-30px;color:#8a8a8a}.wl-nv button.tr i{width:64px;height:64px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center}.wl-nv button.tr i svg{width:30px;height:30px}
+.wl-xh{display:flex;align-items:center;gap:6px;margin:4px 0 14px;font-size:22px;font-weight:800}.wl-xh button{width:38px;height:38px;display:grid;place-items:center;margin-left:-8px}.wl-xh svg{width:24px;height:24px}
+.wl-xs{display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:99px;background:#161616;color:#8d8d8d}.wl-xs svg{width:18px;height:18px;flex:none}.wl-xs input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font-size:15px}
+.wl-xc{margin:14px 2px 4px;color:#7a7a7a;font-size:12.5px}.wl-x{display:flex;align-items:center;gap:12px;width:100%;padding:12px 0;text-align:left;color:#fff;border-bottom:1px solid #141414}.wl-x .coin{width:36px;height:36px;font-size:13px;flex:none}.wl-x .m{flex:1;min-width:0}.wl-x .m b{display:block;font-size:15px}.wl-x .m small{color:#7a7a7a;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.wl-x .r{text-align:right}.wl-x .r b{display:block;font-size:15px;font-variant-numeric:tabular-nums}.wl-x .r .wl-c{display:inline-block;min-width:0;padding:3px 7px;margin-top:3px;font-size:12.5px}
+.auth-back{position:absolute;left:12px;top:calc(10px + env(safe-area-inset-top,0px));width:40px;height:40px;display:grid;place-items:center;color:var(--text);z-index:2}.auth-back svg{width:24px;height:24px}.auth-back[hidden]{display:none}
+@media (min-width:900px){.wl-sc{max-width:520px}}
 /* Geniş ve ultra geniş monitörler (27–34 inç, 2560x1440 / 3440x1440 / 3840x2160): arayüz büyütülür, içerik genişler */
 @media (min-width:1700px){.app{max-width:1400px}.vw-body{grid-template-columns:250px minmax(0,1fr) 380px}}
 @media (min-width:2200px){body{zoom:1.25}.app{max-width:1500px}}
@@ -1352,8 +1374,30 @@ nav.bar button svg{width:22px;height:22px}
 </head>
 <body class="v-home">
 <div class="boot" id="boot">Yükleniyor…</div>
+<div class="wl" id="welcome" hidden>
+  <div class="wl-sc" id="wlHome">
+    <div class="wl-top"><span class="wl-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l9 5v10l-9 5-9-5V7z" opacity=".9"/></svg>COINFORCE</span></div>
+    <h1 class="wl-h" id="wlH"></h1><p class="wl-s" id="wlS"></p>
+    <div class="wl-ph">
+      <button type="button" class="wl-search" data-wl="explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span id="wlSr"></span></button>
+      <div class="wl-est" id="wlEst"></div>
+      <div class="wl-ch" id="wlCh"></div>
+      <div class="wl-rg" id="wlRg"></div>
+      <div class="wl-tb" id="wlTb"></div>
+      <div id="wlList"></div>
+    </div>
+    <div class="wl-bt"><button type="button" class="wl-b wl-b1" data-wl="login" id="wlLogin"></button><button type="button" class="wl-b wl-b2" data-wl="signup" id="wlSignup"></button></div>
+  </div>
+  <div class="wl-sc" id="wlExp" hidden>
+    <div class="wl-xh"><button type="button" data-wl="home" aria-label="Geri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><b id="wlXt"></b></div>
+    <label class="wl-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="wlXi" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+    <div class="wl-xc" id="wlXc"></div><div id="wlXl"></div>
+  </div>
+  <nav class="wl-nv" id="wlNv"></nav>
+</div>
 <div class="auth" id="auth" hidden>
   <div class="auth-in">
+    <button type="button" class="auth-back" id="authBack" hidden aria-label="Geri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
     <div class="auth-brand">
       <svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="lgA1" cx=".3" cy=".25" r="1"><stop offset="0" stop-color="#2a1d4e"/><stop offset="1" stop-color="#0b0a17"/></radialGradient><linearGradient id="lgB1" gradientUnits="userSpaceOnUse" x1="20" y1="80" x2="80" y2="20"><stop offset="0" stop-color="#b58cff"/><stop offset="1" stop-color="#5de0c5"/></linearGradient></defs><rect width="100" height="100" rx="24" fill="url(#lgA1)"/><g transform="translate(50 50) scale(1) translate(-50 -50)"><path d="M71 65 A26 26 0 1 1 64 28" fill="none" stroke="url(#lgB1)" stroke-width="9" stroke-linecap="round"/><path d="M64 28 L76 17" stroke="url(#lgB1)" stroke-width="9" stroke-linecap="round"/><path d="M66 16 H77 V27" fill="none" stroke="url(#lgB1)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
       <div class="auth-name">COINFORCE</div>
@@ -4850,8 +4894,35 @@ function renderOnb(){const o=ONB[onbI];$("onbH").textContent=o.h;$("onbP").textC
 function endOnb(){$("onb").hidden=true;st.onboarded=true;if(me)sb.from("profiles").update({onboarded:true}).eq("id",me.id).then(()=>{})}
 $("onbNext").onclick=()=>{if(onbI<ONB.length-1){onbI++;renderOnb()}else endOnb()};$("onbSkip").onclick=endOnb;
 
+
+// ---------- Karşılama ekranı (giriş yapmamış ziyaretçi): örnek ekran + canlı coin listesi; Trade/Orbit/Assets kayıt ekranına götürür
+let WLT="fav",WLX="";
+const WL_TABS=[["fav","Favoriler","Favorites"],["top","Top","Top"],["hot","Hot","Hot"],["gain","Gainers","Gainers"],["new","Yeni","New"]];
+const wlPct=v=>(v>=0?"+":"")+fmtN(v,2)+"%";
+const wlLive=()=>T.filter(t=>t.p>0&&isFinite(t.p));
+function wlRows(k){let L=wlLive();if(k==="fav")L=["BTC","ETH","SOL","TON","DOGE"].map(find).filter(t=>t&&t.p>0);else if(k==="top")L=L.slice().sort((a,b)=>(b.mc||0)-(a.mc||0));else if(k==="hot")L=L.slice().sort((a,b)=>(b.vol||0)-(a.vol||0)||(b.trend||0)-(a.trend||0));else if(k==="gain")L=L.slice().sort((a,b)=>chg(b)-chg(a));else L=L.slice().sort((a,b)=>(b.age||0)-(a.age||0));return L.slice(0,5)}
+function wlChart(){const n=48,pts=[];let v=.55,seed=7;const r=()=>(seed=(seed*9301+49297)%233280)/233280;for(let i=0;i<n;i++){v+=(r()-.42)*.11+(i>30?.012:.004);v=Math.max(.05,Math.min(.95,v));pts.push(v)}
+  const W=300,H=150,X=i=>i/(n-1)*W,Y=v=>H-8-v*(H-24),line=pts.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join(" ");
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><pattern id="wlDots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#b6ff2e" fill-opacity=".45"/></pattern></defs><path d="${line} L${W} ${H} L0 ${H}Z" fill="url(#wlDots)"/><path d="${line}" fill="none" stroke="#b6ff2e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" style="filter:drop-shadow(0 0 5px #b6ff2e)"/></svg>`}
+function wlHome(){const L=wlRows(WLT);$("wlList").innerHTML=L.map(t=>{const c=chg(t);return `<button type="button" class="wl-r" data-wl="signup"><span>${t.s}<small>/ USDT</small></span><span class="wl-c ${c>=0?"up":"dn"}">${wlPct(c)}</span></button>`}).join("");
+  $("wlTb").innerHTML=WL_TABS.map(t=>`<button type="button" data-wltab="${t[0]}" class="${t[0]===WLT?"on":""}">${EN?t[2]:t[1]}</button>`).join("")}
+function wlExplore(){const q=WLX.trim().toLowerCase();let L=wlLive().sort((a,b)=>(b.mc||0)-(a.mc||0));if(q)L=L.filter(t=>t.s.toLowerCase().includes(q)||String(t.n||"").toLowerCase().includes(q));
+  $("wlXc").textContent=EN?`${L.length} coins on COINFORCE`:`COINFORCE'taki ${L.length} coin`;
+  $("wlXl").innerHTML=L.map(t=>{const c=chg(t);return `<button type="button" class="wl-x" data-wl="signup">${coinHTML(t,"")}<span class="m"><b>${esc(t.s)}</b><small>${esc(t.n||"")}</small></span><span class="r"><b>${usd(t.p,t.d)}</b><span class="wl-c ${c>=0?"up":"dn"}">${wlPct(c)}</span></span></button>`}).join("")||`<div class="empty" style="padding:40px 0;color:#7a7a7a;text-align:center">${EN?"No coin found.":"Coin bulunamadı."}</div>`}
+function wlNav(on){const I={home:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l9 5v10l-9 5-9-5V7z"/></svg>',exp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l17 6-8 3-3 8z"/></svg>',tr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M16 4l4 4-4 4M20 16H4M8 12l-4 4 4 4"/></svg>',orb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5.5" fill="currentColor"/><path d="M3 15c3 4 11 4 17-1M21 9c-3-4-11-4-17 1"/></svg>',as:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10H12z"/></svg>'};
+  $("wlNv").innerHTML=`<button type="button" data-wl="home" class="${on==="home"?"on":""}">${I.home}COINFORCE</button><button type="button" data-wl="explore" class="${on==="explore"?"on":""}">${I.exp}${EN?"Explore":"Keşfet"}</button><button type="button" class="tr" data-wl="signup"><i>${I.tr}</i>Trade</button><button type="button" data-wl="signup">${I.orb}Orbit</button><button type="button" data-wl="signup">${I.as}${EN?"Assets":"Varlıklar"}</button>`}
+function wlShow(v){$("wlHome").hidden=v!=="home";$("wlExp").hidden=v!=="exp";wlNav(v==="exp"?"explore":"home");if(v==="exp")wlExplore();else wlHome();$("welcome").scrollTop=0}
+function showWelcome(){const w=$("welcome");w.hidden=false;$("app").setAttribute("aria-hidden","true");$("auth").hidden=true;
+  $("wlH").textContent=EN?"A New Alternative":"Yeni Bir Alternatif";$("wlS").textContent=EN?"To Your Crypto Journey":"Kripto yolculuğun için";$("wlSr").textContent=EN?"Search":"Ara";$("wlXt").textContent=EN?"Explore":"Keşfet";$("wlXi").placeholder=EN?"Search coins":"Coin ara";
+  $("wlLogin").textContent=EN?"Log in":"Giriş yap";$("wlSignup").textContent=EN?"Sign up":"Kayıt ol";
+  $("wlEst").innerHTML=`${EN?"Est total value":"Tahmini toplam değer"}<i>${EN?"sample":"örnek"}</i><b>10.000,00<small>USDT</small></b><em>+ 590,00 (+%5,90) ${EN?"Today":"Bugün"}</em>`;$("wlCh").innerHTML=wlChart();$("wlRg").innerHTML=(EN?["1D","1W","1M","6M"]:["1G","1H","1A","6A"]).map((x,i)=>`<span class="${i?"":"on"}">${x}</span>`).join("");
+  WLT="fav";WLX="";$("wlXi").value="";wlShow("home");clearInterval(window.__wlT);window.__wlT=setInterval(()=>{if($("welcome").hidden){clearInterval(window.__wlT);return}loadPrices().then(()=>{if(!$("wlExp").hidden)wlExplore();else wlHome()})},20000)}
+document.addEventListener("click",e=>{const w=e.target.closest("[data-wl]");if(w&&!$("welcome").hidden){const k=w.dataset.wl;if(k==="home")wlShow("home");else if(k==="explore")wlShow("exp");else{showAuth(k)}return}
+  const tb=e.target.closest("[data-wltab]");if(tb){WLT=tb.dataset.wltab;wlHome()}});
+$("wlXi").addEventListener("input",()=>{WLX=$("wlXi").value;wlExplore()});
+$("authBack").onclick=()=>{$("auth").hidden=true};
 // ---------- auth
-function showAuth(mode){$("auth").hidden=false;setAuthMode(mode||"login");$("app").setAttribute("aria-hidden","true")}
+function showAuth(mode){$("authBack").hidden=$("welcome").hidden;$("auth").hidden=false;setAuthMode(mode||"login");$("app").setAttribute("aria-hidden","true")}
 function setAuthMode(m){[...$("authSeg").children].forEach(b=>b.classList.toggle("on",b.dataset.a===m));$("loginForm").hidden=m!=="login";$("suForm").hidden=m!=="signup";$("liErr").textContent="";$("suErr").textContent="";if(m!=="login")$("liOk").hidden=true}
 document.querySelectorAll("#auth [data-a]").forEach(b=>b.addEventListener("click",()=>setAuthMode(b.dataset.a)));
 document.querySelectorAll("[data-eye]").forEach(b=>b.addEventListener("click",()=>{const i=$(b.dataset.eye),show=i.type==="password";i.type=show?"text":"password";b.classList.toggle("on",show);b.setAttribute("aria-label",show?"Şifreyi gizle":"Şifreyi göster")}));
@@ -4866,7 +4937,7 @@ $("suForm").addEventListener("input",()=>$("suErr").textContent="");$("loginForm
 $("suPw").addEventListener("input",()=>$("pwMeter").dataset.s=pwScore($("suPw").value));
 async function enter(user){
   me=user;st=fresh();st.watch=loadWatch();
-  $("auth").hidden=true;$("app").removeAttribute("aria-hidden");["liPw","suPw"].forEach(id=>$(id).value="");
+  $("auth").hidden=true;$("welcome").hidden=true;$("app").removeAttribute("aria-hidden");["liPw","suPw"].forEach(id=>$(id).value="");
   go("home");await loadPrices();await Promise.all([loadAll(),loadLB()]);loadTop();loadVIP();loadFX();if(!window.__fxT)window.__fxT=setInterval(loadFX,300000);subscribe();renderAll();$("boot").hidden=true;
   if(!st.onboarded)startOnb();payReturn();tgReturn();
 }
@@ -4927,7 +4998,7 @@ $("pwGo").onclick=()=>busy($("pwGo"),async()=>{const e=$("pwErr"),o=$("pwOld").v
   const {error}=await sb.auth.updateUser({password:n});if(error)return e.textContent=errText(error);
   ["pwOld","pwNew","pwNew2"].forEach(i=>$(i).value="");recovering=false;$("pwOld").closest("label").hidden=false;closeSheet();toast("Şifren güncellendi")});
 $("pwOld").closest(".sheet").addEventListener("input",()=>$("pwErr").textContent="");
-$("logoutBtn").onclick=async()=>{closeSheet();closeUser();closeComm();for(const k in ADDR)delete ADDR[k];PCH={};VIP=new Set();VER=new Set();VLV=new Map();VMY=null;VW.dr={};VW.uh={};VW.dirty={};VW.srvLoaded=false;sb.removeAllChannels();await sb.auth.signOut();me=null;st=fresh();LB=[];showAuth("login");$("liId").value=""};
+$("logoutBtn").onclick=async()=>{closeSheet();closeUser();closeComm();for(const k in ADDR)delete ADDR[k];PCH={};VIP=new Set();VER=new Set();VLV=new Map();VMY=null;VW.dr={};VW.uh={};VW.dirty={};VW.srvLoaded=false;sb.removeAllChannels();await sb.auth.signOut();me=null;st=fresh();LB=[];showWelcome();$("liId").value=""};
 let recovering=false;
 sb.auth.onAuthStateChange((ev,session)=>{if(ev==="PASSWORD_RECOVERY"){recovering=true;setTimeout(()=>{openSheet("pw");$("pwOld").closest("label").hidden=true;toast("Yeni şifreni belirle")},400)}});
 // ---------- device: Dynamic Island tespiti (ana ekran uygulamasında üst güvenli alan ≥ 54pt)
@@ -4971,7 +5042,7 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){addEventListener(
 // boot
 (async function boot(){
   const {data}=await sb.auth.getSession();
-  if(data&&data.session){await enter(data.session.user)}else{showAuth(REF_IN?"signup":"login");if(REF_IN){$("suRef").hidden=false;$("suRef").textContent="🎁 @"+REF_IN+" seni COINFORCE'a davet etti"}$("boot").hidden=true;loadPrices()}
+  if(data&&data.session){await enter(data.session.user)}else{if(REF_IN)showAuth("signup");else{showWelcome();loadPrices().then(()=>{if(!$("welcome").hidden){if(!$("wlExp").hidden)wlExplore();else wlHome()}})}if(REF_IN){$("suRef").hidden=false;$("suRef").textContent="🎁 @"+REF_IN+" seni COINFORCE'a davet etti"}$("boot").hidden=true;loadPrices()}
 })();
 setInterval(tick,2000);
 })();
