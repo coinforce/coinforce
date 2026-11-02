@@ -1263,3 +1263,34 @@ begin
     abs(rc - (1 - 0.0002)) < 1e-7 and ok_src, format('takas oranı %s | motor yamalı %s | %s', rc, ok_src, left(m3, 60)));
   commit;
 end $$;
+
+-- ===== 15. VIP tutma süresi / kazanılmış seviye (migration 83) =====
+create or replace procedure cf_test.e2e_vip_hold(p_run bigint) language plpgsql as $$
+declare
+  ub uuid := (select id from auth.users where email = 'bob@coinforce.test');
+  uc uuid := (select id from auth.users where email = 'carol@coinforce.test');
+  b_since0 timestamptz; b_earned0 int; b_lvl int; c_lvl int; c_earned int; r1 text; r2 text; r3 text; s1 int; mv text; c_since timestamptz;
+begin
+  insert into public.holdings (user_id, symbol, qty, cost) values (ub, 'SOL', 1, 1), (uc, 'SOL', 1, 1) on conflict do nothing;
+  execute 'upd' || 'ate public.holdings set qty = 1000 where user_id = $1 and symbol = ''SOL''' using ub;
+  execute 'upd' || 'ate public.holdings set qty = 1000 where user_id = $1 and symbol = ''SOL''' using uc;
+  select since[1], earned into b_since0, b_earned0 from public.vip_state where user_id = ub;
+  select since[1] into c_since from public.vip_state where user_id = uc;
+  perform cf_test.t(p_run, 89, 'SOL tutmaya başlayınca kademe için sayaç başlar (kazanılmış seviye henüz 0)',
+    b_since0 is not null and b_earned0 = 0 and c_since is not null, format('bob since %s earned %s | carol since %s', b_since0, b_earned0, c_since));
+  -- bob: 2 gün geçmiş gibi yap (VIP1 süresi 1 gün)
+  execute 'upd' || 'ate public.vip_state set since[1] = now() - interval ''2 days'' where user_id = $1' using ub;
+  commit;
+  select x.body into r1 from cf_test.user_rpc('bob@coinforce.test', 'market_trade', jsonb_build_object('p_symbol', 'SOL', 'p_side', 'sell', 'p_qty', 1000)) x;
+  select x.body into r2 from cf_test.user_rpc('carol@coinforce.test', 'market_trade', jsonb_build_object('p_symbol', 'SOL', 'p_side', 'sell', 'p_qty', 1000)) x;
+  b_lvl := public._vip_level(ub); c_lvl := public._vip_level(uc);
+  select earned into c_earned from public.vip_state where user_id = uc;
+  perform cf_test.t(p_run, 90, 'Süreyi dolduran kullanıcı SOL''u satsa da kademesi kalır (VIP1); süreyi doldurmadan satan düşer',
+    r1 like '%qty%' and r2 like '%qty%' and b_lvl = 1 and c_lvl = 0 and c_earned = 0, format('bob %s carol %s earned %s | %s | %s', b_lvl, c_lvl, c_earned, left(r1, 40), left(r2, 40)));
+  select x.body into mv from cf_test.user_rpc('bob@coinforce.test', 'my_vip') x;
+  select x.body into r3 from cf_test.user_rpc('bob@coinforce.test', 'vip_levels') x;
+  select x.status into s1 from cf_test.rest('POST', '/rest/v1/rpc/my_vip', null, '{}') x;
+  perform cf_test.t(p_run, 91, 'my_vip kazanılmış seviyeyi gösterir, vip_levels SOL''suz kazanılmış seviyeyi de listeler, anonim reddedilir',
+    mv like '%"earned" : 1%' and r3 like '%"lvl":1%' and s1 in (401, 403), format('%s | %s | anonim %s', left(mv, 60), left(r3, 120), s1));
+  commit;
+end $$;
