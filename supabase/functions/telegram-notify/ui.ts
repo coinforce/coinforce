@@ -65,6 +65,7 @@ export function help(): Screen {
       "/balance (/bakiye) · /orders (/emirler) · /positions (/pozisyonlar)",
       "/cancel (/iptal) — açık emri iptal et",
       "/accounts (/hesaplar) — işlem yapabildiğin hesaplar (toplu işlem)",
+      "/pnl (/kar) — hesapların 1 saat · 12 saat · 24 saatlik kâr/zararı",
       "/price BTC (/fiyat) · /grafik BTC · /settings (/ayarlar) · /unlink (/dur)",
       "",
       "Emirler <b>onay beklemeden anında</b> işlenir. En düşük tutar 1 USDT, hesap başına dakikada en fazla 20 yeni emir. Fiyat verisi 120 saniyeden eskiyse emir reddedilir.",
@@ -294,6 +295,21 @@ export function accounts(d: any): Screen {
     : d?.group && act.length ? `Bottan verdiğin her emir bu ${act.length + 1} hesapta aynı anda gerçekleşir.`
     : "Toplu işlem kapalı: emirler yalnızca kendi hesabında gerçekleşir. Açmak için uygulamada Toplu işlem anahtarını kullan.");
   return { text: lines.join("\n"), kb: kb([b("🔄 Yenile", "ac"), b("💰 Bakiye", "b")], NAV()) };
+}
+
+/** /pnl: kendi hesabın + toplu işlemdeki aktif hesapların 1s / 12s / 24s kâr-zararı (hesap adının sağında). */
+export function pnl(d: any): Screen {
+  const rows = (d?.rows ?? []) as any[];
+  const v = (x: unknown) => (x == null ? "—" : `${Number(x) > 0 ? "🟢" : Number(x) < 0 ? "🔴" : "⚪"} ${signedMoney(Number(x))}`);
+  const lines = ["📊 <b>Hesapların kâr / zararı</b>", "<i>1 saat · 12 saat · 24 saat (USDT)</i>", ""];
+  for (const r of rows) {
+    lines.push(`<b>@${esc(r.username)}</b>${r.me ? " (sen)" : ""}  —  ${v(r.d1)}  ·  ${v(r.d12)}  ·  ${v(r.d24)}`);
+  }
+  if (!rows.length) lines.push("Hesap bulunamadı.");
+  const sum = (k: string) => rows.reduce((t, r) => (r[k] == null ? t : t + Number(r[k])), 0);
+  if (rows.length > 1) lines.push("", `<b>Toplam</b>  —  ${v(sum("d1"))}  ·  ${v(sum("d12"))}  ·  ${v(sum("d24"))}`);
+  lines.push("", "<i>Kâr/zarar, süre başındaki toplam değere göre hesaplanır (açık pozisyonlar dahil).</i>");
+  return { text: lines.join("\n"), kb: kb([b("🔄 Yenile", "pl"), b("👥 Hesaplar", "ac")], NAV()) };
 }
 
 const KIND_TR: Record<string, string> = { spot_market: "Piyasa", spot_limit: "Limit", spot_stop: "Stop" };

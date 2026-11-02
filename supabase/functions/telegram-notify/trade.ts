@@ -241,6 +241,12 @@ async function accountsCommand(ctx: Ctx) {
   return show(ctx, ui.accounts(await rpc("tgx_accounts", { p_tg_user: ctx.tg })));
 }
 
+// Hesapların 1s / 12s / 24s kâr-zararı (yalnızca okuma).
+async function pnlCommand(ctx: Ctx) {
+  if (!(await needLinked(ctx))) return;
+  return show(ctx, ui.pnl(await rpc("tgx_pnl", { p_tg_user: ctx.tg })));
+}
+
 async function link(ctx: Ctx, code: string) {
   const r = await rpc("tgx_link", { p_tg_user: ctx.tg, p_chat: ctx.chat, p_chat_type: "private", p_tg_username: ctx.tgName ?? null, p_code: code, p_update: ctx.update });
   if (!r?.ok) return warn(ctx, esc(r?.error ?? "Bağlantı kurulamadı."));
@@ -331,6 +337,7 @@ export async function onMessage(ctx: Ctx, msg: any) {
       if (!(await needLinked(ctx))) return;
       return show(ctx, ui.balance(await balanceOf(ctx)));
     case "accounts": case "hesaplar": return accountsCommand(ctx);
+    case "pnl": case "kar": case "kâr": case "karzarar": return pnlCommand(ctx);
     case "buy": case "al": return spotCommand(ctx, "buy", args);
     case "sell": case "sat": return spotCommand(ctx, "sell", args);
     case "long": return futCommand(ctx, "L", args);
@@ -410,6 +417,7 @@ export async function onCallback(ctx: Ctx, q: any) {
     case "p": return closeCommand(ctx, []);
     case "st": return show(ctx, ui.settings(ctx.me, ctx.tgName));
     case "ac": return accountsCommand(ctx);
+    case "pl": return pnlCommand(ctx);
     case "ul": return show(ctx, ui.unlinkConfirm());
     case "ul!": return unlink(ctx);
     case "cx": await setState(ctx, null); return show(ctx, { text: "Vazgeçildi." });

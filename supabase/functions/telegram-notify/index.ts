@@ -84,6 +84,7 @@ const COMMANDS = [
   { command: "menu", description: "Ana menü" },
   { command: "balance", description: "Bakiye (/bakiye)" },
   { command: "accounts", description: "İşlem yapabildiğin hesaplar (/hesaplar)" },
+  { command: "pnl", description: "Hesapların 1s/12s/24s kâr-zararı (/kar)" },
   { command: "buy", description: "Al: /buy BTC 100" },
   { command: "sell", description: "Sat: /sell BTC %50" },
   { command: "long", description: "Long: /long BTC 100 10x" },
