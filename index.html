@@ -507,6 +507,10 @@ nav.bar .mid-btn span{width:46px;height:46px;border-radius:16px;background:linea
 .tier .claim{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink)}
 .tier .locked{background:var(--surface2);color:var(--muted);cursor:default}
 .tier .done{color:var(--up);font-weight:700;font-size:13px;flex:none}
+.tier .done.pass{color:var(--muted);font-weight:600}
+.camp-coins{margin:12px 2px 0;font-size:13px;color:var(--muted)}
+.camp-coins summary{cursor:pointer;font-weight:600;color:var(--fg);padding:4px 0}
+.camp-coins p{margin:6px 0 0;line-height:1.6}
 .camp-big{font-size:28px;font-weight:700;letter-spacing:-.01em;margin:8px 0 2px}
 .camp-actions{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:18px}
 /* v3 features */
@@ -2754,7 +2758,7 @@ async function loadAll(){if(!me)return;const uid=me.id;const q=p=>p.then(r=>{if(
       q(sb.from("reward_claims").select("reward").eq("user_id",uid)),
       q(sb.from("profiles").select("id,username,full_name,bio,avatar_url,created_at,onboarded,follower_bonus,following_bonus").eq("id",uid).maybeSingle()),
       sb.rpc("is_admin").then(r=>!r.error&&r.data===true),
-      sb.rpc("campaigns_list").then(r=>r.error?[]:r.data||[]),
+      sb.rpc("campaigns_list_v2").then(r=>r.error?sb.rpc("campaigns_list").then(r2=>r2.error?[]:r2.data||[]):r.data||[]),
       sb.rpc("can_manage_campaigns").then(r=>!r.error&&r.data===true),
       sb.rpc("my_auto_trades").then(r=>r.error?[]:r.data||[]),
       sb.rpc("get_banner",{p_id:uid}).then(r=>r.error?"":r.data||""),
@@ -3395,32 +3399,45 @@ $("userBody").addEventListener("pointerleave",()=>{if(uHover!=null){uHover=null;
 function timeLeft(ms){if(ms<=0)return "Bitti";const m=Math.floor(ms/60000),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mm=m%60;return d?`${d}g ${h}sa kaldı`:h?`${h}sa ${mm}dk kaldı`:`${Math.max(1,mm)}dk kaldı`}
 function campState(c){const now=Date.now(),s=Date.parse(c.starts_at),e=Date.parse(c.ends_at);return now<s?"soon":now>=e?"ended":"live"}
 function campNext(c){const i=c.tiers.findIndex(t=>c.my_volume<+t.volume);return i<0?null:i}
-function campClaimable(c){return c.tiers.some((t,i)=>c.my_volume>=+t.volume&&!c.claimed.includes(i))&&Date.now()<Date.parse(c.ends_at)+7*864e5}
+function campHi(c){return c.payout==="highest_at_end"}
+function campBest(c){let b=-1;c.tiers.forEach((t,i)=>{if(c.my_volume>=+t.volume)b=i});return b}
+function campScope(c){return c.scope_label?c.scope_label+" işlemleri":c.symbol?c.symbol+" işlemleri":"Tüm coinler"}
+function campMax(c){return Math.max(0,...c.tiers.map(t=>+t.reward))}
+function campClaimable(c){const e=Date.parse(c.ends_at),open=Date.now()<e+7*864e5;
+  if(campHi(c))return Date.now()>=e&&open&&campBest(c)>=0&&!c.claimed.length;
+  return c.tiers.some((t,i)=>c.my_volume>=+t.volume&&!c.claimed.includes(i))&&open}
 function campCard(c){const st8=campState(c),nx=campNext(c),last=c.tiers[c.tiers.length-1]||{volume:1,reward:0};
   const target=nx==null?+last.volume:+c.tiers[nx].volume,prevT=nx>0?+c.tiers[nx-1].volume:0,pctv=nx==null?100:Math.max(2,Math.min(100,(c.my_volume-prevT)/(target-prevT)*100));
-  const total=c.tiers.reduce((a,t)=>a+ +t.reward,0),badge=st8==="ended"?"Bitti":st8==="soon"?"Yakında":timeLeft(Date.parse(c.ends_at)-Date.now());
-  return `<button type="button" class="camp${st8==="ended"?" ended":""}" data-camp="${c.id}"><div class="camp-h"><div><b>${esc(c.title)}</b>${campClaimable(c)?'<span class="camp-dot" title="Alınacak ödül var"></span>':""}<div class="camp-m">${c.symbol?esc(c.symbol)+" işlemleri":"Tüm coinler"} · ${c.participants} katılımcı · toplam ${usd(total,0)} ödül</div></div><span class="camp-t">${badge}</span></div>
+  const hi=campHi(c),total=c.tiers.reduce((a,t)=>a+ +t.reward,0),badge=st8==="ended"?"Bitti":st8==="soon"?"Yakında":timeLeft(Date.parse(c.ends_at)-Date.now());
+  return `<button type="button" class="camp${st8==="ended"?" ended":""}" data-camp="${c.id}"><div class="camp-h"><div><b>${esc(c.title)}</b>${campClaimable(c)?'<span class="camp-dot" title="Alınacak ödül var"></span>':""}<div class="camp-m">${esc(campScope(c))} · ${c.participants} katılımcı · ${hi?`en fazla ${usd(campMax(c),0)}`:`toplam ${usd(total,0)}`} ödül</div></div><span class="camp-t">${badge}</span></div>
     <div class="camp-bar"><i style="width:${pctv}%"></i></div>
-    <div class="camp-f"><span>Hacmin <b>${usd(c.my_volume,0)}</b></span><span>${nx==null?"Tüm kademeler tamam":`Sonraki: ${usd(target,0)} → <b>+${usd(+c.tiers[nx].reward,0)}</b>`}</span></div></button>`}
+    <div class="camp-f"><span>Hacmin <b>${usd(c.my_volume,0)}</b></span><span>${nx==null?(hi?"En yüksek kademedesin":"Tüm kademeler tamam"):`Sonraki: ${usd(target,0)} → <b>${hi?"":"+"}${usd(+c.tiers[nx].reward,0)}</b>`}</span></div></button>`}
 function renderCampHome(){const cs=(st.camps||[]).filter(c=>campState(c)!=="ended"||campClaimable(c));$("campWrap").hidden=!cs.length;$("campHome").innerHTML=cs.slice(0,2).map(campCard).join("")}
 function renderCampList(){$("campNewBtn").hidden=!st.campMgr;const cs=st.camps||[];$("campList").innerHTML=cs.length?cs.map(campCard).join(""):`<div class="empty">Şu an aktif kampanya yok.</div>`}
 let campOpen=null;
 async function openCampaign(id){campOpen=id;const c=(st.camps||[]).find(x=>x.id===id);if(!c)return;renderCampDetail(c,null);openSheet("campaign");
   const {data}=await sb.rpc("campaign_leaderboard",{p_campaign:id,p_limit:10});if(campOpen===id&&openId==="campaign")renderCampDetail(c,data||[])}
-function renderCampDetail(c,lb){const st8=campState(c),e=Date.parse(c.ends_at),canClaim=Date.now()<e+7*864e5;
-  const tiers=c.tiers.map((t,i)=>{const ok=c.my_volume>=+t.volume,cl=c.claimed.includes(i);return `<div class="tier${ok?" ok":""}"><span class="n">${i+1}</span><div class="mid"><b>${usd(+t.volume,0)} hacim</b><small>Ödül: +${usd(+t.reward,0)} USDT${ok?"":` · ${usd(+t.volume-c.my_volume,0)} kaldı`}</small></div>${cl?'<span class="done">Alındı</span>':ok&&canClaim?`<button type="button" class="claim" data-cclaim="${i}">Al</button>`:`<button type="button" class="locked" disabled>${ok?"Süre doldu":"Kilitli"}</button>`}</div>`}).join("");
-  const board=lb==null?`<div class="hint">Sıralama yükleniyor…</div>`:lb.length?lb.map((r,i)=>{const mine=me&&r.user_id===me.id;return `<div class="lbr lbr-link${mine?" me":""}" data-user="${r.user_id}"><span class="rk">${i<3?laurel(i+1):i+1+"."}</span>${avHTML({n:r.full_name||r.username,h:r.username,a:r.avatar_url},"width:36px;height:36px;font-size:14px")}<div class="nm"><b>${esc(r.full_name||r.username)}${mine?" (sen)":""}</b><small>@${esc(r.username)}</small></div><div class="rt"><span class="g">${usd(+r.volume,0)}</span></div></div>`}).join(""):`<div class="hint">Henüz kimse işlem yapmadı. İlk sen ol!</div>`;
+function renderCampDetail(c,lb){const st8=campState(c),e=Date.parse(c.ends_at),canClaim=Date.now()<e+7*864e5,hi=campHi(c),ended=Date.now()>=e,best=campBest(c),com=c.rank_scope==="community";
+  const coins=(c.coins||[]).slice().sort((a,b)=>(b==="SOL")-(a==="SOL")||a.localeCompare(b));
+  const lock=t=>`<button type="button" class="locked" disabled>${t}</button>`,claimB=i=>`<button type="button" class="claim" data-cclaim="${i}">Al</button>`;
+  const tiers=c.tiers.map((t,i)=>{const ok=c.my_volume>=+t.volume,cl=c.claimed.includes(i);
+    const act=cl?'<span class="done">Alındı</span>'
+      :hi?(!ok?lock(ended?"Ulaşılmadı":"Kilitli"):i<best?'<span class="done pass">Geçildi</span>':!ended?lock("Bitince al"):c.claimed.length?'<span class="done pass">Geçildi</span>':canClaim?claimB(i):lock("Süre doldu"))
+      :ok&&canClaim?claimB(i):lock(ok?"Süre doldu":"Kilitli");
+    return `<div class="tier${ok?" ok":""}"><span class="n">${i+1}</span><div class="mid"><b>${usd(+t.volume,0)} hacim</b><small>Ödül: ${hi?"":"+"}${usd(+t.reward,0)} USDT${ok?"":` · ${usd(+t.volume-c.my_volume,0)} kaldı`}</small></div>${act}</div>`}).join("");
+  const board=lb==null?`<div class="hint">Sıralama yükleniyor…</div>`:lb.length?lb.map((r,i)=>{const mine=me&&r.user_id===me.id;return `<div class="lbr lbr-link${mine?" me":""}" data-user="${r.user_id}"><span class="rk">${i<3?laurel(i+1):i+1+"."}</span>${avHTML({n:r.full_name||r.username,h:r.username,a:r.avatar_url},"width:36px;height:36px;font-size:14px")}<div class="nm"><b>${esc(r.full_name||r.username)}${mine?" (sen)":""}</b><small>@${esc(r.username)}</small></div><div class="rt"><span class="g">${usd(+r.volume,0)}</span></div></div>`}).join(""):`<div class="hint">${com?"Topluluğunda henüz bu kampanyada işlem yapan yok. İlk sen ol!":"Henüz kimse işlem yapmadı. İlk sen ol!"}</div>`;
   $("campDetail").innerHTML=`<div class="sh-h"><h3>${esc(c.title)}</h3><span class="camp-t" style="font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:4px 8px;border-radius:8px">${st8==="ended"?"Bitti":st8==="soon"?"Yakında":timeLeft(e-Date.now())}</span></div>
-   <div class="sub">${esc(c.description||"")}${c.description?"<br>":""}${c.symbol?esc(c.symbol)+" işlemleri sayılır":"Tüm coinlerdeki işlemler sayılır"} · Bitiş: ${new Date(e).toLocaleString(LOC,{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"})}</div>
+   <div class="sub">${esc(c.description||"")}${c.description?"<br>":""}${c.scope_label?esc(c.scope_label)+" işlemleri sayılır":c.symbol?esc(c.symbol)+" işlemleri sayılır":"Tüm coinlerdeki işlemler sayılır"} · Bitiş: ${new Date(e).toLocaleString(LOC,{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"})}${hi?`<br>Ödül kampanya bitince, ulaştığın en yüksek kademeye göre verilir (en fazla ${usd(campMax(c),0)}).`:""}</div>
    <div class="muted" style="font-size:13px">Senin hacmin</div><div class="camp-big">${usd(c.my_volume)}</div>
    <div class="sec-t" style="margin-top:14px">Kademeler</div>${tiers}
-   <div class="sec-t" style="margin-top:20px">Hacim sıralaması</div>${board}
+   ${coins.length?`<details class="camp-coins"><summary>Sayılan coinler (${coins.length})</summary><p>${coins.map(esc).join(", ")}</p></details>`:""}
+   <div class="sec-t" style="margin-top:20px">${com?"Topluluk sıralaması":"Hacim sıralaması"}</div>${com?`<div class="hint" style="margin:-4px 2px 8px">${(c.my_communities||[]).length?`Sıralamada yalnızca ${c.my_communities.map(esc).join(", ")} topluluğundaki kişiler görünür.`:"Bir topluluğa katıldığında burada topluluğundaki kişilerle yarışırsın."}</div>`:""}${board}
    <div class="err" id="campErr"></div>
    <div class="camp-actions"><button type="button" class="btn btn-accent" id="campTrade" ${st8==="ended"?"disabled":""}>İşlem yap</button>${st.campMgr&&st8!=="ended"?'<button type="button" class="btn btn-ghost" id="campEnd">Bitir</button>':""}</div>`}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-camp]");if(b){openCampaign(b.dataset.camp)}});
 $("campDetail").addEventListener("click",e=>{
   const cb=e.target.closest("[data-cclaim]");if(cb){busy(cb,async()=>{const r=await call("claim_campaign",{p_campaign:campOpen,p_tier:+cb.dataset.cclaim},"campErr");if(r.err)return;await loadAll();const c=st.camps.find(x=>x.id===campOpen);if(c)openCampaign(c.id);toast(`Kampanya ödülü: +${usd(+r.data,0)}`)});return}
-  if(e.target.id==="campTrade"){const c=st.camps.find(x=>x.id===campOpen);closeSheet();if(c&&c.symbol&&find(c.symbol)){prev=view;go("detail",c.symbol)}else go("home");return}
+  if(e.target.id==="campTrade"){const c=st.camps.find(x=>x.id===campOpen),cs=c&&c.coins||[],s=c&&(c.symbol||(cs.includes("SOL")?"SOL":cs[0]));closeSheet();if(s&&find(s)){prev=view;go("detail",s)}else go("home");return}
   if(e.target.id==="campEnd"){const btn=e.target;if(btn.dataset.sure!=="1"){btn.dataset.sure="1";btn.textContent="Emin misin?";return}
     busy(btn,async()=>{const r=await call("end_campaign",{p_campaign:campOpen},"campErr");if(r.err)return;closeSheet();await loadAll();toast("Kampanya bitirildi")})}
 });
