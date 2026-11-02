@@ -272,7 +272,7 @@ nav.bar .mid-btn span{width:46px;height:46px;border-radius:16px;background:linea
 .adm-chk{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px}.adm-chk input{width:20px;height:20px}
 .up-top.has-ban{margin-top:-40px;padding:0 4px 0 14px}
 .up-top.has-ban .up-av{box-shadow:0 0 0 4px var(--bg)}
-.up-top.has-ban .up-fol{margin-top:48px}
+.up-top.has-ban .up-fol{margin-top:0}
 .post-x{margin-left:auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--muted);flex:none}
 .post-x svg{width:16px;height:16px}
 .post-c{display:inline-flex;align-items:center;gap:5px;margin-top:3px;font-size:12px;font-weight:700;padding:2px 8px;border-radius:8px;cursor:pointer}
@@ -714,6 +714,27 @@ nav.bar .mid-btn span{width:46px;height:46px;border-radius:16px;background:linea
 .p-avatar i svg{width:12px;height:12px}
 .btn-rew{position:relative;display:flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:11px 18px;border-radius:14px;margin-bottom:34px}
 .btn-rew svg{width:18px;height:18px}
+.p-rwcol{display:flex;flex-direction:column;align-items:stretch;gap:8px;margin-bottom:34px}.p-rwcol .btn-rew{margin-bottom:0;justify-content:center}
+.btn-pf{background:var(--surface2);color:var(--fg)}
+.pfp{position:fixed;inset:0;z-index:39;background:var(--bg);color:var(--fg);overflow-y:auto;overscroll-behavior:contain}.pfp[hidden]{display:none}
+.pfp .pf-in{max-width:520px;margin:0 auto;padding:0 16px calc(30px + env(safe-area-inset-bottom,0px))}
+.pfp .pf-top{display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top,0px)) 0 14px;font-weight:700}.pfp .pf-top button{width:36px;height:36px;display:grid;place-items:center;color:var(--muted)}.pfp .pf-top svg{width:22px;height:22px}
+.pf-card{border:2px solid var(--accent);border-radius:16px;overflow:hidden;background:var(--surface)}
+.pf-hd{display:flex;align-items:center;gap:10px;padding:12px 14px 0}.pf-hd .av{width:38px;height:38px;flex:none}.pf-hd b{display:block;font-size:15px}.pf-hd i{font-style:normal;font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;background:color-mix(in srgb,var(--accent) 22%,transparent);color:var(--accent)}
+.pf-val{padding:8px 14px 0;font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}.pf-val s{text-decoration:none;color:var(--muted);font-weight:600}
+.pf-chg{padding:2px 14px 0;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}.pf-chg.up{color:var(--up)}.pf-chg.dn{color:var(--down)}.pf-chg small{color:var(--muted);font-weight:500;margin-left:4px}
+.pf-ch{position:relative;margin:6px 0 0;height:210px}.pf-ch svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.pf-mk{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;box-shadow:0 0 0 2px var(--surface),0 2px 8px rgba(0,0,0,.4);transform:scale(0);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}.pf-mk.on{transform:scale(1)}.pf-mk .coin{width:100%;height:100%;border-radius:50%}
+.pf-mk .lb{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);white-space:nowrap;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px 7px;font-size:11px;font-weight:700;color:var(--up);opacity:0;transition:opacity .3s}.pf-mk.hot .lb{opacity:1}.pf-mk .lb em{font-style:normal;color:var(--fg);margin-right:4px}
+.pf-ax{display:flex;justify-content:space-between;padding:2px 14px 10px;font-size:10px;color:var(--muted)}
+.pf-ft{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--accent);color:var(--accent-ink)}.pf-ft b{font-family:var(--display);font-size:24px;letter-spacing:-.8px}.pf-ft span{font-size:11px;font-weight:600;opacity:.85;text-align:right}
+.pf-ctl{display:flex;align-items:center;gap:12px;margin:14px 2px 0}.pf-ctl button{display:grid;place-items:center}.pf-ctl .pp{width:30px;height:30px}.pf-ctl .pp svg{width:20px;height:20px}.pf-ctl small{color:var(--muted);font-size:12px;min-width:34px;font-variant-numeric:tabular-nums}.pf-ctl .sp{font-weight:700;font-size:13px;min-width:30px}
+.pf-bar{flex:1;height:18px;display:flex;align-items:center;cursor:pointer;touch-action:none}.pf-bar i{display:block;width:100%;height:3px;border-radius:3px;background:var(--surface2);position:relative}.pf-bar u{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--fg)}
+.pf-chips{display:flex;justify-content:center;gap:6px;margin-top:16px;flex-wrap:wrap}.pf-chips button{padding:7px 13px;border-radius:999px;background:var(--surface2);color:var(--muted);font-size:12px;font-weight:700}.pf-chips button.on{background:var(--fg);color:var(--bg)}
+.pf-sum{margin:16px 2px 0;font-size:13px;color:var(--muted);text-align:center;line-height:1.5}.pf-sum b{color:var(--fg)}
+
+.up-fcol{display:flex;flex-direction:column;align-items:stretch;gap:7px;margin-top:14px}.up-top.has-ban .up-fcol{margin-top:48px}.up-fcol .up-fol{margin-top:0}
+.up-pf{display:flex;align-items:center;justify-content:center;gap:6px;min-width:120px;padding:7px 14px;border-radius:12px;background:var(--surface2);color:var(--fg);font-weight:700;font-size:13px}.up-pf svg{width:15px;height:15px}
 .rew-dot{position:absolute;top:-4px;right:-4px;width:12px;height:12px;border-radius:50%;background:var(--down);border:2px solid var(--bg)}
 .p-name{font-size:26px;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere}
 .p-handle{color:var(--muted);font-size:17px;margin-top:2px}
@@ -1657,7 +1678,7 @@ nav.bar button svg{width:22px;height:22px}
   </div>
   <div class="p-idrow">
     <button class="p-avatar" type="button" data-open="edit" aria-label="Profili düzenle"><span class="fr" id="pFrame"></span><span class="fr-glow"></span><span id="pAv" class="p-av-in">E</span><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 20h4L19 9l-4-4L4 16zM16.5 3.5l4 4 1-1a2 2 0 0 0-4-4z"/></svg></i></button>
-    <button class="btn-rew" type="button" data-open="rewards"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-2.2A3 3 0 0 0 12 4.4 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V7h2v4h8V8a1 1 0 0 0-1-1zM9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v6a2 2 0 0 0 2 2h5v-8zm9 8h5a2 2 0 0 0 2-2v-6h-7z"/></svg>Ödüller<span class="rew-dot" id="rewDot" hidden></span></button>
+    <div class="p-rwcol"><button class="btn-rew" type="button" data-open="rewards"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-2.2A3 3 0 0 0 12 4.4 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V7h2v4h8V8a1 1 0 0 0-1-1zM9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v6a2 2 0 0 0 2 2h5v-8zm9 8h5a2 2 0 0 0 2-2v-6h-7z"/></svg>Ödüller<span class="rew-dot" id="rewDot" hidden></span></button><button class="btn-rew btn-pf" type="button" data-pf="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-8 4 5"/><path d="M3 21h18"/></svg>Portfolyo</button></div>
   </div>
   <div class="p-name" id="pName"></div>
   <div class="p-handle" id="pHandle"></div>
@@ -1727,6 +1748,7 @@ nav.bar button svg{width:22px;height:22px}
 </div>
 
 <div class="vipp" id="vipPage" hidden role="dialog" aria-label="VIP"></div>
+<div class="pfp" id="pfPage" hidden role="dialog" aria-label="Portfolyo"></div>
 <div class="vw" id="viewPage" hidden role="dialog" aria-label="View"><div id="vwIn"></div></div>
 <div class="upage" id="aucPage" hidden role="dialog" aria-label="CF Auction">
   <div class="upage-in"><div class="back-row"><button class="icon-btn" type="button" id="aucBack" aria-label="Geri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div><div id="aucBody"></div></div>
@@ -3305,7 +3327,7 @@ function renderUser(){const u=userData;if(!u)return;const n=u.full_name||u.usern
   const nO=(u.open||[]).length;
   const bcss=banCss(u.banner),tcl=tierCls(u.banner),ban=tcl?"ban-user "+tcl:bcss?"ban-user":bannerFor(u.id,u.username);
   $("userBody").innerHTML=`${ban?`<div class="up-banner ${ban}" style="${bcss.replace(/"/g,"&quot;")}" role="img" aria-label="${ban==="ban-ceo"?"COINFORCE CEO":ban==="ban-partner"?"COINFORCE Partner":ban==="ban-wheel"?"Banner":"COINFORCE Bot"}"></div>`:""}<div class="up-top${ban?" has-ban":""}"><div class="fr-wrap"><div class="up-av" style="background:${url?"var(--surface2)":colorFor(u.username)}">${url?`<img class="av-img" src="${url}" alt="">`:esc(initial(n))}</div>${u.frame?`<span class="fr fr-${u.frame}">${frameSVG(u.frame)}</span><span class="fr-glow"></span>`:""}</div>
-      <button type="button" class="btn ${u.is_following?"btn-ghost":"btn-accent"} up-fol" id="userFollow" data-id="${u.id}" data-f="${u.is_following?1:0}">${u.is_following?"Takiptesin":"Takip et"}</button></div>
+      <div class="up-fcol"><button type="button" class="btn ${u.is_following?"btn-ghost":"btn-accent"} up-fol" id="userFollow" data-id="${u.id}" data-f="${u.is_following?1:0}">${u.is_following?"Takiptesin":"Takip et"}</button><button type="button" class="up-pf" data-pf="${u.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-8 4 5"/><path d="M3 21h18"/></svg>Portfolyo</button></div></div>
     <div class="up-name">${esc(n)}${vipTag(u.id)}</div><div class="up-handle">@${esc(u.username)}</div>
     ${u.bio?`<p class="up-bio" translate="no">${esc(u.bio)}</p>`:""}
     <div class="err" id="userErr"></div>
@@ -4506,6 +4528,58 @@ function vipPageHTML(){const lv=vipEff(),have=vipHave(),nx=VIP_SOL[lv],pc=nx?Mat
   <div class="vp-up" style="font-size:20px">${T("Alım Satımın Ötesinde, Ayrıcalığa","Beyond Trading, Into Privilege")}</div><button type="button" class="gb" data-vipbuy>${T("Şimdi Yükselt","Upgrade Now")}</button></div>`}
 function openVip(){const pg=$("vipPage");pg.innerHTML=vipPageHTML();pg.hidden=false;pg.scrollTop=0;document.body.style.overflow="hidden"}
 function closeVip(){$("vipPage").hidden=true;document.body.style.overflow=""}
+// ---------- Portfolyo oynatma (Fomo tarzı): portföy değeri hızlandırılmış oynar, $10.000+ kâr anları coin logosuyla işaretlenir
+const PF={id:null,range:"24h",mode:"$",data:null,prog:0,playing:false,speed:1,raf:0,last:0,shown:new Set(),busy:0};
+const PF_R={"24h":["24s","24h"],"7d":["7g","7d"],"30d":["30g","30d"],"all":["Tümü","All"]},PF_DUR=14000;
+function pfWho(){const id=PF.id;if(me&&id===me.id){const p=st.prof||{};return {id,n:p.name||(me&&me.email)||"",h:p.handle||"",a:p.avatar||p.avatar_url||""}}
+  const u=userData&&userData.id===id?userData:null;return u?{id,n:u.full_name||u.username,h:u.username,a:u.avatar_url}:{id,n:"",h:"",a:""}}
+async function openPf(id){if(!me)return;PF.id=id==="me"?me.id:id;PF.range="24h";PF.data=null;PF.prog=0;PF.shown=new Set();PF.playing=false;pfStop();const pg=$("pfPage");pg.innerHTML=pfShell();pg.hidden=false;pg.scrollTop=0;document.body.style.overflow="hidden";pfLoad()}
+function closePf(){pfStop();$("pfPage").hidden=true;document.body.style.overflow=""}
+function pfStop(){cancelAnimationFrame(PF.raf);PF.raf=0;PF.playing=false}
+async function pfLoad(){const id=PF.id,r=PF.range,tok=++PF.busy;const {data,error}=await sb.rpc("portfolio_replay",{p_user:id,p_range:r});if(tok!==PF.busy||$("pfPage").hidden)return;
+  const d=error||!data?{curve:[],wins:[],n:0,total:0}:data;let pts=(d.curve||[]).map(a=>({t:+a[0],v:+a[1]})).filter(x=>isFinite(x.t)&&isFinite(x.v)).sort((a,b)=>a.t-b.t);
+  if(pts.length<2){const now=Date.now(),v=pts.length?pts[0].v:(me&&id===me.id?pfNow():0);pts=[{t:+d.since||now-864e5,v},{t:now,v}]}
+  const t0=pts[0].t,t1=pts[pts.length-1].t,wins=(d.wins||[]).map(w=>({t:+w.t,s:w.s,p:+w.p})).filter(w=>w.t>=t0&&w.t<=t1);
+  PF.data={pts,t0,t1,wins,n:+d.n||0,total:+d.total||0};PF.prog=0;PF.shown=new Set();$("pfPage").innerHTML=pfShell();pfPlay()}
+function pfNow(){return(st.usdt||0)+posNow()}
+function pfShell(){const w=pfWho(),lbl=EN?"Replaying portfolio":"Portfolyo oynatılıyor",e=EN?1:0;
+  return `<div class="pf-in"><div class="pf-top"><button type="button" data-pfx aria-label="${EN?"Back":"Geri"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span>${lbl}</span><button type="button" data-pfx aria-label="${EN?"Close":"Kapat"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="pf-card"><div class="pf-hd">${avHTML({id:w.id,a:w.a,h:w.h,n:w.n||w.h})}<div><b>${esc(w.n||w.h)}</b><i>${EN?"Portfolio":"Portfolyo"}</i></div></div>
+  <div class="pf-val" id="pfVal">${PF.data?"":"…"}</div><div class="pf-chg" id="pfChg"></div>
+  <div class="pf-ch" id="pfCh"><svg viewBox="0 0 320 210" preserveAspectRatio="none"><defs><linearGradient id="pfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--up)" stop-opacity=".35"/><stop offset="1" stop-color="var(--up)" stop-opacity="0"/></linearGradient></defs><line id="pfBase" x1="0" x2="320" y1="105" y2="105" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 4" opacity=".6" vector-effect="non-scaling-stroke"/><path id="pfArea" fill="url(#pfg)"/><polyline id="pfLine" fill="none" stroke="var(--up)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><div id="pfMk"></div></div>
+  <div class="pf-ax" id="pfAx"></div><div class="pf-ft"><b>coinforce</b><span>${EN?"Profits of $10K+":"$10K+ kâr anları"}<br>@${esc(w.h||"")}</span></div></div>
+  <div class="pf-ctl"><button type="button" class="pp" data-pfpp id="pfPP" aria-label="${EN?"Play/pause":"Oynat/duraklat"}"></button><small id="pfTm"></small><div class="pf-bar" id="pfBar"><i><u id="pfPr" style="width:0"></u></i></div><button type="button" class="sp" data-pfsp id="pfSp">1x</button></div>
+  <div class="pf-chips">${Object.entries(PF_R).map(([k,v])=>`<button type="button" data-pfr="${k}" class="${PF.range===k?"on":""}">${EN?v[1]:v[0]}</button>`).join("")}<button type="button" data-pfm="$" class="${PF.mode==="$"?"on":""}">$</button><button type="button" data-pfm="%" class="${PF.mode==="%"?"on":""}">%</button></div>
+  <div class="pf-sum" id="pfSum">${PF.data?pfSumTxt():""}</div></div>`}
+function pfSumTxt(){const d=PF.data;if(!d)return"";return d.n?(EN?`<b>${d.n}</b> profit${d.n>1?"s":""} of $10K+ · total <b>+${usd(d.total,0)}</b>`:`<b>${d.n}</b> adet $10.000+ kâr anı · toplam <b>+${usd(d.total,0)}</b>`):(EN?"Profits of $10K+ on a coin will appear here as markers.":"Bir coinde $10.000 ve üzeri kâr yapınca burada coin logosuyla işaretlenir.")}
+function pfVal(p){const d=PF.data,a=d.pts;if(p<=0)return a[0].v;const t=d.t0+(d.t1-d.t0)*p;let lo=0,hi=a.length-1;if(t>=a[hi].t)return a[hi].v;while(hi-lo>1){const m=(lo+hi)>>1;if(a[m].t<=t)lo=m;else hi=m}const f=(t-a[lo].t)/(a[hi].t-a[lo].t||1);return a[lo].v+(a[hi].v-a[lo].v)*f}
+function pfDraw(){const d=PF.data;if(!d||$("pfPage").hidden||!$("pfLine"))return;const a=d.pts,span=d.t1-d.t0||1;let mn=Infinity,mx=-Infinity;a.forEach(x=>{if(x.v<mn)mn=x.v;if(x.v>mx)mx=x.v});if(mx-mn<Math.max(1,mx*1e-4)){const m=(mx+mn)/2,h=Math.max(1,m*.01);mn=m-h;mx=m+h}const pad=(mx-mn)*.12;mn-=pad;mx+=pad;
+  const X=t=>(t-d.t0)/span*320,Y=v=>200-(v-mn)/(mx-mn)*190+5,cut=d.t0+span*PF.prog;let pts=[];for(const x of a){if(x.t>cut)break;pts.push(X(x.t).toFixed(1)+","+Y(x.v).toFixed(1))}
+  const cv=pfVal(PF.prog);pts.push(X(cut).toFixed(1)+","+Y(cv).toFixed(1));if(pts.length<2)pts.unshift("0,"+Y(a[0].v).toFixed(1));
+  const first=a[0].v,up=cv>=first;$("pfLine").setAttribute("points",pts.join(" "));$("pfLine").setAttribute("stroke",up?"var(--up)":"var(--down)");
+  $("pfArea").setAttribute("d","M"+pts.join("L")+"L"+X(cut).toFixed(1)+",210L0,210Z");$("pfArea").setAttribute("fill",up?"url(#pfg)":"none");$("pfBase").setAttribute("y1",Y(first).toFixed(1));$("pfBase").setAttribute("y2",Y(first).toFixed(1));
+  const dv=cv-first,pc=first>0?dv/first*100:0,s=PF.mode==="%";const [i,f]=fmtN(cv,2).split(DEC);
+  $("pfVal").innerHTML=s?`${pc>=0?"+":""}${fmtN(pc,2)}%`:`$${esc(i)}<s>${f!=null?DEC+esc(f):""}</s>`;
+  $("pfChg").className="pf-chg "+(dv>=0?"up":"dn");$("pfChg").innerHTML=s?`${dv>=0?"+":"-"}${usd(Math.abs(dv),2)}<small>${EN?PF_R[PF.range][1]:PF_R[PF.range][0]}</small>`:`${dv>=0?"+":"-"}${usd(Math.abs(dv),2)} <small>${pc>=0?"+":""}${fmtN(pc,2)}% · ${EN?PF_R[PF.range][1]:PF_R[PF.range][0]}</small>`;
+  const mk=$("pfMk");if(!mk.childElementCount)mk.innerHTML=d.wins.map((w,k)=>`<div class="pf-mk" data-k="${k}" style="left:${((w.t-d.t0)/span*100).toFixed(2)}%;top:${(Y(pfVal((w.t-d.t0)/span))/210*100).toFixed(2)}%">${coinIc(w.s)}<span class="lb"><em>${esc(w.s)}</em>+${usd(w.p,0)}</span></div>`).join("");
+  mk.querySelectorAll(".pf-mk").forEach(el=>{const w=d.wins[+el.dataset.k],p=(w.t-d.t0)/span,on=PF.prog>=p;el.classList.toggle("on",on);el.classList.toggle("hot",on&&PF.prog-p<.09&&PF.playing||(!PF.playing&&on&&PF.prog-p<.09))});
+  $("pfPr").style.width=(PF.prog*100).toFixed(1)+"%";const left=Math.max(0,Math.ceil((1-PF.prog)*PF_DUR/PF.speed/1000));$("pfTm").textContent="-0:"+String(left).padStart(2,"0");
+  $("pfPP").innerHTML=PF.playing?'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>':'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.9l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>';
+  $("pfAx").innerHTML=[0,.5,1].map(f=>`<span>${new Date(d.t0+span*f).toLocaleString(LOC,PF.range==="24h"?{hour:"2-digit",minute:"2-digit"}:{day:"numeric",month:"short"})}</span>`).join("")}
+function pfFrame(ts){if(!PF.playing)return;const dt=PF.last?Math.min(80,ts-PF.last):16;PF.last=ts;PF.prog=Math.min(1,PF.prog+dt*PF.speed/PF_DUR);pfDraw();if(PF.prog>=1){PF.playing=false;pfDraw();return}PF.raf=requestAnimationFrame(pfFrame)}
+function pfPlay(){if(!PF.data)return;if(PF.prog>=1)PF.prog=0;PF.playing=true;PF.last=0;cancelAnimationFrame(PF.raf);PF.raf=requestAnimationFrame(pfFrame);pfDraw()}
+function pfPause(){PF.playing=false;cancelAnimationFrame(PF.raf);pfDraw()}
+document.addEventListener("click",e=>{const g=s=>e.target.closest(s);let b;
+  if((b=g("[data-pf]"))){openPf(b.dataset.pf);return}
+  if($("pfPage").hidden)return;
+  if(g("[data-pfx]")){closePf();return}
+  if(g("[data-pfpp]")){PF.playing?pfPause():pfPlay();return}
+  if(g("[data-pfsp]")){PF.speed=PF.speed===1?2:PF.speed===2?4:1;$("pfSp").textContent=PF.speed+"x";return}
+  if((b=g("[data-pfr]"))){if(PF.range!==b.dataset.pfr){PF.range=b.dataset.pfr;pfStop();PF.data=null;$("pfPage").innerHTML=pfShell();pfLoad()}return}
+  if((b=g("[data-pfm]"))){PF.mode=b.dataset.pfm;document.querySelectorAll("[data-pfm]").forEach(x=>x.classList.toggle("on",x===b));pfDraw();return}
+  if((b=g("#pfBar"))){const r=b.getBoundingClientRect();PF.prog=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));pfDraw();return}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("pfPage").hidden)closePf()});
+
 document.addEventListener("click",e=>{const g=q=>e.target.closest(q);
   if(g("[data-vip]")){openVip();return}
   if(g("[data-vipclose]")){closeVip();return}
