@@ -1000,6 +1000,11 @@ html[data-theme="light"] .vw,html:not([data-theme]) .vw{}
 .vw-chips{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;scrollbar-width:none;border-bottom:1px solid var(--vw-line)}.vw-chips::-webkit-scrollbar{display:none}
 .vw-chip{flex:none;display:flex;align-items:center;gap:7px;padding:6px 12px 6px 6px;border-radius:12px;background:var(--vw-card);border:1px solid var(--vw-line);color:#e8ebf1;font-weight:700;font-size:13px}
 .vw-chip .coin{width:22px;height:22px;font-size:9px}.vw-chip small{font-weight:600;font-size:11.5px}.vw-chip.on{border-color:#e8ebf1}
+.vw-sq{flex:none;display:flex;align-items:center;gap:7px;width:170px;padding:0 12px;border-radius:12px;background:var(--vw-card);border:1px solid var(--vw-line);color:#8b93a4;position:sticky;left:0;z-index:1}
+.vw-sq:focus-within{border-color:#e8ebf1;color:#e8ebf1}
+.vw-sq input{flex:1;min-width:0;background:none;border:0;outline:0;padding:9px 0;font:inherit;font-size:16px;font-weight:600;color:#e8ebf1;-webkit-appearance:none;appearance:none}
+.vw-sq input::-webkit-search-cancel-button{-webkit-appearance:none}.vw-sq input::placeholder{color:#7c8494;font-weight:500}
+.vw-cl{display:contents}.vw-no{flex:none;align-self:center;padding:0 8px;font-size:13px;color:#7c8494}
 .vw-chip .dot{width:6px;height:6px;border-radius:50%;background:#3ddc97}
 .vw-px{padding:14px 14px 0}.vw-px .big{font-size:34px;font-weight:800;letter-spacing:-.02em}.vw-px .big small{font-size:13px;color:var(--vw-mut);font-weight:600;margin-left:6px}
 .vw-px .chg{font-size:14px;font-weight:600}
@@ -1039,6 +1044,7 @@ html[data-theme="light"] .vw,html:not([data-theme]) .vw{}
   .vw-body{display:grid;grid-template-columns:240px minmax(0,1fr) 360px;height:calc(100vh - 58px)}
   .vw-chips{flex-direction:column;overflow-y:auto;border-bottom:0;border-right:1px solid var(--vw-line);padding:10px}
   .vw-chip{padding:10px;justify-content:flex-start}.vw-chip .coin{width:28px;height:28px}.vw-chip .grow{flex:1}
+  .vw-sq{width:auto;position:sticky;top:-10px;left:auto;margin-bottom:2px}.vw-no{padding:8px 4px}
   .vw-main{overflow-y:auto;border-right:1px solid var(--vw-line)}.vw-ch{height:calc(100vh - 300px)}
   .vw-side{overflow-y:auto}
 }
@@ -4442,7 +4448,11 @@ function vwCoins(){const out=[],seen=new Set(),add=(t,pos)=>{if(t&&!seen.has(t.s
   Object.entries(st.h||{}).filter(([k,q])=>{const t=find(k);return t&&q*t.p>=1}).sort((a,b)=>b[1]*find(b[0]).p-a[1]*find(a[0]).p).forEach(([k])=>add(find(k),true));
   (st.perps||[]).forEach(x=>add(find(x.s),true));(st.watch||[]).forEach(k=>add(find(k),false));
   [...T].filter(t=>t.live).sort((a,b)=>b.mc-a.mc).slice(0,12).forEach(t=>add(t,false));return out}
-function openView(sym){const L=vwCoins();VW.sym=sym&&find(sym)?sym:(L[0]&&L[0].t.s)||"BTC";VW.tab="tr";VW.max=false;VW.tool="cur";VW.zoom=null;VW.ruler=null;vwDrLoad(VW.sym);vwPull();$("viewPage").hidden=false;document.documentElement.style.overflow="hidden";renderView();vwLoad();vwLoadFeed(VW.sym);
+function vwChipsHTML(){const q=(VW.q||"").trim().toLowerCase();let L;
+  if(q){const sc=t=>{const s=t.s.toLowerCase(),n=(t.n||"").toLowerCase();return s===q?0:s.startsWith(q)?1:n.startsWith(q)?2:s.includes(q)?3:n.includes(q)?4:9};L=[...T].filter(t=>sc(t)<9).sort((a,b)=>sc(a)-sc(b)||(b.mc||0)-(a.mc||0)).slice(0,40).map(t=>({t,pos:(st.h||{})[t.s]*t.p>=1}))}
+  else{L=vwCoins();if(!L.some(x=>x.t.s===VW.sym)){const t=find(VW.sym);if(t)L.unshift({t,pos:false})}}
+  return L.length?L.map(x=>{const c=chg(x.t);return `<button type="button" class="vw-chip${x.t.s===VW.sym?" on":""}" data-vws="${x.t.s}">${coinHTML(x.t)}<span class="grow">${x.t.s}</span>${x.pos?'<i class="dot" title="Pozisyon"></i>':""}<small class="${c>=0?"up":"down"}">${pct(c)}</small></button>`}).join(""):`<span class="vw-no">${EN?"No coin found":"Coin bulunamadı"}</span>`}
+function openView(sym){VW.q="";const L=vwCoins();VW.sym=sym&&find(sym)?sym:(L[0]&&L[0].t.s)||"BTC";VW.tab="tr";VW.max=false;VW.tool="cur";VW.zoom=null;VW.ruler=null;vwDrLoad(VW.sym);vwPull();$("viewPage").hidden=false;document.documentElement.style.overflow="hidden";renderView();vwLoad();vwLoadFeed(VW.sym);
   clearInterval(VW.live);VW.live=setInterval(()=>{if($("viewPage").hidden){clearInterval(VW.live);return}vwTick();VW.hl++;if(VW.range!=="live"&&VW.hl%2)return;if(!VW.scrub)vwRenderLive();if(VW.hl%60===0)vwLoad(true);if(VW.hl%20===0)vwLoadFeed(VW.sym);if(VW.hl%5===0)vwSyn(VW.sym)},1000);vwSyn(VW.sym)}
 function closeView(){if($("viewPage").hidden)return;if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});$("viewPage").classList.remove("vw-max");$("viewPage").hidden=true;clearInterval(VW.live);document.documentElement.style.overflow=""}
 function vwLoad(force){const t=find(VW.sym);if(!t)return;const rk=VW.range==="live"?"1G":VW.range;if(force){const c=t.cg&&HIST[t.cg+"|"+R_DAYS[rk]];if(c)c.t=0}loadHist(t,rk);if(rk!=="1G")loadHist(t,"1G");let n=0;const iv=setInterval(()=>{n++;const c=t.cg&&HIST[t.cg+"|"+R_DAYS[rk]];if((c&&!c.busy)||n>25){clearInterval(iv);if(!$("viewPage").hidden&&!VW.scrub){vwRenderChart();vwRenderSide()}}},300)}
@@ -4468,7 +4478,7 @@ function vwGauge(T){const a=Math.PI*(1-(T.v+1)/2),cx=120,cy=118,r=88,nx=cx+Math.
     <div class="vw-note">RSI(14) ${fmtN(T.rsi,1)} · ${EN?"Based on 24h price, moving averages and RSI. Not investment advice.":"24 saatlik fiyat, hareketli ortalamalar ve RSI'ya göre. Yatırım tavsiyesi değildir."}</div></div>`}
 function renderView(){const t=find(VW.sym);if(!t)return;const L=vwCoins();
   $("vwIn").innerHTML=`<div class="vw-top"><button type="button" class="x" data-vwx aria-label="Kapat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button><div class="ti">${coinHTML(t)}<div><b>${esc(t.n)}</b><small>${t.s}/USDT · COINFORCE${t.custom?"":" · "+(t.dex?"DEX":"Spot")}</small></div></div><div class="vw-px" id="vwPx"></div><div class="vw-st" id="vwSt"></div><span class="pr-live"><i></i>${EN?"live":"canlı"}</span></div>
-  <div class="vw-body"><div class="vw-chips">${L.map(x=>{const c=chg(x.t);return `<button type="button" class="vw-chip${x.t.s===VW.sym?" on":""}" data-vws="${x.t.s}">${coinHTML(x.t)}<span class="grow">${x.t.s}</span>${x.pos?'<i class="dot" title="Pozisyon"></i>':""}<small class="${c>=0?"up":"down"}">${pct(c)}</small></button>`}).join("")}</div>
+  <div class="vw-body"><div class="vw-chips"><label class="vw-sq"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="vwQ" type="search" enterkeyhint="search" placeholder="${EN?"Search coin":"Coin ara"}" aria-label="${EN?"Search coin":"Coin ara"}" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(VW.q||"")}"></label><span id="vwCl" class="vw-cl">${vwChipsHTML()}</span></div>
   <div class="vw-main">
     <div class="vw-cw" id="vwCw"><div class="vw-mx"><b>${t.s}/USDT · <span id="vwMxP"></span></b><button type="button" class="x" data-vwfs aria-label="Kapat"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
       <div class="vw-rg">${VW_R.map(([k,en])=>`<button type="button" data-vwr="${k}" class="${k===VW.range?"on":""}">${k==="live"?`<i class="vw-ld"></i>`:""}${EN?en:(k==="live"?"Canlı":k)}</button>`).join("")}<span class="sp"></span><button type="button" class="zb" data-vwzm="out" title="${EN?"Zoom out":"Daralt"}" aria-label="${EN?"Zoom out":"Daralt"}">−</button><button type="button" class="zb" data-vwzm="in" title="${EN?"Zoom in":"Genişlet"}" aria-label="${EN?"Zoom in":"Genişlet"}">+</button><button type="button" class="zb" data-vwzm="reset" title="${EN?"Reset view":"Görünümü sıfırla"}" aria-label="${EN?"Reset view":"Görünümü sıfırla"}"${VW.zoom?"":" disabled"}>⟲</button><button type="button" class="ty${VW.type==="line"?" on":""}" data-vwt="line" aria-label="Çizgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 8-9"/></svg></button><button type="button" class="ty${VW.type==="candle"?" on":""}" data-vwt="candle" aria-label="Mum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3v4M7 15v6M17 3v6M17 17v4"/><rect x="5" y="7" width="4" height="8" rx="1"/><rect x="15" y="9" width="4" height="8" rx="1"/></svg></button><button type="button" class="fs" data-vwfs aria-label="Tam ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
@@ -4959,9 +4969,11 @@ function vwRenderSide(){const el=$("vwSide"),t=find(VW.sym);if(!el||!t)return;co
     if(!c||Date.now()-c.at>12e4)sb.rpc("news_list",{p_symbol:t.s,p_lang:null,p_before:null,p_limit:12}).then(r=>{CN[t.s]={at:Date.now(),items:r.error?[]:r.data||[]};if(VW.tab==="news"&&VW.sym===t.s)vwRenderSide()})}
   else{const T=vwTech(t);el.innerHTML=T?vwGauge(T):`<div class="empty" style="padding:24px 0">${EN?"Not enough data yet.":"Henüz yeterli veri yok."}</div>`}}
 document.addEventListener("click",e=>{if(e.target.closest("[data-view]")){openView();return}});
+$("viewPage").addEventListener("input",e=>{if(e.target.id!=="vwQ")return;VW.q=e.target.value;const cl=$("vwCl");if(cl)cl.innerHTML=vwChipsHTML()});
+$("viewPage").addEventListener("keydown",e=>{if(e.target.id!=="vwQ")return;if(e.key==="Escape"&&e.target.value){e.stopPropagation();e.preventDefault();e.target.value="";VW.q="";$("vwCl").innerHTML=vwChipsHTML()}else if(e.key==="Enter"){const b=document.querySelector("#vwCl [data-vws]");if(b){e.preventDefault();b.click()}}},true);
 $("viewPage").addEventListener("click",e=>{const g=x=>e.target.closest(x);
   if(g("[data-vwx]")){closeView();return}
-  const c=g("[data-vws]");if(c){VW.sym=c.dataset.vws;VW.zoom=null;VW.ruler=null;VW.tool="cur";VW.max=false;VW.ot="market";renderView();vwLoad();vwLoadFeed(VW.sym);return}
+  const c=g("[data-vws]");if(c){VW.q="";VW.sym=c.dataset.vws;VW.zoom=null;VW.ruler=null;VW.tool="cur";VW.max=false;VW.ot="market";renderView();vwLoad();vwLoadFeed(VW.sym);return}
   const r=g("[data-vwr]");if(r){VW.range=r.dataset.vwr;VW.zoom=null;document.querySelectorAll("[data-vwr]").forEach(b=>b.classList.toggle("on",b===r));vwRenderChart();vwLoad();return}
   const ty=g("[data-vwt]");if(ty){VW.type=ty.dataset.vwt;document.querySelectorAll("[data-vwt]").forEach(b=>b.classList.toggle("on",b===ty));vwRenderChart();return}
   const tb=g("[data-vwtab]");if(tb){VW.tab=tb.dataset.vwtab;document.querySelectorAll("[data-vwtab]").forEach(b=>b.classList.toggle("on",b===tb));vwRenderSide();return}
