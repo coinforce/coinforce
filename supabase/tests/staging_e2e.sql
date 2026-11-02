@@ -1063,3 +1063,124 @@ begin
   perform cf_test.user_rpc('alice@coinforce.test', 'tg_group_set', '{"p_on": false}');
   commit;
 end $$;
+
+-- ════════════════════════════════════════════════════════════════════════════════════════════════
+-- 11) Kimlik doğrulama (KYC) (migration 79, testler 75–81)
+create or replace function cf_test.storage_req(p_method text, p_token text, p_path text, p_type text default 'image/jpeg')
+returns int language plpgsql as $$
+declare r extensions.http_response;
+  anon text := (select substring(pg_get_functiondef('cf_test.rest'::regproc) from 'anon text := ''([^'']+)'''));
+begin
+  r := extensions.http((p_method, 'https://dyufemhucbphktjezasa.supabase.co/storage/v1/object/kyc/' || p_path,
+        array[extensions.http_header('apikey', anon), extensions.http_header('Authorization', 'Bearer ' || coalesce(p_token, anon))],
+        case when p_method = 'POST' then p_type end, case when p_method = 'POST' then 'test-image' end)::extensions.http_request);
+  return r.status;
+end $$;
+
+create or replace procedure cf_test.e2e_kyc(p_run bigint) language plpgsql as $$
+-- Yönetici kararları SQL'de verilir; HTTP üzerinden yapılan sonraki kullanıcı çağrıları onları görsün diye COMMIT edilir.
+declare
+  bob   uuid := (select id from public.profiles where username = 'tg_bob');
+  carol uuid := (select id from public.profiles where username = 'tg_carol');
+  adm   uuid := (select id from public.profiles where is_admin limit 1);
+  tb text := cf_test.token('bob@coinforce.test'); tc text := cf_test.token('carol@coinforce.test');
+  pre text := bob::text || '/' || p_run || '-' || floor(extract(epoch from clock_timestamp()))::bigint;
+  cp  text := carol::text || '/' || p_run || '-' || floor(extract(epoch from clock_timestamp()))::bigint;
+  s1 int; s2 int; s3 int; s4 int; s5 int; s6 int; s7 int; v text; e1 text; e2 text; e3 text;
+  r json; kid uuid; u0 numeric; u1 numeric; vol0 numeric; vol1 numeric;
+  args jsonb := jsonb_build_object('p_doc_type', 'tc', 'p_full_name', 'Bob Test', 'p_id_number', '12345678901', 'p_birth_date', '1990-01-01',
+                                   'p_front', pre || '-front.jpg', 'p_back', pre || '-back.jpg', 'p_selfie', pre || '-selfie.jpg', 'p_consent', true);
+begin
+  -- 75
+  select x.body into v from cf_test.user_rpc('bob@coinforce.test', 'kyc_status') x;
+  select x.status into s1 from cf_test.rest('POST', '/rest/v1/rpc/kyc_status', null, '{}') x;
+  select x.status into s2 from cf_test.rest('POST', '/rest/v1/rpc/kyc_submit', null, args::text) x;
+  perform cf_test.t(p_run, 75, 'KYC: başlangıç durumu "doğrulanmadı", ödül 5000; giriş yapmamış (anonim) çağrılar reddedilir',
+    v like '%"status" : "none"%' and v like '%"bonus" : 5000%' and s1 in (401, 403) and s2 in (401, 403),
+    format('durum: %s · anonim kyc_status: HTTP %s · anonim kyc_submit: HTTP %s', left(v, 70), s1, s2));
+
+  -- 76
+  s1 := cf_test.storage_req('POST', tb, pre || '-front.jpg');
+  s2 := cf_test.storage_req('POST', tb, pre || '-back.jpg');
+  s3 := cf_test.storage_req('POST', tb, pre || '-selfie.jpg');
+  s4 := cf_test.storage_req('POST', tc, bob::text || '/carol-' || p_run || '.jpg');
+  s5 := cf_test.storage_req('GET', tb, pre || '-front.jpg');
+  s6 := cf_test.storage_req('GET', null, pre || '-front.jpg');
+  s7 := cf_test.storage_req('GET', cf_test.token('admin@coinforce.test'), pre || '-front.jpg');
+  perform cf_test.t(p_run, 76, 'Belgeler yalnızca sahibinin klasörüne yüklenir; başkasının klasörüne yükleme kapalı; belgeyi sahibi ve anonim okuyamaz, yönetici okur',
+    s1 = 200 and s2 = 200 and s3 = 200 and s4 not between 200 and 299 and s5 not between 200 and 299 and s6 not between 200 and 299 and s7 = 200,
+    format('kendi klasörü: %s/%s/%s · başkasının klasörü: %s · sahibi okuma: %s · anonim okuma: %s · yönetici okuma: %s', s1, s2, s3, s4, s5, s6, s7));
+
+  -- 77
+  select x.body into e1 from cf_test.user_rpc('bob@coinforce.test', 'kyc_submit', args) x;
+  select x.body into e2 from cf_test.user_rpc('bob@coinforce.test', 'kyc_submit',
+    args || jsonb_build_object('p_id_number', '10000000078', 'p_birth_date', to_char(current_date - interval '17 years', 'YYYY-MM-DD'))) x;
+  select x.body into e3 from cf_test.user_rpc('bob@coinforce.test', 'kyc_submit',
+    args || jsonb_build_object('p_id_number', '10000000078', 'p_front', carol::text || '/yok.jpg')) x;
+  perform cf_test.t(p_run, 77, 'Geçersiz T.C. no, 18 yaş altı ve kullanıcıya ait olmayan dosya reddedilir',
+    e1 like '%Geçerli bir T.C.%' and e2 like '%18 yaş%' and e3 like '%fotoğrafları bulunamadı%'
+    and not exists (select 1 from public.kyc_requests where user_id = bob),
+    format('%s | %s | %s', left(e1, 70), left(e2, 70), left(e3, 70)));
+
+  -- 78
+  args := args || jsonb_build_object('p_id_number', '10000000078');
+  select x.status into s1 from cf_test.user_rpc('bob@coinforce.test', 'kyc_submit', args) x;
+  select x.body into e1 from cf_test.user_rpc('bob@coinforce.test', 'kyc_submit', args) x;
+  perform set_config('request.jwt.claims', json_build_object('sub', adm, 'role', 'authenticated')::text, true);
+  r := public.admin_kyc_list('pending');
+  perform set_config('request.jwt.claims', json_build_object('sub', bob, 'role', 'authenticated')::text, true);
+  begin perform public.admin_kyc_list('pending'); e2 := 'izin verildi'; exception when others then e2 := sqlerrm; end;
+  perform set_config('request.jwt.claims', '', true);
+  select id into kid from public.kyc_requests where user_id = bob and status = 'pending';
+  perform cf_test.t(p_run, 78, 'Geçerli başvuru incelemeye girer; bekleyen varken ikincisi reddedilir; listeyi yalnızca yönetici görür; kimlik no şifreli saklanır',
+    s1 = 200 and kid is not null and e1 like '%İncelenmekte%' and e2 like '%yönetici%'
+    and exists (select 1 from json_array_elements(r) x where x->>'id' = kid::text and x->>'id_number' = '10000000078' and x->>'username' = 'tg_bob')
+    and (select id_last4 = '0078' and position('10000000078' in encode(id_enc, 'escape')) = 0 and id_hash !~ '10000000078'
+           from public.kyc_requests where id = kid),
+    format('başvuru HTTP %s · ikinci: %s · yönetici listesi: %s kayıt · yönetici olmayan: %s', s1, left(e1, 60), json_array_length(r), left(e2, 40)));
+
+  -- 79
+  perform set_config('request.jwt.claims', json_build_object('sub', adm, 'role', 'authenticated')::text, true);
+  begin perform public.admin_kyc_decide(kid, false, ''); e1 := 'kabul edildi'; exception when others then e1 := sqlerrm; end;
+  perform public.admin_kyc_decide(kid, false, 'Fotoğraf bulanık, tekrar çek');
+  commit;
+  select x.body into v from cf_test.user_rpc('bob@coinforce.test', 'kyc_status') x;
+  select x.status into s1 from cf_test.user_rpc('bob@coinforce.test', 'kyc_submit', args) x;
+  select id into kid from public.kyc_requests where user_id = bob and status = 'pending';
+  perform cf_test.t(p_run, 79, 'Red için sebep zorunlu; reddedilen kullanıcı sebebi görür, bildirim alır ve yeniden başvurabilir',
+    e1 like '%sebebini yaz%' and v like '%"status" : "rejected"%' and v like '%bulanık%' and s1 = 200 and kid is not null
+    and exists (select 1 from public.notifications n where n.user_id = bob and n.body like '%reddedildi: Fotoğraf bulanık%'),
+    format('boş sebep: %s · durum: %s · yeniden başvuru HTTP %s', left(e1, 40), left(v, 80), s1));
+
+  -- 80
+  select usdt into u0 from public.accounts where user_id = bob;
+  vol0 := public._user_volume(bob);
+  perform set_config('request.jwt.claims', json_build_object('sub', adm, 'role', 'authenticated')::text, true);
+  perform public.admin_kyc_decide(kid, true, null);
+  begin perform public.admin_kyc_decide(kid, true, null); e1 := 'ikinci kez onaylandı'; exception when others then e1 := sqlerrm; end;
+  perform set_config('request.jwt.claims', json_build_object('sub', bob, 'role', 'authenticated')::text, true);
+  r := public.my_volume();
+  commit;
+  select usdt into u1 from public.accounts where user_id = bob;
+  vol1 := public._user_volume(bob);
+  select x.body into v from cf_test.user_rpc('bob@coinforce.test', 'kyc_status') x;
+  perform cf_test.t(p_run, 80, 'Onayda 5000 USDT işlem hacmi bir kez eklenir; bakiye değişmez; hacim kademelere ve "Hacmin" göstergesine sayılır',
+    v like '%"status" : "approved"%' and vol1 - vol0 = 5000 and u1 = u0 and (r->>'bonus')::numeric = 5000
+    and (select count(*) from public.volume_bonuses where user_id = bob) = 1 and e1 like '%beklemede değil%'
+    and exists (select 1 from public.notifications n where n.user_id = bob and n.body like '%5.000 USDT işlem hacmi%'),
+    format('hacim %s → %s · bakiye %s → %s · my_volume.bonus %s · tekrar onay: %s', round(vol0, 2), round(vol1, 2), round(u0, 2), round(u1, 2), r->>'bonus', left(e1, 40)));
+
+  -- 81
+  s1 := cf_test.storage_req('POST', tc, cp || '-front.jpg');
+  s2 := cf_test.storage_req('POST', tc, cp || '-back.jpg');
+  s3 := cf_test.storage_req('POST', tc, cp || '-selfie.jpg');
+  select x.body into e1 from cf_test.user_rpc('carol@coinforce.test', 'kyc_submit',
+    args || jsonb_build_object('p_full_name', 'Carol Test', 'p_front', cp || '-front.jpg', 'p_back', cp || '-back.jpg', 'p_selfie', cp || '-selfie.jpg')) x;
+  -- Çekim engeli doğrudan tetikleyicide denenir; doğrulanmış hesapta eklenen satır geri alınır.
+  begin insert into public.withdrawals (user_id) values (carol); e2 := 'engellenmedi'; exception when others then e2 := sqlerrm; end;
+  begin insert into public.withdrawals (user_id) values (bob); raise exception 'GERI_ALINDI'; exception when others then e3 := sqlerrm; end;
+  perform cf_test.t(p_run, 81, 'Aynı kimlik ikinci hesapta doğrulanamaz; doğrulanmamış hesap çekim talebi oluşturamaz, doğrulanmış hesap bu engele takılmaz',
+    s1 = 200 and e1 like '%başka bir hesapta%' and e2 like '%kimliğini doğrula%' and e3 not like '%kimliğini doğrula%',
+    format('ikinci hesap: %s · doğrulanmamış çekim: %s · doğrulanmış çekim: %s', left(e1, 60), left(e2, 60), left(e3, 50)));
+  commit;
+end $$;
