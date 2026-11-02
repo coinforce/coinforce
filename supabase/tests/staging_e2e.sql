@@ -1019,3 +1019,47 @@ begin
   perform cf_test.user_rpc('alice@coinforce.test', 'tg_group_set', '{"p_on": false}');
   commit;
 end $$;
+
+-- ════════════════════════════════════════════════════════════════════════════════════════════════
+-- 10) /accounts (/hesaplar) komutu (migration 78, testler 73–74)
+create or replace procedure cf_test.e2e_accounts(p_run bigint) language plpgsql as $$
+declare
+  ta bigint := 700000001; u bigint := p_run * 10000 + 980;
+  ck text; cs text; r1 json; s int; t0 timestamptz; rep text; rep2 text; hlp text; okb boolean;
+begin
+  perform cf_test.user_rpc('alice@coinforce.test', 'tg_trading_set', '{"p_on": true}');
+  select (x.body::json)->>'api_key' into ck from cf_test.user_rpc('carol@coinforce.test', 'my_api_keys') x;
+  select (x.body::json)->>'secret' into cs from cf_test.user_rpc('carol@coinforce.test', 'my_api_secret') x;
+  select x.body::json into r1 from cf_test.user_rpc('alice@coinforce.test', 'tg_group_add', jsonb_build_object('p_api_key', ck, 'p_secret', cs)) x;
+  perform cf_test.user_rpc('alice@coinforce.test', 'tg_group_set', '{"p_on": true}');
+
+  -- 73
+  t0 := clock_timestamp();
+  s := cf_test.post_update(cf_test.msg(u + 1, ta, '/accounts'));
+  rep := cf_test.last_reply(t0);
+  t0 := clock_timestamp();
+  s := cf_test.post_update(cf_test.msg(u + 2, ta, '/hesaplar'));
+  rep2 := cf_test.last_reply(t0);
+  perform cf_test.t(p_run, 73, '/accounts ve /hesaplar: kendi hesabın + toplu işlemde aktif hesaplar bakiyeleriyle, pasif hesaplar ayrı gösterilir',
+    coalesce((r1->>'ok')::boolean, false) and rep like '%İşlem yapabildiğin hesaplar%' and rep like '%@tg_alice (sen)%'
+    and rep like '%@tg_carol%kullanılabilir%' and rep like '%Pasif%@tg_bob%' and rep like '%2 hesapta aynı anda%'
+    and rep2 like '%İşlem yapabildiğin hesaplar%',
+    left(replace(rep, E'\n', ' | '), 260));
+
+  -- 74
+  t0 := clock_timestamp();
+  s := cf_test.post_update(cf_test.cbq(u + 3, ta, 'ac', u + 1));
+  rep := cf_test.last_reply(t0);
+  t0 := clock_timestamp();
+  s := cf_test.post_update(cf_test.msg(u + 4, ta, '/menu'));
+  okb := cf_test.has_button(t0, 'ac');
+  t0 := clock_timestamp();
+  s := cf_test.post_update(cf_test.msg(u + 5, ta, '/help'));
+  hlp := cf_test.last_reply(t0);
+  perform cf_test.t(p_run, 74, 'Ana menüdeki Hesaplar butonu, Yenile butonu ve /help satırı çalışır',
+    rep like '%İşlem yapabildiğin hesaplar%' and okb and hlp like '%/accounts%',
+    format('yenile: %s · menü butonu: %s · yardım: %s', rep like '%İşlem yapabildiğin%', okb, hlp like '%/accounts%'));
+
+  perform cf_test.user_rpc('alice@coinforce.test', 'tg_group_set', '{"p_on": false}');
+  commit;
+end $$;

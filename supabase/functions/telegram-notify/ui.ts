@@ -38,7 +38,7 @@ export function mainMenu(me: Me, bal?: any): Screen {
       [b("📈 Spot", "s"), b("⚡ Vadeli", "f")],
       [b("💰 Bakiye", "b"), b("📋 Emirler", "o")],
       [b("📊 Pozisyonlar", "p"), b("💲 Fiyatlar", "px")],
-      [b("⚙️ Ayarlar", "st"), b("❓ Yardım", "h")],
+      [b("👥 Hesaplar", "ac"), b("⚙️ Ayarlar", "st"), b("❓ Yardım", "h")],
     ),
   };
 }
@@ -64,6 +64,7 @@ export function help(): Screen {
       "<b>Hesap</b>",
       "/balance (/bakiye) · /orders (/emirler) · /positions (/pozisyonlar)",
       "/cancel (/iptal) — açık emri iptal et",
+      "/accounts (/hesaplar) — işlem yapabildiğin hesaplar (toplu işlem)",
       "/price BTC (/fiyat) · /grafik BTC · /settings (/ayarlar) · /unlink (/dur)",
       "",
       "Emirler <b>onay beklemeden anında</b> işlenir. En düşük tutar 1 USDT, hesap başına dakikada en fazla 20 yeni emir. Fiyat verisi 120 saniyeden eskiyse emir reddedilir.",
@@ -279,6 +280,21 @@ export const unlinkConfirm = (): Screen => ({
   text: "🔌 Telegram bağlantısı kaldırılsın mı? Bildirimler durur ve işlem izni kapanır. Tekrar bağlamak için uygulamadan yeni kod alman gerekir.",
   kb: kb([b("Evet, kaldır", "ul!"), b("Vazgeç", "st")]),
 });
+
+/** /accounts: emirlerin gerçekleşeceği hesaplar (kendi hesabın + toplu işlemde aktif olanlar). */
+export function accounts(d: any): Screen {
+  const act = (d?.active ?? []) as any[], off = (d?.inactive ?? []) as string[];
+  const lines = ["👥 <b>İşlem yapabildiğin hesaplar</b>",
+    `Toplu işlem: ${d?.group ? "🟢 açık" : "⚪ kapalı"} · Telegram ile işlem: ${d?.trading ? "🔓 açık" : "🔒 kapalı"}`, "",
+    `1. @${esc(d?.me?.username)} (sen) · ${usdt(d?.me?.usdt ?? 0)} kullanılabilir`];
+  act.forEach((a, i) => lines.push(`${i + 2}. @${esc(a.username)} · ${usdt(a.usdt ?? 0)} kullanılabilir`));
+  if (!act.length) lines.push("", "Eklenmiş aktif hesap yok. Uygulamada Ayarlar › Telegram bildirimleri › Toplu işlem bölümünden API Key ve Secret Key ile hesap ekleyebilirsin.");
+  if (off.length) lines.push("", `⚠️ Pasif (API anahtarı yenilenmiş, emir gitmez): ${off.map((u) => "@" + esc(u)).join(", ")}`);
+  lines.push("", !d?.trading ? TRADING_OFF
+    : d?.group && act.length ? `Bottan verdiğin her emir bu ${act.length + 1} hesapta aynı anda gerçekleşir.`
+    : "Toplu işlem kapalı: emirler yalnızca kendi hesabında gerçekleşir. Açmak için uygulamada Toplu işlem anahtarını kullan.");
+  return { text: lines.join("\n"), kb: kb([b("🔄 Yenile", "ac"), b("💰 Bakiye", "b")], NAV()) };
+}
 
 const KIND_TR: Record<string, string> = { spot_market: "Piyasa", spot_limit: "Limit", spot_stop: "Stop" };
 /** tgx_order sonucunu mesaja çevirir. */
