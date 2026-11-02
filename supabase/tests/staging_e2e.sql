@@ -883,3 +883,139 @@ begin
     n_pass = n_all and n_all >= 21, format('%s/%s geçti%s', n_pass, n_all, coalesce(' · kalan: ' || fails, '')));
   commit;
 end $$;
+
+-- ════════════════════════════════════════════════════════════════════════════════════════════════
+-- 9) Toplu işlem: uygulamadan eklenen API anahtarlarıyla aynı anda emir (migration 77, testler 65–72)
+create or replace procedure cf_test.e2e_group(p_run bigint) language plpgsql as $$
+declare
+  alice uuid := (select id from public.profiles where username = 'tg_alice');
+  bob   uuid := (select id from public.profiles where username = 'tg_bob');
+  carol uuid := (select id from public.profiles where username = 'tg_carol');
+  ta bigint := 700000001; u bigint := p_run * 10000 + 950;
+  ak text; asec text; bk text; bs text; ck text; cs text; r1 json; r2 json; r3 json; g json; s int; v text;
+  t0 timestamptz; a0 numeric; b0 numeric; c0 numeric; a1 numeric; b1 numeric; c1 numeric;
+  idem text; lid uuid; ok boolean; k int; pa uuid; pb uuid; pc uuid;
+begin
+  -- Hazırlık: alice'in işlem izni açık, toplu işlemi kapalı ve önceki koşulardan kalan bağlantısı yok
+  perform cf_test.user_rpc('alice@coinforce.test', 'tg_trading_set', '{"p_on": true}');
+  perform cf_test.user_rpc('alice@coinforce.test', 'tg_group_set', '{"p_on": false}');
+  for lid in select id from public.tg_group_links where owner_id = alice and revoked_at is null loop
+    perform cf_test.user_rpc('alice@coinforce.test', 'tg_group_remove', jsonb_build_object('p_id', lid));
+  end loop;
+  select (x.body::json)->>'api_key' into ak from cf_test.user_rpc('alice@coinforce.test', 'my_api_keys') x;
+  select (x.body::json)->>'secret' into asec from cf_test.user_rpc('alice@coinforce.test', 'my_api_secret') x;
+  select (x.body::json)->>'api_key' into bk from cf_test.user_rpc('bob@coinforce.test', 'my_api_keys') x;
+  select (x.body::json)->>'secret' into bs from cf_test.user_rpc('bob@coinforce.test', 'my_api_secret') x;
+  select (x.body::json)->>'api_key' into ck from cf_test.user_rpc('carol@coinforce.test', 'my_api_keys') x;
+  select (x.body::json)->>'secret' into cs from cf_test.user_rpc('carol@coinforce.test', 'my_api_secret') x;
+
+  -- 65
+  select x.body::json into r1 from cf_test.user_rpc('alice@coinforce.test', 'tg_group_add', jsonb_build_object('p_api_key', bk, 'p_secret', 'yanlis-secret')) x;
+  select x.body::json into r2 from cf_test.user_rpc('alice@coinforce.test', 'tg_group_add', jsonb_build_object('p_api_key', ak, 'p_secret', asec)) x;
+  select x.status into s from cf_test.rest('POST', '/rest/v1/rpc/tg_group_add', null, jsonb_build_object('p_api_key', bk, 'p_secret', bs)::text) x;
+  perform cf_test.t(p_run, 65, 'Toplu işlem: yanlış Secret, kendi anahtarı ve anonim çağrı reddedilir; bağlantı oluşmaz',
+    not (r1->>'ok')::boolean and r1->>'error' like '%hatalı%' and not (r2->>'ok')::boolean and r2->>'error' like '%kendi%'
+    and s in (401, 403) and not exists (select 1 from public.tg_group_links where owner_id = alice and revoked_at is null),
+    format('yanlış secret: %s · kendi anahtarı: %s · anonim: HTTP %s', r1->>'error', r2->>'error', s));
+
+  -- 66
+  t0 := clock_timestamp();
+  select x.body::json into r1 from cf_test.user_rpc('alice@coinforce.test', 'tg_group_add', jsonb_build_object('p_api_key', bk, 'p_secret', bs)) x;
+  select x.body::json into r2 from cf_test.user_rpc('alice@coinforce.test', 'tg_group_add', jsonb_build_object('p_api_key', ck, 'p_secret', cs)) x;
+  perform cf_test.t(p_run, 66, 'Doğru API Key + Secret ile hesap eklenir; Secret saklanmaz; eklenen hesabın sahibine Telegram uyarısı gider',
+    coalesce((r1->>'ok')::boolean, false) and r1->>'username' = 'tg_bob' and coalesce((r2->>'ok')::boolean, false) and r2->>'username' = 'tg_carol'
+    and (select count(*) from public.tg_group_links where owner_id = alice and revoked_at is null) = 2
+    and not exists (select 1 from information_schema.columns where table_name = 'tg_group_links' and column_name ~* '(secret|api_key)')
+    and exists (select 1 from public.tg_outbox o join public.tg_notify nn on nn.chat_id = o.chat_id and nn.user_id = carol
+                 where o.created_at >= t0 and o.body like '%toplu işlemine eklendi%'),
+    format('eklenen: @%s, @%s · aktif bağlantı: %s', r1->>'username', r2->>'username',
+           (select count(*) from public.tg_group_links where owner_id = alice and revoked_at is null)));
+
+  -- 67
+  idem := 'm:' || ta || ':' || (u + 1);
+  s := cf_test.post_update(cf_test.msg(u + 1, ta, '/buy BTC 2'));
+  perform cf_test.t(p_run, 67, 'Toplu işlem kapalıyken emir yalnızca kendi hesabında gerçekleşir',
+    (select status from public.telegram_order_logs where idem_key = idem) = 'filled'
+    and not exists (select 1 from public.telegram_order_logs where idem_key like idem || ':%'),
+    format('kendi hesabı: %s · diğer hesap kaydı: %s', (select status from public.telegram_order_logs where idem_key = idem),
+           (select count(*) from public.telegram_order_logs where idem_key like idem || ':%')));
+
+  -- 68
+  select x.body::json into r1 from cf_test.user_rpc('alice@coinforce.test', 'tg_group_set', '{"p_on": true}') x;
+  select usdt into a0 from public.accounts where user_id = alice;
+  select usdt into b0 from public.accounts where user_id = bob;
+  select usdt into c0 from public.accounts where user_id = carol;
+  idem := 'm:' || ta || ':' || (u + 2);
+  t0 := clock_timestamp();
+  s := cf_test.post_update(cf_test.msg(u + 2, ta, '/buy BTC 5'));
+  select usdt into a1 from public.accounts where user_id = alice;
+  select usdt into b1 from public.accounts where user_id = bob;
+  select usdt into c1 from public.accounts where user_id = carol;
+  ok := false;
+  for k in 1..40 loop
+    select body->>'text' into v from cf_test.tg_mock_calls
+     where chat_id = ta and method = 'sendMessage' and at >= t0 and body->>'text' like '%hesapta gerçekleşti%' order by id desc limit 1;
+    ok := coalesce(v like '%3/3 hesapta%', false);
+    exit when ok;
+    perform pg_sleep(0.25);
+  end loop;
+  perform cf_test.t(p_run, 68, 'Toplu işlem açıkken /buy BTC 5 üç hesapta aynı anda gerçekleşir; özet Telegram''a gelir',
+    (r1->>'members')::int = 2 and s = 200
+    and (select count(*) from public.telegram_order_logs where (idem_key = idem or idem_key like idem || ':%') and status = 'filled') = 3
+    and a0 - a1 = 5 and b0 - b1 = 5 and c0 - c1 = 5 and ok,
+    format('USDT düşüşü: alice %s · bob %s · carol %s · özet: %s', a0 - a1, b0 - b1, c0 - c1, coalesce(left(replace(v, E'\n', ' | '), 200), 'yok')));
+
+  -- 69
+  idem := 'm:' || ta || ':' || (u + 3);
+  s := cf_test.post_update(cf_test.msg(u + 3, ta, '/long ETH 5 2x'));
+  select ref_id into pa from public.telegram_order_logs where idem_key = idem;
+  select ref_id into pb from public.telegram_order_logs where idem_key = idem || ':' || bob::text;
+  select ref_id into pc from public.telegram_order_logs where idem_key = idem || ':' || carol::text;
+  s := cf_test.post_update(cf_test.msg(u + 4, ta, '/close ETH'));
+  perform cf_test.t(p_run, 69, 'Vadeli: /long ETH 5 2x üç hesapta açılır; /close ETH aynı toplu işlemle açılan pozisyonları kapatır',
+    pa is not null and pb is not null and pc is not null
+    and (select count(*) from public.positions where id in (pa, pb, pc) and status <> 'open') = 3,
+    format('açılan: %s · kapanan: %s', (select count(*) from public.positions where id in (pa, pb, pc)),
+           (select count(*) from public.positions where id in (pa, pb, pc) and status <> 'open')));
+
+  -- 70
+  perform cf_test.user_rpc('bob@coinforce.test', 'my_api_regenerate');
+  idem := 'm:' || ta || ':' || (u + 5);
+  s := cf_test.post_update(cf_test.msg(u + 5, ta, '/buy BTC 2'));
+  -- user_rpc uzun yanıtı kestiği için liste doğrudan, kullanıcının oturumuyla okunur
+  perform set_config('request.jwt.claims', json_build_object('sub', alice, 'role', 'authenticated')::text, true);
+  g := public.tg_group_list();
+  perform cf_test.t(p_run, 70, 'Eklenen hesap API anahtarını yenileyince gruptan düşer; emir onun hesabında gerçekleşmez',
+    (select status from public.telegram_order_logs where idem_key = idem) = 'filled'
+    and not exists (select 1 from public.telegram_order_logs where idem_key = idem || ':' || bob::text)
+    and (select status from public.telegram_order_logs where idem_key = idem || ':' || carol::text) = 'filled'
+    and exists (select 1 from json_array_elements(g->'members') e where e->>'username' = 'tg_bob' and not (e->>'active')::boolean),
+    format('alice: %s · bob: %s · carol: %s', (select status from public.telegram_order_logs where idem_key = idem),
+           coalesce((select status from public.telegram_order_logs where idem_key = idem || ':' || bob::text), 'yok'),
+           (select status from public.telegram_order_logs where idem_key = idem || ':' || carol::text)));
+
+  -- 71
+  perform set_config('request.jwt.claims', json_build_object('sub', carol, 'role', 'authenticated')::text, true);
+  g := public.tg_group_list();
+  perform set_config('request.jwt.claims', '', true);
+  lid := (select (e->>'id')::uuid from json_array_elements(g->'controllers') e where e->>'username' = 'tg_alice' limit 1);
+  select x.body::json into r3 from cf_test.user_rpc('bob@coinforce.test', 'tg_group_remove', jsonb_build_object('p_id', lid)) x;
+  select x.body::json into r1 from cf_test.user_rpc('carol@coinforce.test', 'tg_group_remove', jsonb_build_object('p_id', lid)) x;
+  idem := 'm:' || ta || ':' || (u + 6);
+  s := cf_test.post_update(cf_test.msg(u + 6, ta, '/buy BTC 2'));
+  perform cf_test.t(p_run, 71, 'Eklenen hesabın sahibi bağlantıyı kendisi kaldırabilir; sonraki emir onun hesabında gerçekleşmez',
+    lid is not null and coalesce((r1->>'ok')::boolean, false)
+    and (select status from public.telegram_order_logs where idem_key = idem) = 'filled'
+    and not exists (select 1 from public.telegram_order_logs where idem_key like idem || ':%'),
+    format('bağlantı bulundu: %s · kaldırma: %s · sonraki emirde diğer hesap kaydı: %s', lid is not null, r1->>'ok',
+           (select count(*) from public.telegram_order_logs where idem_key like idem || ':%')));
+
+  -- 72
+  select x.status, x.body into s, v from cf_test.rest('GET', '/rest/v1/tg_group_links?select=id', cf_test.token('bob@coinforce.test')) x;
+  perform cf_test.t(p_run, 72, 'Başkasının bağlantısı kaldırılamaz; tg_group_links tablosu API''den okunamaz',
+    not coalesce((r3->>'ok')::boolean, false) and (s in (401, 403, 404) or v = '[]'),
+    format('başkası kaldırmayı denedi: %s · tablo okuma: HTTP %s %s', coalesce(r3->>'error', '?'), s, left(coalesce(v, ''), 60)));
+
+  perform cf_test.user_rpc('alice@coinforce.test', 'tg_group_set', '{"p_on": false}');
+  commit;
+end $$;
