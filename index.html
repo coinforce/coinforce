@@ -716,23 +716,44 @@ nav.bar .mid-btn span{width:46px;height:46px;border-radius:16px;background:linea
 .btn-rew svg{width:18px;height:18px}
 .p-rwcol{display:flex;flex-direction:column;align-items:stretch;gap:8px;margin-bottom:34px}.p-rwcol .btn-rew{margin-bottom:0;justify-content:center}
 .btn-pf{background:var(--surface2);color:var(--fg)}
-.pfp{position:fixed;inset:0;z-index:39;background:var(--bg);color:var(--fg);overflow-y:auto;overscroll-behavior:contain}.pfp[hidden]{display:none}
-.pfp .pf-in{max-width:520px;margin:0 auto;padding:0 16px calc(30px + env(safe-area-inset-bottom,0px))}
-.pfp .pf-top{display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top,0px)) 0 14px;font-weight:700}.pfp .pf-top button{width:36px;height:36px;display:grid;place-items:center;color:var(--muted)}.pfp .pf-top svg{width:22px;height:22px}
-.pf-card{border:2px solid var(--accent);border-radius:16px;overflow:hidden;background:var(--surface)}
-.pf-hd{display:flex;align-items:center;gap:10px;padding:12px 14px 0}.pf-hd .av{width:38px;height:38px;flex:none}.pf-hd b{display:block;font-size:15px}.pf-hd i{font-style:normal;font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;background:color-mix(in srgb,var(--accent) 22%,transparent);color:var(--accent)}
-.pf-val{padding:8px 14px 0;font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}.pf-val s{text-decoration:none;color:var(--muted);font-weight:600}
-.pf-chg{padding:2px 14px 0;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}.pf-chg.up{color:var(--up)}.pf-chg.dn{color:var(--down)}.pf-chg small{color:var(--muted);font-weight:500;margin-left:4px}
-.pf-ch{position:relative;margin:6px 0 0;height:210px}.pf-ch svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-.pf-mk{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;box-shadow:0 0 0 2px var(--surface),0 2px 8px rgba(0,0,0,.4);transform:scale(0);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}.pf-mk.on{transform:scale(1)}.pf-mk .coin{width:100%;height:100%;border-radius:50%}
-.pf-mk .lb{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);white-space:nowrap;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px 7px;font-size:11px;font-weight:700;color:var(--up);opacity:0;transition:opacity .3s}.pf-mk.hot .lb{opacity:1}.pf-mk .lb em{font-style:normal;color:var(--fg);margin-right:4px}
-.pf-ax{display:flex;justify-content:space-between;padding:2px 14px 10px;font-size:10px;color:var(--muted)}
-.pf-ft{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--accent);color:var(--accent-ink)}.pf-ft b{font-family:var(--display);font-size:24px;letter-spacing:-.8px}.pf-ft span{font-size:11px;font-weight:600;opacity:.85;text-align:right}
-.pf-ctl{display:flex;align-items:center;gap:12px;margin:14px 2px 0}.pf-ctl button{display:grid;place-items:center}.pf-ctl .pp{width:30px;height:30px}.pf-ctl .pp svg{width:20px;height:20px}.pf-ctl small{color:var(--muted);font-size:12px;min-width:34px;font-variant-numeric:tabular-nums}.pf-ctl .sp{font-weight:700;font-size:13px;min-width:30px}
-.pf-bar{flex:1;height:18px;display:flex;align-items:center;cursor:pointer;touch-action:none}.pf-bar i{display:block;width:100%;height:3px;border-radius:3px;background:var(--surface2);position:relative}.pf-bar u{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--fg)}
-.pf-chips{display:flex;justify-content:center;gap:6px;margin-top:16px;flex-wrap:wrap}.pf-chips button{padding:7px 13px;border-radius:999px;background:var(--surface2);color:var(--muted);font-size:12px;font-weight:700}.pf-chips button.on{background:var(--fg);color:var(--bg)}
-.pf-save{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:16px;padding:14px;border-radius:14px;background:var(--surface2);color:var(--fg);font-weight:700;font-size:15px}.pf-save svg{width:18px;height:18px}.pf-save[disabled]{opacity:.7}
-.pf-sum{margin:16px 2px 0;font-size:13px;color:var(--muted);text-align:center;line-height:1.5}.pf-sum b{color:var(--fg)}
+.rpp{position:fixed;inset:0;z-index:39;background:var(--bg);color:var(--fg);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}.rpp[hidden]{display:none}
+.rp-in{max-width:460px;margin:0 auto;padding:0 16px calc(28px + env(safe-area-inset-bottom,0px))}
+.rp-top{position:sticky;top:0;z-index:2;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:calc(8px + env(safe-area-inset-top,0px)) 0 8px;background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.rp-top h2{margin:0;text-align:center;font-size:16px;font-weight:700}.rp-top button{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;color:var(--fg)}.rp-top svg{width:22px;height:22px}
+.rp-stage{position:relative;margin-top:6px;aspect-ratio:360/440;border-radius:22px;box-shadow:0 22px 50px -18px rgba(27,14,64,.55),0 0 0 1px rgba(169,139,255,.08)}
+.rp-stage canvas{display:block;width:100%;height:100%;border-radius:22px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rp-stage.ld::after{content:"";position:absolute;inset:0;border-radius:22px;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.07) 50%,transparent 70%) #171030;background-size:220% 100%;animation:rpShim 1.15s linear infinite}
+@keyframes rpShim{to{background-position:-120% 0}}
+.rp-err{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:24px;text-align:center;border-radius:22px;background:#171030;color:#f4f1ff;font-size:14px}.rp-err span{color:#9d95bd;font-size:13px}
+.rp-err button{margin-top:8px;padding:10px 18px;border-radius:12px;background:#a98bff;color:#120b24;font-weight:700}
+.rp-ctl{display:flex;align-items:center;gap:10px;margin-top:16px}
+.rp-pp{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:var(--bg)}.rp-pp svg{width:20px;height:20px}
+.rp-tm{flex:none;min-width:30px;font-size:12px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;text-align:center}
+.rp-trk{position:relative;flex:1;height:30px;cursor:pointer;touch-action:none;border-radius:8px}.rp-trk:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.rp-trk i,.rp-trk u{position:absolute;left:0;top:50%;height:4px;margin-top:-2px;border-radius:4px}.rp-trk i{right:0;background:color-mix(in srgb,var(--fg) 16%,transparent)}.rp-trk u{width:0;background:var(--fg)}
+.rp-trk em{position:absolute;top:50%;width:7px;height:7px;margin:-3.5px 0 0 -3.5px;border-radius:50%;background:#e9b949;box-shadow:0 0 0 2px var(--bg)}
+.rp-trk b{position:absolute;left:0;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--fg);box-shadow:0 0 0 4px color-mix(in srgb,var(--fg) 15%,transparent)}
+.rp-sp{flex:none;min-width:44px;padding:7px 0;border-radius:10px;background:var(--surface2);font-weight:700;font-size:13px;font-variant-numeric:tabular-nums}
+.rp-opt{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.rp-seg{display:flex;padding:3px;border-radius:12px;background:var(--surface2)}.rp-seg button{padding:7px 11px;border-radius:9px;font-size:13px;font-weight:700;color:var(--muted)}
+.rp-seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.rp-tg{display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:12px;background:var(--surface2);font-size:13px;font-weight:700;color:var(--muted)}.rp-tg svg{width:16px;height:16px}.rp-tg[aria-pressed="true"]{color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.rp-wins{margin-top:24px}.rp-wins h3{margin:0 0 4px;font-size:16px}.rp-wins>p{margin:0 0 8px;font-size:13px;color:var(--muted);line-height:1.45}
+.rp-w{display:flex;align-items:center;gap:12px;width:100%;padding:11px 2px;border-top:1px solid var(--line);text-align:left;color:var(--fg)}.rp-w:first-of-type{border-top:0}
+.rp-w .coin{width:36px;height:36px;flex:none}.rp-w .mid{flex:1;min-width:0}.rp-w .mid b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rp-w .mid small{display:block;margin-top:2px;color:var(--muted);font-size:12px}
+.rp-w .amt{flex:none;font-weight:800;font-size:15px;color:var(--up);font-variant-numeric:tabular-nums}.rp-w[aria-disabled="true"]{cursor:default}.rp-w[aria-disabled="true"] .amt{opacity:.55}
+.rp-empty{padding:14px 16px;border-radius:14px;background:var(--surface2);font-size:13px;line-height:1.5;color:var(--muted)}
+.rp-save{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:24px;padding:15px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);font-weight:800;font-size:15px}.rp-save svg{width:19px;height:19px}
+.rp-note{margin:8px 0 0;text-align:center;font-size:12px;color:var(--muted)}
+.rp-x{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:rgba(8,5,18,.62);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}.rp-x[hidden]{display:none}
+.rp-xb{width:100%;max-width:460px;max-height:92vh;overflow:auto;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px));border-radius:22px 22px 0 0;background:var(--surface);color:var(--fg);box-shadow:var(--shadow)}
+.rp-xb h3{margin:0 0 6px;font-size:17px}.rp-xb>p{margin:0;color:var(--muted);font-size:13px}
+.rp-xp{height:6px;margin:16px 0;border-radius:6px;background:var(--surface2);overflow:hidden}.rp-xp u{display:block;width:0;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .15s}
+.rp-xv{display:block;width:min(100%,230px);margin:14px auto;border-radius:14px;background:#000;aspect-ratio:9/16;object-fit:cover}
+.rp-xa{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.rp-xa.one{grid-template-columns:1fr}
+.rp-xa button,.rp-xa a{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:14px;background:var(--surface2);color:var(--fg);font-weight:700;font-size:14px;text-decoration:none}
+.rp-xa .pri{background:var(--fg);color:var(--bg)}.rp-xa svg{width:17px;height:17px}
+@media (prefers-reduced-motion:reduce){.rp-stage.ld::after{animation:none}.rp-xp u{transition:none}}
 
 .up-fcol{display:flex;flex-direction:column;align-items:stretch;gap:7px;margin-top:14px}.up-top.has-ban .up-fcol{margin-top:48px}.up-fcol .up-fol{margin-top:0}
 .up-pf{display:flex;align-items:center;justify-content:center;gap:6px;min-width:120px;padding:7px 14px;border-radius:12px;background:var(--surface2);color:var(--fg);font-weight:700;font-size:13px}.up-pf svg{width:15px;height:15px}
@@ -1749,7 +1770,8 @@ nav.bar button svg{width:22px;height:22px}
 </div>
 
 <div class="vipp" id="vipPage" hidden role="dialog" aria-label="VIP"></div>
-<div class="pfp" id="pfPage" hidden role="dialog" aria-label="Portfolyo"></div>
+<div class="rpp" id="pfPage" hidden role="dialog" aria-modal="true" aria-label="Portfolyo"></div>
+<div class="rp-x" id="rpX" hidden role="dialog" aria-modal="true" aria-labelledby="rpXh"></div>
 <div class="vw" id="viewPage" hidden role="dialog" aria-label="View"><div id="vwIn"></div></div>
 <div class="upage" id="aucPage" hidden role="dialog" aria-label="CF Auction">
   <div class="upage-in"><div class="back-row"><button class="icon-btn" type="button" id="aucBack" aria-label="Geri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div><div id="aucBody"></div></div>
@@ -4529,89 +4551,288 @@ function vipPageHTML(){const lv=vipEff(),have=vipHave(),nx=VIP_SOL[lv],pc=nx?Mat
   <div class="vp-up" style="font-size:20px">${T("Alım Satımın Ötesinde, Ayrıcalığa","Beyond Trading, Into Privilege")}</div><button type="button" class="gb" data-vipbuy>${T("Şimdi Yükselt","Upgrade Now")}</button></div>`}
 function openVip(){const pg=$("vipPage");pg.innerHTML=vipPageHTML();pg.hidden=false;pg.scrollTop=0;document.body.style.overflow="hidden"}
 function closeVip(){$("vipPage").hidden=true;document.body.style.overflow=""}
-// ---------- Portfolyo oynatma (Fomo tarzı): portföy değeri hızlandırılmış oynar, $10.000+ kâr anları coin logosuyla işaretlenir
-const PF={id:null,range:"24h",mode:"$",data:null,prog:0,playing:false,speed:1,raf:0,last:0,shown:new Set(),busy:0};
-const PF_R={"24h":["24s","24h"],"7d":["7g","7d"],"30d":["30g","30d"],"all":["Tümü","All"]},PF_DUR=14000;
-function pfWho(){const id=PF.id;if(me&&id===me.id){const p=st.prof||{};return {id,n:p.name||(me&&me.email)||"",h:p.handle||"",a:p.avatar||p.avatar_url||""}}
-  const u=userData&&userData.id===id?userData:null;return u?{id,n:u.full_name||u.username,h:u.username,a:u.avatar_url}:{id,n:"",h:"",a:""}}
-async function openPf(id){if(!me)return;PF.id=id==="me"?me.id:id;PF.range="24h";PF.data=null;PF.prog=0;PF.shown=new Set();PF.playing=false;pfStop();const pg=$("pfPage");pg.innerHTML=pfShell();pg.hidden=false;pg.scrollTop=0;document.body.style.overflow="hidden";pfLoad()}
-function closePf(){pfStop();$("pfPage").hidden=true;document.body.style.overflow=""}
-function pfStop(){cancelAnimationFrame(PF.raf);PF.raf=0;PF.playing=false}
-async function pfLoad(){const id=PF.id,r=PF.range,tok=++PF.busy;const {data,error}=await sb.rpc("portfolio_replay",{p_user:id,p_range:r});if(tok!==PF.busy||$("pfPage").hidden)return;
-  const d=error||!data?{curve:[],wins:[],n:0,total:0}:data;let pts=(d.curve||[]).map(a=>({t:+a[0],v:+a[1]})).filter(x=>isFinite(x.t)&&isFinite(x.v)).sort((a,b)=>a.t-b.t);
-  if(pts.length<2){const now=Date.now(),v=pts.length?pts[0].v:(me&&id===me.id?pfNow():0);pts=[{t:+d.since||now-864e5,v},{t:now,v}]}
-  const t0=pts[0].t,t1=pts[pts.length-1].t,wins=(d.wins||[]).map(w=>({t:+w.t,s:w.s,p:+w.p})).filter(w=>w.t>=t0&&w.t<=t1);
-  PF.data={pts,t0,t1,wins,n:+d.n||0,total:+d.total||0};PF.prog=0;PF.shown=new Set();$("pfPage").innerHTML=pfShell();pfPlay()}
-function pfNow(){return(st.usdt||0)+posNow()}
-function pfShell(){const w=pfWho(),lbl=EN?"Replaying portfolio":"Portfolyo oynatılıyor",e=EN?1:0;
-  return `<div class="pf-in"><div class="pf-top"><button type="button" data-pfx aria-label="${EN?"Back":"Geri"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span>${lbl}</span><button type="button" data-pfx aria-label="${EN?"Close":"Kapat"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-  <div class="pf-card"><div class="pf-hd">${avHTML({id:w.id,a:w.a,h:w.h,n:w.n||w.h})}<div><b>${esc(w.n||w.h)}</b><i>${EN?"Portfolio":"Portfolyo"}</i></div></div>
-  <div class="pf-val" id="pfVal">${PF.data?"":"…"}</div><div class="pf-chg" id="pfChg"></div>
-  <div class="pf-ch" id="pfCh"><svg viewBox="0 0 320 210" preserveAspectRatio="none"><defs><linearGradient id="pfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--up)" stop-opacity=".35"/><stop offset="1" stop-color="var(--up)" stop-opacity="0"/></linearGradient></defs><line id="pfBase" x1="0" x2="320" y1="105" y2="105" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 4" opacity=".6" vector-effect="non-scaling-stroke"/><path id="pfArea" fill="url(#pfg)"/><polyline id="pfLine" fill="none" stroke="var(--up)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><div id="pfMk"></div></div>
-  <div class="pf-ax" id="pfAx"></div><div class="pf-ft"><b>coinforce</b><span>${EN?"Profits of $10K+":"$10K+ kâr anları"}<br>@${esc(w.h||"")}</span></div></div>
-  <div class="pf-ctl"><button type="button" class="pp" data-pfpp id="pfPP" aria-label="${EN?"Play/pause":"Oynat/duraklat"}"></button><small id="pfTm"></small><div class="pf-bar" id="pfBar"><i><u id="pfPr" style="width:0"></u></i></div><button type="button" class="sp" data-pfsp id="pfSp">1x</button></div>
-  <div class="pf-chips">${Object.entries(PF_R).map(([k,v])=>`<button type="button" data-pfr="${k}" class="${PF.range===k?"on":""}">${EN?v[1]:v[0]}</button>`).join("")}<button type="button" data-pfm="$" class="${PF.mode==="$"?"on":""}">$</button><button type="button" data-pfm="%" class="${PF.mode==="%"?"on":""}">%</button></div>
-  <div class="pf-sum" id="pfSum">${PF.data?pfSumTxt():""}</div><button type="button" class="pf-save" data-pfsave id="pfSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg><span>${EN?"Save video":"Videoyu kaydet"}</span></button></div>`}
-function pfSumTxt(){const d=PF.data;if(!d)return"";return d.n?(EN?`<b>${d.n}</b> profit${d.n>1?"s":""} of $10K+ · total <b>+${usd(d.total,0)}</b>`:`<b>${d.n}</b> adet $10.000+ kâr anı · toplam <b>+${usd(d.total,0)}</b>`):(EN?"Profits of $10K+ on a coin will appear here as markers.":"Bir coinde $10.000 ve üzeri kâr yapınca burada coin logosuyla işaretlenir.")}
-function pfVal(p){const d=PF.data,a=d.pts;if(p<=0)return a[0].v;const t=d.t0+(d.t1-d.t0)*p;let lo=0,hi=a.length-1;if(t>=a[hi].t)return a[hi].v;while(hi-lo>1){const m=(lo+hi)>>1;if(a[m].t<=t)lo=m;else hi=m}const f=(t-a[lo].t)/(a[hi].t-a[lo].t||1);return a[lo].v+(a[hi].v-a[lo].v)*f}
-function pfDraw(){const d=PF.data;if(!d||$("pfPage").hidden||!$("pfLine"))return;const a=d.pts,span=d.t1-d.t0||1;let mn=Infinity,mx=-Infinity;a.forEach(x=>{if(x.v<mn)mn=x.v;if(x.v>mx)mx=x.v});if(mx-mn<Math.max(1,mx*1e-4)){const m=(mx+mn)/2,h=Math.max(1,m*.01);mn=m-h;mx=m+h}const pad=(mx-mn)*.12;mn-=pad;mx+=pad;
-  const X=t=>(t-d.t0)/span*320,Y=v=>200-(v-mn)/(mx-mn)*190+5,cut=d.t0+span*PF.prog;let pts=[];for(const x of a){if(x.t>cut)break;pts.push(X(x.t).toFixed(1)+","+Y(x.v).toFixed(1))}
-  const cv=pfVal(PF.prog);pts.push(X(cut).toFixed(1)+","+Y(cv).toFixed(1));if(pts.length<2)pts.unshift("0,"+Y(a[0].v).toFixed(1));
-  const first=a[0].v,up=cv>=first;$("pfLine").setAttribute("points",pts.join(" "));$("pfLine").setAttribute("stroke",up?"var(--up)":"var(--down)");
-  $("pfArea").setAttribute("d","M"+pts.join("L")+"L"+X(cut).toFixed(1)+",210L0,210Z");$("pfArea").setAttribute("fill",up?"url(#pfg)":"none");$("pfBase").setAttribute("y1",Y(first).toFixed(1));$("pfBase").setAttribute("y2",Y(first).toFixed(1));
-  const dv=cv-first,pc=first>0?dv/first*100:0,s=PF.mode==="%";const [i,f]=fmtN(cv,2).split(DEC);
-  $("pfVal").innerHTML=s?`${pc>=0?"+":""}${fmtN(pc,2)}%`:`$${esc(i)}<s>${f!=null?DEC+esc(f):""}</s>`;
-  $("pfChg").className="pf-chg "+(dv>=0?"up":"dn");$("pfChg").innerHTML=s?`${dv>=0?"+":"-"}${usd(Math.abs(dv),2)}<small>${EN?PF_R[PF.range][1]:PF_R[PF.range][0]}</small>`:`${dv>=0?"+":"-"}${usd(Math.abs(dv),2)} <small>${pc>=0?"+":""}${fmtN(pc,2)}% · ${EN?PF_R[PF.range][1]:PF_R[PF.range][0]}</small>`;
-  const mk=$("pfMk");if(!mk.childElementCount)mk.innerHTML=d.wins.map((w,k)=>`<div class="pf-mk" data-k="${k}" style="left:${((w.t-d.t0)/span*100).toFixed(2)}%;top:${(Y(pfVal((w.t-d.t0)/span))/210*100).toFixed(2)}%">${coinIc(w.s)}<span class="lb"><em>${esc(w.s)}</em>+${usd(w.p,0)}</span></div>`).join("");
-  mk.querySelectorAll(".pf-mk").forEach(el=>{const w=d.wins[+el.dataset.k],p=(w.t-d.t0)/span,on=PF.prog>=p;el.classList.toggle("on",on);el.classList.toggle("hot",on&&PF.prog-p<.09&&PF.playing||(!PF.playing&&on&&PF.prog-p<.09))});
-  $("pfPr").style.width=(PF.prog*100).toFixed(1)+"%";const left=Math.max(0,Math.ceil((1-PF.prog)*PF_DUR/PF.speed/1000));$("pfTm").textContent="-0:"+String(left).padStart(2,"0");
-  $("pfPP").innerHTML=PF.playing?'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>':'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.9l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>';
-  $("pfAx").innerHTML=[0,.5,1].map(f=>`<span>${new Date(d.t0+span*f).toLocaleString(LOC,PF.range==="24h"?{hour:"2-digit",minute:"2-digit"}:{day:"numeric",month:"short"})}</span>`).join("")}
-function pfFrame(ts){if(!PF.playing)return;const dt=PF.last?Math.min(80,ts-PF.last):16;PF.last=ts;PF.prog=Math.min(1,PF.prog+dt*PF.speed/PF_DUR);pfDraw();if(PF.prog>=1){PF.playing=false;pfDraw();return}PF.raf=requestAnimationFrame(pfFrame)}
-function pfPlay(){if(!PF.data)return;if(PF.prog>=1)PF.prog=0;PF.playing=true;PF.last=0;cancelAnimationFrame(PF.raf);PF.raf=requestAnimationFrame(pfFrame);pfDraw()}
-function pfPause(){PF.playing=false;cancelAnimationFrame(PF.raf);pfDraw()}
-document.addEventListener("click",e=>{const g=s=>e.target.closest(s);let b;
-  if((b=g("[data-pf]"))){openPf(b.dataset.pf);return}
-  if(g("[data-pfsave]")){pfSave();return}
-  if($("pfPage").hidden)return;
-  if(g("[data-pfx]")){closePf();return}
-  if(g("[data-pfpp]")){PF.playing?pfPause():pfPlay();return}
-  if(g("[data-pfsp]")){PF.speed=PF.speed===1?2:PF.speed===2?4:1;$("pfSp").textContent=PF.speed+"x";return}
-  if((b=g("[data-pfr]"))){if(PF.range!==b.dataset.pfr){PF.range=b.dataset.pfr;pfStop();PF.data=null;$("pfPage").innerHTML=pfShell();pfLoad()}return}
-  if((b=g("[data-pfm]"))){PF.mode=b.dataset.pfm;document.querySelectorAll("[data-pfm]").forEach(x=>x.classList.toggle("on",x===b));pfDraw();return}
-  if((b=g("#pfBar"))){const r=b.getBoundingClientRect();PF.prog=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));pfDraw();return}});
-
-// Videoyu kaydet: oynatma bir tuvale çizilir ve MediaRecorder ile kaydedilir (logo görselleri yerine renkli harf rozetleri: tuval kirlenmesin)
-function pfCanvasDraw(cx,W,H,p,css){const d=PF.data,a=d.pts,span=d.t1-d.t0||1,cv=pfVal(p),first=a[0].v,up=cv>=first,col=up?css.up:css.down,w=pfWho();
-  cx.fillStyle=css.bg;cx.fillRect(0,0,W,H);const m=36,cw=W-m*2,cy0=H*.2,ch=H*.5;cx.fillStyle=css.surface;cx.beginPath();cx.roundRect(m,H*.06,cw,H*.82,28);cx.fill();cx.lineWidth=4;cx.strokeStyle=css.accent;cx.stroke();
-  cx.fillStyle=css.accent;cx.beginPath();cx.arc(m+56,H*.06+60,30,0,7);cx.fill();cx.fillStyle="#fff";cx.font="700 30px sans-serif";cx.textAlign="center";cx.textBaseline="middle";cx.fillText(((w.n||w.h||"?")[0]||"?").toUpperCase(),m+56,H*.06+61);
-  cx.textAlign="left";cx.fillStyle=css.fg;cx.font="700 30px sans-serif";cx.fillText(w.n||w.h||"",m+100,H*.06+50);cx.fillStyle=css.accent;cx.font="700 20px sans-serif";cx.fillText(EN?"Portfolio":"Portfolyo",m+100,H*.06+82);
-  const dv=cv-first,pc=first>0?dv/first*100:0;cx.fillStyle=css.fg;cx.font="700 64px sans-serif";cx.fillText(PF.mode==="%"?`${pc>=0?"+":""}${fmtN(pc,2)}%`:"$"+fmtN(cv,2),m+30,H*.06+160);
-  cx.fillStyle=col;cx.font="600 28px sans-serif";cx.fillText(`${dv>=0?"+":"-"}${usd(Math.abs(dv),2)}  ${pc>=0?"+":""}${fmtN(pc,2)}%`,m+30,H*.06+210);
-  let mn=Infinity,mx=-Infinity;a.forEach(x=>{if(x.v<mn)mn=x.v;if(x.v>mx)mx=x.v});if(mx-mn<Math.max(1,mx*1e-4)){const mm=(mx+mn)/2,h=Math.max(1,mm*.01);mn=mm-h;mx=mm+h}const pad=(mx-mn)*.12;mn-=pad;mx+=pad;
-  const X=t=>m+(t-d.t0)/span*cw,Y=v=>cy0+H*.12+ch-(v-mn)/(mx-mn)*ch,cut=d.t0+span*p;cx.setLineDash([10,10]);cx.strokeStyle=css.muted;cx.lineWidth=2;cx.beginPath();cx.moveTo(m,Y(first));cx.lineTo(m+cw,Y(first));cx.stroke();cx.setLineDash([]);
-  const pts=a.filter(x=>x.t<=cut).map(x=>[X(x.t),Y(x.v)]);pts.push([X(cut),Y(cv)]);if(pts.length<2)pts.unshift([m,Y(first)]);
-  const g=cx.createLinearGradient(0,cy0,0,cy0+ch+H*.12);g.addColorStop(0,col+"55");g.addColorStop(1,col+"00");cx.beginPath();pts.forEach((q,i)=>i?cx.lineTo(q[0],q[1]):cx.moveTo(q[0],q[1]));cx.lineTo(X(cut),cy0+ch+H*.12);cx.lineTo(m,cy0+ch+H*.12);cx.closePath();cx.fillStyle=g;cx.fill();
-  cx.beginPath();pts.forEach((q,i)=>i?cx.lineTo(q[0],q[1]):cx.moveTo(q[0],q[1]));cx.strokeStyle=col;cx.lineWidth=6;cx.lineJoin="round";cx.stroke();
-  d.wins.forEach(wn=>{const wp=(wn.t-d.t0)/span;if(p<wp)return;const x=X(wn.t),y=Y(pfVal(wp)),k=Math.min(1,(p-wp)/.03);cx.fillStyle=css.accent;cx.beginPath();cx.arc(x,y,24*k,0,7);cx.fill();cx.lineWidth=4;cx.strokeStyle=css.surface;cx.stroke();cx.fillStyle="#fff";cx.font="700 22px sans-serif";cx.textAlign="center";cx.fillText((wn.s||"?")[0],x,y+1);
-    if(p-wp<.12){cx.font="700 24px sans-serif";const tx=`${wn.s} +${usd(wn.p,0)}`,tw=cx.measureText(tx).width+24;cx.fillStyle=css.surface2;cx.beginPath();cx.roundRect(Math.max(m+4,Math.min(m+cw-tw-4,x-tw/2)),y-70,tw,40,12);cx.fill();cx.fillStyle=css.up;cx.fillText(tx,Math.max(m+4+tw/2,Math.min(m+cw-tw/2-4,x)),y-49)}cx.textAlign="left"});
-  cx.fillStyle=css.accent;cx.beginPath();cx.roundRect(m,H*.88-110,cw,110,[0,0,28,28]);cx.fill();cx.fillStyle=css.ink;cx.font="700 54px sans-serif";cx.textBaseline="middle";cx.fillText("coinforce",m+30,H*.88-55);cx.font="600 22px sans-serif";cx.textAlign="right";cx.fillText(EN?"Profits of $10K+":"$10K+ kâr anları",m+cw-30,H*.88-66);cx.fillText("@"+(w.h||""),m+cw-30,H*.88-38);cx.textAlign="left";cx.textBaseline="alphabetic"}
-async function pfSave(){if(!PF.data||PF.rec)return;const btn=$("pfSave"),lb=btn.querySelector("span");
-  if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){toast(EN?"This browser can't record video.":"Bu tarayıcı video kaydedemiyor.");return}
-  PF.rec=1;btn.disabled=true;pfPause();const cs=getComputedStyle(document.documentElement),v=n=>(cs.getPropertyValue(n)||"").trim();
-  const css={bg:v("--bg")||"#0b0b12",surface:v("--surface")||"#15151f",surface2:v("--surface2")||"#20202c",fg:v("--fg")||"#fff",muted:v("--muted")||"#888",accent:v("--accent")||"#6c4be0",ink:v("--accent-ink")||"#fff",up:v("--up")||"#22c38e",down:v("--down")||"#ef4f5e"};
-  const hex=(c,f)=>/^#[0-9a-f]{6}$/i.test(c)?c:f;css.up=hex(css.up,"#22c38e");css.down=hex(css.down,"#ef4f5e");
-  const W=720,H=1100,cvs=document.createElement("canvas");cvs.width=W;cvs.height=H;const cx=cvs.getContext("2d");
-  const mt=["video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"].find(t=>MediaRecorder.isTypeSupported(t))||"";
-  let rec;try{rec=new MediaRecorder(cvs.captureStream(30),mt?{mimeType:mt,videoBitsPerSecond:3e6}:{videoBitsPerSecond:3e6})}catch(e){PF.rec=0;btn.disabled=false;toast(EN?"Couldn't start recording.":"Kayıt başlatılamadı.");return}
-  const chunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
-  const done=new Promise(r=>{rec.onstop=r});rec.start(200);const dur=PF_DUR/PF.speed,t0=performance.now();
-  await new Promise(res=>{const loop=()=>{const k=Math.min(1,(performance.now()-t0)/dur);pfCanvasDraw(cx,W,H,k,css);lb.textContent=(EN?"Recording… ":"Kaydediliyor… ")+Math.round(k*100)+"%";if(k<1)requestAnimationFrame(loop);else{pfCanvasDraw(cx,W,H,1,css);setTimeout(res,400)}};loop()});
-  rec.stop();await done;const type=(rec.mimeType||mt||"video/webm").split(";")[0],ext=type.includes("mp4")?"mp4":"webm",blob=new Blob(chunks,{type}),name=`coinforce-portfolyo.${ext}`;
-  PF.rec=0;btn.disabled=false;lb.textContent=EN?"Save video":"Videoyu kaydet";pfDraw();
-  try{const f=new File([blob],name,{type});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"COINFORCE"});return}}catch(e){if(e&&e.name==="AbortError")return}
-  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},4000);toast(EN?"Video saved.":"Video kaydedildi.")}
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("pfPage").hidden)closePf()});
+// ---------- Portfolyo oynatma: tek tuval çizici. Ekranda oynayan kart ile kaydedilen video aynı fonksiyonla çizilir.
+const RPL={id:null,range:"24h",mode:"$",inv:false,speed:1,data:null,cache:{},tok:0,t:0,playing:false,raf:0,last:0,ro:null,ret:null,ov:"",exp:null,seekT:null,rm:false,vurl:null,vfile:null,drag:null};
+const RP_RANGES=[["24h","24 saat","24h","Son 24 saat","Last 24h"],["7d","7 gün","7d","Son 7 gün","Last 7 days"],["30d","30 gün","30d","Son 30 gün","Last 30 days"],["all","Tümü","All","Son 35 gün","Last 35 days"]];
+const RP_C={bg0:"#1b1433",bg1:"#0c0a17",grid:"rgba(169,139,255,.11)",fg:"#f4f1ff",mut:"#9d95bd",acc:"#a98bff",acc2:"#5de0c5",ink:"#120b24",up:"#3ccf8e",dn:"#ff6b5e",gold:"#ffd36b"};
+const RP_W=360,RP_H=440,RP_LEAD=500,RP_TAIL=1800,RP_IMG=new Map();
+const RP_ICON={play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l11-6.8a1 1 0 0 0 0-1.72l-11-6.8A1 1 0 0 0 8 5.2z"/></svg>',pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4.2" height="14" rx="1.2"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.2"/></svg>',replay:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></svg>'};
+const rpT=(a,b)=>EN?b:a;
+function rpSelf(){return !!(me&&RPL.id===me.id)}
+function rpWho(){const id=RPL.id;if(rpSelf()){const p=st.prof||{};return {id,n:p.name||"",h:p.handle||"",a:p.avatar||""}}
+  const u=userData&&userData.id===id?userData:null;return u?{id,n:u.full_name||u.username||"",h:u.username||"",a:u.avatar_url||""}:{id,n:"",h:"",a:""}}
+// --- veri: sıralama, seyreltme (LTTB), monoton kübik eğri, akıllı hızlandırma
+function rpLttb(a,n){const out=[a[0]],ev=(a.length-2)/(n-2);let A=0;
+  for(let i=0;i<n-2;i++){const s=Math.floor((i+1)*ev)+1,e=Math.min(a.length,Math.floor((i+2)*ev)+1);let ax=0,ay=0;for(let j=s;j<e;j++){ax+=a[j].t;ay+=a[j].v}const l=(e-s)||1;ax/=l;ay/=l;
+    const rs=Math.floor(i*ev)+1,re=Math.floor((i+1)*ev)+1;let best=-1,bi=rs;
+    for(let j=rs;j<re;j++){const ar=Math.abs((a[A].t-ax)*(a[j].v-a[A].v)-(a[A].t-a[j].t)*(ay-a[A].v));if(ar>best){best=ar;bi=j}}
+    out.push(a[bi]);A=bi}
+  out.push(a[a.length-1]);return out}
+function rpSpline(p){const n=p.length,x=p.map(q=>q.t),y=p.map(q=>q.v),m=new Array(n).fill(0),d=[];
+  for(let i=0;i<n-1;i++)d.push((y[i+1]-y[i])/((x[i+1]-x[i])||1));
+  if(n===2){m[0]=m[1]=d[0]}else{m[0]=d[0];m[n-1]=d[n-2];for(let i=1;i<n-1;i++)m[i]=d[i-1]*d[i]<=0?0:(d[i-1]+d[i])/2;
+    for(let i=0;i<n-1;i++){if(d[i]===0){m[i]=0;m[i+1]=0;continue}const a=m[i]/d[i],b=m[i+1]/d[i],s=a*a+b*b;if(s>9){const k=3/Math.sqrt(s);m[i]=k*a*d[i];m[i+1]=k*b*d[i]}}}
+  return {x,y,m}}
+function rpAt(S,t){const x=S.x,n=x.length;if(t<=x[0])return S.y[0];if(t>=x[n-1])return S.y[n-1];let lo=0,hi=n-1;while(hi-lo>1){const k=(lo+hi)>>1;if(x[k]<=t)lo=k;else hi=k}
+  const h=(x[hi]-x[lo])||1,s=(t-x[lo])/h,s2=s*s,s3=s2*s;return (2*s3-3*s2+1)*S.y[lo]+(s3-2*s2+s)*h*S.m[lo]+(-2*s3+3*s2)*S.y[hi]+(s3-s2)*h*S.m[hi]}
+// Oynatma hızı zamana eşit dağılmaz: hareketli bölümler ve kâr anları daha çok süre alır, durgun saatler hızlı geçer
+function rpWarp(D){const N=400,span=(D.t1-D.t0)||1,dv=new Float64Array(N);let prev=rpAt(D.sp,D.t0),tv=0;
+  for(let i=0;i<N;i++){const v=rpAt(D.sp,D.t0+span*(i+1)/N);dv[i]=Math.abs(v-prev);tv+=dv[i];prev=v}
+  const nw=D.wins.length,sg=.018,C=new Float64Array(N+1);let s=0;
+  for(let i=0;i<N;i++){let w=.42/N+(tv>0?.4*dv[i]/tv:.4/N);
+    if(nw){const u=(i+.5)/N;for(const wn of D.wins){const z=(u-(wn.t-D.t0)/span)/sg;w+=.18/nw*Math.exp(-z*z/2)/(sg*2.5066283)/N}}else w+=.18/N;
+    s+=w;C[i+1]=s}
+  for(let i=0;i<=N;i++)C[i]/=s;D.C=C;D.N=N;D.wins.forEach(wn=>{wn.q=rpU2P(D,(wn.t-D.t0)/span)})}
+function rpU2P(D,u){const N=D.N,f=Math.max(0,Math.min(1,u))*N,i=Math.min(N-1,Math.floor(f));return D.C[i]+(D.C[i+1]-D.C[i])*(f-i)}
+function rpP2U(D,p){const C=D.C,N=D.N;if(p<=0)return 0;if(p>=1)return 1;let lo=0,hi=N;while(hi-lo>1){const k=(lo+hi)>>1;if(C[k]<=p)lo=k;else hi=k}return (lo+(p-C[lo])/((C[lo+1]-C[lo])||1))/N}
+function rpPrep(d){let pts=(d.curve||[]).map(a=>({t:+a[0],v:+a[1]})).filter(x=>isFinite(x.t)&&isFinite(x.v)).sort((a,b)=>a.t-b.t);
+  const dd=[];for(const p of pts){if(dd.length&&dd[dd.length-1].t===p.t)dd[dd.length-1]=p;else dd.push(p)}pts=dd;
+  const now=Date.now(),since=+d.since||now-864e5;
+  if(!pts.length){const v=rpSelf()?(st.usdt||0)+posNow():0;pts=[{t:since,v},{t:now,v}]}else if(pts.length===1)pts=[{t:Math.min(since,pts[0].t-6e4),v:pts[0].v},pts[0]];
+  if(pts.length>360)pts=rpLttb(pts,360);
+  const t0=pts[0].t,t1=pts[pts.length-1].t,all=(d.wins||[]).map(w=>({t:+w.t,s:String(w.s||""),p:+w.p})).filter(w=>isFinite(w.t)&&w.p>0).sort((a,b)=>a.t-b.t);
+  let lo=Infinity,hi=-Infinity;for(const p of pts){if(p.v<lo)lo=p.v;if(p.v>hi)hi=p.v}
+  if(hi-lo<Math.max(1e-6,Math.abs(hi)*1e-3)){const m=(hi+lo)/2,h=Math.max(1,Math.abs(m)*.02);lo=m-h;hi=m+h}const pad=(hi-lo)*.14;
+  const D={pts,t0,t1,all,wins:all.filter(w=>w.t>=t0&&w.t<=t1).map(w=>({...w})),n:+d.n||0,total:+d.total||0,lo:lo-pad,hi:hi+pad,sp:rpSpline(pts)};rpWarp(D);return D}
+function rpRun(D){return (9000+1100*Math.min(D.wins.length,6))/RPL.speed}
+function rpTotal(D){return RP_LEAD+rpRun(D)}
+function rpP(D,tr){return Math.max(0,Math.min(1,(tr-RP_LEAD)/rpRun(D)))}
+// --- görseller: video için CORS'a uygun kopya (olmazsa harf rozeti), ekran için her türlüsü
+function rpImg(url,clean){if(!url)return null;const same=/^data:/.test(url)||!/^https?:/i.test(url)||url.startsWith(location.origin+"/");if(same)clean=false;
+  const key=(clean?"c|":"a|")+url;let e=RP_IMG.get(key);
+  if(!e){const im=new Image();e={img:im,ok:false,bad:false};RP_IMG.set(key,e);im.decoding="async";if(clean)im.crossOrigin="anonymous";
+    im.onload=()=>{e.ok=true;rpKick()};im.onerror=()=>{e.bad=true};im.src=clean?url+(url.includes("?")?"&":"?")+"cfx=1":url}
+  return e.ok?e.img:null}
+function rpImgsReady(D,clean,ms){const w=rpWho(),urls=[safeUrl(w.a)];D.wins.forEach(x=>{const t=find(x.s);if(t)urls.push(logoUrl(t.img))});
+  const wait=urls.filter(Boolean).map(u=>new Promise(r=>{rpImg(u,clean);const same=/^data:/.test(u)||!/^https?:/i.test(u)||u.startsWith(location.origin+"/"),e=RP_IMG.get((clean&&!same?"c|":"a|")+u);
+    if(!e||e.ok||e.bad)return r();e.img.addEventListener("load",r,{once:true});e.img.addEventListener("error",r,{once:true})}));
+  return Promise.race([Promise.all(wait),new Promise(r=>setTimeout(r,ms))])}
+function rpKick(){if(RPL.data&&!$("pfPage").hidden&&!RPL.playing)rpDraw()}
+// --- çizim yardımcıları
+function rpFont(w,sz,f){return `${w} ${sz}px ${f==="d"?'"Unbounded"':'"Figtree"'}, system-ui, -apple-system, sans-serif`}
+function rpRR(cx,x,y,w,h,r){cx.beginPath();if(cx.roundRect){cx.roundRect(x,y,w,h,r);return}const R=Array.isArray(r)?r:[r,r,r,r];
+  cx.moveTo(x+R[0],y);cx.arcTo(x+w,y,x+w,y+h,R[1]);cx.arcTo(x+w,y+h,x,y+h,R[2]);cx.arcTo(x,y+h,x,y,R[3]);cx.arcTo(x,y,x+w,y,R[0]);cx.closePath()}
+function rpFit(cx,s,w){if(cx.measureText(s).width<=w)return s;let t=s;while(t.length>1&&cx.measureText(t+"…").width>w)t=t.slice(0,-1);return t+"…"}
+function rpShort(v){const a=Math.abs(v),f=(x,u)=>"$"+fmtN(x,1)+u;return a>=1e9?f(v/1e9,"B"):a>=1e6?f(v/1e6,"M"):a>=1e4?f(v/1e3,"K"):"$"+fmtN(v,0)}
+function rpSigned(x,d){return (x>=0?"+":"-")+fmtN(Math.abs(x),d)}
+function rpMs(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function rpBack(x){const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)}
+function rpRand(seed){let s=(seed>>>0)||1;return()=>{s^=s<<13;s>>>=0;s^=s>>>17;s^=s<<5;s>>>=0;return s/4294967296}}
+function rpAge(D,wn,tr){return tr-(RP_LEAD+wn.q*rpRun(D))}
+function rpBadge(cx,sym,x,y,R,clean){const t=find(sym),im=t?rpImg(logoUrl(t.img),clean):null;cx.save();cx.beginPath();cx.arc(x,y,R,0,Math.PI*2);
+  if(im){cx.fillStyle="#fff";cx.fill();cx.clip();cx.drawImage(im,x-R,y-R,R*2,R*2)}
+  else{cx.fillStyle=(t&&t.c)||RP_C.acc;cx.fill();cx.fillStyle="#fff";cx.font=rpFont(800,R*1.05,"b");cx.textAlign="center";cx.textBaseline="middle";cx.fillText((sym||"?").slice(0,1),x,y+R*.06)}
+  cx.restore()}
+// --- kart: 360×440 tasarım biriminde çizilir, o.s ile ölçeklenir
+function rpPaint(cx,D,tr,o){const C=RP_C,p=rpP(D,tr),u=rpP2U(D,p),span=(D.t1-D.t0)||1,tc=D.t0+span*u,cv=rpAt(D.sp,tc),v0=D.pts[0].v,dv=cv-v0,up=dv>=0,col=up?C.up:C.dn,rgb=up?"60,207,142":"255,107,94",who=rpWho();
+  cx.save();cx.translate(o.x,o.y);cx.scale(o.s,o.s);
+  rpRR(cx,0,0,RP_W,RP_H,22);cx.save();cx.clip();
+  let g=cx.createLinearGradient(0,0,0,RP_H);g.addColorStop(0,C.bg0);g.addColorStop(1,C.bg1);cx.fillStyle=g;cx.fillRect(0,0,RP_W,RP_H);
+  g=cx.createRadialGradient(RP_W*.9,0,0,RP_W*.9,0,250);g.addColorStop(0,"rgba(169,139,255,.24)");g.addColorStop(1,"rgba(169,139,255,0)");cx.fillStyle=g;cx.fillRect(0,0,RP_W,RP_H);
+  // üst satır: avatar, ad, etiket, aralık
+  const ax=33,ay=35,ar=17;cx.save();cx.beginPath();cx.arc(ax,ay,ar,0,Math.PI*2);cx.fillStyle=colorFor(who.h||who.n||"?");cx.fill();const aim=rpImg(safeUrl(who.a),o.clean);
+  if(aim){cx.clip();cx.drawImage(aim,ax-ar,ay-ar,ar*2,ar*2)}else{cx.fillStyle="#fff";cx.font=rpFont(700,15,"b");cx.textAlign="center";cx.textBaseline="middle";cx.fillText(initial(who.n||who.h),ax,ay+1)}cx.restore();
+  cx.beginPath();cx.arc(ax,ay,ar+1.5,0,Math.PI*2);cx.strokeStyle="rgba(255,255,255,.16)";cx.lineWidth=1;cx.stroke();
+  cx.textAlign="left";cx.textBaseline="alphabetic";const rr=RP_RANGES.find(r=>r[0]===RPL.range)||RP_RANGES[0],rl=EN?rr[4]:rr[3];cx.font=rpFont(600,10,"b");const rw=cx.measureText(rl).width+18;
+  cx.fillStyle=C.fg;cx.font=rpFont(700,15,"b");cx.fillText(rpFit(cx,who.n||who.h||"",RP_W-80-rw),60,31);
+  cx.font=rpFont(700,9.5,"b");const ct=EN?"Portfolio":"Portfolyo",cw=cx.measureText(ct).width+12;rpRR(cx,60,38,cw,15,7.5);cx.fillStyle="rgba(169,139,255,.2)";cx.fill();cx.fillStyle=C.acc;cx.fillText(ct,66,48.6);
+  cx.font=rpFont(600,10,"b");rpRR(cx,RP_W-16-rw,24,rw,21,10.5);cx.fillStyle="rgba(255,255,255,.07)";cx.fill();cx.fillStyle=C.mut;cx.textAlign="center";cx.fillText(rl,RP_W-16-rw/2,38);cx.textAlign="left";
+  // değer
+  let pop=0;if(!RPL.rm)for(const wn of D.wins){const a=rpAge(D,wn,tr);if(a>=0&&a<480)pop=Math.max(pop,Math.sin(a/480*Math.PI))}
+  const pc=v0>0?dv/v0*100:0;let ip,fp="";if(RPL.mode==="%"){ip=rpSigned(pc,2)+"%"}else{const s="$"+fmtN(cv,2),k=s.lastIndexOf(DEC);ip=k>0?s.slice(0,k):s;fp=k>0?s.slice(k):""}
+  let fs=31;cx.font=rpFont(700,fs,"d");while(fs>15&&cx.measureText(ip+fp).width>RP_W-40){fs-=1;cx.font=rpFont(700,fs,"d")}
+  cx.save();cx.translate(18,101);const sc=1+.06*pop;cx.scale(sc,sc);cx.fillStyle=RPL.mode==="%"?col:(pop>0?`rgb(${Math.round(244+(255-244)*pop)},${Math.round(241-(241-211)*pop)},${Math.round(255-(255-107)*pop)})`:C.fg);cx.fillText(ip,0,0);cx.fillStyle=C.mut;cx.fillText(fp,cx.measureText(ip).width,0);cx.restore();
+  cx.font=rpFont(700,12.5,"b");cx.fillStyle=col;const c1=(dv>=0?"+":"-")+"$"+fmtN(Math.abs(dv),2);cx.fillText(c1,18,125);const px=18+cx.measureText(c1).width+8;
+  cx.font=rpFont(700,10.5,"b");const c2=rpSigned(pc,2)+"%",pw=cx.measureText(c2).width+12;rpRR(cx,px,114,pw,16,8);cx.fillStyle=`rgba(${rgb},.16)`;cx.fill();cx.fillStyle=col;cx.fillText(c2,px+6,125.5);
+  // grafik alanı
+  const X0=16,X1=296,Y0=158,Y1=362,XR=RP_W-14,X=t=>X0+(t-D.t0)/span*(X1-X0),Y=v=>Y1-(v-D.lo)/((D.hi-D.lo)||1)*(Y1-Y0);
+  cx.strokeStyle=C.grid;cx.lineWidth=1;for(let k=0;k<4;k++){const y=Math.round(Y0+(Y1-Y0)*k/3)+.5;cx.beginPath();cx.moveTo(X0,y);cx.lineTo(XR,y);cx.stroke()}
+  cx.font=rpFont(600,9,"b");cx.fillStyle=C.mut;cx.textAlign="right";cx.fillText(rpShort(D.hi),XR,Y0-5);cx.fillText(rpShort(D.lo),XR,Y1-5);cx.textAlign="left";
+  const xe=X(tc),ye=Y(cv),path=[];
+  if(p<1){cx.beginPath();let on=false;for(let x=Math.max(X0,xe);x<=X1+.01;x+=2){const y=Y(rpAt(D.sp,D.t0+(Math.min(x,X1)-X0)/(X1-X0)*span));if(on)cx.lineTo(x,y);else{cx.moveTo(x,y);on=true}}cx.setLineDash([2,3.5]);cx.strokeStyle="rgba(244,241,255,.16)";cx.lineWidth=1.2;cx.stroke();cx.setLineDash([])}for(let x=X0;x<xe;x+=1.25)path.push([x,Y(rpAt(D.sp,D.t0+(x-X0)/(X1-X0)*span))]);path.push([xe,ye]);if(path.length<2)path.unshift([X0,Y(v0)]);
+  g=cx.createLinearGradient(0,Y0,0,Y1);g.addColorStop(0,`rgba(${rgb},.32)`);g.addColorStop(1,`rgba(${rgb},0)`);cx.beginPath();cx.moveTo(path[0][0],Y1);for(const q of path)cx.lineTo(q[0],q[1]);cx.lineTo(xe,Y1);cx.closePath();cx.fillStyle=g;cx.fill();
+  cx.lineJoin="round";cx.lineCap="round";cx.beginPath();path.forEach((q,i)=>i?cx.lineTo(q[0],q[1]):cx.moveTo(q[0],q[1]));cx.strokeStyle=`rgba(${rgb},.22)`;cx.lineWidth=7;cx.stroke();cx.strokeStyle=col;cx.lineWidth=2.3;cx.stroke();
+  // son değer çizgisi ve etiketi
+  cx.setLineDash([3,4]);cx.strokeStyle=`rgba(${rgb},.6)`;cx.lineWidth=1;cx.beginPath();cx.moveTo(xe,ye);cx.lineTo(XR,ye);cx.stroke();cx.setLineDash([]);
+  cx.font=rpFont(800,9.5,"b");const lt=rpShort(cv),lw=cx.measureText(lt).width+12,ly=Math.max(Y0-2,Math.min(Y1-14,ye-8));rpRR(cx,XR-lw+2,ly,lw,16,5);cx.fillStyle=col;cx.fill();cx.fillStyle=C.ink;cx.fillText(lt,XR-lw+8,ly+11.5);
+  // kâr anları: logo damgası, halka, kıvılcım, tutar etiketi
+  for(const wn of D.wins){const a=rpAge(D,wn,tr);if(a<0)continue;const x=X(wn.t),y=Y(rpAt(D.sp,wn.t)),k=RPL.rm?1:rpBack(Math.min(1,a/380)),R=Math.max(.1,11*k);
+    if(a<900&&!RPL.rm){const e=a/900;cx.beginPath();cx.arc(x,y,R+4+28*e,0,Math.PI*2);cx.strokeStyle=`rgba(255,211,107,${.75*(1-e)})`;cx.lineWidth=.6+2.2*(1-e);cx.stroke();
+      const r=rpRand(Math.floor(wn.t/1000)+7),f=a/1000;for(let i=0;i<14;i++){const an=-Math.PI*(.08+.84*r()),sp=38+52*r();cx.globalAlpha=Math.max(0,1-f*1.1);cx.fillStyle=i%3===0?C.gold:i%3===1?C.acc2:C.acc;cx.fillRect(x+Math.cos(an)*sp*f-1.4,y+Math.sin(an)*sp*f+58*f*f-1.4,2.8,2.8)}cx.globalAlpha=1}
+    cx.beginPath();cx.arc(x,y,R+2.2,0,Math.PI*2);cx.fillStyle=C.bg1;cx.fill();rpBadge(cx,wn.s,x,y,R,o.clean);cx.beginPath();cx.arc(x,y,R+1.1,0,Math.PI*2);cx.strokeStyle=C.gold;cx.lineWidth=1.5;cx.stroke();
+    const la=RPL.rm?(a<4000?1:0):a<2600?Math.min(1,a/200):Math.max(0,1-(a-2600)/450);
+    if(la>0){cx.font=rpFont(800,10.5,"b");const s1=wn.s,s2="+"+usd(wn.p,0),w1=cx.measureText(s1).width,w2=cx.measureText(s2).width,bw=w1+w2+22,bx=Math.max(X0,Math.min(XR-bw,x-bw/2)),above=y-R-30>Y0-26,by=above?y-R-30+5*(1-la):y+R+8-5*(1-la);
+      cx.globalAlpha=la;rpRR(cx,bx,by,bw,22,11);cx.fillStyle="rgba(12,10,23,.92)";cx.fill();cx.strokeStyle="rgba(255,211,107,.55)";cx.lineWidth=1;cx.stroke();cx.fillStyle=C.fg;cx.fillText(s1,bx+9,by+15);cx.fillStyle=C.gold;cx.fillText(s2,bx+13+w1,by+15);cx.globalAlpha=1}}
+  // ilerleyen uç
+  if(p<1&&!RPL.rm){const ph=(tr%1400)/1400;cx.beginPath();cx.arc(xe,ye,4+10*ph,0,Math.PI*2);cx.fillStyle=`rgba(${rgb},${.38*(1-ph)})`;cx.fill()}
+  cx.beginPath();cx.arc(xe,ye,4.2,0,Math.PI*2);cx.fillStyle="#fff";cx.fill();cx.lineWidth=2;cx.strokeStyle=col;cx.stroke();
+  // zaman ekseni
+  cx.font=rpFont(500,9,"b");cx.fillStyle=C.mut;const fmt=t=>new Date(t).toLocaleString(LOC,RPL.range==="24h"?{hour:"2-digit",minute:"2-digit"}:{day:"numeric",month:"short"});
+  cx.textAlign="left";cx.fillText(fmt(D.t0),X0,Y1+18);cx.textAlign="center";cx.fillText(fmt(D.t0+span/2),(X0+X1)/2,Y1+18);cx.textAlign="right";cx.fillText(fmt(D.t1),X1,Y1+18);cx.textAlign="left";
+  // alt şerit
+  const fy=394;g=cx.createLinearGradient(0,fy,RP_W,RP_H);g.addColorStop(0,C.acc);g.addColorStop(1,"#8c69ff");cx.fillStyle=g;cx.fillRect(0,fy,RP_W,RP_H-fy);
+  cx.fillStyle=C.ink;cx.textBaseline="middle";cx.font=rpFont(800,19,"d");cx.fillText("coinforce",16,fy+24);cx.textAlign="right";
+  if(RPL.inv&&who.h){cx.globalAlpha=.72;cx.font=rpFont(600,9,"b");cx.fillText(EN?"My invite code":"Davet kodum",RP_W-16,fy+16);cx.globalAlpha=1;cx.font=rpFont(800,12.5,"b");cx.fillText(rpFit(cx,who.h,150),RP_W-16,fy+31)}
+  else{cx.globalAlpha=.72;cx.font=rpFont(600,9,"b");cx.fillText(EN?"Profits of $10K+":"$10K+ kâr anları",RP_W-16,fy+16);cx.globalAlpha=1;cx.font=rpFont(800,12.5,"b");cx.fillText(rpFit(cx,who.h?"@"+who.h:"",150),RP_W-16,fy+31)}
+  cx.textAlign="left";cx.textBaseline="alphabetic";cx.restore();
+  // çerçeve + kâr anında altın parlama
+  rpRR(cx,.75,.75,RP_W-1.5,RP_H-1.5,21.4);g=cx.createLinearGradient(0,0,RP_W,RP_H);g.addColorStop(0,C.acc);g.addColorStop(1,"rgba(93,224,197,.75)");cx.strokeStyle=g;cx.lineWidth=1.5;cx.stroke();
+  let fl=0;if(!RPL.rm)for(const wn of D.wins){const a=rpAge(D,wn,tr);if(a>=0&&a<700)fl=Math.max(fl,1-a/700)}
+  if(fl>0){cx.globalAlpha=fl;cx.strokeStyle=C.gold;cx.lineWidth=3;cx.stroke();cx.globalAlpha=fl*.35;cx.lineWidth=9;cx.stroke();cx.globalAlpha=1}
+  cx.restore()}
+// --- video karesi (9:16): üst başlık, kart, geçilen kâr anları, davet kodu
+function rpPaintStory(cx,D,tr,W,H,clean){const C=RP_C,s=W/1080;
+  let g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#171130");g.addColorStop(1,"#08060f");cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  g=cx.createRadialGradient(W*.12,H*.06,0,W*.12,H*.06,W*.95);g.addColorStop(0,"rgba(169,139,255,.30)");g.addColorStop(1,"rgba(169,139,255,0)");cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  g=cx.createRadialGradient(W*.92,H*.96,0,W*.92,H*.96,W*.85);g.addColorStop(0,"rgba(93,224,197,.18)");g.addColorStop(1,"rgba(93,224,197,0)");cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  cx.textAlign="center";cx.textBaseline="alphabetic";cx.fillStyle=C.fg;cx.font=rpFont(800,50*s,"d");cx.fillText("coinforce",W/2,162*s);const v0=D.pts[0].v,v1=D.pts[D.pts.length-1].v,pc=v0>0?(v1-v0)/v0*100:0,lb=(EN?{"24h":"Last 24h","7d":"Last 7 days","30d":"Last 30 days","all":"Last 35 days"}:{"24h":"Son 24 saatte","7d":"Son 7 günde","30d":"Son 30 günde","all":"Son 35 günde"})[RPL.range]+" ",vl=rpSigned(pc,2)+"%";
+  cx.font=rpFont(600,34*s,"b");const w1=cx.measureText(lb).width;cx.font=rpFont(700,34*s,"d");const w2=cx.measureText(vl).width,hx=(W-w1-w2)/2;cx.textAlign="left";
+  cx.font=rpFont(600,34*s,"b");cx.fillStyle=C.mut;cx.fillText(lb,hx,216*s);cx.font=rpFont(700,34*s,"d");cx.fillStyle=pc>=0?C.up:C.dn;cx.fillText(vl,hx+w1,216*s);cx.textAlign="center";
+  const cw=960*s,k=cw/RP_W,cy=262*s;rpPaint(cx,D,tr,{x:(W-cw)/2,y:cy,s:k,clean});
+  const crossed=D.wins.filter(w=>rpAge(D,w,tr)>=0).slice(-3).reverse(),y0=cy+RP_H*k+32*s,rw=W-120*s;
+  crossed.forEach((w,i)=>{const e=RPL.rm?1:Math.min(1,rpAge(D,w,tr)/320),rx=60*s+(1-e)*48*s,ry=y0+i*96*s;cx.globalAlpha=e;rpRR(cx,rx,ry,rw,84*s,22*s);cx.fillStyle="rgba(255,255,255,.06)";cx.fill();cx.strokeStyle="rgba(255,211,107,.22)";cx.lineWidth=1.5*s;cx.stroke();
+    rpBadge(cx,w.s,rx+48*s,ry+42*s,25*s,clean);cx.textAlign="left";cx.textBaseline="middle";cx.fillStyle=C.fg;cx.font=rpFont(700,31*s,"b");cx.fillText(w.s,rx+90*s,ry+29*s);
+    cx.fillStyle=C.mut;cx.font=rpFont(500,23*s,"b");cx.fillText(new Date(w.t).toLocaleString(LOC,{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}),rx+90*s,ry+59*s);
+    cx.textAlign="right";cx.fillStyle=C.gold;cx.font=rpFont(700,32*s,"d");cx.fillText("+"+usd(w.p,0),rx+rw-28*s,ry+43*s);cx.globalAlpha=1});
+  cx.textAlign="center";cx.textBaseline="alphabetic";const who=rpWho(),url=(location.host+location.pathname).replace(/\/(index\.html)?$/,"");
+  if(RPL.inv&&who.h){cx.fillStyle=C.fg;cx.font=rpFont(700,33*s,"b");cx.fillText((EN?"Join with my invite code: ":"Davet kodumla katıl: ")+who.h,W/2,H-92*s)}
+  cx.fillStyle=C.mut;cx.font=rpFont(500,27*s,"b");cx.fillText(url,W/2,H-46*s);cx.textAlign="left"}
+// --- ekran: boyutlandırma, çizim, oynatma
+function rpSize(){const c=$("rpCv");if(!c)return;const r=c.getBoundingClientRect(),d=Math.min(3,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.width*RP_H/RP_W*d));if(c.width!==w||c.height!==h){c.width=w;c.height=h}rpDraw()}
+function rpDraw(){const c=$("rpCv"),D=RPL.data;if(!c||!D)return;const cx=c.getContext("2d");cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,c.width,c.height);rpPaint(cx,D,RPL.t,{x:0,y:0,s:c.width/RP_W,clean:false});rpUi()}
+function rpUi(){const D=RPL.data;if(!D)return;const run=rpRun(D),p=rpP(D,RPL.t),pc=(p*100).toFixed(2)+"%",f=$("rpFill"),k=$("rpKnob"),tk=$("rpTrk"),a=$("rpT0"),b=$("rpT1"),pp=$("rpPP");
+  if(f)f.style.width=pc;if(k)k.style.left=pc;if(tk){tk.setAttribute("aria-valuenow",Math.round(p*100));tk.setAttribute("aria-valuetext",rpMs(p*run))}if(a)a.textContent=rpMs(p*run);if(b)b.textContent=rpMs(run);
+  if(pp){const s=RPL.playing?"pause":RPL.t>=rpTotal(D)?"replay":"play";if(pp.dataset.st!==s){pp.dataset.st=s;pp.innerHTML=RP_ICON[s];pp.setAttribute("aria-label",s==="pause"?rpT("Duraklat","Pause"):s==="replay"?rpT("Baştan oynat","Replay"):rpT("Oynat","Play"))}}}
+function rpAria(){const D=RPL.data,c=$("rpCv");if(!D||!c)return;const v0=D.pts[0].v,v1=D.pts[D.pts.length-1].v,pc=v0>0?(v1-v0)/v0*100:0;
+  c.setAttribute("aria-label",rpT(`Portfolyo değeri ${usd(v1)}, aralık başına göre ${rpSigned(pc,2)}%. Grafikte ${D.wins.length} kâr anı var.`,`Portfolio value ${usd(v1)}, ${rpSigned(pc,2)}% over the range. ${D.wins.length} profit moments on the chart.`))}
+function rpLoop(ts){if(!RPL.playing||!RPL.data)return;const dt=RPL.last?Math.min(64,ts-RPL.last):16;RPL.last=ts;RPL.t=Math.min(rpTotal(RPL.data),RPL.t+dt);if(RPL.t>=rpTotal(RPL.data))RPL.playing=false;rpDraw();if(RPL.playing)RPL.raf=requestAnimationFrame(rpLoop)}
+function rpPlay(){const D=RPL.data;if(!D)return;if(RPL.t>=rpTotal(D))RPL.t=0;RPL.playing=true;RPL.last=0;cancelAnimationFrame(RPL.raf);RPL.raf=requestAnimationFrame(rpLoop);rpUi()}
+function rpPause(){RPL.playing=false;cancelAnimationFrame(RPL.raf);RPL.raf=0;if(RPL.data)rpDraw()}
+function rpSeekP(p){const D=RPL.data;if(!D)return;p=Math.max(0,Math.min(1,p));RPL.t=p<=0?0:RP_LEAD+p*rpRun(D);rpDraw()}
+function rpDots(){const el=$("rpDots"),D=RPL.data;if(!el)return;el.innerHTML=D?D.wins.map(w=>`<em style="left:${(w.q*100).toFixed(2)}%"></em>`).join(""):""}
+function rpShell(){const self=rpSelf();
+  return `<div class="rp-in"><div class="rp-top"><button type="button" id="rpBack" data-rpx aria-label="${rpT("Geri","Back")}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>${rpT("Portfolyo","Portfolio")}</h2><button type="button" data-rpx aria-label="${rpT("Kapat","Close")}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="rp-stage ld" id="rpStage"><canvas id="rpCv" role="img" aria-label="${rpT("Portfolyo grafiği","Portfolio chart")}"></canvas></div>
+  <div class="rp-ctl"><button type="button" class="rp-pp" id="rpPP" data-rppp aria-label="${rpT("Oynat","Play")}">${RP_ICON.play}</button><span class="rp-tm" id="rpT0">0:00</span>
+  <div class="rp-trk" id="rpTrk" role="slider" tabindex="0" aria-label="${rpT("Oynatma konumu","Playback position")}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i><u id="rpFill"></u><span id="rpDots"></span><b id="rpKnob"></b></div>
+  <span class="rp-tm" id="rpT1">0:00</span><button type="button" class="rp-sp" id="rpSp" data-rpsp aria-label="${rpT("Oynatma hızı","Playback speed")}">1x</button></div>
+  <div class="rp-opt"><div class="rp-seg" role="group" aria-label="${rpT("Zaman aralığı","Time range")}">${RP_RANGES.map(r=>`<button type="button" data-rpr="${r[0]}" aria-pressed="${RPL.range===r[0]}">${EN?r[2]:r[1]}</button>`).join("")}</div>
+  <div class="rp-seg" role="group" aria-label="${rpT("Gösterim","Display")}"><button type="button" data-rpm="$" aria-pressed="${RPL.mode==="$"}">$</button><button type="button" data-rpm="%" aria-pressed="${RPL.mode==="%"}">%</button></div>
+  ${self?`<button type="button" class="rp-tg" data-rpinv aria-pressed="${RPL.inv}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>${rpT("Davet kodu","Invite code")}</button>`:""}</div>
+  <section class="rp-wins" id="rpWins"></section>
+  <button type="button" class="rp-save" id="rpSave" data-rpsave><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>${rpT("Videoyu kaydet","Save video")}</button>
+  <p class="rp-note">${rpT("Hikâye boyutunda video (1080×1920). Instagram ve TikTok'ta paylaşabilirsin.","Story-size video (1080×1920), ready for Instagram and TikTok.")}</p></div>`}
+function rpWinsRender(){const el=$("rpWins");if(!el)return;const D=RPL.data,w=rpWho(),self=rpSelf();if(!D){el.innerHTML="";return}
+  const h=`<h3>${rpT("Kâr anları","Profit moments")}</h3>`;
+  if(!D.n||!D.all.length){el.innerHTML=h+`<div class="rp-empty">${self?rpT("Bir coinde tek seferde $10.000 ve üzeri kâr ettiğinde o an burada listelenir ve grafikte coin logosuyla işaretlenir.","When you make $10,000 or more on a coin in one go, the moment is listed here and stamped on the chart with the coin's logo."):rpT(`@${esc(w.h)} henüz tek seferde $10.000 ve üzeri kâr etmedi.`,`@${esc(w.h)} hasn't made $10,000 or more in one go yet.`)}</div>`;return}
+  const now=Date.now();
+  el.innerHTML=h+`<p>${rpT(`${D.n} kez $10.000 ve üzeri kâr, toplam +${usd(D.total,0)}.`,`${D.n} profit${D.n>1?"s":""} of $10,000 or more, +${usd(D.total,0)} in total.`)}${D.all.length<D.n?" "+rpT(`Son ${D.all.length} tanesi aşağıda.`,`The latest ${D.all.length} are below.`):""}</p>`+
+    D.all.slice().reverse().map(x=>{const t=find(x.s),ok=now-x.t<=35*864e5;return `<button type="button" class="rp-w" data-rpw="${x.t}"${ok?"":' aria-disabled="true"'}>${coinIc(x.s)}<span class="mid"><b>${esc(t&&t.n?t.n:x.s)}</b><small>${esc(x.s)}, ${new Date(x.t).toLocaleString(LOC,{day:"numeric",month:"short",year:now-x.t>300*864e5?"numeric":undefined,hour:"2-digit",minute:"2-digit"})}${ok?"":". "+rpT("Grafik son 35 günü gösterir.","The chart covers the last 35 days.")}</small></span><span class="amt">+${usd(x.p,0)}</span></button>`}).join("")}
+async function rpLoad(){const id=RPL.id,r=RPL.range,key=id+"|"+r,tok=++RPL.tok;rpPause();const stg=$("rpStage");if(stg){stg.classList.add("ld");const e=stg.querySelector(".rp-err");if(e)e.remove()}
+  let d=null,err=null;const c=RPL.cache[key];
+  if(c&&Date.now()-c.at<6e4)d=c.d;else{try{const res=await sb.rpc("portfolio_replay",{p_user:id,p_range:r});if(res.error)err=res.error;else{d=res.data;RPL.cache[key]={at:Date.now(),d}}}catch(e){err=e}}
+  try{await Promise.all([document.fonts.load(rpFont(700,31,"d")),document.fonts.load(rpFont(800,19,"d")),document.fonts.load(rpFont(700,15,"b"))])}catch(e){}
+  if(tok!==RPL.tok||$("pfPage").hidden)return;const s2=$("rpStage");if(s2)s2.classList.remove("ld");
+  if(err||!d){RPL.data=null;if(s2)s2.insertAdjacentHTML("beforeend",`<div class="rp-err" role="alert"><b>${rpT("Portfolyo yüklenemedi.","Couldn't load the portfolio.")}</b><span>${rpT("Bağlantını kontrol edip tekrar dene.","Check your connection and try again.")}</span><button type="button" data-rpretry>${rpT("Tekrar dene","Try again")}</button></div>`);rpWinsRender();rpDots();return}
+  RPL.data=rpPrep(d);RPL.t=RPL.rm?rpTotal(RPL.data):0;rpDots();rpWinsRender();rpSize();rpAria();
+  if(RPL.seekT!=null){const w=RPL.data.wins.find(x=>x.t===RPL.seekT);RPL.seekT=null;if(w){RPL.t=RP_LEAD+Math.max(0,w.q-.035)*rpRun(RPL.data);rpPlay();return}}
+  if(!RPL.rm)rpPlay()}
+function rpSetRange(r){if(!RP_RANGES.some(x=>x[0]===r))return;RPL.range=r;document.querySelectorAll("#pfPage [data-rpr]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.rpr===r)));rpLoad()}
+function rpSeekWin(t){const D=RPL.data;if(!D)return;const w=D.wins.find(x=>x.t===t);
+  if(w){RPL.t=RP_LEAD+Math.max(0,w.q-.035)*rpRun(D);rpPlay();const s=$("rpStage");if(s&&s.scrollIntoView)s.scrollIntoView({block:"nearest",behavior:RPL.rm?"auto":"smooth"});return}
+  const age=Date.now()-t,r=age<=864e5?"24h":age<=7*864e5?"7d":age<=30*864e5?"30d":age<=35*864e5?"all":null;if(!r)return;RPL.seekT=t;rpSetRange(r);const s=$("rpStage");if(s&&s.scrollIntoView)s.scrollIntoView({block:"nearest"})}
+function rpSetSpeed(){const D=RPL.data,p=D?rpP(D,RPL.t):0,started=RPL.t>RP_LEAD;RPL.speed=RPL.speed===1?2:RPL.speed===2?4:1;const b=$("rpSp");if(b)b.textContent=RPL.speed+"x";if(D&&started)RPL.t=RP_LEAD+p*rpRun(D);rpUi();if(!RPL.playing)rpDraw()}
+function openPf(id){if(!me)return;RPL.id=id==="me"?me.id:id;RPL.ret=document.activeElement;RPL.range="24h";RPL.mode="$";RPL.inv=rpSelf();RPL.speed=1;RPL.data=null;RPL.t=0;RPL.seekT=null;rpPause();
+  try{RPL.rm=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)}catch(e){RPL.rm=false}
+  const pg=$("pfPage");pg.innerHTML=rpShell();pg.hidden=false;pg.scrollTop=0;RPL.ov=document.body.style.overflow;document.body.style.overflow="hidden";
+  if(RPL.ro)RPL.ro.disconnect();if(window.ResizeObserver){RPL.ro=new ResizeObserver(()=>rpSize());RPL.ro.observe($("rpStage"))}
+  setTimeout(()=>{const b=$("rpBack");if(b)try{b.focus({preventScroll:true})}catch(e){}},30);rpLoad()}
+function closePf(){rpPause();if(RPL.exp)RPL.exp.cancel=true;rpXClose();if(RPL.ro){RPL.ro.disconnect();RPL.ro=null}RPL.tok++;$("pfPage").hidden=true;$("pfPage").innerHTML="";document.body.style.overflow=RPL.ov||"";const r=RPL.ret;RPL.ret=null;if(r&&r.focus&&document.contains(r))try{r.focus({preventScroll:true})}catch(e){}}
+// --- video: WebCodecs ile kare kare H.264 + kendi MP4 paketleyicimiz (hızlı, 60 fps); olmazsa MediaRecorder (gerçek zamanlı)
+function rpMp4(S,avcC,w,h,fps){const TS=90000,dt=Math.round(TS/fps),n=S.length,durTS=n*dt,durMs=Math.round(durTS/TS*1000);
+  const u32=v=>[(v>>>24)&255,(v>>>16)&255,(v>>>8)&255,v&255],u16=v=>[(v>>>8)&255,v&255],str=s=>Array.from(s,c=>c.charCodeAt(0));
+  const cat=a=>{let L=0;for(const x of a)L+=x.length;const o=new Uint8Array(L);let k=0;for(const x of a){o.set(x,k);k+=x.length}return o};
+  const box=(t,...p)=>{const b=cat(p.map(x=>x instanceof Uint8Array?x:Uint8Array.from(x))),o=new Uint8Array(8+b.length);o.set(u32(8+b.length),0);o.set(str(t),4);o.set(b,8);return o};
+  const fbox=(t,v,f,...p)=>box(t,[v,(f>>>16)&255,(f>>>8)&255,f&255],...p);
+  const mtx=[0x10000,0,0,0,0x10000,0,0,0,0x40000000].flatMap(u32);
+  const pts=S.map(x=>Math.round(x.ts*TS/1e6));let ro=false;for(let i=1;i<n;i++)if(pts[i]<pts[i-1]){ro=true;break}
+  let shift=0,cts=null;if(ro){const off=pts.map((x,i)=>x-i*dt);shift=Math.max(0,-Math.min(...off));cts=off.map(x=>x+shift)}
+  const keys=[];S.forEach((x,i)=>{if(x.key)keys.push(i+1)});
+  const ftyp=box("ftyp",str("isom"),u32(512),str("isom"),str("iso2"),str("avc1"),str("mp41"));
+  const mvhd=fbox("mvhd",0,0,u32(0),u32(0),u32(1000),u32(durMs),u32(0x10000),u16(0x100),u16(0),u32(0),u32(0),mtx,new Array(24).fill(0),u32(2));
+  const tkhd=fbox("tkhd",0,3,u32(0),u32(0),u32(1),u32(0),u32(durMs),u32(0),u32(0),u16(0),u16(0),u16(0),u16(0),mtx,u32(w*65536),u32(h*65536));
+  const mdhd=fbox("mdhd",0,0,u32(0),u32(0),u32(TS),u32(durTS),u16(0x55c4),u16(0));
+  const hdlr=fbox("hdlr",0,0,u32(0),str("vide"),u32(0),u32(0),u32(0),str("COINFORCE video"),[0]);
+  const minfHead=[fbox("vmhd",0,1,u16(0),u16(0),u16(0),u16(0)),box("dinf",fbox("dref",0,0,u32(1),fbox("url ",0,1)))];
+  const avc1=box("avc1",new Array(6).fill(0),u16(1),u16(0),u16(0),new Array(12).fill(0),u16(w),u16(h),u32(0x480000),u32(0x480000),u32(0),u16(1),new Array(32).fill(0),u16(0x18),u16(0xffff),box("avcC",avcC),box("pasp",u32(1),u32(1)));
+  const fixed=[fbox("stsd",0,0,u32(1),avc1),fbox("stts",0,0,u32(1),u32(n),u32(dt)),ro?fbox("ctts",0,0,u32(n),cts.flatMap(c=>[...u32(1),...u32(c)])):null,keys.length?fbox("stss",0,0,u32(keys.length),keys.flatMap(u32)):null,fbox("stsc",0,0,u32(1),u32(1),u32(n),u32(1)),fbox("stsz",0,0,u32(0),u32(n),S.flatMap(x=>u32(x.d.length)))].filter(Boolean);
+  const moov=off=>box("moov",mvhd,box("trak",...[tkhd,ro&&shift?box("edts",fbox("elst",0,0,u32(1),u32(durMs),u32(shift),u16(1),u16(0))):null,box("mdia",mdhd,hdlr,box("minf",...minfHead,box("stbl",...fixed,fbox("stco",0,0,u32(1),u32(off)))))].filter(Boolean)));
+  const m0=moov(0),off=ftyp.length+m0.length+8,mv=moov(off);let L=0;for(const x of S)L+=x.d.length;const mh=new Uint8Array(8);mh.set(u32(8+L),0);mh.set(str("mdat"),4);
+  return new Blob([ftyp,mv,mh,...S.map(x=>x.d)],{type:"video/mp4"})}
+async function rpEncodeWC(D,job){if(!window.VideoEncoder||!window.VideoFrame)return null;
+  const tries=[[1080,1920,60,["avc1.64002a","avc1.4d002a","avc1.42e02a"]],[1080,1920,30,["avc1.640028","avc1.4d0028","avc1.42e028"]],[720,1280,30,["avc1.64001f","avc1.4d001f","avc1.42e01f"]]];let cfg=null,fps=30;
+  for(const [w,h,f,cs] of tries){for(const c of cs){const k={codec:c,width:w,height:h,bitrate:w>=1080?(f>30?12e6:9e6):5e6,framerate:f,avc:{format:"avc"},latencyMode:"quality"};
+    try{const s=await VideoEncoder.isConfigSupported(k);if(s&&s.supported){cfg=k;fps=f;break}}catch(e){}}if(cfg)break}
+  if(!cfg)return null;const W=cfg.width,H=cfg.height,cvs=document.createElement("canvas");cvs.width=W;cvs.height=H;const cx=cvs.getContext("2d",{alpha:false});
+  const S=[];let desc=null,err=null;
+  const enc=new VideoEncoder({output:(ch,meta)=>{const b=new Uint8Array(ch.byteLength);ch.copyTo(b);S.push({d:b,key:ch.type==="key",ts:ch.timestamp});const dd=meta&&meta.decoderConfig&&meta.decoderConfig.description;
+    if(dd&&!desc)desc=dd instanceof ArrayBuffer?new Uint8Array(dd.slice(0)):new Uint8Array(dd.buffer.slice(dd.byteOffset,dd.byteOffset+dd.byteLength))},error:e=>{err=e}});
+  enc.configure(cfg);const total=rpTotal(D)+RP_TAIL,nf=Math.ceil(total/1000*fps),fd=1e6/fps;
+  for(let i=0;i<nf;i++){if(job.cancel||err)break;rpPaintStory(cx,D,i*1000/fps,W,H,true);const fr=new VideoFrame(cvs,{timestamp:Math.round(i*fd),duration:Math.round(fd)});enc.encode(fr,{keyFrame:i%(fps*2)===0});fr.close();
+    if(enc.encodeQueueSize>4)await new Promise(r=>{const f=()=>{if(enc.encodeQueueSize<=1||err||job.cancel)r();else setTimeout(f,3)};f()});
+    if(i%5===0){rpXProg(i/nf);await new Promise(r=>setTimeout(r,0))}}
+  if(job.cancel||err){try{enc.close()}catch(e){}if(err)throw err;return null}
+  await enc.flush();enc.close();if(err)throw err;if(!desc||!S.length)return null;rpXProg(1);
+  return {blob:rpMp4(S,desc,W,H,fps),type:"video/mp4",ext:"mp4",w:W,h:H,dur:nf/fps}}
+async function rpEncodeMR(D,job){if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream)return null;
+  const W=720,H=1280,cvs=document.createElement("canvas");cvs.width=W;cvs.height=H;const cx=cvs.getContext("2d");
+  const mt=["video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"].find(t=>{try{return MediaRecorder.isTypeSupported(t)}catch(e){return false}})||"";
+  rpPaintStory(cx,D,0,W,H,true);let rec;try{rec=new MediaRecorder(cvs.captureStream(30),mt?{mimeType:mt,videoBitsPerSecond:6e6}:{videoBitsPerSecond:6e6})}catch(e){return null}
+  const parts=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)parts.push(e.data)};const stopped=new Promise(r=>{rec.onstop=r});rec.start(250);const total=rpTotal(D)+RP_TAIL,t0=performance.now();
+  await new Promise(res=>{const f=()=>{if(job.cancel)return res();const tr=Math.min(total,performance.now()-t0);rpPaintStory(cx,D,tr,W,H,true);rpXProg(tr/total);if(tr<total)requestAnimationFrame(f);else setTimeout(res,300)};f()});
+  rec.stop();await stopped;if(job.cancel||!parts.length)return null;const type=(rec.mimeType||mt||"video/webm").split(";")[0];
+  return {blob:new Blob(parts,{type}),type,ext:type.includes("mp4")?"mp4":"webm",w:W,h:H,dur:total/1000}}
+function rpXProg(f){const u=$("rpXp"),m=$("rpXm");const pc=Math.round(Math.max(0,Math.min(1,f))*100);if(u)u.style.width=pc+"%";if(m)m.textContent=rpT(`Kareler çiziliyor: %${pc}`,`Rendering frames: ${pc}%`)}
+function rpXClose(){const ov=$("rpX");if(ov){ov.hidden=true;ov.innerHTML=""}if(RPL.vurl){const u=RPL.vurl;RPL.vurl=null;setTimeout(()=>URL.revokeObjectURL(u),2000)}RPL.vfile=null}
+async function rpSave(){const D=RPL.data;if(!D||RPL.exp)return;rpPause();const ov=$("rpX"),job={cancel:false};RPL.exp=job;
+  ov.innerHTML=`<div class="rp-xb"><h3 id="rpXh">${rpT("Video hazırlanıyor","Preparing the video")}</h3><p id="rpXm">${rpT("Kareler çiziliyor: %0","Rendering frames: 0%")}</p><div class="rp-xp"><u id="rpXp"></u></div><div class="rp-xa one"><button type="button" data-rpxc>${rpT("Vazgeç","Cancel")}</button></div></div>`;ov.hidden=false;
+  try{await Promise.all([document.fonts.load(rpFont(800,50,"d")),document.fonts.load(rpFont(700,32,"d")),document.fonts.load(rpFont(700,31,"b")),document.fonts.load(rpFont(500,23,"b"))])}catch(e){}
+  await rpImgsReady(D,true,4000);let out=null;
+  try{out=await rpEncodeWC(D,job)}catch(e){out=null}
+  if(!out&&!job.cancel){try{out=await rpEncodeMR(D,job)}catch(e){out=null}}
+  RPL.exp=null;if(job.cancel||$("pfPage").hidden)return;
+  if(!out){ov.innerHTML=`<div class="rp-xb" role="alert"><h3 id="rpXh">${rpT("Video oluşturulamadı","Couldn't create the video")}</h3><p>${rpT("Bu tarayıcı video kaydını desteklemiyor. Chrome veya Safari'nin güncel sürümüyle tekrar dene.","This browser can't record video. Try again in an up-to-date Chrome or Safari.")}</p><div class="rp-xa one"><button type="button" data-rpxc>${rpT("Kapat","Close")}</button></div></div>`;return}
+  rpReady(out)}
+function rpReady(o){const ov=$("rpX"),who=rpWho(),name=`coinforce-portfolyo${who.h?"-"+who.h.replace(/[^a-z0-9_-]/gi,""):""}.${o.ext}`,url=URL.createObjectURL(o.blob);RPL.vurl=url;
+  let file=null;try{file=new File([o.blob],name,{type:o.type})}catch(e){}RPL.vfile=file;let share=false;try{share=!!(file&&navigator.canShare&&navigator.canShare({files:[file]}))}catch(e){}
+  ov.innerHTML=`<div class="rp-xb"><h3 id="rpXh">${rpT("Video hazır","Your video is ready")}</h3><p>${o.ext.toUpperCase()}, ${o.w}×${o.h}, ${fmtN(o.dur,1)} ${rpT("saniye","seconds")}, ${fmtN(o.blob.size/1048576,1)} MB</p>
+  <video class="rp-xv" src="${url}" autoplay muted loop playsinline></video><div class="rp-xa">${share?`<button type="button" class="pri" data-rpshare><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>${rpT("Paylaş","Share")}</button>`:""}<a class="${share?"":"pri"}" href="${url}" download="${esc(name)}" data-rpdl><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>${rpT("İndir","Download")}</a>${share?"":`<button type="button" data-rpxc>${rpT("Kapat","Close")}</button>`}</div>${share?`<div class="rp-xa one"><button type="button" data-rpxc>${rpT("Kapat","Close")}</button></div>`:""}</div>`}
+(function(){const pg=$("pfPage"),ov=$("rpX");
+  document.addEventListener("click",e=>{const b=e.target.closest("[data-pf]");if(b&&!pg.contains(b)){openPf(b.dataset.pf)}});
+  pg.addEventListener("click",e=>{const g=s=>e.target.closest(s);let b;
+    if(g("[data-rpx]")){closePf();return}
+    if(g("[data-rppp]")||g("#rpCv")){if(!RPL.data)return;RPL.playing?rpPause():rpPlay();return}
+    if(g("[data-rpsp]")){rpSetSpeed();return}
+    if((b=g("[data-rpr]"))){if(b.dataset.rpr!==RPL.range)rpSetRange(b.dataset.rpr);return}
+    if((b=g("[data-rpm]"))){RPL.mode=b.dataset.rpm;pg.querySelectorAll("[data-rpm]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));rpDraw();return}
+    if((b=g("[data-rpinv]"))){RPL.inv=!RPL.inv;b.setAttribute("aria-pressed",String(RPL.inv));rpDraw();return}
+    if((b=g("[data-rpw]"))){if(b.getAttribute("aria-disabled")!=="true")rpSeekWin(+b.dataset.rpw);return}
+    if(g("[data-rpretry]")){delete RPL.cache[RPL.id+"|"+RPL.range];rpLoad();return}
+    if(g("[data-rpsave]")){rpSave();return}});
+  pg.addEventListener("pointerdown",e=>{const tk=e.target.closest("#rpTrk");if(!tk||!RPL.data||e.button>0)return;e.preventDefault();const was=RPL.playing;if(was)rpPause();RPL.drag={was,id:e.pointerId};try{tk.setPointerCapture(e.pointerId)}catch(_){}
+    const mv=ev=>{const r=tk.getBoundingClientRect();rpSeekP((ev.clientX-r.left)/r.width)};mv(e);
+    const up=()=>{tk.removeEventListener("pointermove",mv);tk.removeEventListener("pointerup",up);tk.removeEventListener("pointercancel",up);const d=RPL.drag;RPL.drag=null;if(d&&d.was&&RPL.t<rpTotal(RPL.data))rpPlay()};
+    tk.addEventListener("pointermove",mv);tk.addEventListener("pointerup",up);tk.addEventListener("pointercancel",up)});
+  pg.addEventListener("keydown",e=>{if(!RPL.data)return;const tk=e.target.closest&&e.target.closest("#rpTrk");
+    if(tk&&["ArrowLeft","ArrowRight","Home","End","PageUp","PageDown"].includes(e.key)){e.preventDefault();const p=rpP(RPL.data,RPL.t),st5=e.key==="PageUp"||e.key==="PageDown"?.2:.05;rpPause();rpSeekP(e.key==="Home"?0:e.key==="End"?1:p+(e.key==="ArrowRight"||e.key==="PageUp"?st5:-st5));return}
+    if(e.key===" "&&!e.target.closest("button,a,input,textarea,select")){e.preventDefault();RPL.playing?rpPause():rpPlay()}});
+  ov.addEventListener("click",async e=>{const g=s=>e.target.closest(s);
+    if(g("[data-rpxc]")){if(RPL.exp)RPL.exp.cancel=true;rpXClose();return}
+    if(g("[data-rpshare]")&&RPL.vfile){try{await navigator.share({files:[RPL.vfile],title:"COINFORCE"})}catch(err){}return}
+    if(e.target===ov&&!RPL.exp)rpXClose()});
+  document.addEventListener("keydown",e=>{if(e.key!=="Escape"||pg.hidden)return;if(!ov.hidden){if(RPL.exp)RPL.exp.cancel=true;rpXClose()}else closePf()});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden&&RPL.playing)rpPause()});
+  window.addEventListener("resize",()=>{if(!pg.hidden&&!RPL.ro)rpSize()})})();
 
 document.addEventListener("click",e=>{const g=q=>e.target.closest(q);
   if(g("[data-vip]")){openVip();return}
