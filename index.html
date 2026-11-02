@@ -5518,10 +5518,11 @@ async function pullRefresh(){
   renderAll();if(view==="rank")renderRank();toast("Güncellendi")}
 if("serviceWorker" in navigator&&location.protocol==="https:"){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
 // ---------- açılış reklamları
-// Oturumu olan kullanıcı uygulamayı açınca 3 reklam arka arkaya gösterilir (veri bu sırada arkada yüklenir).
-// Sağ üstteki buton ilk 3 saniye geri sayar, sonra "Geç" olur ve bütün reklamları kapatır.
-// Derin bağlantıyla (Telegram, ödeme, davet) açılışta ve 30 dakika içinde yeniden yüklemede gösterilmez.
-const AD_DUR=3500,AD_SKIP=3000,AD_GAP=30*6e4;
+// Oturumu olan kullanıcı uygulamayı her açtığında tek reklam görür (veri bu sırada arkada yüklenir). Hangi reklam olduğu
+// Türkiye saatine göre 5 dakikada bir sırayla değişir: 02:50 → 1. reklam, 02:55 → 2., 03:00 → 3., 03:05 → yine 1. (kesintisiz döngü).
+// Sağ üstteki buton ilk 3 saniye geri sayar, sonra "Geç" olur; dokunulmazsa reklam 6 saniyede kendiliğinden kapanır.
+// Derin bağlantıyla (Telegram, ödeme, davet) açılışta ve uygulama güncellemesinin hemen ardından gelen yeniden yüklemede gösterilmez.
+const AD_DUR=6000,AD_SKIP=3000,AD_GAP=20000,AD_SLOT=5;
 const ADS=[
   {k:"fomo",until:"2026-11-10T02:18:54+03:00",eb:["FOMO Trading Week","FOMO Trading Week"],h:["1 milyon dolar hacme 10.000 dolar ödül","$10,000 for $1M in volume"],
    p:["SOL ve Solana memecoinlerinde işlem yap, topluluğunla yarış. Kampanya 10 Kasım'da bitiyor.","Trade SOL and Solana memecoins and race your community. Ends Nov 10."],
@@ -5556,11 +5557,15 @@ function adHeroPf(){const pts=[[0,82],[18,74],[34,78],[50,60],[66,66],[82,46],[9
 function adsHTML(list){const l=EN?1:0,disc=EN?"Trading uses a virtual balance. Not investment advice.":"Sanal bakiyeyle işlem yapılır. Yatırım tavsiyesi değildir.";
   return `<div class="ad-top"><div class="ad-seg" aria-hidden="true">${list.map(()=>"<i><b></b></i>").join("")}</div><button type="button" class="ad-skip" id="adSkip" disabled aria-label="${EN?"You can skip in 3 seconds":"3 saniye sonra geçebilirsin"}"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/><circle id="adSkipR" cx="10" cy="10" r="8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" transform="rotate(-90 10 10)"/></svg><span id="adSkipT">3</span></button></div>`
     +list.map((a,i)=>`<section class="ad-sc ad-${a.k}" data-i="${i}" aria-hidden="true"><div class="ad-tx"><div class="ad-eb">${a.eb[l]}${a.nw?`<em>${EN?"New":"Yeni"}</em>`:""}</div><h2 class="ad-h">${a.h[l]}</h2><p class="ad-p">${a.p[l]}</p></div><div class="ad-hero" aria-hidden="true">${a.hero()}</div><button type="button" class="ad-cta" data-adgo="${i}">${a.cta[l]}</button><div class="ad-ft"><div class="ad-brand">${adLogo(i)}COINFORCE</div><small>${disc}</small></div></section>`).join("")}
+function adsSlot(d){let h,m;try{const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Istanbul",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(d);h=+p.find(x=>x.type==="hour").value%24;m=+p.find(x=>x.type==="minute").value}
+  catch(e){const u=new Date(d.getTime()+3*36e5);h=u.getUTCHours();m=u.getUTCMinutes()}return Math.floor((h*60+m)/AD_SLOT)}
+function adsPick(list,d){return list[(adsSlot(d||new Date())+2)%list.length]}
 function adsStart(){
   if(location.search.length>1||location.hash.length>1)return;
   let seen=0;try{seen=+sessionStorage.getItem("cf_ads_at")||0}catch(e){}
   if(seen&&Date.now()-seen<AD_GAP)return;
-  const list=ADS.filter(a=>!a.until||Date.now()<Date.parse(a.until));if(!list.length)return;
+  const all=ADS.filter(a=>!a.until||Date.now()<Date.parse(a.until));if(!all.length)return;
+  const list=[adsPick(all)];
   try{sessionStorage.setItem("cf_ads_at",String(Date.now()))}catch(e){}
   const el=$("ads");el.innerHTML=adsHTML(list);el.hidden=false;el.classList.remove("out");
   AD={list,i:-1,el:0,last:performance.now(),done:false,skip:false,rm:!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)};
