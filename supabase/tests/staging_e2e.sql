@@ -1202,3 +1202,30 @@ begin
     format('HTTP %s · gövde: %s · anonim: HTTP %s', s1, left(b, 120), s2));
   commit;
 end $$;
+
+-- ════════════════════════════════════════════════════════════════════════════════════════════════
+-- 13) Kalıcı grafik çizimleri (migration 81, test 83)
+create or replace procedure cf_test.e2e_drawings(p_run bigint) language plpgsql as $$
+declare
+  items jsonb := '[{"k":"tl","a":[1,2],"b":[3,4],"c":"#7aa2ff","w":2},{"k":"hl","p":[[1,2],[2,3],[3,2]],"c":"#fff200","w":17}]';
+  big jsonb := (select jsonb_agg(jsonb_build_object('k', 'h', 'v', g)) from generate_series(1, 401) g);
+  a1 text; a2 text; a3 text; a4 text; a5 text; a6 text; a7 text; s1 int; s2 int;
+begin
+  select x.body into a1 from cf_test.user_rpc('alice@coinforce.test', 'save_chart_drawings', jsonb_build_object('p_symbol', 'BTC', 'p_data', items)) x;
+  select x.body into a2 from cf_test.user_rpc('alice@coinforce.test', 'my_chart_drawings') x;
+  select x.body into a3 from cf_test.user_rpc('bob@coinforce.test', 'my_chart_drawings') x;
+  select x.status into s1 from cf_test.rest('POST', '/rest/v1/rpc/my_chart_drawings', null, '{}') x;
+  select x.status into s2 from cf_test.rest('POST', '/rest/v1/rpc/save_chart_drawings', null, jsonb_build_object('p_symbol', 'BTC', 'p_data', items)::text) x;
+  select x.body into a4 from cf_test.user_rpc('alice@coinforce.test', 'save_chart_drawings', jsonb_build_object('p_symbol', 'B T C', 'p_data', items)) x;
+  select x.body into a5 from cf_test.user_rpc('alice@coinforce.test', 'save_chart_drawings', jsonb_build_object('p_symbol', 'ETH', 'p_data', big)) x;
+  select x.body into a6 from cf_test.user_rpc('alice@coinforce.test', 'save_chart_drawings', jsonb_build_object('p_symbol', 'BTC', 'p_data', '{"k":1}'::jsonb)) x;
+  perform cf_test.t(p_run, 83, 'Çizimler kullanıcıya özel saklanır: kaydet/oku, başkası göremez, giriş yapmamış reddedilir, geçersiz coin/veri ve 400 üstü reddedilir',
+    a1 like '%"ok"%' and a2 like '%BTC%' and a2 like '%fff200%' and a3 not like '%fff200%' and a3 not like '%BTC%'
+    and s1 in (401, 403) and s2 in (401, 403) and a4 like '%Geçersiz coin%' and a5 like '%en fazla 400%' and a6 like '%Geçersiz çizim%',
+    format('kayıt: %s | oku: %s | bob: %s | anonim: %s/%s | %s | %s | %s', left(a1, 30), left(a2, 40), left(a3, 20), s1, s2, left(a4, 40), left(a5, 50), left(a6, 40)));
+  -- boş liste satırı siler
+  select x.body into a7 from cf_test.user_rpc('alice@coinforce.test', 'save_chart_drawings', jsonb_build_object('p_symbol', 'BTC', 'p_data', '[]'::jsonb)) x;
+  select x.body into a2 from cf_test.user_rpc('alice@coinforce.test', 'my_chart_drawings') x;
+  perform cf_test.t(p_run, 84, 'Çizimlerin hepsi silinince kayıt kalkar', a7 like '%"n"%0%' and a2 not like '%BTC%', format('%s | %s', left(a7, 30), left(a2, 40)));
+  commit;
+end $$;
