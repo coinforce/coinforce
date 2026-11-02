@@ -1166,6 +1166,7 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
 .drl .dem{position:absolute;transform:translate(-50%,-50%);font-size:22px;line-height:1}
 .drl .drl-m{position:absolute;transform:translate(-50%,-50%);padding:4px 9px;border-radius:8px;color:#fff;font-size:11.5px;font-weight:700;text-align:center;white-space:nowrap}
 .vw-max .vw-chw,.vw-cw:fullscreen .vw-chw{flex:1;display:flex;flex-direction:column;min-height:0}
+.vw-rg .zb{flex:none;width:32px;padding:5px 0;font-size:17px;font-weight:700;display:grid;place-items:center;color:#e8ebf1}.vw-rg .zb:disabled{opacity:.35}.vw-rg .zb:not(:disabled):active{background:#1a1e27}
 /* Geniş ve ultra geniş monitörler (27–34 inç, 2560x1440 / 3440x1440 / 3840x2160): arayüz büyütülür, içerik genişler */
 @media (min-width:1700px){.app{max-width:1400px}.vw-body{grid-template-columns:250px minmax(0,1fr) 380px}}
 @media (min-width:2200px){body{zoom:1.25}.app{max-width:1500px}}
@@ -4322,7 +4323,7 @@ function renderView(){const t=find(VW.sym);if(!t)return;const L=vwCoins();
   <div class="vw-body"><div class="vw-chips">${L.map(x=>{const c=chg(x.t);return `<button type="button" class="vw-chip${x.t.s===VW.sym?" on":""}" data-vws="${x.t.s}">${coinHTML(x.t)}<span class="grow">${x.t.s}</span>${x.pos?'<i class="dot" title="Pozisyon"></i>':""}<small class="${c>=0?"up":"down"}">${pct(c)}</small></button>`}).join("")}</div>
   <div class="vw-main">
     <div class="vw-cw" id="vwCw"><div class="vw-mx"><b>${t.s}/USDT · <span id="vwMxP"></span></b><button type="button" class="x" data-vwfs aria-label="Kapat"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-      <div class="vw-rg">${VW_R.map(([k,en])=>`<button type="button" data-vwr="${k}" class="${k===VW.range?"on":""}">${k==="live"?`<i class="vw-ld"></i>`:""}${EN?en:(k==="live"?"Canlı":k)}</button>`).join("")}<span class="sp"></span><button type="button" class="ty${VW.type==="line"?" on":""}" data-vwt="line" aria-label="Çizgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 8-9"/></svg></button><button type="button" class="ty${VW.type==="candle"?" on":""}" data-vwt="candle" aria-label="Mum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3v4M7 15v6M17 3v6M17 17v4"/><rect x="5" y="7" width="4" height="8" rx="1"/><rect x="15" y="9" width="4" height="8" rx="1"/></svg></button><button type="button" class="fs" data-vwfs aria-label="Tam ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
+      <div class="vw-rg">${VW_R.map(([k,en])=>`<button type="button" data-vwr="${k}" class="${k===VW.range?"on":""}">${k==="live"?`<i class="vw-ld"></i>`:""}${EN?en:(k==="live"?"Canlı":k)}</button>`).join("")}<span class="sp"></span><button type="button" class="zb" data-vwzm="out" title="${EN?"Zoom out":"Daralt"}" aria-label="${EN?"Zoom out":"Daralt"}">−</button><button type="button" class="zb" data-vwzm="in" title="${EN?"Zoom in":"Genişlet"}" aria-label="${EN?"Zoom in":"Genişlet"}">+</button><button type="button" class="zb" data-vwzm="reset" title="${EN?"Reset view":"Görünümü sıfırla"}" aria-label="${EN?"Reset view":"Görünümü sıfırla"}"${VW.zoom?"":" disabled"}>⟲</button><button type="button" class="ty${VW.type==="line"?" on":""}" data-vwt="line" aria-label="Çizgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 8-9"/></svg></button><button type="button" class="ty${VW.type==="candle"?" on":""}" data-vwt="candle" aria-label="Mum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3v4M7 15v6M17 3v6M17 17v4"/><rect x="5" y="7" width="4" height="8" rx="1"/><rect x="15" y="9" width="4" height="8" rx="1"/></svg></button><button type="button" class="fs" data-vwfs aria-label="Tam ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
       <div class="vw-chw"><div class="vw-tl" id="vwTl">${vwToolsHTML()}</div><div class="vw-ch" id="vwCh"></div></div></div>
     <div class="vw-bt"><div class="vw-tabs">${[["tr",EN?"Trades":"İşlemler"],["pos",EN?"Positions":"Pozisyonlar"],["ord",EN?"Orders":"Emirler"],["ov",EN?"Overview":"Genel Bakış"],["news",EN?"News":"Haberler"],["tech",EN?"Technicals":"Teknikler"]].map(([k,l])=>`<button type="button" data-vwtab="${k}" class="${k===VW.tab?"on":""}">${l}</button>`).join("")}</div><div class="vw-sec" id="vwSide"></div></div></div>
   <div class="vw-side">${vwTrHTML(t)}</div></div>`;
@@ -4348,7 +4349,7 @@ async function vwLoadFeed(sym){const r=await sb.rpc("trade_feed",{p_symbol:sym,p
 function vwRenderLive(){const t=find(VW.sym);if(!t)return;const c=chg(t),d=t.p-t.open,el=$("vwPx");if(el)el.innerHTML=`<div class="big">${usd(t.p,t.d)}</div><div class="chg ${c>=0?"up":"down"}">${d>=0?"+":"-"}${usd(Math.abs(d),t.d)} · ${c>=0?"+":""}${fmtN(c,2)}%</div>`;
   const st_=$("vwSt");if(st_){const it=(a,b)=>`<div class="it"><span>${a}</span><b>${b}</b></div>`;st_.innerHTML=it(EN?"Market cap":"Piyasa değeri",t.mc?big(t.mc):"—")+it(EN?"24h vol":"24s hacim",t.vol?big(t.vol):"—")+it(EN?"Supply":"Arz",t.sup?big(t.sup).replace("$",""):"—")+it(EN?"24h high":"24s yüksek",t.hi24?usd(t.hi24,t.d):"—")+it(EN?"24h low":"24s düşük",t.lo24?usd(t.lo24,t.d):"—")+it("ATH",t.ath?usd(t.ath,t.d):"—")}
   const mp=$("vwMxP");if(mp)mp.textContent=usd(t.p,t.d);vwRenderChart();vwTrUpd()}
-function vwRenderChart(){const box=$("vwCh"),t=find(VW.sym);if(!box||!t||VW.scrub||VW.dg)return;let pts=vwSeries(t,VW.range);if(VW.zoom){const f=pts.filter(p=>p[0]>=VW.zoom[0]&&p[0]<=VW.zoom[1]);if(f.length>=2)pts=f}if(pts.length<2){box.innerHTML=`<div class="empty" style="padding-top:120px">${EN?"Loading chart…":"Grafik yükleniyor…"}</div>`;return}
+function vwRenderChart(){const box=$("vwCh"),t=find(VW.sym);if(!box||!t||VW.scrub||VW.dg)return;let pts=vwSeries(t,VW.range);if(pts.length>=2)VW.full=[pts[0][0],pts[pts.length-1][0]];const zb=document.querySelector("[data-vwzm=reset]");if(zb)zb.disabled=!VW.zoom;if(VW.zoom){const f=pts.filter(p=>p[0]>=VW.zoom[0]&&p[0]<=VW.zoom[1]);if(f.length>=2)pts=f}if(pts.length<2){box.innerHTML=`<div class="empty" style="padding-top:120px">${EN?"Loading chart…":"Grafik yükleniyor…"}</div>`;return}
   const W=1000,H=400,padB=22,cand=VW.type==="candle"?vwCandles(pts,Math.min(80,Math.max(24,Math.floor(pts.length/3)))):null,vals=cand?cand.flatMap(c=>[c.h,c.l]):pts.map(p=>p[1]);
   let mn=Math.min(...vals),mx=Math.max(...vals);const pad=(mx-mn)*.08||mx*.01;mn-=pad;mx+=pad;const t0=pts[0][0],t1=pts[pts.length-1][0]||t0+1,X=x=>(x-t0)/Math.max(1,t1-t0)*(W-60),Y=v=>(mx-v)/(mx-mn)*(H-padB);
   const up=pts[pts.length-1][1]>=pts[0][1],col=up?"#22c38e":"#f05252";let body="";
@@ -4404,6 +4405,29 @@ function vwDrawUp(e){if(!VW.dg)return;VW.dg=false;const k=VW.tool,tm=VW.tmp,rl=V
   if(tm&&((tm.k==="tl"||tm.k==="rc")&&(tm.a[0]!==tm.b[0]||tm.a[1]!==tm.b[1])||(tm.k==="br"&&tm.p.length>2))){vwDrLoad(VW.sym);VW.dr[VW.sym].push(tm);vwDrSave(VW.sym)}
   vwDrDone()}
 function vwDrDone(){VW.tool="cur";VW.dg=false;VW.tmp=null;vwTlUpd();vwDraw()}
+
+// ----- Elle daraltma / genişletme: fare tekeri, iki parmakla sıkıştırma, sürükleyerek kaydırma, + / − düğmeleri
+const VWP=new Map();let vwPan=null,vwPinch=null,vwHold=null,vwLast=null;
+function vwWin(){return (VW.zoom||VW.full||[0,1]).slice()}
+function vwZoomTo(a,b){const F=VW.full;if(!F)return;const fs=F[1]-F[0];if(!(fs>0))return;const span=Math.min(Math.max(b-a,fs*.04),fs);
+  if(span>=fs*.995)VW.zoom=null;else{let na=a;if(na<F[0])na=F[0];if(na+span>F[1])na=F[1]-span;VW.zoom=[na,na+span]}
+  vwRenderChart();vwTlUpd()}
+function vwZoomBy(f,frac){const [a,b]=vwWin(),span=(b-a)*f,an=a+(b-a)*frac;vwZoomTo(an-span*frac,an+span*(1-frac))}
+function vwCurDown(e){VWP.set(e.pointerId,{x:e.clientX,y:e.clientY});try{e.target.setPointerCapture(e.pointerId)}catch(_){}vwLast={clientX:e.clientX,clientY:e.clientY};
+  if(VWP.size>=2){clearTimeout(vwHold);VW.scrub=false;const c=$("vwCh");if(c)c.classList.remove("on");const [p,q]=[...VWP.values()];vwPinch={d:Math.hypot(p.x-q.x,p.y-q.y)||1,win:vwWin()};vwPan=null;return}
+  const touch=e.pointerType!=="mouse";
+  if(!VW.zoom){VW.scrub=true;vwScrub(e);return}
+  vwPan={x:e.clientX,win:vwWin(),moved:false};
+  if(touch){clearTimeout(vwHold);vwHold=setTimeout(()=>{if(vwPan&&!vwPan.moved){vwPan=null;VW.scrub=true;vwScrub(vwLast)}},320)}}
+function vwCurMove(e){if(VWP.has(e.pointerId))VWP.set(e.pointerId,{x:e.clientX,y:e.clientY});vwLast={clientX:e.clientX,clientY:e.clientY};
+  const c=$("vwCh");if(!c)return false;const r=c.getBoundingClientRect();
+  if(vwPinch&&VWP.size>=2){const [p,q]=[...VWP.values()],d=Math.hypot(p.x-q.x,p.y-q.y)||1,frac=Math.min(Math.max(((p.x+q.x)/2-r.left)/r.width,0),1),[a,b]=vwPinch.win,span=(b-a)*vwPinch.d/d,an=a+(b-a)*frac;vwZoomTo(an-span*frac,an+span*(1-frac));return true}
+  if(vwPan){const dx=e.clientX-vwPan.x;if(Math.abs(dx)>4)vwPan.moved=true;if(vwPan.moved){clearTimeout(vwHold);const [a,b]=vwPan.win,sh=-dx/r.width*(b-a);vwZoomTo(a+sh,b+sh);return true}return e.pointerType!=="mouse"}
+  return false}
+function vwCurUp(e){VWP.delete(e.pointerId);if(VWP.size<2)vwPinch=null;if(!VWP.size){vwPan=null;clearTimeout(vwHold)}}
+$("viewPage").addEventListener("wheel",e=>{const c=e.target.closest("#vwCh");if(!c||!VW.full)return;e.preventDefault();const r=c.getBoundingClientRect(),frac=Math.min(Math.max((e.clientX-r.left)/r.width,0),1),[a,b]=vwWin();
+  if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){const sh=e.deltaX/r.width*(b-a);vwZoomTo(a+sh,b+sh);return}
+  vwZoomBy(Math.exp(Math.max(-200,Math.min(200,e.deltaY))*(e.ctrlKey?.012:.0016)),frac)},{passive:false});
 function vwScrub(e){const box=$("vwCh"),G=VW.geo;if(!box||!G)return;const r=box.getBoundingClientRect(),xr=Math.min(Math.max(0,(e.clientX-r.left)/r.width),1)*G.W;
   let k=0,b=1e18;G.pts.forEach((p,i)=>{const d=Math.abs(G.X(p[0])-xr);if(d<b){b=d;k=i}});const p=G.pts[k],px=G.X(p[0])/G.W*r.width,py=G.Y(p[1])/G.H*r.height;
   box.classList.add("on");box.querySelector(".cl").style.left=px+"px";const hz=box.querySelector(".chz");hz.style.top=py+"px";const tp=box.querySelector(".tip"),t=find(VW.sym),ch=(p[1]/G.pts[0][1]-1)*100;
@@ -4431,6 +4455,7 @@ $("viewPage").addEventListener("click",e=>{const g=x=>e.target.closest(x);
   const tb=g("[data-vwtab]");if(tb){VW.tab=tb.dataset.vwtab;document.querySelectorAll("[data-vwtab]").forEach(b=>b.classList.toggle("on",b===tb));vwRenderSide();return}
   if(g("[data-vwfs]")){const cw=$("vwCw"),pg=$("viewPage");if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});return}if(pg.classList.contains("vw-max")){pg.classList.remove("vw-max");setTimeout(vwRenderChart,50);return}
     if(cw.requestFullscreen&&!/iPhone|iPad/.test(navigator.userAgent)){cw.requestFullscreen().then(()=>{try{screen.orientation.lock("landscape").catch(()=>{})}catch(_){}setTimeout(vwRenderChart,100)}).catch(()=>{pg.classList.add("vw-max");setTimeout(vwRenderChart,50)})}else{pg.classList.add("vw-max");setTimeout(vwRenderChart,50)}return}
+  const zm=g("[data-vwzm]");if(zm){const k=zm.dataset.vwzm;if(k==="reset"){VW.zoom=null;vwRenderChart();vwTlUpd()}else vwZoomBy(k==="in"?.6:1/.6,.5);return}
   const dr=g("[data-vwdr]");if(dr){const k=dr.dataset.vwdr;
     if(k==="mag")VW.mag=!VW.mag;else if(k==="del"){VW.dr[VW.sym]=[];VW.ruler=null;VW.zoom=null;vwDrSave(VW.sym);VW.tool="cur";vwRenderChart()}
     else if(k==="zm"&&VW.zoom){VW.zoom=null;VW.tool="cur";vwRenderChart()}
@@ -4455,9 +4480,9 @@ async function vwGo(){const t=find(VW.sym),err=$("vwErr");err.textContent="";trS
     r=await call("market_trade",{p_symbol:t.s,p_side:"sell",p_qty:VW.max||q>=have*.99999?have:Math.min(q,have)},"vwErr")}
   if(r.err)return;$("vwAmt").value="";VW.max=false;await loadAll();toast(`${fmtN(+r.data.qty,6)} ${t.s} ${VW.side==="buy"?(EN?"bought":"alındı"):(EN?"sold":"satıldı")}`);vwTrUpd();vwLoadFeed(t.s);if(VW.tab==="pos"||VW.tab==="ord")vwRenderSide()}
 document.addEventListener("fullscreenchange",()=>{if(!$("viewPage").hidden)setTimeout(vwRenderChart,80)});
-$("viewPage").addEventListener("pointerdown",e=>{if(!e.target.closest("#vwCh"))return;if(VW.tool!=="cur"){vwDrawDown(e);return}VW.scrub=true;try{e.target.setPointerCapture(e.pointerId)}catch(_){}vwScrub(e)});
-$("viewPage").addEventListener("pointermove",e=>{if(VW.dg){vwDrawMove(e);return}if(VW.tool!=="cur")return;if(VW.scrub||(e.pointerType==="mouse"&&e.target.closest("#vwCh")))vwScrub(e)});
-$("viewPage").addEventListener("pointerup",vwDrawUp);$("viewPage").addEventListener("pointercancel",e=>{if(VW.dg){VW.dg=false;VW.tmp=null;VW.ruler=null;vwDraw()}});
+$("viewPage").addEventListener("pointerdown",e=>{if(!e.target.closest("#vwCh"))return;if(VW.tool!=="cur"){vwDrawDown(e);return}vwCurDown(e)});
+$("viewPage").addEventListener("pointermove",e=>{if(VW.dg){vwDrawMove(e);return}if(VW.tool!=="cur")return;if(vwCurMove(e))return;if(VW.scrub||(e.pointerType==="mouse"&&e.target.closest("#vwCh")))vwScrub(e)});
+$("viewPage").addEventListener("pointerup",e=>{vwDrawUp(e);vwCurUp(e)});$("viewPage").addEventListener("pointercancel",e=>{vwCurUp(e);if(VW.dg){VW.dg=false;VW.tmp=null;VW.ruler=null;vwDraw()}});
 const vwEnd=()=>{VW.scrub=false;const b=$("vwCh");if(b)b.classList.remove("on")};$("viewPage").addEventListener("pointerup",vwEnd);$("viewPage").addEventListener("pointercancel",vwEnd);$("viewPage").addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")vwEnd()});
 addEventListener("resize",()=>{if(!$("viewPage").hidden)vwRenderChart()});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("viewPage").hidden&&!document.fullscreenElement){if($("viewPage").classList.contains("vw-max")){$("viewPage").classList.remove("vw-max");vwRenderChart()}else closeView()}});
