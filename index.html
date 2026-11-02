@@ -1223,6 +1223,19 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
 .wl-xh{display:flex;align-items:center;gap:4px;margin:2px 0 12px;font-size:19px;font-weight:800}.wl-xh button{width:34px;height:34px;display:grid;place-items:center;margin-left:-8px}.wl-xh svg{width:21px;height:21px}
 .wl-xs{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:99px;background:var(--surface2);color:var(--muted)}.wl-xs svg{width:16px;height:16px;flex:none}.wl-xs input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--fg);font-size:14px}
 .wl-xc{margin:12px 2px 2px;color:var(--muted);font-size:12px}.wl-x{display:flex;align-items:center;gap:10px;width:100%;padding:10px 0;text-align:left;color:var(--fg);border-bottom:1px solid var(--line)}.wl-x .coin{width:32px;height:32px;font-size:12px;flex:none}.wl-x .m{flex:1;min-width:0}.wl-x .m b{display:block;font-size:14px}.wl-x .m small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.wl-x .r{text-align:right}.wl-x .r b{display:block;font-size:14px;font-variant-numeric:tabular-nums}.wl-x .r .wl-c{display:inline-block;min-width:0;padding:2px 6px;margin-top:2px;font-size:11.5px}
+.wl-sc{position:relative;z-index:2}.wl-top{position:relative;z-index:2}
+.wl-splash,.wl-fl,.wl-dm{display:none}
+.wl-intro{overflow:hidden}
+.wl-intro .wl-splash{display:grid;position:fixed;inset:0;z-index:10;place-items:center;background:#07060f;animation:wlSp .3s ease 1s both}.wl-splash svg{width:92px;height:92px;animation:wlLg .9s cubic-bezier(.2,.8,.2,1) both}
+.wl-intro .wl-fl{display:block;position:fixed;inset:0;z-index:1;background:#fff}
+.wl-intro .wl-dm{display:block;position:fixed;left:-30%;right:-30%;bottom:0;height:0;z-index:1;border-radius:50% 50% 0 0/150px 150px 0 0;background:var(--bg);animation:wlDm 1.05s cubic-bezier(.3,.7,.2,1) both}
+.wl-intro .wl-dm.a{background:color-mix(in srgb,var(--accent) 16%,#fff);animation-delay:1.2s}.wl-intro .wl-dm.b{animation-delay:1.36s}
+.wl-intro .wl-ph{animation:wlUp 1.05s cubic-bezier(.2,.8,.2,1) 1.25s both}
+.wl-intro .wl-h,.wl-intro .wl-s{animation:wlIn .75s ease 1.85s both}
+@keyframes wlSp{to{opacity:0;visibility:hidden}}@keyframes wlLg{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:none}}
+@keyframes wlDm{from{height:0}to{height:170vh}}@keyframes wlUp{from{opacity:0;transform:translateY(110px)}to{opacity:1;transform:none}}
+@keyframes wlIn{from{opacity:0;transform:translateY(14px) scale(.97);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){.wl-intro .wl-splash,.wl-intro .wl-fl,.wl-intro .wl-dm{display:none}.wl-intro .wl-ph,.wl-intro .wl-h,.wl-intro .wl-s{animation:none}}
 .auth-back{position:absolute;left:12px;top:calc(10px + env(safe-area-inset-top,0px));width:40px;height:40px;display:grid;place-items:center;color:var(--text);z-index:2}.auth-back svg{width:24px;height:24px}.auth-back[hidden]{display:none}
 @media (min-width:900px){.wl-sc{max-width:520px}}
 /* Geniş ve ultra geniş monitörler (27–34 inç, 2560x1440 / 3440x1440 / 3840x2160): arayüz büyütülür, içerik genişler */
@@ -1375,6 +1388,7 @@ nav.bar button svg{width:22px;height:22px}
 <body class="v-home">
 <div class="boot" id="boot">Yükleniyor…</div>
 <div class="wl" id="welcome" hidden>
+  <div class="wl-splash" id="wlSplash" aria-hidden="true"></div><div class="wl-fl" aria-hidden="true"></div><div class="wl-dm a" aria-hidden="true"></div><div class="wl-dm b" aria-hidden="true"></div>
   <div class="wl-sc" id="wlHome">
     <div class="wl-top"><span class="wl-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg>COINFORCE</span></div>
     <h1 class="wl-h" id="wlH"></h1><p class="wl-s" id="wlS"></p>
@@ -4912,7 +4926,10 @@ function wlExplore(){const q=WLX.trim().toLowerCase();let L=wlLive().sort((a,b)=
 function wlNav(on){const sv=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`,I={home:sv('<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/>'),exp:sv('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'),tr:sv('<path d="M4 8h15M15 4l4 4-4 4M20 16H5M9 12l-4 4 4 4"/>'),orb:sv('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/>'),as:sv('<path d="M12 3a9 9 0 1 0 9 9h-9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/>')};
   $("wlNv").innerHTML=`<button type="button" data-wl="home" class="${on==="home"?"on":""}">${I.home}COINFORCE</button><button type="button" data-wl="explore" class="${on==="explore"?"on":""}">${I.exp}${EN?"Explore":"Keşfet"}</button><button type="button" class="tr" data-wl="signup"><i>${I.tr}</i>Trade</button><button type="button" data-wl="signup">${I.orb}Orbit</button><button type="button" data-wl="signup">${I.as}${EN?"Assets":"Varlıklar"}</button>`}
 function wlShow(v){$("wlHome").hidden=v!=="home";$("wlExp").hidden=v!=="exp";wlNav(v==="exp"?"explore":"home");if(v==="exp")wlExplore();else wlHome();$("welcome").scrollTop=0}
-function showWelcome(){const w=$("welcome");w.hidden=false;$("app").setAttribute("aria-hidden","true");$("auth").hidden=true;
+let wlIntroDone=false;
+function showWelcome(){const w=$("welcome");w.hidden=false;
+  if(!wlIntroDone&&!(matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches)){wlIntroDone=true;const lg=document.querySelector("#auth .auth-brand svg");$("wlSplash").innerHTML=lg?lg.outerHTML:"";w.classList.add("wl-intro");setTimeout(()=>w.classList.remove("wl-intro"),3000)}
+  $("app").setAttribute("aria-hidden","true");$("auth").hidden=true;
   $("wlH").textContent=EN?"A New Alternative":"Yeni Bir Alternatif";$("wlS").textContent=EN?"To Your Crypto Journey":"Kripto yolculuğun için";$("wlSr").textContent=EN?"Search":"Ara";$("wlXt").textContent=EN?"Explore":"Keşfet";$("wlXi").placeholder=EN?"Search coins":"Coin ara";
   $("wlLogin").textContent=EN?"Log in":"Giriş yap";$("wlSignup").textContent=EN?"Sign up":"Kayıt ol";
   $("wlEst").innerHTML=`${EN?"Est total value":"Tahmini toplam değer"}<i>${EN?"sample":"örnek"}</i><b>10.000,00<small>USDT</small></b><em>+ 590,00 (+%5,90) ${EN?"Today":"Bugün"}</em>`;$("wlCh").innerHTML=wlChart();$("wlRg").innerHTML=(EN?["1D","1W","1M","6M"]:["1G","1H","1A","6A"]).map((x,i)=>`<span class="${i?"":"on"}">${x}</span>`).join("");
