@@ -1456,8 +1456,8 @@ nav.bar button svg{width:22px;height:22px}
 .ad-tx{width:100%;max-width:440px}
 .ad-sc.on .ad-tx{animation:adUp .6s cubic-bezier(.2,.8,.2,1) both}
 .ad-eb{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13px;color:rgba(244,242,255,.8)}
-.ad-eb::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--a2);box-shadow:0 0 10px var(--a2)}
-.ad-eb em{font-style:normal;font-size:11px;font-weight:700;color:#0b0a17;background:var(--a2);padding:2px 7px;border-radius:999px}
+.ad-eb::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--a3,var(--a2));box-shadow:0 0 10px var(--a3,var(--a2))}
+.ad-eb em{font-style:normal;font-size:11px;font-weight:700;color:#0b0a17;background:var(--a3,var(--a2));padding:2px 7px;border-radius:999px}
 .ad-h{font-family:var(--display);font-weight:800;font-size:clamp(25px,7.4vw,36px);line-height:1.1;letter-spacing:-.02em;margin:12px auto 0;max-width:14ch;text-wrap:balance}
 .ad-p{margin:10px auto 0;max-width:34ch;font-size:15px;line-height:1.45;color:rgba(244,242,255,.68)}
 .ad-hero{flex:1;width:100%;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:14px 0}
@@ -1530,6 +1530,142 @@ nav.bar button svg{width:22px;height:22px}
 .ad-tl b{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#b58cff,#5de0c5)}
 .ad-sc.on .ad-tl b{animation:adBar 3.2s .2s linear forwards}
 @keyframes adBar{to{width:100%}}
+/* 4-7: Web3 cüzdan, Grid Bot, CF Auction, Davet. Kahraman alanı em ile çizilir; yazı boyu kalan alana göre küçülür (kapsayıcı birimleri). */
+.ad-w3{--a1:#2ee59d;--a2:#a6f7d0;--a3:#2ee59d;--bgi:radial-gradient(120% 70% at 50% 50%,#0f3325 0%,#05120d 58%,#030a07 100%)}
+.ad-gb{--a1:#38d9ff;--a2:#b8f1ff;--a3:#38d9ff;--bgi:linear-gradient(rgba(56,217,255,.05) 1px,transparent 1px) 0 0/26px 26px,linear-gradient(90deg,rgba(56,217,255,.05) 1px,transparent 1px) 0 0/26px 26px,radial-gradient(120% 70% at 50% 52%,#0c2742 0%,#06111f 58%,#040a13 100%)}
+.ad-au{--a1:#f4c55c;--a2:#ffe7a8;--a3:#f4c55c;--bgi:radial-gradient(120% 70% at 50% 52%,#2b1e07 0%,#120c04 58%,#080603 100%)}
+.ad-rf{--a1:#ff6b8b;--a2:#ffb07a;--a3:#ff6b8b;--bgi:radial-gradient(120% 70% at 50% 50%,#3d1024 0%,#1a0811 58%,#0d0509 100%)}
+.ad-fit{flex:1;min-height:0;width:100%;container-type:size;display:flex;align-items:center;justify-content:center}
+.ad-k{--kh:24;--kw:22;position:relative;font-size:16px;font-size:min(16px,calc(100cqh / var(--kh)),calc(100cqw / var(--kw)));line-height:1.3;display:flex;flex-direction:column;align-items:center;gap:.75em}
+.ad-k .coin{width:100%;height:100%;font-size:.6em}
+.ad-gl{position:absolute;left:50%;top:42%;width:21em;height:21em;margin:-10.5em 0 0 -10.5em;border-radius:50%;background:radial-gradient(circle,var(--g),transparent 68%);pointer-events:none}
+@keyframes adIn{from{opacity:0;transform:translateY(1.25em)}to{opacity:1;transform:none}}
+@keyframes adPop2{from{opacity:0;transform:scale(.55)}to{opacity:1;transform:none}}
+@keyframes adFade2{from{opacity:0}to{opacity:1}}
+@keyframes adBlink{50%{opacity:.3}}
+@keyframes adSun{from{opacity:.35;transform:translateY(24px)}to{opacity:1;transform:none}}
+.ad-w3h{--kh:23.5;--kw:20.5;--g:rgba(46,229,157,.22)}
+.ad-w3c,.ad-w3t{position:relative;width:19.875em;box-sizing:border-box;text-align:left}
+.ad-w3c{padding:1em 1em .875em;border-radius:1.375em;background:linear-gradient(165deg,rgba(46,229,157,.15),rgba(46,229,157,.04) 60%);border:1px solid rgba(46,229,157,.3);box-shadow:0 1.75em 3.75em -1.75em rgba(0,0,0,.9)}
+.ad-w3c .hd,.ad-w3t{display:flex;align-items:center;gap:.625em}
+.ad-w3c .ic{width:2.25em;height:2.25em;flex:none;border-radius:.75em;background:rgba(46,229,157,.16);color:#2ee59d;display:grid;place-items:center}
+.ad-w3c .ic svg{width:1.2em;height:1.2em}
+.ad-w3c .tt,.ad-w3t .tt{flex:1;min-width:0;display:flex;flex-direction:column;gap:.125em}
+.ad-w3c .tt b,.ad-w3t .tt b{font-size:.875em;font-weight:700}
+.ad-w3c .tt small,.ad-w3t .tt small{font-size:.75em;color:rgba(236,255,246,.7)}
+.ad-w3c .lk{width:1.875em;height:1.875em;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.14);color:rgba(236,255,246,.85);display:grid;place-items:center}
+.ad-w3c .lk svg{width:.95em;height:.95em}
+.ad-w3c .gr{margin-top:.875em;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.4375em}
+.ad-w3c .gr span{height:2em;box-sizing:border-box;padding:0 .5625em;border-radius:.625em;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:.375em}
+.ad-w3c .gr em{font-style:normal;font-size:.75em;min-width:1.2em;color:rgba(236,255,246,.55);font-variant-numeric:tabular-nums}
+.ad-w3c .gr b{font-size:.75em;font-weight:600;letter-spacing:.17em;color:rgba(236,255,246,.85)}
+.ad-w3c .sh{margin-top:.75em;display:flex;align-items:center;gap:.45em;color:#2ee59d}
+.ad-w3c .sh svg{width:.95em;height:.95em;flex:none}
+.ad-w3c .sh span{font-size:.75em;font-weight:600}
+.ad-w3t{gap:.75em;padding:.75em .875em;border-radius:1.125em;background:rgba(3,10,7,.78);border:1px solid rgba(255,255,255,.1)}
+.ad-w3t .pr{position:relative;width:3.25em;height:2em;flex:none}
+.ad-w3t .pr i{position:absolute;top:0;left:0;width:2em;height:2em;border-radius:50%;box-shadow:0 0 0 2px #05120d}
+.ad-w3t .pr i+i{left:1.25em}
+.ad-w3t .ok{width:1.625em;height:1.625em;flex:none;border-radius:50%;background:#2ee59d;color:#04130d;display:grid;place-items:center}
+.ad-w3t .ok svg{width:.95em;height:.95em}
+.ad-w3n{display:grid;grid-template-columns:repeat(2,auto);justify-content:center;gap:.375em}
+.ad-w3n>span{display:flex;align-items:center;justify-content:center;gap:.4em;height:1.875em;box-sizing:border-box;padding:0 .7em 0 .375em;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+.ad-w3n i,.ad-w3n .bs{display:block;width:1.25em;height:1.25em;flex:none}
+.ad-w3n .bs{border-radius:.22em}
+.ad-w3n b{font-size:.75em;font-weight:700}
+.ad-sc.on .ad-w3c{animation:adIn .65s .05s cubic-bezier(.2,.8,.2,1) both}
+.ad-sc.on .ad-w3c .gr span{animation:adPop2 .35s calc(var(--i) * 45ms + .45s) cubic-bezier(.2,1.4,.4,1) both}
+.ad-sc.on .ad-w3t{animation:adIn .55s 1s cubic-bezier(.2,.8,.2,1) both}
+.ad-sc.on .ad-w3n>span{animation:adPop2 .4s calc(var(--i) * 80ms + 1.25s) cubic-bezier(.2,1.4,.4,1) both}
+@container (max-height:340px){.ad-w3h{--kh:20.6}.ad-w3n{display:none}}
+.ad-gbh{--kh:26;--kw:22.25;--g:rgba(56,217,255,.16);gap:.625em}
+.ad-gbp{position:relative;width:21.875em;box-sizing:border-box;padding:.875em .875em .5em;border-radius:1.375em;background:rgba(5,14,26,.88);border:1px solid rgba(56,217,255,.24);box-shadow:0 1.75em 3.75em -1.875em rgba(0,0,0,.9);text-align:left}
+.ad-gbp .hd{display:flex;align-items:center;gap:.5625em}
+.ad-gbp .hd>i{display:block;width:1.75em;height:1.75em;flex:none}
+.ad-gbp .tt{flex:1;min-width:0;display:flex;flex-direction:column;gap:.0625em}
+.ad-gbp .tt b{font-size:.875em;font-weight:700}
+.ad-gbp .tt small{font-size:.72em;color:rgba(234,248,255,.68)}
+.ad-gbp .run{flex:none;display:inline-flex;align-items:center;gap:.375em;height:1.625em;padding:0 .625em;border-radius:999px;background:rgba(56,217,255,.12);color:#38d9ff}
+.ad-gbp .run::before{content:"";width:.375em;height:.375em;border-radius:50%;background:#38d9ff;box-shadow:0 0 .5em #38d9ff;animation:adBlink 1.6s ease-in-out infinite}
+.ad-gbp .run span{font-size:.75em;font-weight:700}
+.ad-gbp svg{display:block;width:100%;height:auto;margin-top:.625em;overflow:visible}
+.ad-gbp .mk{transform-box:fill-box;transform-origin:center}
+.ad-sc.on .ad-gbp .mk{animation:adPop2 .35s cubic-bezier(.2,1.5,.4,1) both}
+.ad-gbl{margin-top:.375em;border-top:1px solid rgba(255,255,255,.08)}
+.ad-gbl>div{height:2.125em;display:flex;align-items:center;gap:.625em}
+.ad-gbl>div+div{border-top:1px solid rgba(255,255,255,.06)}
+.ad-gbl .d{display:block;width:.625em;height:.625em;flex:none;box-sizing:border-box;border-radius:50%;background:#38d9ff}
+.ad-gbl .d.s{background:none;border:.16em solid #c8ff5a}
+.ad-gbl b{min-width:2.3em;font-size:.8125em;font-weight:700}
+.ad-gbl span{flex:1;font-size:.8125em;color:rgba(234,248,255,.7)}
+.ad-gbl strong{font-size:.8125em;font-weight:700;font-variant-numeric:tabular-nums}
+.ad-gbl em{font-style:normal;font-size:.75em;font-weight:800;color:#c8ff5a;background:rgba(200,255,90,.12);padding:.2em .6em;border-radius:999px;font-variant-numeric:tabular-nums}
+.ad-gbf{width:21.875em;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5em}
+.ad-gbf>div{box-sizing:border-box;padding:.5em .625em;border-radius:.875em;background:rgba(56,217,255,.07);border:1px solid rgba(56,217,255,.18);display:flex;flex-direction:column;gap:.125em;text-align:left}
+.ad-gbf small{font-size:.6875em;color:rgba(234,248,255,.68)}
+.ad-gbf b{font-size:.875em;font-weight:700;font-variant-numeric:tabular-nums}
+.ad-sc.on .ad-gbp{animation:adIn .6s .05s cubic-bezier(.2,.8,.2,1) both}
+.ad-sc.on .ad-gbl>div{animation:adIn .45s calc(var(--i) * .3s + 1.6s) cubic-bezier(.2,.8,.2,1) both}
+.ad-sc.on .ad-gbf{animation:adIn .5s .25s cubic-bezier(.2,.8,.2,1) both}
+@container (max-height:370px){.ad-gbh{--kh:22}.ad-gbf{display:none}}
+@container (max-height:300px){.ad-gbh{--kh:17.6}.ad-gbl{display:none}}
+.ad-auh{--kh:25;--kw:20;--g:rgba(244,197,92,.2)}
+.ad-auc{position:relative;width:19em;box-sizing:border-box;padding:.625em;border-radius:1.5em;background:linear-gradient(170deg,rgba(244,197,92,.17),rgba(244,197,92,.04) 55%);border:1px solid rgba(244,197,92,.38);box-shadow:0 1.875em 4.375em -1.875em rgba(0,0,0,.95);text-align:left}
+.ad-aua{position:relative;border-radius:1em;overflow:hidden;background:#140d03}
+.ad-aua svg{display:block;width:100%;height:auto}
+.ad-aua .sun{transform-box:fill-box;transform-origin:center}
+.ad-sc.on .ad-aua .sun{animation:adSun 1.4s .2s cubic-bezier(.2,.8,.2,1) both}
+.ad-aua .tg{position:absolute;top:.625em;display:inline-flex;align-items:center;gap:.375em;height:1.5em;padding:0 .5625em;border-radius:999px;background:rgba(12,8,3,.72);color:#fff6e3}
+.ad-aua .tg span{font-size:.72em;font-weight:700}
+.ad-aua .tg.l{left:.625em}
+.ad-aua .tg.l::before{content:"";width:.4375em;height:.4375em;border-radius:50%;background:#ff6b5e;box-shadow:0 0 .5em #ff6b5e;animation:adBlink 1.4s ease-in-out infinite}
+.ad-aua .tg.r{right:.625em;color:#ffe7a8}
+.ad-aum{margin-top:.625em;padding:0 .25em;display:flex;align-items:center;justify-content:space-between;gap:.625em}
+.ad-aum .tt{display:flex;flex-direction:column;gap:.125em}
+.ad-aum .tt b{font-size:1em;font-weight:700}
+.ad-aum .tt small{font-size:.75em;color:rgba(255,246,227,.68)}
+.ad-aum .bd{display:flex;align-items:center;gap:.5em}
+.ad-aum .av{position:relative;width:3.7em;height:1.5em}
+.ad-aum .av span{position:absolute;top:0;left:0;width:1.5em;height:1.5em;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 2px #1c1306}
+.ad-aum .av span+span{left:1.1em}
+.ad-aum .av span+span+span{left:2.2em}
+.ad-aum .av b{font-size:.6875em;font-weight:800}
+.ad-aum .bd>small{font-size:.75em;font-weight:600;color:rgba(255,246,227,.74)}
+.ad-aug{margin-top:.625em;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5em}
+.ad-aug>div{box-sizing:border-box;padding:.5625em .6875em;border-radius:.875em;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;gap:.25em}
+.ad-aug>div+div{background:rgba(244,197,92,.12);border-color:rgba(244,197,92,.32)}
+.ad-aug small{font-size:.6875em;color:rgba(255,246,227,.72)}
+.ad-aug b{display:flex;align-items:center;gap:.3em;font-family:var(--display);font-weight:700;font-size:1em;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.ad-aug>div+div b{color:#f4c55c}
+.ad-aug img{width:1.1em;height:1.1em;border-radius:50%;flex:none}
+.ad-auc2{display:inline-flex;align-items:center;gap:.5625em;height:2.125em;box-sizing:border-box;padding:0 .875em 0 .375em;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+.ad-auc2 img{width:1.5em;height:1.5em;border-radius:50%;flex:none}
+.ad-auc2 span{font-size:.78em;font-weight:600;color:rgba(255,246,227,.86)}
+.ad-sc.on .ad-auc{animation:adIn .65s .05s cubic-bezier(.2,.8,.2,1) both}
+.ad-sc.on .ad-auc2{animation:adIn .5s .9s cubic-bezier(.2,.8,.2,1) both}
+@container (max-height:375px){.ad-auh{--kh:22.4}.ad-auc2{display:none}}
+.ad-rfh{--kh:23;--kw:21;gap:.875em}
+.ad-rfo{position:relative;width:20.625em;height:18.75em;flex:none}
+.ad-rfo svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ad-rfc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.125em}
+.ad-rfc b{font-family:var(--display);font-weight:800;font-size:3.125em;line-height:1;letter-spacing:-.03em;text-shadow:0 0 .55em rgba(255,107,139,.55);font-variant-numeric:tabular-nums}
+.ad-rfc small{margin-top:.5em;font-size:.75em;color:rgba(255,240,244,.76)}
+.ad-rfc span{font-size:.75em;font-weight:700;color:#ffb07a}
+.ad-rfo .fr{position:absolute;width:3em;height:3em;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 3px #1a0811,0 .625em 1.5em -.5em rgba(0,0,0,.7)}
+.ad-rfo .fr b{font-size:1.0625em;font-weight:800}
+.ad-rfo .pl{position:absolute;width:4em;height:1.375em;border-radius:999px;background:rgba(255,107,139,.18);color:#ffc2cf;display:grid;place-items:center}
+.ad-rfo .pl b{font-size:.72em;font-weight:800;font-variant-numeric:tabular-nums}
+.ad-sc.on .ad-rfo .fr{animation:adPop2 .45s calc(var(--i) * 120ms + .5s) cubic-bezier(.2,1.5,.4,1) both}
+.ad-sc.on .ad-rfo .cn{animation:adFade2 .5s 1s both}
+.ad-sc.on .ad-rfo .pl{animation:adPop2 .45s calc(var(--i) * 120ms + 1.15s) cubic-bezier(.2,1.5,.4,1) both}
+.ad-rfl{width:20.625em;height:3em;box-sizing:border-box;display:flex;align-items:center;gap:.625em;padding:0 .375em 0 .875em;border-radius:.875em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);text-align:left}
+.ad-rfl>svg{width:1em;height:1em;flex:none;color:rgba(255,240,244,.7)}
+.ad-rfl span{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:.8125em;color:rgba(255,240,244,.8)}
+.ad-rfl span b{color:#fff0f4;font-weight:700}
+.ad-rfl i{width:2.25em;height:2.25em;flex:none;border-radius:.625em;background:rgba(255,107,139,.18);color:#ffc2cf;display:grid;place-items:center}
+.ad-rfl i svg{width:1em;height:1em}
+.ad-sc.on .ad-rfl{animation:adIn .5s 1.5s cubic-bezier(.2,.8,.2,1) both}
+@container (max-height:345px){.ad-rfh{--kh:19.4}.ad-rfl{display:none}}
 @media (max-height:700px){.ad-chips{display:none}}
 @media (max-height:600px){.ad-p{display:none}}
 @media (prefers-reduced-motion:reduce){
@@ -5920,15 +6056,29 @@ const ADS=[
    cta:["FOREVER'ı aç","Open FOREVER"],hero:adHeroFv,act:()=>{if(find("FOREVER")){prev=view;go("detail","FOREVER")}}},
   {k:"pf",eb:["Portfolyo videosu","Portfolio video"],nw:1,h:["Büyük kazançlarını video yap","Turn big wins into a video"],
    p:["10.000 $ ve üzeri kârların hızlandırılmış grafikte, hikâye boyutunda. Tek dokunuşla paylaş.","Your $10K+ profits on a sped-up chart in story size. Share in one tap."],
-   cta:["Portfolyonu aç","Open your portfolio"],hero:adHeroPf,act:()=>openPf("me")}
+   cta:["Portfolyonu aç","Open your portfolio"],hero:adHeroPf,act:()=>openPf("me")},
+  {k:"w3",nw:1,eb:["Web3 cüzdan","Web3 wallet"],h:["Anahtarı sende olan cüzdan","Your keys, your wallet"],
+   p:["Solana ve EVM ağlarında kendi cüzdanını oluştur. Gönder, al ve doğrudan cüzdanından takas yap.","Create your own wallet on Solana and EVM networks. Send, receive and swap right from your wallet."],
+   cta:["Cüzdanını oluştur","Create your wallet"],hero:adHeroW3,act:adGoW3,
+   disc:["Zincir üstü işlemler gerçek varlıklarla yapılır ve geri alınamaz.","On-chain transactions use real assets and can't be reversed."]},
+  {k:"gb",eb:["Grid Bot","Grid Bot"],h:["Yatay piyasada bot çalışsın","Let a bot trade the range"],
+   p:["Alt ve üst fiyatı seç. Bot fiyat her basamak düştüğünde alır, bir basamak yukarıda satar.","Pick a low and a high price. The bot buys each time the price drops a level and sells one level higher."],
+   cta:["Grid Bot kur","Set up Grid Bot"],hero:adHeroGb,act:()=>openSheet("grid")},
+  {k:"au",eb:["CF Auction","CF Auction"],h:["Son teklif senin olsun","Make the last bid yours"],
+   p:["Nadir dijital varlıklar canlı açık artırmada. CF Token ile teklif ver, süre bitmeden zirvede kal.","Rare digital assets in live auctions. Bid with CF Token and stay on top before time runs out."],
+   cta:["CF Auction'a gir","Enter CF Auction"],hero:adHeroAu,act:()=>go("auction")},
+  {k:"rf",eb:["Davet programı","Referral program"],h:["Davet ettikçe kazan","Earn as you invite"],
+   p:["Davet linkini paylaş. Arkadaşlarının ödediği işlem ücretlerinin %25'i senin olsun.","Share your invite link. Get 25% of the trading fees your friends pay."],
+   cta:["Davet linkini paylaş","Share your invite link"],hero:adHeroRf,act:()=>openSheet("rewards")}
 ];
 let AD=null;
 function adLogo(i){const g=document.querySelector("#auth .auth-brand svg");return g?g.outerHTML.replace(/id="([^"]+)"/g,`id="$1Ad${i}"`).replace(/url\(#([^)]+)\)/g,`url(#$1Ad${i})`):""}
-const AD_SYMS=["SOL","BONK","WIF","TRUMP","PENGU","FOREVER","BTC","ETH","HYPE","PAXG"];
+const AD_SYMS=["SOL","BONK","WIF","TRUMP","PENGU","FOREVER","BTC","ETH","HYPE","PAXG","BNB"];
 function adLogoLoad(){try{const o=JSON.parse(localStorage.getItem("cf_adlogos")||"{}");return o&&typeof o==="object"?o:{}}catch(e){return{}}}
 function adLogoSave(){try{const o=adLogoLoad();let ch=0;AD_SYMS.forEach(s=>{const t=find(s),u=t&&t.img&&/^https:\/\//.test(t.img)?t.img:"";if(u&&o[s]!==u){o[s]=u;ch=1}});if(ch)localStorage.setItem("cf_adlogos",JSON.stringify(o))}catch(e){}}
-function adCoin(s){const t=find(s);if(t&&t.img)return t;const u=adLogoLoad()[s]||(s==="FOREVER"?"coins/forever.png":"");return Object.assign({s,n:s,c:"#3b2f73"},t||{},{img:u})}
-function adPreload(){const o=adLogoLoad();AD_SYMS.forEach(s=>{const u=o[s]||(s==="FOREVER"?"coins/forever.png":"");if(u){const i=new Image();i.decoding="async";i.referrerPolicy="no-referrer";i.src=u}})}
+function adCoin(s){const t=find(s);if(t&&t.img)return t;const u=adLogoLoad()[s]||(s==="FOREVER"?"coins/forever.png":s==="USDC"?W3USDC:"");return Object.assign({s,n:s,c:s==="USDC"?"#2775ca":"#3b2f73"},t||{},{img:u})}
+const adC=s=>`<i data-adc="${s}">${coinHTML(adCoin(s),"adc").replace('loading="lazy"','loading="eager"')}</i>`;
+function adPreload(){const o=adLogoLoad();AD_SYMS.forEach(s=>{const u=o[s]||(s==="FOREVER"?"coins/forever.png":"");if(u){const i=new Image();i.decoding="async";i.referrerPolicy="no-referrer";i.src=u}});["coins/base.png","cf-token.svg?v=1",W3USDC].forEach(u=>{const i=new Image();i.decoding="async";i.referrerPolicy="no-referrer";i.src=u})}
 function adOrbit(){return["SOL","BONK","WIF","TRUMP","PENGU","FOREVER"].map((s,i)=>`<div style="--r:${i*60}deg"><span><i data-adc="${s}">${coinHTML(adCoin(s),"adc").replace('loading="lazy"','loading="eager"')}</i></span></div>`).join("")}
 function adHeroFomo(){const T3=EN?["$100K → $500","$500K → $5,000","$1M → $10,000"]:["$100 bin → $500","$500 bin → $5.000","$1 milyon → $10.000"];
   return `<div class="ad-orb"><svg viewBox="0 0 200 200"><defs><linearGradient id="adRg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9945ff"/><stop offset="1" stop-color="#14f195"/></linearGradient></defs><circle cx="100" cy="100" r="84" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="12"/><circle class="ad-ring" cx="100" cy="100" r="84" fill="none" stroke="url(#adRg)" stroke-width="12" stroke-linecap="round" pathLength="100" transform="rotate(-90 100 100)"/></svg>
@@ -5945,11 +6095,66 @@ function adHeroPf(){const pts=[[0,82],[18,74],[34,78],[50,60],[66,66],[82,46],[9
     <svg viewBox="0 0 200 100" preserveAspectRatio="none"><defs><linearGradient id="adPa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b58cff" stop-opacity=".45"/><stop offset="1" stop-color="#b58cff" stop-opacity="0"/></linearGradient><linearGradient id="adPl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b58cff"/><stop offset="1" stop-color="#5de0c5"/></linearGradient></defs>
     <path class="ad-ar" d="${d} L200 100 L0 100 Z" fill="url(#adPa)"/><path class="ad-ln" d="${d}" fill="none" stroke="url(#adPl)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" pathLength="100"/></svg>
     <span class="ad-st s1" style="left:14%;top:47%">BTC +$25.000</span><span class="ad-st s2" style="right:7%;top:30%">SOL +$12.000</span><div class="ad-tl"><b></b></div></div>`}
+const ADI={key:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4"/><path d="M10.5 12.5L20 3M16 7l3 3M13.5 9.5l2 2"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  link:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg>',
+  copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>'};
+function adHeroW3(){const L=(a,b)=>EN?b:a,d=[5,7,4,6,5,6,4,7,5,4,6,5];
+  return `<div class="ad-fit"><div class="ad-k ad-w3h"><i class="ad-gl"></i>
+    <div class="ad-w3c"><div class="hd"><span class="ic">${ADI.key}</span><span class="tt"><b>${L("Kurtarma ifaden","Recovery phrase")}</b><small>${L("12 kelime, yalnızca senin cihazında","12 words, only on your device")}</small></span><span class="lk">${ADI.lock}</span></div>
+    <div class="gr">${d.map((n,i)=>`<span style="--i:${i}"><em>${i+1}</em><b>${"•".repeat(n)}</b></span>`).join("")}</div>
+    <div class="sh">${ADI.shield}<span>${L("Şifreli saklanır, hiçbir sunucuya gitmez","Encrypted, never sent to any server")}</span></div></div>
+    <div class="ad-w3t"><span class="pr">${adC("SOL")}${adC("USDC")}</span><span class="tt"><b>${L("SOL'den USDC'ye takas","Swap SOL to USDC")}</b><small>${L("İmzadan önce simüle edildi","Simulated before you sign")}</small></span><span class="ok">${ADI.check}</span></div>
+    <div class="ad-w3n">${[["SOL","Solana"],["ETH","Ethereum"],["BNB","BNB Chain"]].map(([s,n],i)=>`<span style="--i:${i}">${adC(s)}<b>${n}</b></span>`).join("")}<span style="--i:3"><img class="bs" src="coins/base.png" alt=""><b>Base</b></span></div>
+  </div></div>`}
+function adGoW3(){const run=()=>{w3Set({seen:1,seg:"own"});w3Open();W3.step="app";W3.tab="wallet";w3Render();if(!wkGet())wkOpen("new")};try{modeGo(MODE,"web3",run)}catch(e){run()}}
+function adHeroGb(){const L=(a,b)=>EN?b:a,lv=[15,45,75,105,135,165,195],px=[100,98,96,94,92,90,88],
+    P="M0 105 L24 135 L44 105 L64 165 L88 135 L108 75 L130 105 L152 45 L198 135 L222 105 L246 165 L268 135 L284 114",
+    mk=[[24,135,0],[44,105,1],[64,165,0],[88,135,1],[130,105,0],[141,75,1],[198,135,0],[222,105,1],[246,165,0],[268,135,1]],dl=x=>`animation-delay:${(.3+1.6*x/284).toFixed(2)}s`;
+  return `<div class="ad-fit"><div class="ad-k ad-gbh"><i class="ad-gl"></i>
+    <div class="ad-gbp"><div class="hd">${adC("SOL")}<span class="tt"><b>SOL/USDT</b><small>${L("7 basamak, $88–100 aralığı","7 levels, $88–100 range")}</small></span><span class="run"><span>${L("Bot çalışıyor","Bot running")}</span></span></div>
+    <svg viewBox="0 0 322 210" aria-hidden="true"><defs><linearGradient id="adGbA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38d9ff" stop-opacity=".24"/><stop offset="1" stop-color="#38d9ff" stop-opacity="0"/></linearGradient></defs>
+      ${lv.map((y,i)=>`<line x1="0" x2="284" y1="${y}" y2="${y}" stroke="rgba(56,217,255,.22)" stroke-dasharray="2 6"/><text x="320" y="${y+3.5}" text-anchor="end" font-size="10" fill="rgba(234,248,255,.66)">${px[i]}</text>`).join("")}
+      <path class="ad-ar" d="${P} L284 210 L0 210 Z" fill="url(#adGbA)"/><path class="ad-ln" d="${P}" pathLength="100" fill="none" stroke="#38d9ff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+      ${mk.map(m=>m[2]?`<circle class="mk" style="${dl(m[0])}" cx="${m[0]}" cy="${m[1]}" r="5" fill="#05101d" stroke="#c8ff5a" stroke-width="2.5"/>`:`<circle class="mk" style="${dl(m[0])}" cx="${m[0]}" cy="${m[1]}" r="5.5" fill="#38d9ff" stroke="#05101d" stroke-width="2"/>`).join("")}
+      <circle class="mk" style="${dl(284)}" cx="284" cy="114" r="9" fill="rgba(56,217,255,.22)"/><circle class="mk" style="${dl(284)}" cx="284" cy="114" r="4" fill="#eaf8ff"/></svg>
+    <div class="ad-gbl"><div style="--i:0"><i class="d"></i><b>${L("Al","Buy")}</b><span>${fmtN(.55,2)} SOL</span><strong>${usd(90)}</strong></div><div style="--i:1"><i class="d s"></i><b>${L("Sat","Sell")}</b><span>${fmtN(.55,2)} SOL</span><strong>${usd(92)}</strong><em>+${usd(1.1)}</em></div></div></div>
+    <div class="ad-gbf"><div><small>${L("Alt fiyat","Low price")}</small><b>${usd(88,0)}</b></div><div><small>${L("Basamak","Levels")}</small><b>7</b></div><div><small>${L("Üst fiyat","High price")}</small><b>${usd(100,0)}</b></div></div>
+  </div></div>`}
+function adHeroAu(){const L=(a,b)=>EN?b:a,cf=`<img src="cf-token.svg?v=1" alt="">`;
+  return `<div class="ad-fit"><div class="ad-k ad-auh"><i class="ad-gl"></i>
+    <div class="ad-auc"><div class="ad-aua"><svg viewBox="0 0 284 212" aria-hidden="true"><defs><linearGradient id="adAuS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1907"/><stop offset="1" stop-color="#140b03"/></linearGradient><radialGradient id="adAuN" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#fff1c9"/><stop offset=".45" stop-color="#f4c55c"/><stop offset="1" stop-color="#b9781f"/></radialGradient></defs>
+      <rect width="284" height="212" fill="url(#adAuS)"/><g fill="none"><circle cx="142" cy="124" r="112" stroke="rgba(244,197,92,.14)"/><circle cx="142" cy="124" r="96" stroke="rgba(244,197,92,.2)"/><circle cx="142" cy="124" r="80" stroke="rgba(244,197,92,.28)"/></g>
+      <circle class="sun" cx="142" cy="124" r="58" fill="url(#adAuN)"/><g fill="rgba(255,231,168,.75)"><circle cx="40" cy="34" r="1.4"/><circle cx="72" cy="58" r="1"/><circle cx="226" cy="40" r="1.5"/><circle cx="250" cy="76" r="1"/><circle cx="196" cy="22" r="1"/></g>
+      <path d="M0 142 C 50 122, 92 152, 142 138 S 232 120, 284 140 L284 212 L0 212 Z" fill="#4a2b09"/><path d="M0 142 C 50 122, 92 152, 142 138 S 232 120, 284 140" fill="none" stroke="rgba(255,231,168,.55)" stroke-width="1.2"/>
+      <path d="M0 168 C 60 152, 112 180, 172 162 S 250 154, 284 170 L284 212 L0 212 Z" fill="#2a1806"/><path d="M0 190 C 70 178, 132 202, 202 188 S 262 184, 284 194 L284 212 L0 212 Z" fill="#140b03"/></svg>
+      <span class="tg l"><span>${L("Canlı","Live")}</span></span><span class="tg r"><span>Lot 024</span></span></div>
+    <div class="ad-aum"><span class="tt"><b>${L("Gece Güneşi","Night Sun")}</b><small>${L("Dijital eser","Digital artwork")}</small></span><span class="bd"><span class="av"><span style="background:#c9b6ff;color:#1a1030"><b>A</b></span><span style="background:#9fe8d6;color:#08201a"><b>M</b></span><span style="background:#ffc6a8;color:#2a1206"><b>K</b></span></span><small>${L("18 teklif","18 bids")}</small></span></div>
+    <div class="ad-aug"><div><small>${L("Kalan süre","Time left")}</small><b data-tick="8077">02:14:37</b></div><div><small>${L("En yüksek teklif","Highest bid")}</small><b>${cf}${fmtN(1250,0)} CF</b></div></div></div>
+    <div class="ad-auc2">${cf}<span>${L("CF Token'ı USDT bakiyenle al, teklif ver","Buy CF Token with your USDT balance and bid")}</span></div>
+  </div></div>`}
+function adHeroRf(){const L=(a,b)=>EN?b:a,h=(st&&st.prof&&st.prof.handle)||"",u=location.host+location.pathname,
+    F=[["E","#ffd2dc","#3d1024",.6875,3.1875],["A","#ffe0c2","#3a1d05",16.9375,3.1875],["M","#e3d4ff","#1f1240",16.9375,12.5625],["K","#c9f2e6","#072a20",.6875,12.5625]],
+    C=[[1.2,.1875,1.25],[.85,16.4375,1.25],[2.4,16.4375,16.125],[.6,.1875,16.125]];
+  return `<div class="ad-fit"><div class="ad-k ad-rfh"><div class="ad-rfo">
+    <svg viewBox="0 0 330 300" aria-hidden="true"><defs><linearGradient id="adRfG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b8b"/><stop offset="1" stop-color="#ffb07a"/></linearGradient><radialGradient id="adRfI" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#5a1835"/><stop offset="1" stop-color="#22081a"/></radialGradient></defs>
+      <circle cx="165" cy="150" r="126" fill="none" stroke="rgba(255,107,139,.12)"/><circle cx="165" cy="150" r="104" fill="none" stroke="rgba(255,107,139,.18)"/>
+      <circle cx="165" cy="150" r="82" fill="url(#adRfI)"/><circle cx="165" cy="150" r="82" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="10"/>
+      <circle class="ad-ring" cx="165" cy="150" r="82" fill="none" stroke="url(#adRfG)" stroke-width="10" stroke-linecap="round" pathLength="100" transform="rotate(-90 165 150)"/>
+      <g class="cn" stroke="#ff8aa3" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"><line x1="58.4" y1="88.5" x2="84.4" y2="103.5"/><line x1="271.6" y1="88.5" x2="245.6" y2="103.5"/><line x1="271.6" y1="211.5" x2="245.6" y2="196.5"/><line x1="58.4" y1="211.5" x2="84.4" y2="196.5"/></g>
+      <g class="cn" fill="#ffb07a"><circle cx="84.4" cy="103.5" r="3.5"/><circle cx="245.6" cy="103.5" r="3.5"/><circle cx="245.6" cy="196.5" r="3.5"/><circle cx="84.4" cy="196.5" r="3.5"/></g></svg>
+    <div class="ad-rfc"><b data-count="25" ${EN?'data-suf="%"':'data-pre="%"'}>${EN?"25%":"%25"}</b><small>${L("işlem ücretlerinden","of trading fees")}</small><span>${L("senin payın","is your share")}</span></div>
+    ${F.map((f,i)=>`<span class="fr" style="--i:${i};left:${f[3]}em;top:${f[4]}em;background:${f[1]};color:${f[2]}"><b>${f[0]}</b></span>`).join("")}
+    ${C.map((c,i)=>`<span class="pl" style="--i:${i};left:${c[1]}em;top:${c[2]}em"><b>+${usd(c[0])}</b></span>`).join("")}</div>
+    <div class="ad-rfl">${ADI.link}<span>${esc(u)}?r=<b data-adref>${h?esc(h):"…"}</b></span><i>${ADI.copy}</i></div>
+  </div></div>`}
 function adsHTML(list){const l=EN?1:0,disc=EN?"Trading uses a virtual balance. Not investment advice.":"Sanal bakiyeyle işlem yapılır. Yatırım tavsiyesi değildir.";
   return `<div class="ad-top"><div class="ad-seg" aria-hidden="true">${list.map(()=>"<i><b></b></i>").join("")}</div><button type="button" class="ad-skip" id="adSkip" disabled aria-label="${EN?"You can skip in 3 seconds":"3 saniye sonra geçebilirsin"}"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/><circle id="adSkipR" cx="10" cy="10" r="8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" transform="rotate(-90 10 10)"/></svg><span id="adSkipT">3</span></button></div>`
-    +list.map((a,i)=>`<section class="ad-sc ad-${a.k}" data-i="${i}" aria-hidden="true"><div class="ad-tx"><div class="ad-eb">${a.eb[l]}${a.nw?`<em>${EN?"New":"Yeni"}</em>`:""}</div><h2 class="ad-h">${a.h[l]}</h2><p class="ad-p">${a.p[l]}</p></div><div class="ad-hero" aria-hidden="true">${a.hero()}</div><button type="button" class="ad-cta" data-adgo="${i}">${a.cta[l]}</button><div class="ad-ft"><div class="ad-brand">${adLogo(i)}COINFORCE</div><small>${disc}</small></div></section>`).join("")}
-function adsSlot(d){let h,m;try{const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Istanbul",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(d);h=+p.find(x=>x.type==="hour").value%24;m=+p.find(x=>x.type==="minute").value}
-  catch(e){const u=new Date(d.getTime()+3*36e5);h=u.getUTCHours();m=u.getUTCMinutes()}return Math.floor((h*60+m)/AD_SLOT)}
+    +list.map((a,i)=>`<section class="ad-sc ad-${a.k}" data-i="${i}" aria-hidden="true"><div class="ad-tx"><div class="ad-eb">${a.eb[l]}${a.nw?`<em>${EN?"New":"Yeni"}</em>`:""}</div><h2 class="ad-h">${a.h[l]}</h2><p class="ad-p">${a.p[l]}</p></div><div class="ad-hero" aria-hidden="true">${a.hero()}</div><button type="button" class="ad-cta" data-adgo="${i}">${a.cta[l]}</button><div class="ad-ft"><div class="ad-brand">${adLogo(i)}COINFORCE</div><small>${a.disc?a.disc[l]:disc}</small></div></section>`).join("")}
+function adsSlot(d){let y,mo,da,h,m;try{const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(d),g=k=>+p.find(x=>x.type===k).value;y=g("year");mo=g("month");da=g("day");h=g("hour")%24;m=g("minute")}
+  catch(e){const u=new Date(d.getTime()+3*36e5);y=u.getUTCFullYear();mo=u.getUTCMonth()+1;da=u.getUTCDate();h=u.getUTCHours();m=u.getUTCMinutes()}return Math.floor((Date.UTC(y,mo-1,da)/6e4+h*60+m)/AD_SLOT)}
 function adsPick(list,d){return list[(adsSlot(d||new Date())+2)%list.length]}
 function adsStart(){
   if(location.search.length>1||location.hash.length>1)return;
@@ -5962,11 +6167,13 @@ function adsStart(){
   AD={list,i:-1,el:0,last:performance.now(),done:false,skip:false,rm:!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)};
   adsShow(0);try{el.focus({preventScroll:true})}catch(e){}
   [800,2000,4000].forEach(ms=>setTimeout(adsFaces,ms));requestAnimationFrame(adsLoop)}
-function adsFaces(){if(!AD||AD.done)return;document.querySelectorAll("#ads [data-adc]").forEach(n=>{const t=find(n.dataset.adc);if(t&&t.img&&!n.querySelector("img"))n.innerHTML=coinHTML(t,"adc").replace('loading="lazy"','loading="eager"')})}
+function adsFaces(){if(!AD||AD.done)return;document.querySelectorAll("#ads [data-adc]").forEach(n=>{const t=find(n.dataset.adc);if(t&&t.img&&!n.querySelector("img"))n.innerHTML=coinHTML(t,"adc").replace('loading="lazy"','loading="eager"')});const hd=st&&st.prof&&st.prof.handle;if(hd)document.querySelectorAll("#ads [data-adref]").forEach(n=>{n.textContent=hd})}
 function adsShow(i){AD.i=i;document.querySelectorAll("#ads .ad-sc").forEach((s,j)=>{s.classList.toggle("on",j===i);s.setAttribute("aria-hidden",j===i?"false":"true")});
   document.querySelectorAll("#ads .ad-seg b").forEach((b,j)=>{b.style.width=j<i?"100%":"0%"});
-  const s=document.querySelector(`#ads .ad-sc[data-i="${i}"]`);if(s)s.querySelectorAll("[data-count]").forEach(adsCount)}
-function adsCount(n){const to=+n.dataset.count,pre=n.dataset.pre||"",f=v=>pre+Math.round(v).toLocaleString(LOC);
+  const s=document.querySelector(`#ads .ad-sc[data-i="${i}"]`);if(s){s.querySelectorAll("[data-count]").forEach(adsCount);s.querySelectorAll("[data-tick]").forEach(adsTick)}}
+function adsTick(n){let v=+n.dataset.tick;const f=x=>[x/3600|0,x%3600/60|0,x%60].map(y=>String(y).padStart(2,"0")).join(":");n.textContent=f(v);
+  const t=setInterval(()=>{if(!AD||AD.done||v<=0){clearInterval(t);return}n.textContent=f(--v)},1000)}
+function adsCount(n){const to=+n.dataset.count,pre=n.dataset.pre||"",suf=n.dataset.suf||"",f=v=>pre+Math.round(v).toLocaleString(LOC)+suf;
   if(AD.rm){n.textContent=f(to);return}const t0=performance.now(),dur=1200,step=t=>{if(!AD||AD.done)return;const k=Math.min(1,(t-t0)/dur);n.textContent=f(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)};n.textContent=f(0);requestAnimationFrame(step)}
 function adsLoop(t){if(!AD||AD.done)return;const dt=Math.min(100,Math.max(0,t-AD.last));AD.last=t;if(!document.hidden)AD.el+=dt;
   const i=Math.floor(AD.el/AD_DUR);if(i>=AD.list.length){adsClose();return}if(i!==AD.i)adsShow(i);
