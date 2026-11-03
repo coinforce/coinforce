@@ -1328,6 +1328,20 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
 @media (min-width:2200px){body{zoom:1.25}.app{max-width:1500px}}
 @media (min-width:3000px){body{zoom:1.6}.app{max-width:1800px}.vw-body{grid-template-columns:260px minmax(0,1fr) 400px}}
 @media (min-width:3700px){body{zoom:1.8}}
+.rev{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(5,6,12,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);overscroll-behavior:contain}
+.rev[hidden]{display:none!important}
+.rev-c{width:100%;max-width:420px;max-height:100%;overflow:auto;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:24px;padding:28px 22px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;box-shadow:var(--shadow)}
+.rev-ic{width:56px;height:56px;border-radius:18px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center}
+.rev-ic svg{width:28px;height:28px}
+.rev-c h1{margin:0;font-size:22px;line-height:1.25;font-weight:800;text-align:center;font-family:var(--display);outline:0}
+.rev-t{width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.rev-t span{font-size:12.5px;color:var(--muted)}
+.rev-t b{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--accent-2)}
+.rev-c p{margin:0;font-size:14.5px;line-height:1.6;text-align:center;color:var(--fg)}
+.rev-s{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.rev-s i{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block;animation:revPulse 1.6s ease-in-out infinite}
+@keyframes revPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+@media (prefers-reduced-motion:reduce){.rev-s i{animation:none}}
 .hold-dlg{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.6);backdrop-filter:blur(3px)}
 .hold-dlg.show{display:flex}
 .hold-box{width:100%;max-width:360px;background:var(--surface);color:var(--fg);border:1px solid rgba(255,107,107,.35);border-radius:22px;padding:24px 20px 18px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
@@ -2856,6 +2870,16 @@ nav.bar button svg{width:22px;height:22px}
 
 <div class="ptr" id="ptr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v12M6 11l6 6 6-6"/></svg></div>
 
+<div class="rev" id="revLock" role="alertdialog" aria-modal="true" aria-labelledby="revT" hidden>
+  <div class="rev-c">
+    <div class="rev-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v5c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-3z"/><path d="M12 8v4.5"/><circle cx="12" cy="15.5" r=".6" fill="currentColor"/></svg></div>
+    <h1 id="revT" tabindex="-1">Hesap Değerlendirme Süreci</h1>
+    <div class="rev-t"><span id="revEl0">Hesap açılışından bu yana geçen süre</span><b id="revEl">—</b></div>
+    <p id="revTx">Sayın kullanıcımız, hesabınızın açıldığı tarihten itibaren 14 gün dolmadan 1.000 $ üzerinde alım-satım işlemi gerçekleştirdiğiniz tespit edilmiştir. Bu nedenle hesabınız değerlendirme sürecine alınmıştır. Değerlendirme tamamlandığında hesabınızdaki bakiyenin tamamı, tutarı ne olursa olsun, en kısa sürede çekilebilir duruma getirilecektir.</p>
+    <div class="rev-s"><i></i><span id="revSt">Değerlendirme süreci devam etmektedir</span></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"><i></i><span id="toastT"></span></div>
 
 <script>
@@ -3380,7 +3404,7 @@ $("addBtn").onclick=()=>busy($("addBtn"),async()=>{const h=$("addHandle").value.
 
 // ---------- server helpers
 function errText(e){const m=(e&&(e.message||e.error_description))||"";if(/fetch|network/i.test(m))return "Sunucuya ulaşılamadı. İnternet bağlantını kontrol et.";if(/rate limit|too many|only request this after/i.test(m))return "Kısa sürede çok fazla doğrulama e-postası istendi. Biraz bekleyip tekrar dene.";if(/not authorized/i.test(m)&&/email/i.test(m))return "Doğrulama e-postası bu adrese gönderilemedi. E-posta servisi henüz tüm adreslere açık değil; destekle iletişime geç.";if(/error sending (confirmation|recovery|magic)|sending.*email/i.test(m))return "Doğrulama e-postası gönderilemedi. Biraz sonra tekrar dene.";if(/signups? (not allowed|disabled)/i.test(m))return "Yeni kayıtlar şu an kapalı.";return m||"Bir hata oluştu, tekrar dene."}
-async function call(fn,args,errId){const {data,error}=await sb.rpc(fn,args||{});if(error){const m=errText(error);if(errId)$(errId).textContent=m;else toast(m);if(/^(Bu hesapta çekim ve gönderim|Withdrawals and transfers on this account)/.test(m))holdAlert(m);return{err:m}}return{data}}
+async function call(fn,args,errId){const {data,error}=await sb.rpc(fn,args||{});if(error){const m=errText(error);if(errId)$(errId).textContent=m;else toast(m);if(/^(Bu hesapta çekim ve gönderim|Withdrawals and transfers on this account)/.test(m))holdAlert(m);if(/değerlendirme sürecinde/.test(m))revPeek();return{err:m}}return{data}}
 function holdAlert(m){let d=$("holdDlg");if(!d){d=document.createElement("div");d.id="holdDlg";d.className="hold-dlg";d.setAttribute("role","alertdialog");d.setAttribute("aria-modal","true");
   d.innerHTML=`<div class="hold-box"><div class="hold-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><h3>İşlem durduruldu</h3><p id="holdMsg"></p><button type="button" class="btn btn-accent full" id="holdOk">Tamam</button></div>`;
   document.body.appendChild(d);d.addEventListener("click",e=>{if(e.target===d||e.target.id==="holdOk")d.classList.remove("show")})}
@@ -4914,7 +4938,7 @@ function renderKyc(){const k=KYC||{},s=k.status||"none",e=$("setKycVal");if(e)e.
   if(s==="approved")body=`<div class="kyc-ok">✅ ${kycT("Kimliğin doğrulandı.","Your identity is verified.")}${k.bonus_given?`<br><small>${kycT("5.000 USDT işlem hacmi hesabına eklendi.","5,000 USDT of trading volume was added.")}</small>`:""}</div>`;
   else if(s==="pending")body=`<div class="kyc-wait">⏳ ${kycT("Belgelerin inceleniyor. Sonuç bildirim olarak gelecek.","Your documents are being reviewed. You'll get a notification.")}</div>`;
   else body=(s==="rejected"?`<div class="kyc-no">${kycT("Önceki talebin reddedildi","Your previous request was rejected")}: ${esc(k.reason||"")}</div>`:"")+kycForm(k);
-  const adm=st.admin?`<button type="button" class="xf-admin" id="kycAdmin">${kycT("Bekleyen kimlik talepleri (yönetici)","Pending verifications (admin)")}<span>›</span></button><div id="kycAdm"></div>`:"";
+  const adm=st.admin?`<button type="button" class="xf-admin" id="kycAdmin">${kycT("Bekleyen kimlik talepleri (yönetici)","Pending verifications (admin)")}<span>›</span></button><div id="kycAdm"></div><button type="button" class="xf-admin" id="revAdmin">${EN?"Accounts under review (admin)":"Değerlendirmedeki hesaplar (yönetici)"}<span>›</span></button><div id="revAdm"></div>`:"";
   $("kycBody").innerHTML=head+body+adm+`<div class="err" id="kycErr"></div>`}
 function kycForm(k){const f=(id,l,cap)=>`<label class="fld"><span>${l}</span><input type="file" id="${id}" accept="image/*"${cap?` capture="${cap}"`:""}></label>`;
   return `<label class="fld"><span>${kycT("Belge türü","Document")}</span><div class="sel"><select id="kyType"><option value="tc">${kycT("T.C. kimlik kartı","Turkish ID card")}</option><option value="passport">${kycT("Pasaport","Passport")}</option></select></div></label>
@@ -4952,6 +4976,8 @@ async function loadAdminKyc(){const box=$("kycAdm");if(!box)return;box.innerHTML
 $("sh-kyc").addEventListener("click",e=>{
   const go=e.target.closest("#kyGo");if(go)return busy(go,kycSubmit);
   if(e.target.closest("#kycAdmin"))return loadAdminKyc();
+  if(e.target.closest("#revAdmin"))return loadAdminRev();
+  {const ro=e.target.closest("[data-revok]");if(ro){const id=ro.dataset.revok;return busy(ro,async()=>{const r=await call("admin_review_clear",{p_user:id});if(r.err)return;toast(EN?"Review cleared, account unlocked":"Değerlendirme tamamlandı, hesabın kilidi kaldırıldı");loadAdminRev()})}}
   const ok=e.target.closest("[data-kyok]"),rj=e.target.closest("[data-kyrej]");if(!ok&&!rj)return;
   const id=(ok||rj).dataset[ok?"kyok":"kyrej"],reason=(($("kyr-"+id)||{}).value||"").trim();
   if(rj&&reason.length<3){toast(kycT("Reddetmek için sebep yaz.","Write a reason to reject."));return}
@@ -5060,6 +5086,33 @@ function xlReturn(){if(!XL_IN)return;try{history.replaceState(null,"",location.p
   const M={ok:socL("X hesabın bağlandı; rozet profilinde görünüyor.","Your X account is connected; the badge shows on your profile."),denied:socL("X bağlantısını iptal ettin.","You cancelled the X connection."),
     taken:socL("Bu X hesabı başka bir COINFORCE hesabına bağlı.","This X account is already linked to another COINFORCE account."),expired:socL("Bağlantının süresi doldu; tekrar dene.","The link expired; please try again.")};
   toast(M[XL_IN]||socL("X bağlantısı tamamlanamadı; tekrar dene.","Couldn't connect X; please try again."));openSheet("soc")}
+// Hesap değerlendirme kilidi: hesap 14 günden yeniyken tek işlemde 1.000 $ üzerinde al-sat yapıldıysa, yönetici onaylayana kadar uygulama kilitli.
+// Asıl kural sunucuda (my_review / transactions tetikleyicileri); bu yalnızca durumu gösterir ve arayüzü kilitler.
+let REV=null,revT=0,revP=0,revOff=0;
+const revFmt=ms=>{const s=Math.max(0,Math.floor(ms/1000)),p=n=>String(n).padStart(2,"0");return Math.floor(s/86400)+(EN?"d ":" gün ")+p(Math.floor(s%86400/3600))+":"+p(Math.floor(s%3600/60))+":"+p(s%60)};
+function revRender(){const el=$("revLock");if(!el)return;const on=!!(REV&&REV.pending);
+  if(!on){if(!el.hidden){el.hidden=true;$("app").inert=false}return}
+  if(el.hidden){el.hidden=false;$("app").inert=true;try{closeSheet(true)}catch(_){}
+    $("revT").textContent=EN?"Account Review in Progress":"Hesap Değerlendirme Süreci";$("revEl0").textContent=EN?"Time since your account was opened":"Hesap açılışından bu yana geçen süre";
+    $("revSt").textContent=EN?"The review is in progress":"Değerlendirme süreci devam etmektedir";
+    $("revTx").textContent=EN?"Dear user, a trade above $1,000 was made within 14 days of your account being opened. Your account has therefore entered the review process. Once the review is complete, your entire balance, whatever the amount, will be made available for withdrawal as soon as possible.":"Sayın kullanıcımız, hesabınızın açıldığı tarihten itibaren 14 gün dolmadan 1.000 $ üzerinde alım-satım işlemi gerçekleştirdiğiniz tespit edilmiştir. Bu nedenle hesabınız değerlendirme sürecine alınmıştır. Değerlendirme tamamlandığında hesabınızdaki bakiyenin tamamı, tutarı ne olursa olsun, en kısa sürede çekilebilir duruma getirilecektir.";
+    setTimeout(()=>{try{$("revT").focus()}catch(_){}},30)}
+  $("revEl").textContent=revFmt(Date.now()+revOff-Date.parse(REV.account_created))}
+async function revPeek(){if(!me)return;const r=await sb.rpc("my_review");if(r.error||!r.data)return;REV=r.data;if(REV.pending&&REV.now)revOff=Date.parse(REV.now)-Date.now();revRender()}
+function revStart(){revStop();revPeek();
+  // Yalnızca 14 günden yeni hesaplar işaretlenebilir: yalnızca onlar için sık yokla
+  const young=st&&st.prof&&st.prof.joined&&Date.now()-st.prof.joined<15*864e5;
+  revT=setInterval(()=>{if(REV&&REV.pending)revRender()},1000);
+  revP=setInterval(()=>{if(!document.hidden&&(young||(REV&&REV.pending)))revPeek()},young?4000:15000)}
+function revStop(){clearInterval(revT);clearInterval(revP);REV=null;revRender()}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&me)revPeek()});
+async function loadAdminRev(){const box=$("revAdm");if(!box)return;box.innerHTML=`<div class="empty">…</div>`;const r=await call("admin_review_list",{p_status:"pending"});if(r.err){box.innerHTML="";return}
+  const list=r.data||[];if(!list.length){box.innerHTML=`<div class="empty">${EN?"No accounts under review.":"Değerlendirmede hesap yok."}</div>`;return}
+  const L=EN?"en-GB":"tr-TR";
+  box.innerHTML=list.map(x=>`<div class="wd-adm"><div style="display:flex;justify-content:space-between;gap:8px"><b>@${esc(x.username||"?")}</b><small class="muted">${esc(new Date(x.created_at).toLocaleString(L))}</small></div>
+    <small>${esc(x.full_name||"")} · ${esc(String(x.trigger_kind||"").toUpperCase())} ${esc(x.trigger_symbol||"")} · $${Math.round(+x.trigger_usd||0).toLocaleString(L)}</small><br>
+    <small class="muted">${EN?"Account age":"Hesap yaşı"}: ${esc(revFmt(Date.parse(x.created_at)-Date.parse(x.account_created)))} · ${EN?"Balance":"Bakiye"}: $${Math.round(+x.balance||0).toLocaleString(L)}</small>
+    <div style="margin-top:8px"><button type="button" class="btn btn-accent full" data-revok="${esc(x.user_id)}">${EN?"Approve and unlock":"Onayla ve kilidi kaldır"}</button></div></div>`).join("")}
 async function loadEarn(){$("eaErr").textContent="";const [p,m]=await Promise.all([sb.rpc("earn_products"),sb.rpc("my_earn")]);EAP=p.data||[];if(p.error){$("eaProd").innerHTML=`<div class="empty">${esc(errText(p.error))}</div>`;return}
   if(!EAP.some(x=>x.days===eaDays)&&EAP[0])eaDays=EAP[0].days;renderEarnProd();renderEarnList(m.data||[])}
 function renderEarnProd(){$("eaProd").innerHTML=EAP.map(x=>`<button type="button" data-eadays="${x.days}" class="${x.days===eaDays?"on":""}"><b>%${fmtN(+x.apr,+x.apr%1?1:0)}</b><small>${x.days} ${EN?"days":"gün"} · ${EN?"APR":"yıllık"}</small></button>`).join("");eaEst()}
@@ -6035,7 +6088,7 @@ $("suPw").addEventListener("input",()=>$("pwMeter").dataset.s=pwScore($("suPw").
 async function enter(user){
   me=user;st=fresh();st.watch=loadWatch();
   $("auth").hidden=true;$("welcome").hidden=true;$("app").removeAttribute("aria-hidden");["liPw","suPw"].forEach(id=>$(id).value="");
-  go("home");await loadPrices();await Promise.all([loadAll(),loadLB()]);loadTop();loadVIP();loadMySoc();loadFX();if(!window.__fxT)window.__fxT=setInterval(loadFX,300000);subscribe();renderAll();$("boot").hidden=true;
+  go("home");await loadPrices();await Promise.all([loadAll(),loadLB()]);loadTop();loadVIP();loadMySoc();revStart();loadFX();if(!window.__fxT)window.__fxT=setInterval(loadFX,300000);subscribe();renderAll();$("boot").hidden=true;
   if(!st.onboarded)startOnb();payReturn();tgReturn();xlReturn();
 }
 // Kullanıcı adıyla giriş: şifre sunucuda (auth-username) hız sınırıyla doğrulanır, yalnızca doğruysa e-posta döner.
@@ -6095,7 +6148,7 @@ $("pwGo").onclick=()=>busy($("pwGo"),async()=>{const e=$("pwErr"),o=$("pwOld").v
   const {error}=await sb.auth.updateUser({password:n});if(error)return e.textContent=errText(error);
   ["pwOld","pwNew","pwNew2"].forEach(i=>$(i).value="");recovering=false;$("pwOld").closest("label").hidden=false;closeSheet();toast("Şifren güncellendi")});
 $("pwOld").closest(".sheet").addEventListener("input",()=>$("pwErr").textContent="");
-$("logoutBtn").onclick=async()=>{closeSheet();closeUser();closeComm();for(const k in ADDR)delete ADDR[k];PCH={};VIP=new Set();VER=new Set();VLV=new Map();SOC=null;SOCU.clear();clearInterval(socT);VMY=null;VW.dr={};VW.uh={};VW.dirty={};VW.srvLoaded=false;sb.removeAllChannels();await sb.auth.signOut();me=null;st=fresh();LB=[];showWelcome();$("liId").value=""};
+$("logoutBtn").onclick=async()=>{closeSheet();closeUser();closeComm();for(const k in ADDR)delete ADDR[k];PCH={};VIP=new Set();VER=new Set();VLV=new Map();SOC=null;SOCU.clear();clearInterval(socT);revStop();VMY=null;VW.dr={};VW.uh={};VW.dirty={};VW.srvLoaded=false;sb.removeAllChannels();await sb.auth.signOut();me=null;st=fresh();LB=[];showWelcome();$("liId").value=""};
 let recovering=false;
 sb.auth.onAuthStateChange((ev,session)=>{if(ev==="PASSWORD_RECOVERY"){recovering=true;setTimeout(()=>{openSheet("pw");$("pwOld").closest("label").hidden=true;toast("Yeni şifreni belirle")},400)}});
 // ---------- device: Dynamic Island tespiti (ana ekran uygulamasında üst güvenli alan ≥ 54pt)
