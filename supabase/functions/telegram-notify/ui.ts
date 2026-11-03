@@ -282,15 +282,21 @@ export const unlinkConfirm = (): Screen => ({
   kb: kb([b("Evet, kaldır", "ul!"), b("Vazgeç", "st")]),
 });
 
+/** Değerlendirme sürecindeki hesabın altına yazılan resmi uyarı. */
+const REVIEW_NOTE = (own: boolean) =>
+  `⚠️ <i>${own ? "Hesabınız" : "Bu hesap"} şu anda değerlendirme sürecindedir. Bu süreçte alım-satım işlemi yapılamamaktadır.</i>`;
+
 /** /accounts: emirlerin gerçekleşeceği hesaplar (kendi hesabın + toplu işlemde aktif olanlar). */
 export function accounts(d: any): Screen {
   const act = (d?.active ?? []) as any[], off = (d?.inactive ?? []) as string[];
   const lines = ["👥 <b>İşlem yapabildiğin hesaplar</b>",
     `Toplu işlem: ${d?.group ? "🟢 açık" : "⚪ kapalı"} · Telegram ile işlem: ${d?.trading ? "🔓 açık" : "🔒 kapalı"}`, "",
     `1. @${esc(d?.me?.username)} (sen) · ${usdt(d?.me?.usdt ?? 0)} kullanılabilir`];
-  act.forEach((a, i) => lines.push(`${i + 2}. @${esc(a.username)} · ${usdt(a.usdt ?? 0)} kullanılabilir`));
+  if (d?.me?.review) lines.push(REVIEW_NOTE(true));
+  act.forEach((a, i) => { lines.push(`${i + 2}. @${esc(a.username)} · ${usdt(a.usdt ?? 0)} kullanılabilir`); if (a.review) lines.push(REVIEW_NOTE(false)); });
   if (!act.length) lines.push("", "Eklenmiş aktif hesap yok. Uygulamada Ayarlar › Telegram bildirimleri › Toplu işlem bölümünden API Key ve Secret Key ile hesap ekleyebilirsin.");
   if (off.length) lines.push("", `⚠️ Pasif (API anahtarı yenilenmiş, emir gitmez): ${off.map((u) => "@" + esc(u)).join(", ")}`);
+  if (d?.me?.review || act.some((a) => a.review)) lines.push("", "<i>Değerlendirme sürecindeki hesaplarda emir gerçekleşmez.</i>");
   lines.push("", !d?.trading ? TRADING_OFF
     : d?.group && act.length ? `Bottan verdiğin her emir bu ${act.length + 1} hesapta aynı anda gerçekleşir.`
     : "Toplu işlem kapalı: emirler yalnızca kendi hesabında gerçekleşir. Açmak için uygulamada Toplu işlem anahtarını kullan.");
