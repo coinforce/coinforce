@@ -1536,12 +1536,76 @@ nav.bar button svg{width:22px;height:22px}
   .ads *,.ads *::before,.ads *::after{animation:none!important;transition:none!important}
   .ad-ring,.ad-ln{stroke-dashoffset:0}.ad-cd{transform:none}.ad-ar,.ad-up,.ad-st,.ad-chips span{opacity:1}.ad-tl b{width:100%}
 }
+/* Web3 (sanal cüzdan) */
+.w3{position:fixed;inset:0;z-index:39;background:#07100c;color:#eaf3ee;font-family:var(--body);display:flex;flex-direction:column;align-items:stretch;overflow:hidden;--g:#2fe08a;--g2:#19b86a;--wl:rgba(255,255,255,.08);--wm:#8a978f}
+.w3>*{width:min(460px,100%);margin-inline:auto}
+.w3 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+.w3-hd{display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 8px;flex:none}
+.w3-hd .lg{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(47,224,138,.14);color:var(--g)}
+.w3-pill{display:flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700;background:rgba(255,255,255,.06)}
+.w3-pill svg{width:12px;height:12px}
+.w3-hd .ic{width:28px;height:28px;display:grid;place-items:center;color:#cfd9d3}.w3-hd svg{width:20px;height:20px}
+.w3-skip{font-size:13px;font-weight:600;color:var(--g)}
+.w3-hero{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;transition:opacity .4s}
+.w3-hero.dim{opacity:.22}
+.w3-orb{width:min(46vw,190px);aspect-ratio:1;position:relative;margin-bottom:22px}
+.w3-orb svg{width:100%;height:100%;overflow:visible}
+.w3-orb .d{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;animation:w3f 4s ease-in-out infinite}
+@keyframes w3f{50%{transform:translateY(-6px);opacity:.5}}
+.w3-hero h1{margin:0;font-size:21px;line-height:1.3;font-weight:700}.w3-hero h1 b{display:block;color:var(--g)}
+.w3-card{flex:none;background:#101a15;border-radius:22px 22px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.w3-seg{display:flex;gap:6px;margin-bottom:14px}.w3-seg i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.14)}.w3-seg i.on{background:#fff}
+.w3-card h2{margin:0 0 10px;font-size:15px;font-weight:700}
+.w3-art{height:clamp(110px,22vh,170px);border-radius:12px;overflow:hidden;background:radial-gradient(120% 100% at 50% 0,#17382a,#0b1410);margin-bottom:12px;display:grid;place-items:center}
+.w3-art svg{height:100%;width:auto;max-width:100%}
+.w3-card p{margin:0 0 16px;font-size:12.5px;line-height:1.5;color:var(--wm);min-height:38px}
+.w3-btns{display:flex;gap:10px}.w3-btns button{flex:1;height:42px;border-radius:999px;font-weight:700;font-size:13px;background:rgba(255,255,255,.1)}.w3-btns .pri{background:#fff;color:#07100c}
+.w3-opt{display:block;width:100%;text-align:left;padding:16px;margin:0 0 12px;border-radius:12px;background:#132019;border:1px solid rgba(255,255,255,.14)}
+.w3-opt b{display:block;font-size:13.5px;margin-bottom:4px}.w3-opt small{font-size:11.5px;color:var(--wm);line-height:1.4;display:block}
+.w3-ck{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--wm);padding:2px 2px 8px;cursor:pointer;text-align:left}
+.w3-ck i{width:16px;height:16px;border-radius:50%;border:1.5px solid #5c6a62;flex:none;display:grid;place-items:center}.w3-ck.on i{background:var(--g);border-color:var(--g)}.w3-ck.on i::after{content:"";width:5px;height:8px;border:solid #07100c;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.w3-tip{display:inline-block;margin:0 2px;padding:8px 10px;border-radius:6px;background:#27322c;font-size:11px;color:#dfe8e3}
+.w3-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 16px 96px;-webkit-overflow-scrolling:touch}
+.w3-q{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:10px;background:rgba(255,255,255,.06);margin:4px 0 12px}
+.w3-q svg{width:16px;height:16px;color:var(--wm);flex:none}.w3-q input{flex:1;min-width:0;background:none;border:0;outline:0;color:#eaf3ee;font:inherit;font-size:13px}.w3-q input::placeholder{color:#6f7d75}
+.w3-bal{border-radius:16px;padding:16px;background:linear-gradient(135deg,#123a29,#0c1a13 70%);border:1px solid rgba(47,224,138,.16);margin-bottom:14px}
+.w3-bal small{display:block;font-size:12px;color:var(--wm)}.w3-bal b{display:block;font-family:var(--display);font-size:26px;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.w3-bal em{font-style:normal;font-size:12.5px;font-weight:700}
+.w3-ban{border-radius:16px;padding:18px;background:linear-gradient(135deg,#133f2c,#0c1a13);border:1px solid rgba(47,224,138,.16);margin-bottom:14px}
+.w3-ban h3{margin:0 0 14px;font-size:15px;line-height:1.35;max-width:75%}
+.w3-ban .go{display:block;width:100%;height:40px;border-radius:999px;background:#fff;color:#07100c;font-weight:700;font-size:13px}
+.w3-act{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}.w3-act button{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:#cfd9d3}
+.w3-act i{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.07);display:grid;place-items:center}.w3-act svg{width:19px;height:19px}
+.w3-pr{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px;scrollbar-width:none}.w3-pr::-webkit-scrollbar{display:none}
+.w3-pr button{flex:0 0 82%;scroll-snap-align:start;text-align:left;border-radius:14px;padding:14px;background:#0f1713;border:1px solid var(--wl);display:flex;align-items:center;gap:10px;min-height:78px}
+.w3-pr b{display:block;font-size:13.5px;margin-bottom:3px}.w3-pr small{font-size:11.5px;color:var(--wm)}.w3-pr .t{flex:1}.w3-pr .em{font-size:30px}
+.w3-sh{display:flex;align-items:center;justify-content:space-between;margin:4px 0 8px}.w3-sh b{font-size:14px}.w3-sh button{font-size:12px;color:var(--g);font-weight:600}
+.w3-as{display:flex;align-items:center;gap:12px;width:100%;padding:11px 0;text-align:left}
+.w3-as .mid{flex:1;min-width:0}.w3-as b{display:block;font-size:14px}.w3-as small{font-size:11px;color:var(--wm);display:block;margin-top:2px}.w3-as .rt{text-align:right}
+.w3 .up{color:var(--g)}.w3 .down{color:#ff6b5e}
+.w3c{width:36px!important;height:36px!important;font-size:13px!important}
+.w3-tabs{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;margin:2px 0 10px}.w3-tabs::-webkit-scrollbar{display:none}
+.w3-tabs button{font-size:13px;font-weight:600;color:var(--wm);white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent}.w3-tabs button.on{color:#fff;border-color:#fff}
+.w3-h{font-size:22px;font-weight:700;margin:6px 0 10px}
+.w3-mk{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:12px 0;text-align:left}
+.w3-mk b{display:block;font-size:14px}.w3-mk small{font-size:11px;color:var(--wm)}.w3-mk .rt{text-align:right}.w3-mk .rt b{font-variant-numeric:tabular-nums}
+.w3-mk .rt small{font-size:12px;font-weight:700}
+.w3-gh{margin:16px 0 4px}.w3-gh b{display:block;font-size:15px}.w3-gh small{font-size:11.5px;color:var(--wm)}
+.w3-ap{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px;border-radius:14px;background:#0f1713;margin-top:8px}
+.w3-ap button{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10.5px;color:#cfd9d3;min-width:0}.w3-ap button span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w3-ap i{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:17px;color:#fff;font-family:var(--display);position:relative}
+.w3-ap i em{position:absolute;bottom:-5px;font-style:normal;font-size:8px;font-family:var(--body);background:#2a3530;border-radius:4px;padding:1px 4px;font-weight:700}
+.w3-nav{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(460px,100%);display:flex;background:rgba(10,18,14,.96);border-top:1px solid var(--wl);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+.w3-nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:#6f7d75;padding:2px 0}.w3-nav button.on{color:#fff}.w3-nav svg{width:22px;height:22px}
+.w3-empty{padding:28px 0;text-align:center;color:var(--wm);font-size:13px}
+@media (prefers-reduced-motion:reduce){.w3-orb .d{animation:none}}
 </style>
 
 </head>
 <body class="v-home">
 <div class="boot" id="boot">Yükleniyor…</div>
 <div class="ads" id="ads" hidden role="dialog" aria-modal="true" aria-label="Reklam" tabindex="-1"></div>
+<div class="w3" id="w3" hidden role="dialog" aria-label="Web3"></div>
 <div class="wl" id="welcome" hidden>
   <div class="wl-splash" id="wlSplash" aria-hidden="true"></div><div class="wl-fl" aria-hidden="true"></div><div class="wl-dm a" aria-hidden="true"></div><div class="wl-dm b" aria-hidden="true"></div>
   <div class="wl-sc" id="wlHome">
@@ -2253,7 +2317,7 @@ nav.bar button svg{width:22px;height:22px}
   <div class="md-list">
     <button type="button" class="md-opt" data-mode="pro"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3"/></svg></i><span><b>Pro</b><small data-en="For experienced traders, with a full range of powerful features.">Deneyimli yatırımcılar için; tüm güçlü özellikler açık.</small></span></button>
     <button type="button" class="md-opt" data-mode="lite"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5L12 5l10 4.5-10 4.5z"/><path d="M6 11.3V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.7"/></svg></i><span><b>Lite</b><small data-en="For beginners, or those who prefer a simple and easy-to-use interface.">Yeni başlayanlar ya da sade, kolay bir arayüz isteyenler için.</small></span></button>
-    <button type="button" class="md-opt" data-mode="web3"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L3 12l8 9 8-9z"/><path d="M3 12h16M11 3v18"/><path d="M19.5 2.5v4M17.5 4.5h4"/></svg></i><span><b>Web3<em class="md-dot"></em></b><small data-en="Trade on-chain with full transparency and freedom. Coming soon.">Zincir üstünde tam şeffaflık ve özgürlükle işlem yap. Yakında.</small></span></button>
+    <button type="button" class="md-opt" data-mode="web3"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L3 12l8 9 8-9z"/><path d="M3 12h16M11 3v18"/><path d="M19.5 2.5v4M17.5 4.5h4"/></svg></i><span><b>Web3<em class="md-dot"></em></b><small data-en="Your virtual wallet: manage assets, explore markets and discover apps.">Sanal cüzdanın: varlıklarını yönet, piyasaları ve uygulamaları keşfet.</small></span></button>
   </div>
 </div>
 <div class="sheet" id="sh-banner" role="dialog" aria-label="Banner">
@@ -5134,10 +5198,10 @@ $("viewPage").addEventListener("pointerup",e=>{vwDrawUp(e);vwCurUp(e)});$("viewP
 const vwEnd=()=>{VW.scrub=false;const b=$("vwCh");if(b)b.classList.remove("on")};$("viewPage").addEventListener("pointerup",vwEnd);$("viewPage").addEventListener("pointercancel",vwEnd);$("viewPage").addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")vwEnd()});
 addEventListener("resize",()=>{if(!$("viewPage").hidden)vwRenderChart()});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("viewPage").hidden&&!document.fullscreenElement){if($("viewPage").classList.contains("vw-max")){$("viewPage").classList.remove("vw-max");vwRenderChart()}else closeView()}});
-function renderMode(){document.querySelectorAll("#sh-mode .md-opt").forEach(b=>b.classList.toggle("on",b.dataset.mode===MODE))}
+function renderMode(){const w=typeof w3Vis==="function"&&w3Vis();document.querySelectorAll("#sh-mode .md-opt").forEach(b=>b.classList.toggle("on",b.dataset.mode===(w?"web3":MODE)))}
 $("sh-mode").addEventListener("click",e=>{const b=e.target.closest("[data-mode]");if(!b)return;const m=b.dataset.mode;
-  if(m==="web3"){toast(EN?"Web3 mode is coming soon":"Web3 modu yakında geliyor");return}
-  MODE=m;try{localStorage.setItem("cf_mode",m)}catch(e){}applyMode();renderMode();setTimeout(()=>closeSheet(),180);toast(m==="lite"?(EN?"Lite mode on":"Lite mod açıldı"):(EN?"Pro mode on":"Pro mod açıldı"))});
+  if(m==="web3"){w3Open();return}
+  MODE=m;try{localStorage.setItem("cf_mode",m)}catch(e){}w3Close();applyMode();renderMode();setTimeout(()=>closeSheet(),180);toast(m==="lite"?(EN?"Lite mode on":"Lite mod açıldı"):(EN?"Pro mode on":"Pro mod açıldı"))});
 $("themeBtn").onclick=()=>{const r=document.documentElement,light=r.dataset.theme?r.dataset.theme==="light":matchMedia("(prefers-color-scheme: light)").matches;r.dataset.theme=light?"dark":"light";if(view==="detail")drawChart();if(view==="profile")renderProfile()};
 addEventListener("resize",()=>{if(view==="detail")drawChart();if(view==="profile")renderProfile()});
 
@@ -5578,8 +5642,8 @@ function adsStart(){
 function adsFaces(){if(!AD||AD.done)return;document.querySelectorAll("#ads [data-adc]").forEach(n=>{const t=find(n.dataset.adc);if(t&&t.img&&!n.querySelector("img"))n.innerHTML=coinHTML(t,"adc").replace('loading="lazy"','loading="eager"')})}
 function adsShow(i){AD.i=i;document.querySelectorAll("#ads .ad-sc").forEach((s,j)=>{s.classList.toggle("on",j===i);s.setAttribute("aria-hidden",j===i?"false":"true")});
   document.querySelectorAll("#ads .ad-seg b").forEach((b,j)=>{b.style.width=j<i?"100%":"0%"});
-  const s=document.querySelector(`#ads .ad-sc[data-i="${i}"]`);if(s)s.querySelectorAll("[data-count]").forEach(adCount)}
-function adCount(n){const to=+n.dataset.count,pre=n.dataset.pre||"",f=v=>pre+Math.round(v).toLocaleString(LOC);
+  const s=document.querySelector(`#ads .ad-sc[data-i="${i}"]`);if(s)s.querySelectorAll("[data-count]").forEach(adsCount)}
+function adsCount(n){const to=+n.dataset.count,pre=n.dataset.pre||"",f=v=>pre+Math.round(v).toLocaleString(LOC);
   if(AD.rm){n.textContent=f(to);return}const t0=performance.now(),dur=1200,step=t=>{if(!AD||AD.done)return;const k=Math.min(1,(t-t0)/dur);n.textContent=f(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)};n.textContent=f(0);requestAnimationFrame(step)}
 function adsLoop(t){if(!AD||AD.done)return;const dt=Math.min(100,Math.max(0,t-AD.last));AD.last=t;if(!document.hidden)AD.el+=dt;
   const i=Math.floor(AD.el/AD_DUR);if(i>=AD.list.length){adsClose();return}if(i!==AD.i)adsShow(i);
@@ -5593,6 +5657,133 @@ function adsWhenReady(fn){let n=0;const t=setInterval(()=>{const ok=me&&$("boot"
 $("ads").addEventListener("click",e=>{if(!AD||AD.done)return;if(e.target.closest("#adSkip")){if(AD.skip)adsClose();return}
   const g=e.target.closest("[data-adgo]");if(g){const a=AD.list[+g.dataset.adgo];adsClose(a&&a.act)}});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&AD&&!AD.done&&!$("ads").hidden){e.stopPropagation();e.preventDefault();if(AD.skip)adsClose()}},true);
+// ---------- Web3 modu (sanal cüzdan): tanıtım → cüzdan oluştur → Cüzdan / Piyasalar / Keşfet
+// Gerçek cüzdan, seed phrase ya da özel anahtar yoktur; bakiyeler hesabındaki sanal bakiyedir.
+const W3={step:"app",i:0,tab:"wallet",mk:"hot",ds:"dapps",dq:"",mq:"",xq:"",more:false,ck:false,tip:false};
+const w3L=(a,b)=>EN?b:a;
+const w3Vis=()=>!$("w3").hidden;
+function w3Get(){try{return JSON.parse(localStorage.getItem("cf_w3:"+(me?me.id:"x"))||"{}")||{}}catch(e){return{}}}
+function w3Set(o){try{localStorage.setItem("cf_w3:"+(me?me.id:"x"),JSON.stringify(Object.assign(w3Get(),o)))}catch(e){}}
+const W3I={
+  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  scan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 011-1h4M15 4h4a1 1 0 011 1v4M20 15v4a1 1 0 01-1 1h-4M9 20H5a1 1 0 01-1-1v-4"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>',
+  drop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.2 6 10.5A6 6 0 016 13.5C6 9.2 12 3 12 3z"/></svg>',
+  mk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="1.8"/><circle cx="18" cy="6" r="1.8"/><circle cx="6" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/></svg>',
+  wallet:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 7a3 3 0 013-3h10a2 2 0 012 2v1H7a1 1 0 000 2h12a1 1 0 011 1v8a2 2 0 01-2 2H7a3 3 0 01-3-3z"/><circle cx="16.5" cy="14" r="1.3" fill="#07100c"/></svg>',
+  disc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>'};
+const w3Orb=()=>`<div class="w3-orb"><svg viewBox="0 0 200 200"><defs><radialGradient id="w3og" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#2fe08a" stop-opacity=".35"/><stop offset="1" stop-color="#2fe08a" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="98" fill="url(#w3og)"/><circle cx="100" cy="100" r="62" fill="#07100c" stroke="#2fe08a" stroke-width="3" opacity=".95"/><circle cx="100" cy="100" r="50" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-dasharray="4 6"/><path d="M88 112l24-24M92 92l16 16" stroke="#e9fff3" stroke-width="5" stroke-linecap="round"/></svg><i class="d" style="left:8%;top:62%"></i><i class="d" style="left:84%;top:58%;animation-delay:-1s"></i><i class="d" style="left:46%;top:-3%;animation-delay:-2s"></i><i class="d" style="left:92%;top:20%;animation-delay:-3s"></i></div>`;
+const w3Hero=dim=>`<div class="w3-hero${dim?" dim":""}">${w3Orb()}<h1>${w3L("Sonraki Kripto Cevherini","Find the Next")}<b>${w3L("Web3'te Bul","Crypto Gem on Web3")}</b></h1></div>`;
+const W3S=[
+ {t:["Hepsi Bir Arada Web3 Cüzdanın","Your All-in-One Web3 Wallet"],p:["Sanal bakiyeni tek yerden yönet, coinleri keşfet ve işlem yap.","Manage your virtual balance in one place, discover coins and trade."],
+  a:'<svg viewBox="0 0 260 150"><rect x="86" y="10" width="88" height="150" rx="12" fill="#0a120e" stroke="#2b3a32"/><text x="130" y="48" text-anchor="middle" fill="#fff" font-size="12" font-weight="800">$18.529,23</text><path d="M96 124l14-10 12 6 14-24 12 10 14-22 8-4" fill="none" stroke="#2fe08a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="62" cy="92" r="16" fill="#1a7f6e"/><circle cx="204" cy="82" r="18" fill="#2563a8"/><circle cx="196" cy="40" r="10" fill="#5b4bc4"/></svg>'},
+ {t:["Öngörülerini İşe Dök","Put Your Insights to Work"],p:["Piyasaları takip et, favorilerini ekle ve fırsatları kaçırma.","Follow the markets, add favorites and don't miss opportunities."],
+  a:'<svg viewBox="0 0 260 150"><rect x="40" y="28" width="180" height="66" rx="10" fill="#fff"/><circle cx="62" cy="48" r="10" fill="#f7931a"/><text x="80" y="52" fill="#111" font-size="12" font-weight="800">BTC ↑ / ↓ 5dk</text><rect x="54" y="66" width="152" height="14" rx="7" fill="#ff5c5c"/><rect x="54" y="66" width="86" height="14" rx="7" fill="#2fe08a"/><rect x="52" y="100" width="156" height="30" rx="8" fill="#2a2f33" opacity=".7"/></svg>'},
+ {t:["Meme Coin Piyasalarına Eriş","Access Memecoin Markets"],p:["Solana zincirindeki memecoinlerde ve yeni listelenen coinlerde sanal bakiyeyle işlem yap.","Trade Solana memecoins and newly listed coins with your virtual balance."],
+  a:'<svg viewBox="0 0 260 150"><g fill="#4a5a52"><rect x="60" y="86" width="12" height="52" rx="3"/><rect x="82" y="72" width="12" height="66" rx="3"/><rect x="104" y="92" width="12" height="46" rx="3"/><rect x="126" y="64" width="12" height="74" rx="3"/></g><circle cx="168" cy="50" r="22" fill="#d6342f"/><text x="168" y="56" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">T</text><circle cx="200" cy="100" r="17" fill="#d9a62b"/><text x="200" y="105" text-anchor="middle" fill="#3a2a00" font-size="11" font-weight="800">GOLD</text><circle cx="120" cy="34" r="14" fill="#4f9a3a"/></svg>'},
+ {t:["Vadeli İşlem Yap","Trade Perpetuals"],p:["Kaldıraçlı vadeli işlemlere cüzdanından tek dokunuşla geç.","Jump into leveraged perpetuals straight from your wallet."],
+  a:'<svg viewBox="0 0 260 150"><rect x="30" y="14" width="200" height="124" rx="10" fill="#fff"/><g font-size="10" font-weight="700" fill="#111"><circle cx="50" cy="38" r="7" fill="#76b900"/><text x="64" y="42">NVDA-USDC</text><text x="200" y="42" text-anchor="end">201,2</text><circle cx="50" cy="64" r="7" fill="#111"/><text x="64" y="68">CL-USDC</text><text x="200" y="68" text-anchor="end">78,97</text><circle cx="50" cy="90" r="7" fill="#0b8e72"/><text x="64" y="94">HYPE-USDC</text><text x="200" y="94" text-anchor="end">58,67</text></g><rect x="46" y="108" width="78" height="18" rx="9" fill="#2fe08a"/><rect x="132" y="108" width="78" height="18" rx="9" fill="#ff5c5c"/></svg>'},
+ {t:["Varlıklarını Tek Yerde Yönet","Manage Your Assets in One Place"],p:["Web3 yolculuğuna tüm varlıklarınla, sanal bakiyeyle güvenle başla.","Start your Web3 journey safely with all your assets and a virtual balance."],
+  a:'<svg viewBox="0 0 260 150"><path d="M130 14l58 20v38c0 34-24 56-58 66-34-10-58-32-58-66V34z" fill="#12301f" stroke="#2fe08a" stroke-width="3"/><path d="M104 78l18 18 34-36" fill="none" stroke="#2fe08a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="40" r="11" fill="#d9a62b"/><circle cx="214" cy="34" r="11" fill="#2563a8"/><circle cx="220" cy="104" r="11" fill="#c0603a"/></svg>'}];
+function w3Intro(){const s=W3S[W3.i],last=W3.i===W3S.length-1;
+  return `<div class="w3-hd"><span class="lg" style="visibility:hidden"></span><button type="button" class="w3-pill" data-w3="mode">Web3 ${W3I.down}</button><button type="button" class="w3-skip" data-w3="skip">${w3L("Geç","Skip")}</button></div>${w3Hero(!last)}
+  <div class="w3-card"><div class="w3-seg">${W3S.map((_,k)=>`<i class="${k<=W3.i?"on":""}"></i>`).join("")}</div><h2>${s.t[+EN]}</h2><div class="w3-art">${s.a}</div><p>${s.p[+EN]}</p>
+  <div class="w3-btns"><button type="button" data-w3="skip">${w3L("Geç","Skip")}</button><button type="button" class="pri" data-w3="next">${last?w3L("Başla","Get Started"):w3L("İleri","Next")}</button></div></div>`}
+function w3Create(){
+  return `<div class="w3-hd"><button type="button" class="ic" data-w3="exit" aria-label="${w3L("COINFORCE'a dön","Back to COINFORCE")}">${W3I.back}</button><button type="button" class="w3-pill" data-w3="mode">Web3 ${W3I.down}</button><span style="width:28px"></span></div>${w3Hero(false)}
+  <div class="w3-card" style="background:none;padding-top:0"><button type="button" class="w3-opt" data-w3="mk"><b>${w3L("Yeni Sanal Cüzdan Oluştur","Create New Virtual Wallet")}</b><small>${w3L("Tek dokunuşla cüzdanın hazır olur. Seed phrase ya da özel anahtar gerekmez.","Your wallet is ready in one tap. No seed phrase or private key needed.")}</small></button>
+  <button type="button" class="w3-opt" data-w3="mk"><b>${w3L("Hesabımdaki Varlıkları Bağla","Link My Account Assets")}</b><small>${w3L("COINFORCE hesabındaki sanal bakiyeni ve coinlerini cüzdanda göster.","Show your COINFORCE virtual balance and coins in the wallet.")}</small></button>
+  <button type="button" class="w3-ck${W3.ck?" on":""}" data-w3="ck"><i></i><span>${w3L("Sanal bakiyenin gerçek para olmadığını ve yatırım tavsiyesi sunmadığımızı kabul ediyorum.","I understand the balance is virtual, not real money, and this is not investment advice.")}</span></button>
+  ${W3.tip?`<div><span class="w3-tip">${w3L("Cüzdanı oluşturmadan önce kutuyu işaretle.","Please check the box before creating your wallet.")}</span></div>`:""}</div>`}
+const w3NavB=(k,ic,l)=>`<button type="button" data-w3t="${k}" class="${W3.tab===k?"on":""}">${W3I[ic]}<span>${l}</span></button>`;
+function w3App(){
+  return `<div class="w3-hd"><button type="button" class="ic" data-w3="exit" aria-label="${w3L("COINFORCE'a dön","Back to COINFORCE")}">${W3I.back}</button><button type="button" class="w3-pill" data-w3="mode">Web3 ${W3I.down}</button><button type="button" class="ic" data-w3="scan" aria-label="${w3L("Tara","Scan")}">${W3I.scan}</button></div>
+  <div class="w3-body" id="w3Body"></div><nav class="w3-nav">${w3NavB("wallet","wallet",w3L("Cüzdan","Wallet"))}${w3NavB("markets","mk",w3L("Piyasalar","Markets"))}${w3NavB("discover","disc",w3L("Keşfet","Discover"))}</nav>`}
+const w3Q=(id,ph,v)=>`<label class="w3-q">${W3I.search}<input id="${id}" type="search" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${ph}" value="${esc(v)}"></label>`;
+const w3C=v=>{v=+v||0;return v>=1e9?"$"+(v/1e9).toFixed(2)+"B":v>=1e6?"$"+(v/1e6).toFixed(2)+"M":v>=1e3?"$"+(v/1e3).toFixed(2)+"K":"$"+v.toFixed(0)}
+const w3Pc=c=>`<span class="${c>=0?"up":"down"}">${c>=0?"+":""}${fmtN(c,2)}%</span>`;
+const w3Qty=q=>Number(q).toLocaleString(LOC,{maximumFractionDigits:q<1?6:2});
+function w3Assets(){const rows=[];const held=Object.entries(st.h||{}).filter(([s,q])=>q>0&&find(s)).map(([s,q])=>({s,q,v:q*find(s).p})).sort((a,b)=>b.v-a.v);
+  rows.push({s:"USDT",q:st.usdt||0,v:st.usdt||0});held.forEach(h=>rows.push(h));
+  const have=new Set(rows.map(r=>r.s)),fill=(W3.more?[...T].filter(t=>!t.custom&&t.p>0).sort((a,b)=>(b.mc||0)-(a.mc||0)).slice(0,25).map(t=>t.s):["BTC","ETH","SOL","BNB","XRP"]);
+  fill.forEach(s=>{if(!have.has(s)&&find(s)&&(W3.more||rows.length<6)){have.add(s);rows.push({s,q:0,v:0})}});return rows}
+function w3AssetRow(r){if(r.s==="USDT")return `<div class="w3-as"><div class="coin w3c" style="background:#26a17b">$</div><span class="mid"><b>USDT</b><small>$1 <span style="color:var(--wm)">0,00%</span></small></span><span class="rt"><b>${w3Qty(r.q)}</b><small>${usd(r.v)}</small></span></div>`;
+  const t=find(r.s),c=chg(t);return `<button type="button" class="w3-as" data-sym="${r.s}">${coinHTML(t,"w3c")}<span class="mid"><b>${r.s}</b><small>${usd(t.p,t.d)} ${w3Pc(c)}</small></span><span class="rt"><b>${w3Qty(r.q)}</b><small>${usd(r.v)}</small></span></button>`}
+function w3Total(){let v=0,v0=0;v+=st.usdt||0;v0+=st.usdt||0;for(const[s,q]of Object.entries(st.h||{})){const t=find(s);if(t&&q>0){v+=q*t.p;v0+=q*t.open}}return{v,c:v0>0?(v/v0-1)*100:0}}
+function w3WalletTop(){const o=w3Get();
+  if(!o.wallet)return `<div class="w3-ban"><h3>${w3L("Sonraki Kripto Cevherini Web3'te Bul","Find the Next Crypto Gem on Web3")}</h3><button type="button" class="go" data-w3="create">${w3L("Cüzdan Oluştur","Create Wallet")}</button></div>`;
+  const t=w3Total();return `<div class="w3-bal"><small>${w3L("Toplam Sanal Bakiye","Total Virtual Balance")}</small><b id="w3Tot">${usd(t.v)}</b><em id="w3Chg" class="${t.c>=0?"up":"down"}">${t.c>=0?"▲ +":"▼ "}${fmtN(t.c,2)}% · 24${w3L("s","h")}</em></div>`}
+function w3Wallet(){const b=$("w3Body");
+  b.innerHTML=w3Q("w3Dq",w3L("Coin / kontrat ara","Search coin/contract"),W3.dq)+w3WalletTop()+
+  `<div class="w3-act"><button type="button" data-w3="send"><i>${W3I.send}</i>${w3L("Gönder","Send")}</button><button type="button" data-w3="airdrop"><i>${W3I.drop}</i>Airdrop</button><button type="button" data-w3t="markets"><i>${W3I.mk}</i>${w3L("Piyasalar","Markets")}</button><button type="button" data-w3="more"><i>${W3I.more}</i>${w3L("Daha fazla","More")}</button></div>`+
+  `<div class="w3-pr"><button type="button" data-w3="camp"><span class="t"><b>FOMO Trading Week</b><small>${w3L("1 milyon dolar hacme 10.000 dolar ödül","$10,000 for $1M in volume")}</small></span><span class="em">🏆</span></button><button type="button" data-sym="FOREVER"><span class="t"><b>FOREVER</b><small>${w3L("Hiç yerinde durmayan Solana memecoini","The Solana memecoin that never sits still")}</small></span><span class="em">🐎</span></button><button type="button" data-w3="airdrop"><span class="t"><b>Airdrop</b><small>${w3L("QR ile arkadaşına anında coin gönder","Send coins to a friend instantly with a QR")}</small></span><span class="em">🎁</span></button></div>`+
+  `<div id="w3L"></div>`;w3List()}
+function w3List(){const L=$("w3L");if(!L)return;
+  if(W3.dq.trim()){const q=W3.dq.trim().toLowerCase(),a=T.filter(t=>t.s.toLowerCase().includes(q)||String(t.n||"").toLowerCase().includes(q)).slice(0,25);
+    L.innerHTML=a.length?a.map(w3MkRow).join(""):`<div class="w3-empty">${w3L("Sonuç bulunamadı","No results")}</div>`;return}
+  L.innerHTML=`<div class="w3-sh"><b>${w3L("Varlıklarım","My Assets")}</b><button type="button" data-w3="more2">${W3.more?w3L("Daha az","Less"):w3L("Tokenları Yönet","Manage Tokens")}</button></div>`+w3Assets().map(w3AssetRow).join("")}
+function w3MkRow(t){const c=chg(t);return `<button type="button" class="w3-mk" data-sym="${t.s}"><span style="display:flex;align-items:center;gap:10px;min-width:0">${coinHTML(t,"w3c")}<span><b>${t.s}</b><small>${t.vol?w3C(t.vol):esc(t.n||"")}</small></span></span><span class="rt"><b>${usd(t.p,t.d)}</b><small class="${c>=0?"up":"down"}">${c>=0?"+":""}${fmtN(c,2)}%</small></span></button>`}
+const W3SOL=["SOL","TRUMP","PENGU","BONK","WIF","FARTCOIN","BOME","POPCAT","MEW","FOREVER"];
+function w3MkList(){const L=$("w3L");if(!L)return;let a=T.filter(t=>t.live||t.p>0);const q=W3.mq.trim().toLowerCase();
+  if(q)a=a.filter(t=>t.s.toLowerCase().includes(q)||String(t.n||"").toLowerCase().includes(q));
+  else if(W3.mk==="fav")a=a.filter(t=>(st.watch||[]).includes(t.s));
+  else if(W3.mk==="sol")a=a.filter(t=>W3SOL.includes(t.s));
+  else if(W3.mk==="new")a=a.filter(t=>t.age>0).sort((x,y)=>y.age-x.age);
+  if(!q&&W3.mk!=="new")a=[...a].sort((x,y)=>(+y.vol||0)-(+x.vol||0)||(y.mc||0)-(x.mc||0));
+  L.innerHTML=a.length?a.slice(0,60).map(w3MkRow).join(""):`<div class="w3-empty">${W3.mk==="fav"&&!q?w3L("Favori coinin yok. Bir coini yıldızlayarak ekle.","No favorites yet. Star a coin to add it."):w3L("Sonuç bulunamadı","No results")}</div>`}
+function w3Markets(){const T3=[["fav",w3L("Favoriler","Favorites")],["hot","Hot"],["sol","Solana"],["new",w3L("Yeni","New")]];
+  $("w3Body").innerHTML=`<div class="w3-h">${w3L("Piyasalar","Markets")}</div>`+w3Q("w3Mq",w3L("Coin / kontrat ara","Search coin/contract"),W3.mq)+`<div class="w3-tabs">${T3.map(x=>`<button type="button" data-w3m="${x[0]}" class="${W3.mk===x[0]?"on":""}">${x[1]}</button>`).join("")}</div><div id="w3L"></div>`;w3MkList()}
+const W3G=[
+ ["Solana Projeleri","En iyi Solana projeleri",[["Jupiter",""],["Raydium","DEX"],["Meteora",""],["Orca",""]],"Top Solana Projects","Top Solana projects"],
+ ["DeFi Araçları","Web3'e yeni başlayanlar için gerekli araçlar",[["World Liberty","DeFi"],["Smolrefuel","DeFi"],["DefiLlama",""],["Revoke.cash",""]],"DeFi Tools","Must-have tools for Web3 beginners"],
+ ["Meme Araçları","Zincir üstü meme araçları; bir sonraki cevheri bul",[["Ave.ai","DeFi"],["Pancakeswap","DEX"],["Phantom SOL",""],["BigPump","NFT"]],"Meme Tools","On-chain meme tools to find the next gem"],
+ ["Yeniden Stake","En yeni yeniden stake uygulamaları",[["ether.fi","Stake"],["EigenLayer","Stake"],["Symbiotic",""],["Solayer",""]],"Restaking Zone","The newest restaking apps"],
+ ["Yükselen Yıldızlar","Güçlü büyüme potansiyeli olan projeler",[["Raydium","DEX"],["Dydx",""],["Pancake Swap","DEX"],["Uniswap","DEX"]],"Rising Stars","Projects with strong growth potential"]];
+function w3Discover(){const T2=[["dapps","DApps"],["air","Airdrop"]];
+  $("w3Body").innerHTML=`<div class="w3-tabs" style="gap:18px;margin-top:6px">${T2.map(x=>`<button type="button" data-w3d="${x[0]}" class="${W3.ds===x[0]?"on":""}" style="font-size:18px">${x[1]}</button>`).join("")}</div>`+(W3.ds==="dapps"?w3Q("w3Xq",w3L("DApp ara","Search DApps"),W3.xq)+`<div id="w3L"></div>`:`<div id="w3L"></div>`);w3DList()}
+function w3DList(){const L=$("w3L");if(!L)return;
+  if(W3.ds==="air"){L.innerHTML=`<div class="w3-pr" style="flex-direction:column;margin:0;padding:0;overflow:visible"><button type="button" style="flex:none" data-w3="camp"><span class="t"><b>FOMO Trading Week</b><small>${w3L("SOL ve Solana memecoinlerinde hacim yap, 10.000 $'a kadar ödül kazan.","Trade SOL and Solana memecoins for up to $10,000 in rewards.")}</small></span><span class="em">🏆</span></button><button type="button" style="flex:none" data-w3="airdrop"><span class="t"><b>Airdrop</b><small>${w3L("Yakındaki arkadaşına QR ile coin gönder ya da al.","Send or receive coins with a nearby friend via QR.")}</small></span><span class="em">🎁</span></button><button type="button" style="flex:none" data-w3="rewards"><span class="t"><b>${w3L("Ödüller","Rewards")}</b><small>${w3L("Görevleri tamamla, günlük ödülleri topla.","Complete tasks and collect daily rewards.")}</small></span><span class="em">⭐</span></button></div>`;return}
+  const q=W3.xq.trim().toLowerCase();let h="";
+  W3G.forEach(g=>{const it=g[2].filter(x=>!q||x[0].toLowerCase().includes(q));if(!it.length)return;
+    h+=`<div class="w3-gh"><b>${g[+EN?3:0]}</b><small>${g[+EN?4:1]}</small></div><div class="w3-ap">${it.map(x=>`<button type="button" data-w3="dapp"><i style="background:${colorFor(x[0])}">${esc(x[0][0])}${x[1]?`<em>${x[1]}</em>`:""}</i><span>${esc(x[0])}</span></button>`).join("")}</div>`});
+  L.innerHTML=h||`<div class="w3-empty">${w3L("Sonuç bulunamadı","No results")}</div>`}
+function w3Render(){const el=$("w3"),o=w3Get();
+  if(W3.step==="intro"){el.innerHTML=w3Intro();return}
+  if(W3.step==="create"){el.innerHTML=w3Create();return}
+  el.innerHTML=w3App();({wallet:w3Wallet,markets:w3Markets,discover:w3Discover})[W3.tab]()}
+function w3Open(){if(!me)return;const o=w3Get();W3.step=!o.seen?"intro":"app";W3.i=0;W3.tab="wallet";W3.dq=W3.mq=W3.xq="";W3.more=false;W3.ck=false;W3.tip=false;
+  closeSheet();$("w3").hidden=false;w3Render();try{renderMode()}catch(e){}}
+function w3Close(){const el=$("w3");if(el.hidden)return;el.hidden=true;el.innerHTML=""}
+function w3Sym(s){w3Close();prev=view;go("detail",s)}
+$("w3").addEventListener("input",e=>{const i=e.target;if(i.id==="w3Dq"){W3.dq=i.value;w3List()}else if(i.id==="w3Mq"){W3.mq=i.value;w3MkList()}else if(i.id==="w3Xq"){W3.xq=i.value;w3DList()}});
+$("w3").addEventListener("click",e=>{const t=e.target;let b;
+  if(b=t.closest("[data-sym]")){w3Sym(b.dataset.sym);return}
+  if(b=t.closest("[data-w3t]")){W3.tab=b.dataset.w3t;w3Render();return}
+  if(b=t.closest("[data-w3m]")){W3.mk=b.dataset.w3m;w3Markets();return}
+  if(b=t.closest("[data-w3d]")){W3.ds=b.dataset.w3d;w3Discover();return}
+  if(!(b=t.closest("[data-w3]")))return;const a=b.dataset.w3;
+  if(a==="mode")openSheet("mode");
+  else if(a==="skip"){w3Set({seen:1});W3.step=w3Get().wallet?"app":"create";W3.tip=false;w3Render()}
+  else if(a==="next"){if(W3.i<W3S.length-1){W3.i++;w3Render()}else{w3Set({seen:1});W3.step=w3Get().wallet?"app":"create";w3Render()}}
+  else if(a==="exit")w3Close();
+  else if(a==="ck"){W3.ck=!W3.ck;if(W3.ck)W3.tip=false;w3Render()}
+  else if(a==="mk"){if(!W3.ck){W3.tip=true;w3Render();return}w3Set({seen:1,wallet:1});W3.step="app";W3.tab="wallet";w3Render();toast(w3L("Sanal cüzdanın hazır","Your virtual wallet is ready"))}
+  else if(a==="create"){W3.step="create";W3.ck=false;W3.tip=false;w3Render()}
+  else if(a==="more2"){W3.more=!W3.more;w3List()}
+  else if(a==="send")openSheet("send");
+  else if(a==="airdrop")openSheet("airdrop");
+  else if(a==="more")openSheet("more");
+  else if(a==="rewards")openSheet("rewards");
+  else if(a==="camp"){w3Close();const c=(st.camps||[]).find(x=>x.title==="FOMO Trading Week");if(c)openCampaign(c.id);else openSheet("campaigns")}
+  else if(a==="scan")openSheet("recv");
+  else if(a==="dapp")toast(w3L("Bu uygulama sanal cüzdanda yakında","This app is coming soon to the virtual wallet"))});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&w3Vis()&&!openId&&!(AD&&!AD.done&&!$("ads").hidden)){e.preventDefault();w3Close()}});
+setInterval(()=>{if(!w3Vis()||W3.step!=="app"||document.hidden)return;
+  if(W3.tab==="wallet"){const tt=$("w3Tot");if(tt){const t=w3Total();tt.textContent=usd(t.v);const c=$("w3Chg");if(c){c.className=t.c>=0?"up":"down";c.textContent=(t.c>=0?"▲ +":"▼ ")+fmtN(t.c,2)+"% · 24"+w3L("s","h")}}w3List()}
+  else if(W3.tab==="markets")w3MkList()},3000);
 // boot
 (async function boot(){
   const {data}=await sb.auth.getSession();
