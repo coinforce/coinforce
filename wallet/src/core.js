@@ -1,7 +1,9 @@
 /*! COINFORCE Web3 cüzdan çekirdeği (saklamasız / non-custodial)
  * Kurtarma ifadesi ve özel anahtarlar yalnızca kullanıcının cihazında üretilir ve şifreli saklanır;
  * bu dosya hiçbir anahtarı, ifadeyi ya da şifreyi ağ üzerinden göndermez. Ağ istekleri yalnızca
- * herkese açık blokzincir RPC uçlarına (bakiye okuma, işlem yayınlama) yapılır.
+ * herkese açık blokzincir RPC uçlarına (bakiye okuma, simülasyon, işlem yayınlama) ve takas teklifi için
+ * Jupiter (api.jup.ag) ile KyberSwap (aggregator-api.kyberswap.com) uçlarına yapılır; bunlara yalnızca
+ * herkese açık adres ve tutar gider. Takas işlemleri imzadan önce simülasyonla denetlenir.
  * Paketlenen kütüphaneler (hepsi MIT lisanslı): ethers 6.17.0, @solana/web3.js 1.98.4,
  * @scure/bip39 2.4.0, @noble/hashes 2.4.0 (ve bağımlılıkları). Lisans metinleri: wallet/LICENSES.txt
  */
@@ -10,9 +12,9 @@ import { wordlist } from "@scure/bip39/wordlists/english.js";
 import { hmac } from "@noble/hashes/hmac.js";
 import { sha512 } from "@noble/hashes/sha2.js";
 import { HDNodeWallet, JsonRpcProvider, Contract, Interface, Network, isAddress, getAddress, parseUnits, formatUnits } from "ethers";
-import { Connection, PublicKey, Keypair, SystemProgram, TransactionInstruction, TransactionMessage, VersionedTransaction, ComputeBudgetProgram } from "@solana/web3.js";
+import { Connection, PublicKey, Keypair, SystemProgram, TransactionInstruction, TransactionMessage, VersionedTransaction, ComputeBudgetProgram, AddressLookupTableAccount } from "@solana/web3.js";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
 export const SOL_PATH = "m/44'/501'/0'/0'";   // Phantom / Solflare varsayılanı
 export const EVM_PATH = "m/44'/60'/0'/0/0";    // MetaMask varsayılanı
 export const KDF_IT = 600000;                  // PBKDF2-SHA256 (OWASP 2023 önerisi)
@@ -27,8 +29,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 // ---------- Ağlar (adresler bağımsız listelerle doğrulandı: Jupiter doğrulanmış token listesi, Uniswap varsayılan listesi)
 export const NETS = {
   main: {
-    sol: { id: "sol", name: "Solana", sym: "SOL", dec: 9, rpc: ["https://api.mainnet-beta.solana.com", "https://solana-rpc.publicnode.com"], tx: "solscan.io/tx/", acct: "solscan.io/account/", q: "",
-      mints: { EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: "USDC", Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB: "USDT", DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263: "BONK",
+    sol: { id: "sol", name: "Solana", sym: "SOL", dec: 9, rpc: ["https://api.mainnet-beta.solana.com", "https://solana-rpc.publicnode.com"], rpcTx: ["https://solana-rpc.publicnode.com", "https://api.mainnet-beta.solana.com"], tx: "solscan.io/tx/", acct: "solscan.io/account/", q: "",
+      holdings: true, mints: { EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: "USDC", Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB: "USDT", DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263: "BONK",
         EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm: "WIF", JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN: "JUP", "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr": "POPCAT",
         ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82: "BOME", MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5: "MEW" } },
     evm: [
@@ -123,21 +125,38 @@ const fail = (code, extra) => Object.assign(new Error(code), { code, userFacing:
 const ERC20 = new Interface(["function balanceOf(address) view returns (uint256)", "function transfer(address,uint256) returns (bool)"]);
 
 // ---------- Bakiyeler
+function solRows(C, lam, list) {   // list: [{acct, mint, prog, dec, raw(BigInt), frozen}]
+  const rows = [{ net: "sol", netName: C.name, sym: "SOL", name: "Solana", dec: 9, raw: String(lam), native: true }], by = {};
+  for (const a of list) {
+    if (a.raw === 0n || a.frozen) continue; const cur = by[a.mint];
+    if (!cur) by[a.mint] = { net: "sol", netName: C.name, mint: a.mint, prog: a.prog, dec: a.dec, raw: a.raw, acct: a.acct, acctRaw: a.raw };
+    else { cur.raw += a.raw; if (a.raw > cur.acctRaw) { cur.acct = a.acct; cur.acctRaw = a.raw } }
+  }
+  for (const r of Object.values(by)) { const sym = C.mints[r.mint] || null; rows.push(Object.assign(r, { sym, name: sym, raw: String(r.raw), acctRaw: String(r.acctRaw) })) }
+  return rows;
+}
 async function solBalances(C, owner) {
-  return withRpc(C.rpc, async u => {
-    const cn = solConn(u), pk = new PublicKey(owner);
-    const [lam, t1, t2] = await Promise.all([cn.getBalance(pk), cn.getParsedTokenAccountsByOwner(pk, { programId: new PublicKey(TOKEN) }), cn.getParsedTokenAccountsByOwner(pk, { programId: new PublicKey(TOKEN22) })]);
-    const rows = [{ net: "sol", netName: C.name, sym: "SOL", name: "Solana", dec: 9, raw: String(lam), native: true }], by = {};
-    for (const [arr, prog] of [[t1.value, TOKEN], [t2.value, TOKEN22]]) for (const a of arr) {
-      const info = a.account.data && a.account.data.parsed && a.account.data.parsed.info, amt = info && info.tokenAmount;
-      if (!amt || amt.amount === "0" || info.state === "frozen") continue;
-      const raw = BigInt(amt.amount), m = info.mint, cur = by[m];
-      if (!cur) by[m] = { net: "sol", netName: C.name, mint: m, prog, dec: amt.decimals, raw, acct: a.pubkey.toBase58(), acctRaw: raw };
-      else { cur.raw += raw; if (raw > cur.acctRaw) { cur.acct = a.pubkey.toBase58(); cur.acctRaw = raw } }
+  const pk = new PublicKey(owner);
+  try {
+    return await withRpc(C.rpc, async u => {
+      const cn = solConn(u), [lam, t1, t2] = await Promise.all([cn.getBalance(pk), cn.getParsedTokenAccountsByOwner(pk, { programId: new PublicKey(TOKEN) }), cn.getParsedTokenAccountsByOwner(pk, { programId: new PublicKey(TOKEN22) })]), list = [];
+      for (const [arr, prog] of [[t1.value, TOKEN], [t2.value, TOKEN22]]) for (const a of arr) {
+        const info = a.account.data && a.account.data.parsed && a.account.data.parsed.info, amt = info && info.tokenAmount; if (!amt) continue;
+        list.push({ acct: a.pubkey.toBase58(), mint: info.mint, prog, dec: amt.decimals, raw: BigInt(amt.amount), frozen: info.state === "frozen" });
+      }
+      return solRows(C, lam, list);
+    });
+  } catch (e) {
+    if (C.holdings) {   // yedek: Jupiter bakiye servisi (herkese açık adres)
+      try {
+        const j = await getJSON(`${JUP_API}/ultra/v1/holdings/${owner}`), list = [];
+        if (j && j.amount != null && j.tokens) { for (const [mint, arr] of Object.entries(j.tokens)) for (const a of arr || []) if (a.programId === TOKEN || a.programId === TOKEN22) list.push({ acct: a.account, mint, prog: a.programId, dec: +a.decimals, raw: BigInt(a.amount), frozen: !!a.isFrozen });
+          return solRows(C, BigInt(j.amount), list) }
+      } catch (e2) {}
     }
-    for (const r of Object.values(by)) { const sym = C.mints[r.mint] || null; rows.push(Object.assign(r, { sym, name: sym, raw: String(r.raw), acctRaw: String(r.acctRaw) })) }
-    return rows;
-  });
+    const lam = await withRpc(C.rpcTx || C.rpc, u => solConn(u).getBalance(pk));
+    const rows = solRows(C, lam, []); rows.partial = true; return rows;
+  }
 }
 async function evmBalances(C, owner) {
   return withRpc(C.rpc, async u => {
@@ -148,7 +167,7 @@ async function evmBalances(C, owner) {
 }
 export async function balances(net, addrs) {
   const N = NETS[net], list = [], errs = [], jobs = [];
-  if (addrs && addrs.sol) jobs.push(solBalances(N.sol, addrs.sol).then(r => list.push(...r), e => errs.push({ net: "sol", msg: String(e && e.message || e) })));
+  if (addrs && addrs.sol) jobs.push(solBalances(N.sol, addrs.sol).then(r => { list.push(...r); if (r.partial) errs.push({ net: "sol", msg: "tokens" }) }, e => errs.push({ net: "sol", msg: String(e && e.message || e) })));
   if (addrs && addrs.evm) for (const C of N.evm) jobs.push(evmBalances(C, addrs.evm).then(r => list.push(...r), e => errs.push({ net: C.id, msg: String(e && e.message || e) })));
   await Promise.all(jobs); return { list, errs, at: Date.now() };
 }
@@ -169,14 +188,14 @@ function solIxs(from, to, a, raw, needAta) {
 const solMsg = (from, bh, ixs) => new TransactionMessage({ payerKey: from, recentBlockhash: bh, instructions: ixs }).compileToLegacyMessage();
 // Gönderim planı: doğrulama + simülasyon + ücret. İmza YOK.
 export async function solPlan({ net, from, to, asset, raw, max }) {
-  const C = NETS[net].sol, A = solAddr(to); raw = BigInt(raw || 0);
+  const C = NETS[net].sol, A = solAddr(to); raw = BigInt(raw || 0); const RPCS = C.rpcTx || C.rpc;
   if (!A.ok) throw fail("bad-address");
   if (!A.onCurve) throw fail("off-curve");
   if (A.addr === from) throw fail("self");
   if (max && !asset.native) raw = BigInt(asset.acctRaw);
   if (!max && raw <= 0n) throw fail("bad-amount");
   if (!asset.native && raw > BigInt(asset.acctRaw)) throw fail("insufficient");
-  return withRpc(C.rpc, async u => {
+  return withRpc(RPCS, async u => {
     const cn = solConn(u), fromPk = new PublicKey(from), toPk = new PublicKey(A.addr);
     let needAta = false, ataRent = 0n;
     const [balN, rent0, toInfo] = await Promise.all([cn.getBalance(fromPk), cn.getMinimumBalanceForRentExemption(0), cn.getAccountInfo(toPk)]);
@@ -215,7 +234,7 @@ export async function solPlan({ net, from, to, asset, raw, max }) {
 export async function solSend(plan, phrase, onStatus) {
   const C = NETS[plan.net].sol, kp = solKeypair(phrase);
   if (kp.publicKey.toBase58() !== plan.from) throw fail("wallet-mismatch");
-  const cn = solConn(C.rpc[0]), ixs = [ComputeBudgetProgram.setComputeUnitLimit({ units: plan.units }), ComputeBudgetProgram.setComputeUnitPrice({ microLamports: plan.price }),
+  const cn = solConn((C.rpcTx || C.rpc)[0]), ixs = [ComputeBudgetProgram.setComputeUnitLimit({ units: plan.units }), ComputeBudgetProgram.setComputeUnitPrice({ microLamports: plan.price }),
     ...solIxs(kp.publicKey, new PublicKey(plan.to), plan.asset, BigInt(plan.raw), plan.needAta)];
   const { blockhash, lastValidBlockHeight } = await cn.getLatestBlockhash("confirmed");
   const tx = new VersionedTransaction(solMsg(kp.publicKey, blockhash, ixs)); tx.sign([kp]);
@@ -272,3 +291,235 @@ export async function evmSend(plan, phrase, onStatus) {
 // ---------- Gezgin bağlantıları
 export function explorerTx(net, chain, id) { const C = chainOf(net, chain); return C.tx + id + (C.q || "") }
 export function explorerAcct(net, chain, a) { const C = chainOf(net, chain); return C.acct + a + (C.q || "") }
+
+// =====================================================================================================
+// ---------- Takas (zincir üstü). Solana: Jupiter /swap/v2/build (Metis yönlendirme, Jupiter ücreti yok; işlemi biz kurarız).
+// EVM: KyberSwap Aggregator. Her iki tarafta da imzadan ÖNCE simülasyonla bakiye değişiklikleri denetlenir; beklenmeyen bir
+// çıkış, sahiplik/harcama izni değişikliği ya da eksik çıktı varsa işlem imzalanmaz.
+export const JUP_API = "https://api.jup.ag", KYBER_API = "https://aggregator-api.kyberswap.com";
+export const WSOL = "So11111111111111111111111111111111111111112", EVM_NATIVE = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+const KYBER_CHAIN = { eth: "ethereum", bsc: "bsc", base: "base" };
+const KYBER_ROUTERS = ["0x6131B5fae19EA4f9D964eAc0408E4408b66337b5", "0x6868d319c8c9a78f7d39dc3602c5c917315132d7"].map(a => a.toLowerCase());
+const CB = "ComputeBudget111111111111111111111111111111", SYS = "11111111111111111111111111111111";
+const SAFE_PROGS = new Set([CB, SYS, TOKEN, TOKEN22, ATA]);
+const b64u8 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const ERC20X = new Interface(["function balanceOf(address) view returns (uint256)", "function allowance(address,address) view returns (uint256)", "function approve(address,uint256) returns (bool)",
+  "function decimals() view returns (uint8)", "function symbol() view returns (string)", "function name() view returns (string)",
+  "event Transfer(address indexed from, address indexed to, uint256 value)", "event Approval(address indexed owner, address indexed spender, uint256 value)"]);
+async function getJSON(url, opt) {
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 15000);
+  try {
+    const r = await fetch(url, Object.assign({ signal: ctl.signal }, opt || {})), j = await r.json().catch(() => null);
+    if (r.status === 429) throw fail("rate-limited");
+    if (!r.ok) throw fail(r.status === 400 || r.status === 404 || r.status === 422 ? "no-route" : "quote-failed", { status: r.status, detail: j && (j.error || j.message || j.errorMessage) || r.statusText });
+    return j;
+  } catch (e) { if (e && e.userFacing) throw e; throw fail("quote-net", { detail: String(e && e.message || e) }) } finally { clearTimeout(t) }
+}
+// SPL token hesabı (Token ve Token-2022 temel düzeni, ilk 165 bayt)
+function parseTA(b) {
+  if (!b || b.length < 165) return null; const dv = new DataView(b.buffer, b.byteOffset, b.byteLength);
+  return { mint: new PublicKey(b.slice(0, 32)).toBase58(), owner: new PublicKey(b.slice(32, 64)).toBase58(), amount: dv.getBigUint64(64, true),
+    delegate: dv.getUint32(72, true) ? new PublicKey(b.slice(76, 108)).toBase58() : null, close: dv.getUint32(129, true) ? new PublicKey(b.slice(133, 165)).toBase58() : null };
+}
+const accData = a => !a ? null : a.data instanceof Uint8Array ? a.data : Array.isArray(a.data) ? b64u8(a.data[0]) : null;
+
+// ---- Solana
+export async function solTokenInfo(mints) {   // zincirden: hangi token programı, kaç ondalık (Mint düzeninde 44. bayt)
+  const N = NETS.main.sol; return withRpc(N.rpcTx, async u => {
+    const r = await solConn(u).getMultipleAccountsInfo(mints.map(m => new PublicKey(m))), out = {};
+    mints.forEach((m, i) => { const a = r[i]; if (!a) return; const o = a.owner.toBase58(); if ((o === TOKEN || o === TOKEN22) && a.data.length >= 82) out[m] = { prog: o, dec: a.data[44] } }); return out;
+  });
+}
+export async function solSwapQuote({ from, inMint, outMint, raw, slippageBps }) {
+  if (inMint === outMint) throw fail("same-token");
+  if (!(BigInt(raw) > 0n)) throw fail("bad-amount");
+  const q = new URLSearchParams({ inputMint: inMint, outputMint: outMint, amount: String(raw), taker: from, slippageBps: String(Math.round(slippageBps)), computeUnitPricePercentile: "high", maxAccounts: "48" });
+  const r = await getJSON(`${JUP_API}/swap/v2/build?${q}`);
+  if (!r || !r.swapInstruction || !r.outAmount) throw fail("no-route", { detail: r && (r.error || r.errorMessage) });
+  const pi = r.priceImpact != null ? +r.priceImpact : r.priceImpactPct != null ? +r.priceImpactPct * 100 : null;
+  return { chain: "sol", at: Date.now(), from, inMint, outMint, raw: String(raw), slippageBps, inAmount: String(r.inAmount), outAmount: String(r.outAmount), minOut: String(r.otherAmountThreshold),
+    priceImpact: isFinite(pi) ? pi : null, route: [...new Set((r.routePlan || []).map(x => x.swapInfo && x.swapInfo.label).filter(Boolean))], resp: r };
+}
+function solSwapParts(q) {
+  const r = q.resp, extra = [...(r.setupInstructions || []), ...(r.cleanupInstruction ? [r.cleanupInstruction] : []), ...(r.otherInstructions || [])];
+  for (const j of extra) if (!SAFE_PROGS.has(j.programId)) throw fail("route-unsupported", { detail: j.programId });
+  for (const j of [...extra, r.swapInstruction]) for (const a of j.accounts || []) if (a.isSigner && a.pubkey !== q.from) throw fail("route-unsupported", { detail: "signer" });
+  const ix = j => new TransactionInstruction({ programId: new PublicKey(j.programId), keys: (j.accounts || []).map(a => ({ pubkey: new PublicKey(a.pubkey), isSigner: !!a.isSigner, isWritable: !!a.isWritable })), data: b64u8(j.data || "") });
+  let price = 0;
+  for (const j of r.computeBudgetInstructions || []) { if (j.programId !== CB) continue; const d = b64u8(j.data); if (d[0] === 3 && d.length >= 9) price = Number(new DataView(d.buffer).getBigUint64(1, true)) }
+  const alts = Object.entries(r.addressesByLookupTableAddress || {}).map(([k, a]) => new AddressLookupTableAccount({ key: new PublicKey(k),
+    state: { deactivationSlot: BigInt("18446744073709551615"), lastExtendedSlot: 0, lastExtendedSlotStartIndex: 0, authority: undefined, addresses: a.map(x => new PublicKey(x)) } }));
+  return { ixs: [...(r.setupInstructions || []), r.swapInstruction, ...(r.cleanupInstruction ? [r.cleanupInstruction] : []), ...(r.otherInstructions || [])].map(ix), alts, price };
+}
+// Simülasyon öncesi/sonrası hesap durumlarını karşılaştıran saf denetim (test edilebilir). pre/post: [{lamports, owner, data(Uint8Array)}|null]
+export function guardCheck(q, keys, pre, post) {
+  const L0 = BigInt(pre[0] ? pre[0].lamports : 0), L1 = BigInt(post[0] ? post[0].lamports : 0);
+  if (post[0] && post[0].owner !== SYS) throw fail("guard", { detail: "wallet-owner" });
+  let inD = 0n, outD = 0n, rent = 0n;
+  for (let i = 1; i < keys.length; i++) {
+    const a0 = pre[i] ? parseTA(pre[i].data) : null, a1 = post[i] ? parseTA(post[i].data) : null;
+    if (!a0 && a1) rent += BigInt(post[i].lamports || 0);
+    const m = (a1 || a0 || {}).mint; if (!m) continue;
+    if (a1 && a1.owner !== q.from) throw fail("guard", { detail: "token-owner" });
+    if (a1 && a1.delegate && (!a0 || a0.delegate !== a1.delegate)) throw fail("guard", { detail: "delegate" });
+    if (a1 && a1.close && (!a0 || a0.close !== a1.close)) throw fail("guard", { detail: "close-authority" });
+    const d = (a1 ? a1.amount : 0n) - (a0 ? a0.amount : 0n);
+    if (m === q.inMint && m !== WSOL) inD += d; else if (m === q.outMint && m !== WSOL) outD += d;
+    else if (d < 0n && !(m === WSOL && (q.inMint === WSOL || q.outMint === WSOL))) throw fail("guard", { detail: "other-token" });
+  }
+  const raw = BigInt(q.raw), minOut = BigInt(q.minOut), feeMax = 3000000n + rent, dL = L1 - L0;   // ağ + öncelik ücreti (≤0,001) + pay; yeni açılan hesapların kirası ayrıca
+  if (q.inMint !== WSOL && -inD > raw) throw fail("guard", { detail: "in-amount" });
+  if (q.outMint !== WSOL && outD < minOut) throw fail("guard", { detail: "out-amount" });
+  if (q.inMint === WSOL) { if (-dL > raw + feeMax) throw fail("guard", { detail: "sol-spent" }) }
+  else if (q.outMint === WSOL) { if (dL < minOut - feeMax) throw fail("guard", { detail: "sol-received" }) }
+  else if (-dL > feeMax) throw fail("guard", { detail: "sol-fee" });
+  return { inD, outD, dL };
+}
+const accN = a => a ? { lamports: a.lamports, owner: typeof a.owner === "string" ? a.owner : a.owner.toBase58(), data: accData(a) } : null;
+async function solGuard(cn, msg, q, watch) {
+  const keys = [q.from, ...watch], pre = await cn.getMultipleAccountsInfo(keys.map(a => new PublicKey(a)), "confirmed");
+  const sim = await cn.simulateTransaction(new VersionedTransaction(msg), { sigVerify: false, replaceRecentBlockhash: true, commitment: "confirmed", accounts: { encoding: "base64", addresses: keys } });
+  if (sim.value.err) throw fail("sim-failed", { detail: JSON.stringify(sim.value.err), logs: (sim.value.logs || []).slice(-8) });
+  const g = guardCheck(q, keys, pre.map(accN), (sim.value.accounts || []).map(accN));
+  return Object.assign(g, { units: sim.value.unitsConsumed || 0 });
+}
+const solSwapMsg = (from, bh, units, price, ixs, alts) => new TransactionMessage({ payerKey: new PublicKey(from), recentBlockhash: bh,
+  instructions: [ComputeBudgetProgram.setComputeUnitLimit({ units }), ComputeBudgetProgram.setComputeUnitPrice({ microLamports: price }), ...ixs] }).compileToV0Message(alts);
+// Plan: işlemi kur, simüle et, denetle. İmza YOK.  userAccts: kullanıcının izlenecek diğer token hesapları
+export async function solSwapPlan(q, userAccts) {
+  const N = NETS.main.sol; return withRpc(N.rpcTx, async u => {
+    const cn = solConn(u), from = new PublicKey(q.from), { ixs, alts, price: p0 } = solSwapParts(q);
+    const mints = [q.inMint, q.outMint].filter(m => m !== WSOL), info = mints.length ? await cn.getMultipleAccountsInfo(mints.map(m => new PublicKey(m))) : [], tk = {};
+    mints.forEach((m, i) => { const a = info[i], o = a && a.owner.toBase58(); if (o !== TOKEN && o !== TOKEN22) throw fail("bad-mint"); tk[m] = { prog: o, dec: a.data[44] } });
+    const ataIn = q.inMint !== WSOL ? ataOf(from, new PublicKey(q.inMint), tk[q.inMint].prog).toBase58() : null, ataOut = q.outMint !== WSOL ? ataOf(from, new PublicKey(q.outMint), tk[q.outMint].prog).toBase58() : null;
+    const watch = [...new Set([ataIn, ataOut, ...(userAccts || [])].filter(Boolean))].slice(0, 60);
+    const bal = BigInt(await cn.getBalance(from));
+    if (q.inMint === WSOL && bal < BigInt(q.raw) + 10000n) throw fail("insufficient");
+    const { blockhash } = await cn.getLatestBlockhash("confirmed");
+    const g = await solGuard(cn, solSwapMsg(q.from, blockhash, 1400000, 0, ixs, alts), q, watch);
+    const units = Math.min(1400000, Math.ceil(g.units * 1.2) + 3000), price = Math.max(0, Math.min(p0, Math.floor(1000000 * 1e6 / units)));   // öncelik ücreti en fazla 0,001 SOL
+    const msg = solSwapMsg(q.from, blockhash, units, price, ixs, alts);
+    if (new VersionedTransaction(msg).serialize().length > 1232) throw fail("tx-too-large");
+    const fee = 5000 + Math.ceil(units * price / 1e6);
+    return Object.assign({}, q, { units, price, fee: String(fee), watch, ataOut, inDec: q.inMint === WSOL ? 9 : tk[q.inMint].dec, outDec: q.outMint === WSOL ? 9 : tk[q.outMint].dec, simOut: String(q.outMint === WSOL ? g.dL : g.outD) });
+  });
+}
+async function solConfirm(cn, sig, wire, lastValidBlockHeight) {
+  for (let i = 0; i < 120; i++) {
+    await sleep(1500);
+    const s = (await cn.getSignatureStatuses([sig])).value[0];
+    if (s && s.err) throw fail("tx-failed", { sig, detail: JSON.stringify(s.err) });
+    if (s && (s.confirmationStatus === "confirmed" || s.confirmationStatus === "finalized")) return { sig, slot: s.slot };
+    if (i % 3 === 2) { if ((await cn.getBlockHeight("confirmed")) > lastValidBlockHeight) throw fail("expired", { sig }); cn.sendRawTransaction(wire, { skipPreflight: true, maxRetries: 0 }).catch(() => {}) }
+  }
+  throw fail("timeout", { sig });
+}
+// İmzala ve gönder: son kez simüle edip denetler; teklif eskiyse (60 sn) durur.
+export async function solSwapSend(plan, phrase, onStatus) {
+  if (Date.now() - plan.at > 60000) throw fail("quote-expired");
+  const kp = solKeypair(phrase); if (kp.publicKey.toBase58() !== plan.from) throw fail("wallet-mismatch");
+  const N = NETS.main.sol; return withRpc(N.rpcTx, async u => {
+    const cn = solConn(u), { ixs, alts } = solSwapParts(plan), { blockhash, lastValidBlockHeight } = await cn.getLatestBlockhash("confirmed");
+    const msg = solSwapMsg(plan.from, blockhash, plan.units, plan.price, ixs, alts);
+    onStatus && onStatus({ stage: "check" }); await solGuard(cn, msg, plan, plan.watch);
+    const tx = new VersionedTransaction(msg); tx.sign([kp]);
+    const wire = tx.serialize(), sig = await cn.sendRawTransaction(wire, { skipPreflight: true, maxRetries: 3 });
+    onStatus && onStatus({ stage: "sent", sig });
+    return solConfirm(cn, sig, wire, lastValidBlockHeight);
+  });
+}
+
+// ---- EVM (KyberSwap)
+export async function evmTokenInfo(chain, addr) {   // yapıştırılan kontrat için: sembol, ad, ondalık (zincirden)
+  const C = chainOf("main", chain), A = evmAddr(addr); if (!A.ok) throw fail("bad-address");
+  return withRpc(C.rpc, async u => { const t = new Contract(A.addr, ERC20X, evmProv(C, u)); const [s, n, d] = await Promise.all([t.symbol(), t.name().catch(() => ""), t.decimals()]); return { address: A.addr, symbol: String(s).slice(0, 16), name: String(n).slice(0, 40), decimals: Number(d) } });
+}
+export async function evmSwapQuote({ chain, from, tokenIn, tokenOut, raw }) {
+  const k = KYBER_CHAIN[chain]; if (!k) throw fail("bad-net");
+  const tin = tokenIn || EVM_NATIVE, tout = tokenOut || EVM_NATIVE; if (tin.toLowerCase() === tout.toLowerCase()) throw fail("same-token");
+  if (!(BigInt(raw) > 0n)) throw fail("bad-amount");
+  const j = await getJSON(`${KYBER_API}/${k}/api/v1/routes?${new URLSearchParams({ tokenIn: tin, tokenOut: tout, amountIn: String(raw), gasInclude: "true", excludeRFQSources: "true", origin: from })}`, { headers: { "x-client-id": "coinforce" } });
+  const d = j && j.data; if (!d || !d.routeSummary || !d.routeSummary.amountOut) throw fail("no-route", { detail: j && j.message });
+  if (!KYBER_ROUTERS.includes(String(d.routerAddress).toLowerCase())) throw fail("route-unsupported", { detail: d.routerAddress });
+  const rs = d.routeSummary, iu = +rs.amountInUsd, ou = +rs.amountOutUsd;
+  return { chain, at: Date.now(), from, tokenIn: tin, tokenOut: tout, raw: String(raw), outAmount: String(rs.amountOut), priceImpact: iu > 0 && ou > 0 ? Math.max(0, (iu - ou) / iu * 100) : null,
+    gasUsd: +rs.gasUsd || null, route: [...new Set((rs.route || []).flat().map(x => x && x.exchange).filter(Boolean))], routeSummary: rs };
+}
+async function evmSimulate(p, q, d, minOut, approves) {
+  const from = q.from.toLowerCase(), hex = v => "0x" + BigInt(v || 0).toString(16), calls = approves.map(v => ({ from: q.from, to: q.tokenIn, data: ERC20X.encodeFunctionData("approve", [d.routerAddress, v]) }));
+  calls.push({ from: q.from, to: d.routerAddress, data: d.data, value: hex(d.transactionValue) });
+  let r = null;
+  try { r = await p.send("eth_simulateV1", [{ blockStateCalls: [{ calls: calls.map(c => ({ from: c.from, to: c.to, data: c.data, value: c.value || "0x0" })) }], traceTransfers: true, validation: false }, "latest"]) } catch (e) { r = null }
+  if (r && r[0] && Array.isArray(r[0].calls)) {
+    const res = r[0].calls, last = res[res.length - 1];
+    if (res.some(x => x.status !== "0x1")) throw fail("sim-failed", { detail: last && last.error && last.error.message || "revert" });
+    const TT = ERC20X.getEvent("Transfer").topicHash, AT = ERC20X.getEvent("Approval").topicHash, NAT = EVM_NATIVE.toLowerCase(), tin = q.tokenIn.toLowerCase(), tout = q.tokenOut.toLowerCase();
+    let gotOut = 0n, spentIn = 0n;
+    for (const c of res) for (const l of c.logs || []) {
+      const addr = String(l.address).toLowerCase(), t0 = l.topics && l.topics[0];
+      if (t0 === AT && l.topics.length >= 3 && ("0x" + l.topics[1].slice(26)).toLowerCase() === from) {
+        if (addr !== tin || ("0x" + l.topics[2].slice(26)).toLowerCase() !== d.routerAddress.toLowerCase() || BigInt(l.data) > BigInt(q.raw)) throw fail("guard", { detail: "approval" }) }
+      if (t0 !== TT || !l.topics || l.topics.length < 3) continue;
+      const fa = ("0x" + l.topics[1].slice(26)).toLowerCase(), ta = ("0x" + l.topics[2].slice(26)).toLowerCase(), v = BigInt(l.data);
+      if (fa === from) { if (addr === tin) spentIn += v; else throw fail("guard", { detail: "other-token" }) }
+      if (ta === from && addr === tout) gotOut += v;
+    }
+    if (spentIn > BigInt(q.raw)) throw fail("guard", { detail: "in-amount" });
+    if (gotOut < minOut) throw fail("guard", { detail: "out-amount" });
+    return { mode: "simulateV1", gas: BigInt(last.gasUsed || 0) || null, gotOut };
+  }
+  if (approves.length) return { mode: "deferred", gas: null };   // onay gerekmiş ve RPC eth_simulateV1 desteklemiyor: takas, onaydan sonra eth_call ile denenir
+  try { await p.call({ from: q.from, to: d.routerAddress, data: d.data, value: BigInt(d.transactionValue || 0) }) } catch (e) { throw fail("sim-failed", { detail: String(e && (e.shortMessage || e.message) || e) }) }
+  return { mode: "call", gas: null };
+}
+export async function evmSwapPlan(q, slippageBps) {
+  const C = chainOf("main", q.chain), k = KYBER_CHAIN[q.chain];
+  const j = await getJSON(`${KYBER_API}/${k}/api/v1/route/build`, { method: "POST", headers: { "content-type": "application/json", "x-client-id": "coinforce" },
+    body: JSON.stringify({ routeSummary: q.routeSummary, sender: q.from, recipient: q.from, origin: q.from, slippageTolerance: Math.round(slippageBps), deadline: Math.floor(Date.now() / 1000) + 1200, enableGasEstimation: false, source: "coinforce" }) });
+  const d = j && j.data; if (!d || !d.data) throw fail("no-route", { detail: j && j.message });
+  if (!KYBER_ROUTERS.includes(String(d.routerAddress).toLowerCase())) throw fail("route-unsupported", { detail: d.routerAddress });
+  const nativeIn = q.tokenIn.toLowerCase() === EVM_NATIVE.toLowerCase(), raw = BigInt(q.raw);
+  if (BigInt(d.amountIn) !== raw) throw fail("guard", { detail: "amountIn" });
+  if (BigInt(d.transactionValue || 0) !== (nativeIn ? raw : 0n)) throw fail("guard", { detail: "value" });
+  const minOut = BigInt(d.amountOut) * BigInt(10000 - Math.round(slippageBps)) / 10000n;
+  return withRpc(C.rpc, async u => {
+    const p = evmProv(C, u), [bal, fd] = await Promise.all([p.getBalance(q.from), p.getFeeData()]);
+    let approves = [];
+    if (!nativeIn) {
+      const t = new Contract(q.tokenIn, ERC20X, p), [tb, al] = await Promise.all([t.balanceOf(q.from), t.allowance(q.from, d.routerAddress)]);
+      if (tb < raw) throw fail("insufficient");
+      if (al < raw) approves = al > 0n ? [0n, raw] : [raw];   // tam tutar kadar izin (sınırsız değil); USDT gibi tokenlar önce sıfırlamayı ister
+    } else if (bal < raw) throw fail("insufficient");
+    const sim = await evmSimulate(p, q, d, minOut, approves);
+    const maxFee = fd.maxFeePerGas != null ? fd.maxFeePerGas : fd.gasPrice, gasSwap = (sim.gas || BigInt(d.gas || 350000)) * 13n / 10n, gasAppr = BigInt(approves.length) * 65000n;
+    const fee = (gasSwap + gasAppr) * maxFee, need = fee + (nativeIn ? raw : 0n);
+    if (bal < need) throw fail("insufficient-fee", { need: String(need), have: String(bal) });
+    return Object.assign({}, q, { slippageBps, minOut: String(minOut), outAmount: String(d.amountOut), router: d.routerAddress, data: d.data, value: String(d.transactionValue || 0), approves: approves.map(String),
+      gasSwap: String(gasSwap), fee: String(fee), eip1559: fd.maxFeePerGas != null, maxFeePerGas: String(maxFee), maxPriorityFeePerGas: fd.maxPriorityFeePerGas != null ? String(fd.maxPriorityFeePerGas) : null, sim: sim.mode, at: Date.now() });
+  });
+}
+export async function evmSwapSend(plan, phrase, onStatus) {
+  if (Date.now() - plan.at > 120000) throw fail("quote-expired");
+  const C = chainOf("main", plan.chain); return withRpc(C.rpc, async u => {
+    const p = evmProv(C, u), w = evmWallet(phrase).connect(p); if (w.address !== plan.from) throw fail("wallet-mismatch");
+    const fd = await p.getFeeData(), mf = fd.maxFeePerGas != null ? fd.maxFeePerGas : fd.gasPrice;
+    if (mf > BigInt(plan.maxFeePerGas) * 3n / 2n) throw fail("fee-changed");
+    const fees = fd.maxFeePerGas != null ? { type: 2, maxFeePerGas: mf, maxPriorityFeePerGas: fd.maxPriorityFeePerGas } : { type: 0, gasPrice: mf };
+    let nonce = await p.getTransactionCount(w.address, "pending");
+    for (const v of plan.approves || []) {
+      onStatus && onStatus({ stage: "approve" });
+      const data = ERC20X.encodeFunctionData("approve", [plan.router, BigInt(v)]), gas = await p.estimateGas({ from: plan.from, to: plan.tokenIn, data });
+      let r; try { r = await w.sendTransaction(Object.assign({ to: plan.tokenIn, data, gasLimit: gas * 13n / 10n, nonce: nonce++, chainId: C.chainId }, fees)) } catch (e) { throw fail("send-failed", { detail: String(e && (e.shortMessage || e.message) || e) }) }
+      const rc = await r.wait(1, 180000); if (!rc || rc.status !== 1) throw fail("tx-failed", { hash: r.hash });
+    }
+    onStatus && onStatus({ stage: "check" });
+    let gas; try { gas = await p.estimateGas({ from: plan.from, to: plan.router, data: plan.data, value: BigInt(plan.value) }) } catch (e) { throw fail("sim-failed", { detail: String(e && (e.shortMessage || e.message) || e) }) }
+    const measured = plan.sim === "simulateV1", c2 = BigInt(plan.gasSwap) * (measured ? 2n : 4n), floor = measured ? 800000n : 2500000n, cap = c2 > floor ? c2 : floor, gl = gas * 13n / 10n;
+    if (gl > cap) throw fail("gas-high", { est: String(gas), cap: String(cap), planGas: String(plan.gasSwap) });   // tahmin planın çok üstündeyse gönderme: yetersiz gazla gönderip ücret yakmaktansa dur
+    let r; try { r = await w.sendTransaction(Object.assign({ to: plan.router, data: plan.data, value: BigInt(plan.value), gasLimit: gl, nonce: nonce++, chainId: C.chainId }, fees)) } catch (e) { throw fail("send-failed", { detail: String(e && (e.shortMessage || e.message) || e) }) }
+    onStatus && onStatus({ stage: "sent", hash: r.hash });
+    const rc = await r.wait(1, 180000); if (!rc || rc.status !== 1) throw fail("tx-failed", { hash: r.hash });
+    let got = null; try { const TT = ERC20X.getEvent("Transfer").topicHash, me = plan.from.toLowerCase(); for (const l of rc.logs) if (l.topics[0] === TT && l.address.toLowerCase() === plan.tokenOut.toLowerCase() && ("0x" + l.topics[2].slice(26)).toLowerCase() === me) got = (got || 0n) + BigInt(l.data) } catch (e) {}
+    return { hash: r.hash, got: got != null ? String(got) : null };
+  });
+}

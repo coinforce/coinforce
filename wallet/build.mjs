@@ -1,4 +1,4 @@
-// COINFORCE cüzdan paketi derlemesi: npm ci --ignore-scripts && node build.mjs cf-wallet-1.0.0.js
+// COINFORCE cüzdan paketi derlemesi: npm ci --ignore-scripts && node build.mjs cf-wallet-1.1.0.js
 // Çıktının sha384 değeri index.html içindeki WK_SRI ile aynı olmalı.
 import * as esbuild from "esbuild";
 import { createHash } from "crypto";

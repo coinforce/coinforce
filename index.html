@@ -1808,6 +1808,24 @@ nav.bar button svg{width:22px;height:22px}
 .w3 .w3-nav{position:absolute;left:0;right:0;bottom:0;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(12,13,13,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--w-ln);padding:7px 6px calc(7px + env(safe-area-inset-bottom,0px))}
 .w3 .w3-nav button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:#69716d;padding:2px 0}.w3 .w3-nav button.on{color:#fff}.w3 .w3-nav svg{width:23px;height:23px}
 @media (prefers-reduced-motion:reduce){.w3 .w3-orb i,.w3 .w3-orb .gl,.w3 .ia1 .ia-fl,.w3 .w3-sk{animation:none}.w3 .w3-sub,.w3 .w3-dsh{animation:none}.w3 .w3-hero{transition:none}}
+/* Web3: zincir üstü takas */
+.w3 .wkx-nets{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 0 12px;padding-bottom:2px}.w3 .wkx-nets::-webkit-scrollbar{display:none}
+.w3 .wkx-nets button{flex:none;height:32px;padding:0 13px;border-radius:999px;background:var(--w-c1);border:1px solid var(--w-ln);font-size:13px;font-weight:700;color:var(--w-mu)}
+.w3 .wkx-nets button.on{background:#e9efec;color:#0a0b0b;border-color:#e9efec}
+.w3 .w3-sw .tk .wkx-uv{display:grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#ffc95c;color:#1a1400;font:800 10px/1 var(--body);font-style:normal}
+.w3 .w3-sw .tk .coin{width:26px;height:26px;font-size:11px}
+.w3 .wkx-ok{display:inline-grid;place-items:center;width:15px;height:15px;margin-left:3px;border-radius:50%;background:var(--w-g);color:#04140c;vertical-align:-2px}.w3 .wkx-ok svg{width:10px;height:10px}
+.w3 .wkx-bad{display:inline-block;margin-left:5px;padding:1px 6px;border-radius:6px;background:rgba(255,201,92,.14);color:#ffc95c;font-size:10.5px;font-weight:700;vertical-align:2px}
+.w3 .wkx-w{color:#ffc95c!important}
+.w3 .wkx-sl{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin:12px 0 0;padding:8px;font-size:12.5px;color:var(--w-mu)}.w3 .wkx-sl b{color:#dfe6e2}.w3 .wkx-sl svg{width:14px;height:14px}
+.w3 .wkx-sls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 6px}
+.w3 .wkx-sls button{height:44px;border-radius:12px;background:var(--w-c1);border:1.5px solid var(--w-ln);font-weight:800;font-size:14px}.w3 .wkx-sls button.on{border-color:var(--w-g);color:var(--w-g)}
+.w3 .wkx-rv{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 10px 18px;margin:0 0 6px;text-align:center}
+.w3 .wkx-rv small{display:block;font-size:12px;color:var(--w-mu);margin-bottom:2px}.w3 .wkx-rv b{font-size:23px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.w3 .wkx-rv i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--w-c1);color:var(--w-mu)}.w3 .wkx-rv i svg{width:15px;height:15px}
+.w3 .wkx-ver{display:flex;gap:10px;align-items:flex-start;margin:14px 0 0;padding:11px 13px;border-radius:12px;background:rgba(37,227,138,.08);color:#bfe9d3;font-size:12.5px;line-height:1.5}.w3 .wkx-ver svg{width:17px;height:17px;flex:none;color:var(--w-g);margin-top:1px}
+.w3 .wk-spin.big{width:30px;height:30px;border-width:3px;border-color:rgba(37,227,138,.25);border-top-color:var(--w-g)}
+.w3 .wk-lnk.in{display:inline;margin:0;padding:0;font-size:inherit}
 /* Web3: kendi cüzdanım (saklamasız) */
 .w3 .wk-seg{display:flex;gap:4px;padding:4px;margin:0 0 14px;border-radius:14px;background:var(--w-c1);border:1px solid var(--w-ln)}
 .w3 .wk-seg button{flex:1;height:36px;border-radius:10px;font-size:13.5px;font-weight:700;color:var(--w-mu);transition:background .15s,color .15s}
@@ -6145,8 +6163,9 @@ function w3MkList(){const L=$("w3L");if(!L)return;const q=W3.mq.trim().toLowerCa
 // ---------- Takas (ana uygulamadaki "swap" işlemi)
 const w3Has=s=>s==="USDT"||!!find(s);
 const w3TkBtn=s=>`${w3Ico(s==="USDT"?{s:"USDT"}:find(s),"w3cs")}<b>${s}</b>${W3I.down}`;
-function w3Swap(){
-  $("w3Body").innerHTML=`<div class="w3-tt"><h2>${w3L("Takas","Swap")}</h2></div>
+function w3Swap(){const seg=wkSeg();
+  if(seg==="own"){$("w3Body").innerHTML=`<div class="w3-tt"><h2>${w3L("Takas","Swap")}</h2></div>`+wkSegHTML(seg)+(wkGet()?wkxHTML():wkCta());if(wkGet()){wkxAfter();if(!WK.bal&&!wkCache())wkRefresh(false)}else wkRegCheck();return}
+  $("w3Body").innerHTML=`<div class="w3-tt"><h2>${w3L("Takas","Swap")}</h2></div>${wkSegHTML(seg)}
   <div class="w3-sw"><div class="sc"><div class="r1"><span>${w3L("Öde","Pay")}</span><span><span id="w3Fb"></span><button type="button" class="mx" data-w3="max">${w3L("Maks","Max")}</button></span></div>
   <div class="r2"><input id="w3Sa" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="${w3L("Ödenecek miktar","Amount to pay")}" value="${esc(W3.amt)}"><button type="button" class="tk" data-w3="pickf" id="w3Ft" aria-label="${w3L("Ödenecek token","Token to pay")}"></button></div><div class="r3" id="w3Fu"></div></div>
   <button type="button" class="fl" data-w3="flip" aria-label="${w3L("Yönü değiştir","Switch direction")}">${W3I.swap}</button>
@@ -6278,7 +6297,7 @@ function w3SubRender(){const s=$("w3Sub");if(!s)return;if(!W3.sub){s.innerHTML="
   if(W3.sub==="wk"){wkRender();return}
   s.innerHTML=`<div class="w3-sub" role="dialog" aria-modal="true">${W3.sub==="tok"?w3TokHTML():W3.sub==="manage"?w3MgHTML():w3PickHTML()}</div>`;
   if(W3.sub==="manage")w3MgList();if(W3.sub==="pick")w3PkList();const b=s.querySelector('[data-w3="subx"]');if(b)try{b.focus({preventScroll:true})}catch(e){}}
-function w3SubClose(){const wk=W3.sub==="wk";if(wk)wkReset();W3.sub=null;w3SubRender();if(W3.tab==="wallet"){if(wk)w3Wallet();else w3WalletLive()}else if(W3.tab==="markets")w3MkList();else if(W3.tab==="swap")w3SwCalc()}
+function w3SubClose(){const wk=W3.sub==="wk";if(wk){if(WKF&&WKF.mode==="xslip"&&WKX)WKX.q=null;wkReset()}W3.sub=null;w3SubRender();if(wk){w3Tab();return}if(W3.tab==="wallet")w3WalletLive();else if(W3.tab==="markets")w3MkList();else if(W3.tab==="swap")w3SwCalc()}
 
 // ---------- aç / kapat ve olaylar
 function w3Open(){if(!me)return;try{adPreload()}catch(e){}const o=w3Get();if(WK.uid!==me.id){Object.assign(WK,{uid:me.id,bal:null,at:0,err:null,reg:undefined})}wkReset();
@@ -6341,13 +6360,13 @@ addEventListener("keydown",e=>{if(e.key!=="Escape"||!w3Vis()||openId||(AD&&!AD.d
   if(W3.dapp!=null){W3.dapp=null;w3ShRender()}else if(W3.sub)w3SubClose();else w3Close()});
 setInterval(()=>{if(!w3Vis()||document.hidden||W3.step!=="app")return;
   if(W3.sub==="tok"){const tb=$("w3TokB");if(tb)tb.innerHTML=w3TokBody();return}if(W3.sub)return;
-  if(W3.tab==="wallet")w3WalletLive();else if(W3.tab==="markets")w3MkList();else if(W3.tab==="swap")w3SwCalc()},3000);
+  if(W3.tab==="wallet")w3WalletLive();else if(W3.tab==="markets")w3MkList();else if(W3.tab==="swap"){if(wkSeg()==="own"){if(WKX&&WKX.amt&&!WKX.busy&&Date.now()-WKX.at>15000&&wkGet())wkxQuote();else wkxLive()}else w3SwCalc()}},3000);
 // ---------- Web3: kendi cüzdanım (saklamasız). Kurtarma ifadesi ve anahtarlar yalnızca bu cihazda, kullanıcının şifresiyle
 // şifreli durur (PBKDF2-SHA256 600k + AES-GCM). Sunucuya, Telegram'a ya da loglara hiçbir zaman ifade/anahtar/şifre gitmez;
 // veritabanına yalnızca herkese açık adresler yazılır. Kripto kütüphaneleri sürüm sabitli, bütünlük kontrollü (SRI) ayrı dosyada.
-const WK_SRC="wallet/cf-wallet-1.0.0.js",WK_SRI="sha384-PpgQQOKHiCE54IyyuY1CoYgWgbk3GLSSJKJMWqW29JLbPclRwWz/3h7Uqo3Py0k0";
+const WK_SRC="wallet/cf-wallet-1.1.0.js",WK_SRI="sha384-kquTj+AoadcGaVCK5yhYIuGDHN70S6SbAdZKrE25rPMr3pqIxh2O6uj6Khd6WdNl";
 let CFWp=null;
-function cfwLoad(){if(window.CFW&&window.CFW.VERSION==="1.0.0")return Promise.resolve(window.CFW);if(CFWp)return CFWp;
+function cfwLoad(){if(window.CFW&&window.CFW.VERSION==="1.1.0")return Promise.resolve(window.CFW);if(CFWp)return CFWp;
   CFWp=new Promise((res,rej)=>{const s=document.createElement("script");s.src=WK_SRC;s.integrity=WK_SRI;s.crossOrigin="anonymous";s.async=true;
     s.onload=()=>{if(window.CFW)res(window.CFW);else{CFWp=null;rej(Object.assign(new Error("load"),{code:"load"}))}};
     s.onerror=()=>{CFWp=null;s.remove();rej(Object.assign(new Error("load"),{code:"load"}))};document.head.appendChild(s)});return CFWp}
@@ -6378,6 +6397,18 @@ const WKE={"bad-address":["Adres geçersiz. Ağı ve adresi kontrol et.","Invali
   "timeout":["Onay gecikiyor. İşlem yine de gerçekleşebilir; gezginden kontrol et.","Confirmation is taking long. It may still go through; check the explorer."],
   "load":["Cüzdan bileşeni yüklenemedi. İnternet bağlantını kontrol et.","Couldn't load the wallet component. Check your connection."],
   "bad-blob":["Bu cihazdaki cüzdan kaydı okunamadı. Kurtarma ifadenle yeniden içe aktar.","The wallet data on this device couldn't be read. Re-import with your recovery phrase."],
+  "same-token":["Aynı tokenı seçtin.","You picked the same token."],
+  "no-route":["Bu tutar için takas rotası bulunamadı. Tutarı ya da tokenı değiştir.","No swap route for this amount. Change the amount or token."],
+  "quote-failed":["Teklif alınamadı. Biraz sonra tekrar dene.","Couldn't get a quote. Try again shortly."],
+  "quote-net":["Takas servisine bağlanılamadı. İnternet bağlantını kontrol et.","Couldn't reach the swap service. Check your connection."],
+  "rate-limited":["Çok sık teklif istendi; birkaç saniye sonra tekrar dene.","Too many quote requests; try again in a few seconds."],
+  "route-unsupported":["Bu rota güvenlik nedeniyle desteklenmiyor.","This route isn't supported for safety reasons."],
+  "guard":["Güvenlik denetimi bu işlemi durdurdu: simülasyonda cüzdanından beklenmeyen bir değişiklik görüldü. Hiçbir şey imzalanmadı.","The safety check stopped this transaction: the simulation showed an unexpected change to your wallet. Nothing was signed."],
+  "tx-too-large":["Rota tek işleme sığmıyor. Daha küçük bir tutar dene.","The route doesn't fit in one transaction. Try a smaller amount."],
+  "quote-expired":["Teklifin süresi doldu. Yeni teklif alıp tekrar onayla.","The quote expired. Get a new quote and confirm again."],
+  "fee-changed":["Ağ ücreti onayladığından çok yükseldi. Yeni teklif al.","Network fees rose a lot since you confirmed. Get a new quote."],
+  "gas-high":["Bu rota beklenenden çok fazla ağ ücreti gerektiriyor; işlem gönderilmedi. Tutarı değiştirip tekrar dene.","This route needs far more gas than expected; nothing was sent. Change the amount and try again."],
+  "bad-mint":["Bu token adresi geçerli değil.","This token address isn't valid."],
   "insecure":["Bu tarayıcıda güvenli şifreleme kullanılamıyor. Uygulamayı https:// adresinden aç.","Secure encryption isn't available in this browser. Open the app over https://."],
   "net":["Ağa bağlanılamadı. Biraz sonra tekrar dene.","Couldn't reach the network. Try again shortly."]};
 function wkErr(e,sym){const c=e&&(e.code||e.message)||"net",m=WKE[c]||WKE.net;let t=m[+EN];
@@ -6394,7 +6425,7 @@ function wkRows(){const b=WK.bal||wkCache();if(!b)return [];const small=!!w3Get(
     .filter(r=>r.native||!small||r.v>=1).sort((a,b)=>b.v-a.v||(b.native?1:0)-(a.native?1:0)||b.q-a.q)}
 async function wkRefresh(force){const w=wkGet();if(!w||WK.busy)return;if(!force&&Date.now()-WK.at<30000)return;WK.busy=true;WK.err=null;wkSoft();
   try{const C=await cfwLoad(),r=await C.balances(wkNet(),w.addr);WK.bal=r;WK.at=Date.now();try{localStorage.setItem(wkCK(),JSON.stringify({sol:w.addr.sol,list:r.list,errs:r.errs,at:r.at}))}catch(e){}}
-  catch(e){WK.err=e&&e.code==="load"?"load":"net";WK.at=Date.now()}finally{WK.busy=false;if(w3Vis()&&W3.tab==="wallet"&&wkSeg()==="own"){const L=$("wkL");if(L)L.innerHTML=wkListHTML(wkRows(),w3Hid());wkSoft()}}}
+  catch(e){WK.err=e&&e.code==="load"?"load":"net";WK.at=Date.now()}finally{WK.busy=false;if(w3Vis()&&W3.tab==="wallet"&&wkSeg()==="own"){const L=$("wkL");if(L)L.innerHTML=wkListHTML(wkRows(),w3Hid());wkSoft()}if(w3Vis()&&W3.tab==="swap"&&wkSeg()==="own")wkxLive()}}
 function wkStatus(){const b=WK.bal||wkCache();if(WK.busy)return w3L("Zincirden güncelleniyor…","Updating from the chain…");
   if(WK.err)return wkErr({code:WK.err});
   if(b&&b.errs&&b.errs.length){const C=NETS_NAMES(b.errs.map(x=>x.net));return w3L(`${C} ağına şu an bağlanılamadı.`,`Couldn't reach ${C} right now.`)}
@@ -6434,9 +6465,9 @@ function wkOpen(kind,arg){if(!me)return;if(kind==="new"||kind==="imp"){WKF={mode
   else WKF={mode:kind,step:kind==="recv"?"recv":"set",tab:"sol",err:"",busy:false};
   W3.dapp=null;w3ShRender();W3.sub="wk";w3SubRender()}
 function wkReset(){if(WKF){WKF.phrase=null;WKF.words=null}WKF=null;WKS=null}
-function wkClose(){wkReset();W3.sub=null;w3SubRender();if(W3.tab==="wallet")w3Wallet()}
+function wkClose(){const sl=WKF&&WKF.mode==="xslip";wkReset();W3.sub=null;w3SubRender();if(sl&&WKX)WKX.q=null;w3Tab()}
 function wkHTML(){if(WKS)return wkSendHTML();const f=WKF;if(!f)return "";
-  if(f.mode==="recv")return wkRecvHTML();if(f.mode==="set")return wkSetHTML();return wkFlowHTML()}
+  if(f.mode==="recv")return wkRecvHTML();if(f.mode==="set")return wkSetHTML();if(f.mode==="xpick")return wkxPickHTML();if(f.mode==="xrev")return wkxRevHTML();if(f.mode==="xslip")return wkxSlipHTML();return wkFlowHTML()}
 function wkRender(focus){const s=$("w3Sub");if(!s||W3.sub!=="wk")return;const y=(s.querySelector(".w3-sb")||{}).scrollTop||0;
   let box=s.querySelector(":scope>.wk-sub");if(!box){s.innerHTML=`<div class="w3-sub wk-sub" role="dialog" aria-modal="true"></div>`;box=s.firstElementChild}   // kapsayıcı kalır: adım değişince animasyon tekrar oynamaz
   const key=(WKS?"s":"f")+(WKF?WKF.mode:"");if(box.dataset.k&&box.dataset.k!==key)box.style.animation="none";box.dataset.k=key;
@@ -6548,9 +6579,145 @@ async function wkSign(){const s=WKS,w=wkGet(),i=$("wkPw1"),pw=i?i.value:"";if(!w
   catch(e){phrase=null;if(e&&(e.code||e.message)==="bad-password"){s.err=WKE["bad-password"][+EN];s.busy=false;wkRender("#wkPw1");return}
     s.sig=s.sig||(e&&e.sig)||null;s.hash=s.hash||(e&&e.hash)||null;s.err=wkErr(e);s.step="fail"}
   finally{phrase=null;s.busy=false;if(W3.sub==="wk"&&WKS===s)wkRender()}}
+// ---------- Web3: zincir üstü takas (Cüzdanım). Solana: Jupiter, EVM: KyberSwap. Teklif API'lerine yalnızca herkese açık adres ve
+// tutar gider; işlem imzadan önce simülasyonla denetlenir (cüzdandan beklenmeyen çıkış, eksik çıktı, izin/sahiplik değişikliği → imza yok).
+const WKXN=[["sol","Solana"],["eth","Ethereum"],["bsc","BNB Chain"],["base","Base"]];
+// Doğrulanmış token listeleri (Solana: Jupiter doğrulanmış liste; EVM: Uniswap varsayılan listesi)
+const WKXT={sol:[["SOL","So11111111111111111111111111111111111111112",9],["USDC","EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",6],["USDT","Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",6],["JUP","JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",6],["BONK","DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",5],["WIF","EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",6],["POPCAT","7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",9],["BOME","ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82",6],["MEW","MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",5]],
+  eth:[["ETH",null,18],["USDT","0xdAC17F958D2ee523a2206206994597C13D831ec7",6],["USDC","0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",6],["DAI","0x6B175474E89094C44Da98b954EedeAC495271d0F",18],["WETH","0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",18],["WBTC","0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",8],["LINK","0x514910771AF9Ca656af840dff83E8264EcF986CA",18],["UNI","0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",18],["AAVE","0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",18],["PEPE","0x6982508145454Ce325dDbE47a25d4ec3d2311933",18],["SHIB","0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",18],["ONDO","0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3",18],["ENA","0x57e114B691Db790C35207b2e685D4A43181e6061",18],["LDO","0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",18],["ARB","0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",18],["FLOKI","0xcf0C122c6b73ff809C693DB761e7BaeBe62b6a2E",9],["MOG","0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",18]],
+  bsc:[["BNB",null,18],["USDT","0x55d398326f99059fF775485246999027B3197955",18],["USDC","0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",18],["WBNB","0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",18],["DAI","0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",18],["LINK","0xF8A0BF9cF54Bb92F17374d9e9A321E6a111a51bD",18],["FLOKI","0xfb5B838b6cfEEdC2873aB27866079AC55363D37E",9]],
+  base:[["ETH",null,18],["USDC","0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",6],["USDT","0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",6],["WETH","0x4200000000000000000000000000000000000006",18],["cbBTC","0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",8],["DAI","0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",18],["AERO","0x940181a94A35A4569E4529A3CDfB74e38FD98631",18],["DEGEN","0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",18],["VIRTUAL","0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",18],["cbETH","0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",18]]};
+const WKX_RES={sol:10000000n,eth:2000000000000000n,bsc:1000000000000000n,base:300000000000000n};   // "Tümü" seçilince ağ ücreti için bırakılan pay
+const wkxTok=(chain,[sym,id,dec],x)=>Object.assign({chain,id,sym,dec,verified:true},x||{});
+let WKX=null,wkxT=0,wkxQT=0,wkxPT=0;
+function wkxInit(){if(WKX)return;WKX={chain:"sol",from:null,to:null,amt:"",q:null,busy:false,err:"",seq:0,at:0};wkxChain("sol",true)}
+function wkxChain(c,quiet){WKX.chain=c;const L=WKXT[c];WKX.from=wkxTok(c,L[0]);WKX.to=wkxTok(c,c==="sol"?L[1]:L.find(x=>x[0]==="USDC")||L[1]);WKX.q=null;WKX.err="";if(!quiet)WKX.amt=""}
+const wkxSlip=()=>{const v=+w3Get().slip;return v>=1&&v<=500?v:50};
+const wkxAddr=()=>{const w=wkGet();return w?(WKX.chain==="sol"?w.addr.sol:w.addr.evm):""};
+function wkxBal(t){const b=WK.bal||wkCache();if(!b||!t)return null;const net=t.chain;
+  const r=b.list.find(x=>x.net===net&&(t.chain==="sol"?(t.id==="So11111111111111111111111111111111111111112"?x.native:x.mint===t.id):(t.id?String(x.token||"").toLowerCase()===String(t.id).toLowerCase():x.native)));return r?BigInt(r.raw):0n}
+const wkxQ=(raw,dec)=>Number(raw)/Math.pow(10,dec);
+function wkxPx(t){if(!t)return 0;if(/^(USDT|USDC|DAI|USDbC)$/.test(t.sym))return 1;if(t.usd>0)return t.usd;const s=t.sym==="WETH"||t.sym==="cbETH"?"ETH":t.sym==="WBNB"?"BNB":t.sym==="WBTC"||t.sym==="cbBTC"?"BTC":t.sym;const x=find(s);return x&&x.p>0?x.p:0}
+function wkxIco(t,cls){cls=cls||"w3cs";if(!t)return "";const f=find(t.sym==="WETH"?"ETH":t.sym==="WBNB"?"BNB":t.sym==="WBTC"?"BTC":t.sym);
+  if(t.sym==="USDT"||t.sym==="USDC")return `<span class="coin ${cls}" style="background:${t.sym==="USDT"?"#26a17b":"#2775ca"}"><img src="${t.sym==="USDT"?W3USDT:W3USDC}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="mono">$</span></span>`;
+  if(t.icon&&/^https:\/\//.test(t.icon))return `<span class="coin ${cls} wk-gen"><img src="${esc(t.icon)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="mono">${esc(t.sym.slice(0,1))}</span></span>`;
+  return f?coinHTML(f,cls):`<span class="coin ${cls} wk-gen"><span class="mono">${esc((t.sym||"?").slice(0,1))}</span></span>`}
+const wkxTk=t=>`${wkxIco(t)}<span>${esc(t.sym)}</span>${t.verified===false?`<i class="wkx-uv" title="${w3L("Doğrulanmamış","Unverified")}">!</i>`:""}${W3I.down}`;
+function wkxHTML(){wkxInit();const test=wkNet()==="test",x=WKX;
+  return `<div class="wkx-nets" role="tablist">${WKXN.map(n=>`<button type="button" role="tab" data-wk="xnet" data-v="${n[0]}" class="${x.chain===n[0]?"on":""}" aria-selected="${x.chain===n[0]}">${n[1]}</button>`).join("")}</div>
+  ${test?`<div class="wk-warn">${WKI.warn}<span>${w3L("Takas yalnızca ana ağda yapılabilir. Cüzdanın şu an test ağında.","Swaps only work on mainnet. Your wallet is on testnet.")} <button type="button" class="wk-lnk in" data-wk="xmain">${w3L("Ana ağa geç","Switch to mainnet")}</button></span></div>`:""}
+  <div class="w3-sw"><div class="sc"><div class="r1"><span>${w3L("Ödeyeceğin","You pay")}</span><span><span id="wkxFb"></span><button type="button" class="mx" data-wk="xhalf">${w3L("Yarısı","Half")}</button><button type="button" class="mx" data-wk="xmax">${w3L("Tümü","Max")}</button></span></div>
+  <div class="r2"><input id="wkxA" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="${w3L("Ödenecek miktar","Amount to pay")}" value="${esc(x.amt)}"><button type="button" class="tk" data-wk="xpick" data-v="from" aria-label="${w3L("Ödenecek token","Token to pay")}">${wkxTk(x.from)}</button></div><div class="r3" id="wkxFu"></div></div>
+  <button type="button" class="fl" data-wk="xflip" aria-label="${w3L("Yönü değiştir","Switch direction")}">${W3I.swap}</button>
+  <div class="sc"><div class="r1"><span>${w3L("Alacağın (tahmini)","You get (estimated)")}</span><span id="wkxTb"></span></div><div class="r2"><b id="wkxOut">0</b><button type="button" class="tk" data-wk="xpick" data-v="to" aria-label="${w3L("Alınacak token","Token to get")}">${wkxTk(x.to)}</button></div><div class="r3" id="wkxTu"></div></div>
+  <div class="w3-si" id="wkxSi"></div><div class="w3-err" id="wkxE" role="alert"></div><button type="button" class="w3-go" id="wkxGo" data-wk="xgo">${w3L("Takası incele","Review swap")}</button>
+  <button type="button" class="wkx-sl" data-wk="xslip">${w3L("Fiyat kayması toleransı","Slippage tolerance")}: <b>%${fmtN(wkxSlip()/100,wkxSlip()%10?2:1)}</b> ${W3I.chev}</button></div>
+  <p class="wk-note">${WKI.shield}<span>${w3L("Takas doğrudan senin cüzdanınla yapılır (Solana'da Jupiter, EVM ağlarında KyberSwap). Her işlem imzalanmadan önce simüle edilip denetlenir; cüzdanından beklenmeyen bir şey çıkacaksa imza atılmaz.","Swaps run directly from your wallet (Jupiter on Solana, KyberSwap on EVM). Every transaction is simulated and checked before signing; if anything unexpected would leave your wallet, nothing is signed.")}</span></p>
+  <div class="w3-ah"><b>${w3L("Son zincir üstü takasların","Recent on-chain swaps")}</b></div><div id="wkxH"></div>`}
+function wkxAfter(){wkxLive();wkxHist();if(!WKX.q&&WKX.amt)wkxQuoteSoon(10)}
+function wkxRaw(){const C=window.CFW,t=WKX.from;return C&&t?C.toRaw(WKX.amt,t.dec):null}
+function wkxLive(){const x=WKX;if(!x||!$("wkxGo"))return;const b=wkxBal(x.from),bt=wkxBal(x.to),raw=wkxRaw(),q=x.q&&x.q.raw===String(raw)&&x.q.chain===x.chain?x.q:null,test=wkNet()==="test";
+  $("wkxFb").textContent=w3L("Bakiye: ","Balance: ")+(b==null?"—":w3Qty(wkxQ(b,x.from.dec)));$("wkxTb").textContent=w3L("Bakiye: ","Balance: ")+(bt==null?"—":w3Qty(wkxQ(bt,x.to.dec)));
+  const a=raw?wkxQ(raw,x.from.dec):0,pf=wkxPx(x.from),out=q?wkxQ(q.outAmount,x.to.dec):0,pt=wkxPx(x.to);
+  $("wkxFu").textContent=a&&pf?"≈ "+curFmt(a*pf):"";$("wkxOut").textContent=q?w3Qty(out):x.busy?"…":"0";$("wkxTu").textContent=out&&pt?"≈ "+curFmt(out*pt):"";
+  const imp=q&&q.priceImpact!=null?q.priceImpact:null,slip=wkxSlip();
+  $("wkxSi").innerHTML=q?`<div><span>${w3L("Kur","Rate")}</span><span>1 ${esc(x.from.sym)} ≈ ${w3Qty(out/a)} ${esc(x.to.sym)}</span></div>
+    <div><span>${w3L("En az alacağın","Minimum received")}</span><span>${w3Qty(wkxQ(q.minOut||(BigInt(q.outAmount)*BigInt(10000-slip)/10000n),x.to.dec))} ${esc(x.to.sym)}</span></div>
+    ${imp!=null?`<div><span>${w3L("Fiyat etkisi","Price impact")}</span><span class="${imp>10?"down":imp>3?"wkx-w":""}">%${fmtN(imp,imp<0.01?3:2)}</span></div>`:""}
+    <div><span>${w3L("Rota","Route")}</span><span>${esc((q.route||[]).slice(0,3).join(" → ")||"—")}</span></div>`:"";
+  const g=$("wkxGo"),e=$("wkxE"),over=raw&&b!=null&&raw>b;e.textContent=x.err||"";
+  g.disabled=test||!raw||over||!q||x.busy;g.textContent=test?w3L("Yalnızca ana ağda","Mainnet only"):!raw?w3L("Tutar gir","Enter an amount"):over?w3L(`Yetersiz ${x.from.sym} bakiyesi`,`Insufficient ${x.from.sym}`):x.busy?w3L("Teklif alınıyor…","Getting a quote…"):!q?(x.err?w3L("Rota bulunamadı","No route"):w3L("Teklif bekleniyor","Waiting for quote")):w3L("Takası incele","Review swap")}
+function wkxQuoteSoon(ms){clearTimeout(wkxQT);wkxQT=setTimeout(wkxQuote,ms==null?650:ms)}
+async function wkxQuote(){const x=WKX;if(!x||wkNet()==="test"||!wkGet())return;const raw=wkxRaw();x.err="";if(!raw){x.q=null;x.busy=false;wkxLive();return}
+  const my=++x.seq,chain=x.chain,from=x.from,to=x.to;x.busy=true;wkxLive();
+  try{const C=await cfwLoad();const q=chain==="sol"?await C.solSwapQuote({from:wkxAddr(),inMint:from.id,outMint:to.id,raw,slippageBps:wkxSlip()})
+      :await C.evmSwapQuote({chain,from:wkxAddr(),tokenIn:from.id||C.EVM_NATIVE,tokenOut:to.id||C.EVM_NATIVE,raw});
+    if(my!==x.seq)return;q.raw=String(raw);q.chain=chain;x.q=q;x.at=Date.now()}
+  catch(e){if(my!==x.seq)return;x.q=null;x.err=wkErr(e)}finally{if(my===x.seq){x.busy=false;wkxLive()}}}
+function wkxHistL(){try{const a=JSON.parse(localStorage.getItem("cf_w3kx:"+(me?me.id:"x"))||"[]");return Array.isArray(a)?a:[]}catch(e){return []}}
+function wkxHist(){const L=$("wkxH");if(!L)return;const h=wkxHistL().slice(0,8);
+  L.innerHTML=h.length?h.map(s=>`<button type="button" class="w3-row" data-url="${esc(s.u||"")}"><span class="w3-ci w3c"><span class="w3-hi">${W3I.swap}</span></span><span class="nm"><b>${esc(s.a)} ${esc(s.fs)} → ${esc(s.b)} ${esc(s.ts)}</b><small>${esc(s.n)} · ${new Date(s.t).toLocaleString(LOC,{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</small></span>${W3I.ext}</button>`).join(""):`<div class="w3-empty">${w3L("Henüz zincir üstü takas yapmadın.","No on-chain swaps yet.")}</div>`}
+// ---- token seçici
+function wkxPickHTML(){const f=WKF,side=f.side,x=WKX;
+  return wkHd(side==="from"?w3L("Ödenecek token","Token to pay"):w3L("Alınacak token","Token to get"))+`<div class="w3-sb wk-fl">${side==="to"?`<label class="w3-q">${W3I.search}<input id="wkxPq" type="search" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${x.chain==="sol"?w3L("Token adı, sembol ya da adres","Name, symbol or mint address"):w3L("Token adı ya da kontrat adresi","Name or contract address")}" value="${esc(f.pq||"")}"></label>`:""}<div id="wkxPL">${wkxPickList()}</div></div>`}
+function wkxPickList(){const f=WKF,x=WKX,c=x.chain;
+  if(f.side==="from"){const rows=wkRows().filter(r=>r.net===c&&r.q>0);if(!rows.length)return `<div class="w3-empty">${w3L("Bu ağda takas edilecek varlığın yok.","You have no assets on this network.")}</div>`;
+    return rows.map(r=>`<button type="button" class="w3-row" data-wk="xsel" data-k="${esc(r.k)}">${wkIco(r)}<span class="nm"><b>${esc(wkName(r))}</b><small>${r.mint&&!r.sym?esc(wkShort(r.mint)):esc(r.netName)}</small></span><span class="rt"><b>${w3Qty(r.q)}</b><small>${r.p?curFmt(r.v):""}</small></span></button>`).join("")}
+  const q=String(f.pq||"").trim(),ql=q.toLowerCase();let list=[];
+  if(c==="sol"&&q&&f.res)list=f.res;else list=WKXT[c].map(t=>wkxTok(c,t)).filter(t=>!ql||t.sym.toLowerCase().includes(ql)||String(t.id||"").toLowerCase()===ql);
+  if(c!=="sol"&&f.custom)list=[f.custom].concat(list);
+  const row=(t,i)=>`<button type="button" class="w3-row" data-wk="xsel" data-i="${i}">${wkxIco(t,"w3c")}<span class="nm"><b>${esc(t.sym)} ${t.verified?`<span class="wkx-ok" title="${w3L("Doğrulanmış","Verified")}">${WKI.ok}</span>`:t.verified===false?`<span class="wkx-bad">${w3L("Doğrulanmamış","Unverified")}</span>`:""}</b><small>${esc(t.name||"")}${t.id?" · "+esc(wkShort(t.id)):""}</small></span>${t.usd?`<span class="rt"><small>${usd(t.usd,t.usd<1?6:2)}</small></span>`:""}</button>`;
+  f.list=list;const msg=f.busy?`<div class="w3-empty">${w3L("Aranıyor…","Searching…")}</div>`:f.err?`<div class="w3-empty">${esc(f.err)}</div>`:"";
+  return (list.length?list.map(row).join(""):"")+(msg||(!list.length?`<div class="w3-empty">${w3L("Sonuç yok. Token adresini yapıştırabilirsin.","No results. You can paste the token address.")}</div>`:""))}
+async function wkxSearch(){const f=WKF;if(!f||f.mode!=="xpick")return;const x=WKX,q=String(f.pq||"").trim(),my=++f.seq;f.err="";f.res=null;f.custom=null;
+  if(!q){f.busy=false;const L=$("wkxPL");if(L)L.innerHTML=wkxPickList();return}
+  if(x.chain==="sol"){f.busy=true;const L0=$("wkxPL");if(L0)L0.innerHTML=wkxPickList();
+    try{const C=await cfwLoad(),r=await fetch(`${C.JUP_API}/tokens/v2/search?query=${encodeURIComponent(q)}`);const j=await r.json();if(my!==f.seq)return;
+      f.res=(Array.isArray(j)?j:[]).filter(t=>t&&t.id&&t.symbol&&Number.isInteger(t.decimals)&&(t.tokenProgram==="TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"||t.tokenProgram==="TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"||t.id==="So11111111111111111111111111111111111111112")).slice(0,25)
+        .map(t=>({chain:"sol",id:t.id,sym:String(t.symbol).slice(0,16),name:String(t.name||"").slice(0,40),dec:t.decimals,icon:t.icon||"",usd:+t.usdPrice||0,verified:!!t.isVerified}))}
+    catch(e){if(my!==f.seq)return;f.err=w3L("Arama yapılamadı; biraz sonra tekrar dene.","Search failed; try again shortly.")}
+    finally{if(my===f.seq){f.busy=false;const L=$("wkxPL");if(L)L.innerHTML=wkxPickList()}}return}
+  if(/^0x[0-9a-fA-F]{40}$/.test(q)&&!WKXT[x.chain].some(t=>String(t[1]||"").toLowerCase()===q.toLowerCase())){f.busy=true;const L0=$("wkxPL");if(L0)L0.innerHTML=wkxPickList();
+    try{const C=await cfwLoad(),i=await C.evmTokenInfo(x.chain,q);if(my!==f.seq)return;f.custom={chain:x.chain,id:i.address,sym:i.symbol,name:i.name,dec:i.decimals,verified:false}}
+    catch(e){if(my!==f.seq)return;f.err=w3L("Bu adreste bir token bulunamadı.","No token found at this address.")}finally{if(my===f.seq){f.busy=false;const L=$("wkxPL");if(L)L.innerHTML=wkxPickList()}}return}
+  const L=$("wkxPL");if(L)L.innerHTML=wkxPickList()}
+// ---- inceleme / imza
+function wkxRevHTML(){const f=WKF,x=WKX,p=f.plan;
+  if(f.step==="plan")return wkHd(w3L("Takas","Swap"))+`<div class="w3-sb wk-fl"><div class="wk-ill"><span class="wk-spin big"></span></div><h2 class="wk-h">${w3L("Takas simüle ediliyor","Simulating the swap")}</h2><p class="wk-p c">${w3L("İşlem zincirde denenip cüzdanındaki bakiye değişiklikleri denetleniyor. İmza atılmadı.","The transaction is being tried on-chain and your balance changes checked. Nothing is signed.")}</p></div>`;
+  if(f.step==="done"){const link=f.sig||f.hash?wkTxUrl({net:x.chain==="sol"?"sol":x.chain},f.sig||f.hash):"";
+    return wkHd(w3L("Takas tamamlandı","Swap complete"),"close")+`<div class="w3-sb wk-fl"><div class="wk-ill ok">${WKI.ok}</div><h2 class="wk-h">${w3Qty(wkxQ(p.raw,f.fd))} ${esc(f.fs)} → ${f.got?w3Qty(wkxQ(f.got,f.td)):"≥ "+w3Qty(wkxQ(p.minOut,f.td))} ${esc(f.ts)}</h2><p class="wk-p c">${esc(f.netName)}</p>${link?`<button type="button" class="wk-sec w" data-url="${esc(link)}">${W3I.ext}<span>${w3L("Gezginde gör","View in explorer")}</span></button>`:""}</div><div class="wk-bar"><button type="button" class="wk-pri" data-wk="close">${w3L("Tamam","Done")}</button></div>`}
+  if(f.step==="fail"){const link=f.sig||f.hash?wkTxUrl({net:x.chain==="sol"?"sol":x.chain},f.sig||f.hash):"";
+    return wkHd(w3L("Takas yapılamadı","Swap failed"),"close")+`<div class="w3-sb wk-fl"><div class="wk-ill bad">${WKI.warn}</div><p class="wk-p c">${esc(f.err)}</p>${link?`<button type="button" class="wk-sec w" data-url="${esc(link)}">${W3I.ext}<span>${w3L("Gezginde gör","View in explorer")}</span></button>`:""}</div><div class="wk-bar"><button type="button" class="wk-pri" data-wk="xretry">${w3L("Yeni teklif al","Get a new quote")}</button></div>`}
+  const imp=p.priceImpact,need=(f.uv&&!f.ackU)||(imp!=null&&imp>10&&!f.ackI),nat=x.chain==="sol"?"SOL":x.chain==="bsc"?"BNB":"ETH",fee=x.chain==="sol"?Number(p.fee)/1e9:Number(p.fee)/1e18,npx=wkPx({sym:nat});
+  return wkHd(w3L("Takası onayla","Confirm swap"),f.step==="pw"?"xpwback":"back")+`<div class="w3-sb wk-fl">
+    <div class="wkx-rv"><div><small>${w3L("Ödeyeceğin","You pay")}</small><b>${w3Qty(wkxQ(p.raw,f.fd))} ${esc(f.fs)}</b></div><i>${W3I.down}</i><div><small>${w3L("Alacağın (tahmini)","You get (estimated)")}</small><b>${w3Qty(wkxQ(p.outAmount,f.td))} ${esc(f.ts)}</b></div></div>
+    <div class="wk-kv"><span>${w3L("En az alacağın","Minimum received")}</span><b>${w3Qty(wkxQ(p.minOut,f.td))} ${esc(f.ts)}</b></div>
+    <div class="wk-kv"><span>${w3L("Fiyat kayması toleransı","Slippage tolerance")}</span><b>%${fmtN(p.slippageBps/100,p.slippageBps%10?2:1)}</b></div>
+    ${imp!=null?`<div class="wk-kv"><span>${w3L("Fiyat etkisi","Price impact")}</span><b class="${imp>10?"down":imp>3?"wkx-w":""}">%${fmtN(imp,imp<0.01?3:2)}</b></div>`:""}
+    <div class="wk-kv"><span>${w3L("Rota","Route")}</span><b>${esc((p.route||[]).slice(0,4).join(" → ")||"—")}</b></div>
+    <div class="wk-kv"><span>${w3L("Ağ","Network")}</span><b>${esc(f.netName)}</b></div>
+    <div class="wk-kv"><span>${w3L("Ağ ücreti (en fazla)","Network fee (max)")}</span><b>${w3Qty(fee)} ${nat}${npx?` · ${curFmt(fee*npx)}`:""}</b></div>
+    ${(p.approves||[]).length?`<p class="wk-hint">${w3L(`Önce ${esc(f.fs)} için harcama izni verilecek (${p.approves.length===2?"önce sıfırlanıp ":""}yalnızca bu tutar kadar). Bu ayrı bir işlem olarak ağ ücreti ister.`,`First a spending approval for ${esc(f.fs)} is sent (${p.approves.length===2?"reset, then ":""}only for this amount). It's a separate transaction with its own fee.`)}</p>`:""}
+    <p class="wkx-ver">${WKI.shield}<span>${p.sim==="deferred"?w3L("Takas, izin verildikten hemen sonra imzadan önce yeniden denenecek.","The swap will be re-checked right after the approval, before signing."):w3L("Simülasyonla denetlendi: cüzdanından yalnızca bu tutar çıkıyor, en az gösterilen tutar giriyor.","Checked by simulation: only this amount leaves your wallet and at least the minimum arrives.")}</span></p>
+    ${f.uv?`<p class="wk-warn">${WKI.warn}<span>${w3L(`${esc(f.ts)} doğrulanmamış bir token. Sahte ya da değersiz olabilir; adresini kendin kontrol et.`,`${esc(f.ts)} is an unverified token. It may be fake or worthless; verify its address yourself.`)}</span></p><button type="button" class="w3-ck${f.ackU?" on":""}" data-wk="xacku" role="checkbox" aria-checked="${!!f.ackU}"><i>${f.ackU?W3I.check:""}</i><span>${w3L("Riski anlıyorum, bu tokenı almak istiyorum.","I understand the risk and want this token.")}</span></button>`:""}
+    ${imp!=null&&imp>10?`<p class="wk-warn">${WKI.warn}<span>${w3L("Fiyat etkisi çok yüksek; bu takasta değer kaybedebilirsin.","Price impact is very high; you may lose value on this swap.")}</span></p><button type="button" class="w3-ck${f.ackI?" on":""}" data-wk="xacki" role="checkbox" aria-checked="${!!f.ackI}"><i>${f.ackI?W3I.check:""}</i><span>${w3L("Yüksek fiyat etkisini kabul ediyorum.","I accept the high price impact.")}</span></button>`:""}
+    ${f.step==="pw"?wkPwOne():""}${f.err?`<p class="wk-err" role="alert">${esc(f.err)}</p>`:""}</div>
+    <div class="wk-bar"><button type="button" class="wk-pri" data-wk="${f.step==="pw"?"xsign":"xtopw"}"${f.busy||need?" disabled":""}>${f.busy?`<span class="wk-spin"></span>${esc(f.stage||"")}`:f.step==="pw"?w3L("İmzala ve takas et","Sign and swap"):w3L("Onayla","Confirm")}</button></div>`}
+async function wkxPlan(){const x=WKX,f=WKF,w=wkGet();if(!f||!w)return;f.step="plan";f.err="";wkRender();
+  try{const C=await cfwLoad();let q=x.q;
+    if(!q||Date.now()-x.at>20000){await wkxQuote();q=x.q;if(!q)throw {code:"no-route"}}
+    const accts=((WK.bal||wkCache()||{list:[]}).list||[]).filter(r=>r.net==="sol"&&r.acct).map(r=>r.acct);
+    const p=x.chain==="sol"?await C.solSwapPlan(q,accts):await C.evmSwapPlan(q,wkxSlip());
+    if(WKF!==f)return;Object.assign(f,{plan:p,step:"review",fs:x.from.sym,ts:x.to.sym,fd:x.chain==="sol"&&p.inDec!=null?p.inDec:x.from.dec,td:x.chain==="sol"&&p.outDec!=null?p.outDec:x.to.dec,uv:x.to.verified===false,netName:(WKXN.find(n=>n[0]===x.chain)||[0,""])[1]});
+    if(f.plan.slippageBps==null)f.plan.slippageBps=wkxSlip()}
+  catch(e){if(WKF!==f)return;f.step="fail";f.err=wkErr(e)}wkRender()}
+async function wkxSign(){const f=WKF,x=WKX,w=wkGet(),i=$("wkPw1"),pw=i?i.value:"";if(!f||!w||f.busy)return;if(!pw){f.err=w3L("Şifreni gir.","Enter your password.");wkRender("#wkPw1");return}
+  f.busy=true;f.err="";f.stage=w3L("Şifre çözülüyor…","Unlocking…");wkRender();let phrase=null;
+  const st2=s=>{f.stage=s.stage==="approve"?w3L("Harcama izni veriliyor…","Sending approval…"):s.stage==="check"?w3L("Son denetim yapılıyor…","Final check…"):w3L("Onay bekleniyor…","Waiting for confirmation…");if(s.sig)f.sig=s.sig;if(s.hash)f.hash=s.hash;wkRender()};
+  try{const C=await cfwLoad();phrase=await C.unseal(w.blob,pw,wkAad());f.stage=w3L("İmzalanıyor…","Signing…");wkRender();
+    const out=x.chain==="sol"?await C.solSwapSend(f.plan,phrase,st2):await C.evmSwapSend(f.plan,phrase,st2);phrase=null;
+    f.sig=out.sig||f.sig||null;f.hash=out.hash||f.hash||null;f.got=out.got||null;f.step="done";
+    try{const h=wkxHistL();h.unshift({t:Date.now(),a:w3Qty(wkxQ(f.plan.raw,f.fd)),fs:f.fs,b:f.got?w3Qty(wkxQ(f.got,f.td)):"≥"+w3Qty(wkxQ(f.plan.minOut,f.td)),ts:f.ts,n:f.netName,u:wkTxUrl({net:x.chain},f.sig||f.hash)});localStorage.setItem("cf_w3kx:"+(me?me.id:"x"),JSON.stringify(h.slice(0,30)))}catch(e){}
+    x.amt="";x.q=null;WK.at=0;setTimeout(()=>wkRefresh(true),1500)}
+  catch(e){phrase=null;const c=e&&(e.code||e.message);if(c==="bad-password"){f.err=WKE["bad-password"][+EN];f.busy=false;wkRender("#wkPw1");return}
+    f.sig=f.sig||(e&&e.sig)||null;f.hash=f.hash||(e&&e.hash)||null;f.err=wkErr(e);f.step="fail"}
+  finally{phrase=null;f.busy=false;if(W3.sub==="wk"&&WKF===f)wkRender()}}
+// ---- kayma toleransı
+function wkxSlipHTML(){const v=wkxSlip(),f=WKF;return wkHd(w3L("Fiyat kayması toleransı","Slippage tolerance"))+`<div class="w3-sb wk-fl"><p class="wk-p">${w3L("Fiyat, teklif ile işlemin zincire yazılması arasında bu oran kadar aleyhine değişirse takas iptal olur ve tokenların cüzdanında kalır.","If the price moves against you by more than this between the quote and execution, the swap is cancelled and your tokens stay in your wallet.")}</p>
+  <div class="wkx-sls">${[10,50,100,300].map(b=>`<button type="button" data-wk="xslv" data-v="${b}" class="${v===b?"on":""}">%${fmtN(b/100,b%100?b%10?2:1:0)}</button>`).join("")}</div>
+  <label class="wk-f"><span>${w3L("Özel (%)","Custom (%)")}</span><span class="wk-in"><input id="wkxSl" type="text" inputmode="decimal" autocomplete="off" placeholder="0,5" value="${[10,50,100,300].includes(v)?"":esc(String(v/100).replace(".",DEC))}"><b class="wk-u">%</b></span></label>
+  ${v>200?`<p class="wk-warn">${WKI.warn}<span>${w3L("Yüksek tolerans, işlemin araya giren botlar tarafından kötü fiyattan gerçekleştirilmesine yol açabilir.","High tolerance can let bots fill your trade at a worse price.")}</span></p>`:""}${f&&f.err?`<p class="wk-err">${esc(f.err)}</p>`:""}</div>`}
 // ---------- olaylar
 $("w3").addEventListener("click",async e=>{const b=e.target.closest("[data-wk]");if(!b||b.disabled)return;const a=b.dataset.wk,f=WKF,s=WKS;
-  if(a==="seg"){w3Set({seg:b.dataset.v});W3.dq="";w3Wallet();return}
+  if(a==="seg"){w3Set({seg:b.dataset.v});W3.dq="";w3Tab();return}
+  if(a==="xnet"){wkxInit();wkxChain(b.dataset.v);w3Swap();return}
+  if(a==="xmain"){w3Set({net:"main"});WK.bal=null;WK.at=0;wkRefresh(true);w3Swap();return}
+  if(a==="xhalf"||a==="xmax"){const x=WKX,t=x&&x.from,bl=t&&wkxBal(t);if(!t||bl==null)return;let r=a==="xhalf"?bl/2n:bl;if(a==="xmax"&&(!t.id||t.id==="So11111111111111111111111111111111111111112"))r=r>WKX_RES[x.chain]?r-WKX_RES[x.chain]:0n;
+    const C=window.CFW;if(!C)return;x.amt=r>0n?C.fromRaw(r,t.dec).replace(".",DEC):"";const i=$("wkxA");if(i)i.value=x.amt;x.q=null;wkxLive();wkxQuoteSoon(10);return}
+  if(a==="xflip"){const x=WKX;if(!x)return;[x.from,x.to]=[x.to,x.from];x.amt="";x.q=null;x.err="";w3Swap();return}
+  if(a==="xpick"){wkxInit();WKF={mode:"xpick",side:b.dataset.v,pq:"",seq:0};W3.dapp=null;w3ShRender();W3.sub="wk";w3SubRender();if(b.dataset.v==="to"){const i=$("wkxPq");if(i)try{i.focus({preventScroll:true})}catch(err){}}return}
+  if(a==="xgo"){if(!WKX||!WKX.q)return;WKF={mode:"xrev",step:"plan"};W3.dapp=null;w3ShRender();W3.sub="wk";w3SubRender();wkxPlan();return}
+  if(a==="xslip"){WKF={mode:"xslip"};W3.sub="wk";w3SubRender();return}
   if(a==="new"||a==="imp"){if(W3.step!=="app"){W3.step="app";W3.tab="wallet";w3Set({seen:1,seg:"own"});w3Render()}wkOpen(a);return}
   if(a==="later"){w3Set({seen:1,seg:"acct"});W3.step="app";W3.tab="wallet";w3Render();return}
   if(a==="send"){wkOpen("send");return}if(a==="recv"){wkOpen("recv");return}if(a==="set"){wkOpen("set");return}
@@ -6569,6 +6736,17 @@ $("w3").addEventListener("click",async e=>{const b=e.target.closest("[data-wk]")
     if(a==="pwv1"){const i=$("wkPw1");if(i)i.type=i.type==="password"?"text":"password";return}
     return}
   if(!f)return;
+  if(a==="xsel"){const x=WKX;let t=null;
+    if(f.side==="from"){const r=wkRows().find(z=>z.k===b.dataset.k);if(r)t=r.net==="sol"?(r.native?wkxTok("sol",WKXT.sol[0]):{chain:"sol",id:r.mint,sym:r.sym||wkShort(r.mint),dec:r.dec,verified:r.sym?true:null}):(r.native?wkxTok(x.chain,WKXT[x.chain][0]):{chain:x.chain,id:r.token,sym:r.sym,dec:r.dec,verified:true})}
+    else t=(f.list||[])[+b.dataset.i]||null;
+    if(!t)return;const o=f.side==="from"?x.to:x.from,same=o&&String(o.id||"").toLowerCase()===String(t.id||"").toLowerCase();
+    if(f.side==="from"){if(same)x.to=x.from;x.from=t}else{if(same)x.from=x.to;x.to=t}x.q=null;x.err="";if(f.side==="from")x.amt="";wkClose();wkxQuoteSoon(10);return}
+  if(a==="xslv"){w3Set({slip:+b.dataset.v});f.err="";if(WKX)WKX.q=null;wkRender();return}
+  if(a==="xtopw"){f.step="pw";f.err="";wkRender("#wkPw1");return}
+  if(a==="xpwback"){if(f.busy)return;f.step="review";f.err="";wkRender();return}
+  if(a==="xsign"){wkxSign();return}
+  if(a==="xacku"){f.ackU=!f.ackU;wkRender();return}if(a==="xacki"){f.ackI=!f.ackI;wkRender();return}
+  if(a==="xretry"){wkClose();if(WKX){WKX.q=null;wkxQuote()}return}
   if(a==="pwv"||a==="pwv1"){[$("wkPw"),$("wkPw2"),$("wkPw1")].forEach(i=>{if(i)i.type=i.type==="password"?"text":"password"});return}
   if(a==="back"){if(f.busy)return;const prev={words:"ack",quiz:"words",phrase:"ack",pw:f.mode==="imp"?"phrase":"quiz"}[f.step];if(f.mode==="new"&&f.step==="words"){f.words=null;f.phrase=null;f.reveal=false}if(prev){f.step=prev;f.err="";if(prev==="quiz"){f.quiz.forEach(q=>q.pick=null);f.checked=false}wkRender()}else wkClose();return}
   if(a==="setback"){if(f.busy)return;f.step="set";f.words=null;f.err="";f.ack=false;clearTimeout(wkRevT);wkRender();return}
@@ -6598,7 +6776,13 @@ $("w3").addEventListener("click",async e=>{const b=e.target.closest("[data-wk]")
 $("w3").addEventListener("input",e=>{const i=e.target;
   if(i.id==="wkImp"&&WKF){WKF.raw=i.value;WKF.pasted=false;const C=window.CFW;if(C){WKF.chk=C.phraseCheck(i.value);const c=$("wkChk");if(c){c.textContent=wkChkTxt(WKF.chk);c.classList.toggle("ok",!!WKF.chk.ok)}const bt=document.querySelector('#w3 [data-wk="phrasego"]');if(bt)bt.disabled=!WKF.chk.ok}}
   else if(i.id==="wkTo"&&WKS){WKS.to=i.value;const a=wkAddrState(),c=$("wkToChk");if(c){c.textContent=a.txt;c.className="wk-chk"+a.cls}}
-  else if(i.id==="wkAmt"&&WKS&&!WKS.max){WKS.amt=i.value;const c=$("wkAmtV");if(c)c.textContent=wkAmtTxt()}});
+  else if(i.id==="wkAmt"&&WKS&&!WKS.max){WKS.amt=i.value;const c=$("wkAmtV");if(c)c.textContent=wkAmtTxt()}
+  else if(i.id==="wkxA"&&WKX){WKX.amt=i.value;WKX.q=null;WKX.err="";wkxLive();wkxQuoteSoon()}
+  else if(i.id==="wkxPq"&&WKF&&WKF.mode==="xpick"){const q=i.value.trim();WKF.pq=i.value;WKF.seq++;WKF.res=null;WKF.custom=null;WKF.err="";
+    WKF.busy=!!q&&(WKX.chain==="sol"||/^0x[0-9a-fA-F]{40}$/.test(q));const L=$("wkxPL");if(L)L.innerHTML=wkxPickList();clearTimeout(wkxPT);wkxPT=setTimeout(wkxSearch,350)}
+  else if(i.id==="wkxSl"&&WKF&&WKF.mode==="xslip"){const v=parseFloat(String(i.value).replace(",","."));const e2=document.querySelector("#w3 .wk-sub .wk-err");
+    if(i.value===""){return}if(v>=0.01&&v<=5){w3Set({slip:Math.round(v*100)});if(WKX)WKX.q=null;document.querySelectorAll("#w3 .wkx-sls button").forEach(z=>z.classList.remove("on"));if(e2)e2.remove()}
+    else if(!e2){const p=document.createElement("p");p.className="wk-err";p.textContent=w3L("0,01 ile 5 arasında bir değer gir.","Enter a value between 0.01 and 5.");i.closest(".wk-fl").appendChild(p)}}});
 // boot
 (async function boot(){
   const {data}=await sb.auth.getSession();
