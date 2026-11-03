@@ -1536,6 +1536,25 @@ nav.bar button svg{width:22px;height:22px}
   .ads *,.ads *::before,.ads *::after{animation:none!important;transition:none!important}
   .ad-ring,.ad-ln{stroke-dashoffset:0}.ad-cd{transform:none}.ad-ar,.ad-up,.ad-st,.ad-chips span{opacity:1}.ad-tl b{width:100%}
 }
+/* Mod geçiş ekranı */
+.mtr{position:fixed;inset:0;z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#151515;color:#fff;opacity:0;transition:opacity .3s ease;overflow:hidden}
+.mtr[hidden]{display:none}
+.mtr::before{content:"";position:absolute;inset:-20%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.035) 50%,transparent 60%);transform:translateX(-30%);animation:mtrS 2s ease-out forwards}
+@keyframes mtrS{to{transform:translateX(30%)}}
+.mtr.in{opacity:1}.mtr.out{opacity:0;transition-duration:.4s}
+.mtr-h{position:relative;font-size:17px;font-weight:500;color:#e8ecea;opacity:0;animation:mtrH .5s .1s ease-out forwards}
+@keyframes mtrH{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.mtr-w{position:relative;height:84px;min-width:260px;display:flex;align-items:center;justify-content:center}
+.mtr-wd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:62px;font-weight:800;line-height:1}
+.mtr-wd.pro,.mtr-wd.lite{letter-spacing:.2em;padding-left:.2em;font-size:56px}
+.mtr-wd.web3{letter-spacing:-.02em}
+.mtr-wd i{display:inline-block;font-style:normal;background:linear-gradient(180deg,#fff,#8e9692);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mtr-wd.a i{animation:mtrO .55s cubic-bezier(.5,0,.8,.3) forwards;animation-delay:calc(.75s + var(--k)*.06s)}
+.mtr-wd.b i{opacity:0;animation:mtrI .6s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.95s + var(--k)*.07s)}
+@keyframes mtrO{to{opacity:0;transform:translateY(-55%) scaleY(1.5);filter:blur(7px)}}
+@keyframes mtrI{from{opacity:0;transform:translateY(60%) scaleY(.6);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+.mtr-t{position:relative;margin:6px 0 0;font-size:13.5px;color:#8b948f;opacity:0;animation:mtrH .5s .35s ease-out forwards}
+@media (prefers-reduced-motion:reduce){.mtr::before{display:none}.mtr *{animation:none!important}.mtr-h,.mtr-t{opacity:1}.mtr-wd.a{display:none}.mtr-wd.b i{opacity:1}}
 /* Web3 cüzdanı */
 .w3{position:fixed;inset:0;z-index:39;--w-bg:#0a0b0b;--w-c1:#141615;--w-c2:#1e2120;--w-ln:rgba(255,255,255,.07);--w-tx:#f1f4f2;--w-mu:#8b938f;--w-g:#25e38a;--w-r:#ff5d5d;background:var(--w-bg);color:var(--w-tx);font-family:var(--body);-webkit-font-smoothing:antialiased;outline:none}
 .w3 .w3-col{position:relative;height:100%;width:min(460px,100%);margin:0 auto;display:flex;flex-direction:column;overflow:hidden}
@@ -5354,10 +5373,25 @@ $("viewPage").addEventListener("pointerup",e=>{vwDrawUp(e);vwCurUp(e)});$("viewP
 const vwEnd=()=>{VW.scrub=false;const b=$("vwCh");if(b)b.classList.remove("on")};$("viewPage").addEventListener("pointerup",vwEnd);$("viewPage").addEventListener("pointercancel",vwEnd);$("viewPage").addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")vwEnd()});
 addEventListener("resize",()=>{if(!$("viewPage").hidden)vwRenderChart()});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("viewPage").hidden&&!document.fullscreenElement){if($("viewPage").classList.contains("vw-max")){$("viewPage").classList.remove("vw-max");vwRenderChart()}else closeView()}});
+// ---------- Mod geçiş ekranı
+const MTN={pro:"Pro",lite:"Lite",web3:"Web3"};
+function mtText(a,b){if(EN)return `Switching from ${MTN[a]} to ${MTN[b]}`;const f={pro:"Pro'dan",lite:"Lite'tan",web3:"Web3'ten"},t={pro:"Pro'ya",lite:"Lite'ye",web3:"Web3'e"};return `${f[a]} ${t[b]} geçiliyor`}
+let mtBusy=false;
+function modeGo(a,b,fn){if(mtBusy)return;mtBusy=true;try{closeSheet()}catch(e){}
+  const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let el=$("mtr");if(!el){el=document.createElement("div");el.id="mtr";el.setAttribute("role","status");el.setAttribute("aria-live","polite");document.body.appendChild(el)}
+  const wd=(m,c)=>`<div class="mtr-wd ${m} ${c}">${[...(m==="web3"?"Web3":MTN[m].toUpperCase())].map((ch,k)=>`<i style="--k:${k}">${ch}</i>`).join("")}</div>`;
+  el.className="mtr";el.dataset.rm=rm?"1":"";
+  el.innerHTML=`<div class="mtr-h">${EN?"Welcome to COINFORCE":"COINFORCE'a hoş geldin"}</div><div class="mtr-w">${wd(a,"a")}${wd(b,"b")}</div><p class="mtr-t">${mtText(a,b)}</p>`;
+  el.hidden=false;void el.offsetWidth;el.classList.add("in");
+  const T1=rm?250:1300,T2=rm?600:2300;
+  setTimeout(()=>{try{fn()}catch(e){}},T1);
+  setTimeout(()=>{el.classList.remove("in");el.classList.add("out");setTimeout(()=>{el.hidden=true;el.className="mtr";el.innerHTML="";mtBusy=false},rm?50:380)},T2)}
 function renderMode(){const w=typeof w3Vis==="function"&&w3Vis();document.querySelectorAll("#sh-mode .md-opt").forEach(b=>b.classList.toggle("on",b.dataset.mode===(w?"web3":MODE)))}
 $("sh-mode").addEventListener("click",e=>{const b=e.target.closest("[data-mode]");if(!b)return;const m=b.dataset.mode;
-  if(m==="web3"){w3Open();return}
-  MODE=m;try{localStorage.setItem("cf_mode",m)}catch(e){}w3Close();applyMode();renderMode();setTimeout(()=>closeSheet(),180);toast(m==="lite"?(EN?"Lite mode on":"Lite mod açıldı"):(EN?"Pro mode on":"Pro mod açıldı"))});
+  const cur=typeof w3Vis==="function"&&w3Vis()?"web3":MODE;if(m===cur){closeSheet();return}
+  modeGo(cur,m,()=>{if(m==="web3"){w3Open();return}
+    MODE=m;try{localStorage.setItem("cf_mode",m)}catch(e){}w3Close();applyMode();renderMode();closeSheet()})});
 $("themeBtn").onclick=()=>{const r=document.documentElement,light=r.dataset.theme?r.dataset.theme==="light":matchMedia("(prefers-color-scheme: light)").matches;r.dataset.theme=light?"dark":"light";if(view==="detail")drawChart();if(view==="profile")renderProfile()};
 addEventListener("resize",()=>{if(view==="detail")drawChart();if(view==="profile")renderProfile()});
 
@@ -5919,7 +5953,7 @@ function w3Intro(){const s=W3S[W3.i],last=W3.i===W3S.length-1;
   <div class="w3-card"><div class="w3-seg" aria-hidden="true">${W3S.map((_,k)=>`<i class="${k===W3.i?"on":k<W3.i?"done":""}"></i>`).join("")}</div><h2>${s.t[+EN]}</h2><div class="w3-art" aria-hidden="true">${s.a()}</div><p>${s.p?s.p[+EN]:w3PerpTxt()}</p>
   <div class="w3-btns"><button type="button" data-w3="skip">${w3L("Geç","Skip")}</button><button type="button" class="pri" data-w3="next">${last?w3L("Başla","Get Started"):w3L("İleri","Next")}</button></div></div>`}
 function w3Create(){
-  return `<div class="w3-hd"><button type="button" class="w3-ib" data-w3="exit" aria-label="${w3L("COINFORCE'a dön","Back to COINFORCE")}">${W3I.back}</button><button type="button" class="w3-pill" data-w3="mode" aria-haspopup="dialog">Web3 ${W3I.down}</button><span class="w3-ib"></span></div>${w3Hero(false)}
+  return `<div class="w3-hd"><span class="w3-ib"></span><button type="button" class="w3-pill" data-w3="mode" aria-haspopup="dialog">Web3 ${W3I.down}</button><span class="w3-ib"></span></div>${w3Hero(false)}
   <div class="w3-cr"><button type="button" class="w3-opt" data-w3="mk"><span class="ic">${W3I.plus}</span><span class="tx"><b>${w3L("Yeni Cüzdan Oluştur","Create New Wallet")}</b><small>${w3L("Tek dokunuşla yeni Web3 cüzdanını oluştur.","Create your new Web3 wallet in one tap.")}</small></span>${W3I.chev}</button>
   <button type="button" class="w3-opt" data-w3="mk"><span class="ic">${W3I.link}</span><span class="tx"><b>${w3L("Mevcut Hesabı Bağla","Link Existing Account")}</b><small>${w3L("COINFORCE hesabındaki varlıklarını cüzdanına aktar.","Bring your COINFORCE account assets into your wallet.")}</small></span>${W3I.chev}</button>
   <button type="button" class="w3-ck${W3.ck?" on":""}" data-w3="ck" role="checkbox" aria-checked="${W3.ck}"><i>${W3.ck?W3I.check:""}</i><span>${w3L("Cüzdanımın COINFORCE hesabımla eşitlenmesini onaylıyorum.","I agree to sync my wallet with my COINFORCE account.")}</span></button>
@@ -5928,7 +5962,7 @@ function w3Create(){
 // ---------- uygulama kabuğu
 const W3TABS=[["wallet","wallet",["Cüzdan","Wallet"]],["markets","mk",["Piyasalar","Markets"]],["swap","swap",["Takas","Swap"]],["discover","disc",["Keşfet","Discover"]]];
 function w3App(){
-  return `<div class="w3-hd"><button type="button" class="w3-ib" data-w3="exit" aria-label="${w3L("COINFORCE'a dön","Back to COINFORCE")}">${W3I.back}</button><button type="button" class="w3-pill" data-w3="mode" aria-haspopup="dialog">Web3 ${W3I.down}</button><button type="button" class="w3-ib" data-w3="recv" aria-label="${w3L("Adresim ve QR kodum","My address and QR code")}">${W3I.scan}</button></div>
+  return `<div class="w3-hd"><span class="w3-ib"></span><button type="button" class="w3-pill" data-w3="mode" aria-haspopup="dialog">Web3 ${W3I.down}</button><button type="button" class="w3-ib" data-w3="recv" aria-label="${w3L("Adresim ve QR kodum","My address and QR code")}">${W3I.scan}</button></div>
   <div class="w3-body" id="w3Body"></div><nav class="w3-nav" aria-label="Web3">${W3TABS.map(x=>`<button type="button" data-w3t="${x[0]}" class="${W3.tab===x[0]?"on":""}"${W3.tab===x[0]?' aria-current="page"':""}>${W3I[x[1]]}<span>${x[2][+EN]}</span></button>`).join("")}</nav><div id="w3Sub"></div><div id="w3Sh"></div>`}
 function w3Tab(){const b=$("w3Body");if(!b)return;b.scrollTop=0;
   document.querySelectorAll("#w3 .w3-nav [data-w3t]").forEach(n=>{const on=n.dataset.w3t===W3.tab;n.classList.toggle("on",on);if(on)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current")});
