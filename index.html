@@ -1536,76 +1536,232 @@ nav.bar button svg{width:22px;height:22px}
   .ads *,.ads *::before,.ads *::after{animation:none!important;transition:none!important}
   .ad-ring,.ad-ln{stroke-dashoffset:0}.ad-cd{transform:none}.ad-ar,.ad-up,.ad-st,.ad-chips span{opacity:1}.ad-tl b{width:100%}
 }
-/* Web3 (sanal cüzdan) */
-.w3{position:fixed;inset:0;z-index:39;background:#07100c;color:#eaf3ee;font-family:var(--body);display:flex;flex-direction:column;align-items:stretch;overflow:hidden;--g:#2fe08a;--g2:#19b86a;--wl:rgba(255,255,255,.08);--wm:#8a978f}
-.w3>*{width:min(460px,100%);margin-inline:auto}
-.w3 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
-.w3-hd{display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 8px;flex:none}
-.w3-hd .lg{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(47,224,138,.14);color:var(--g)}
-.w3-pill{display:flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700;background:rgba(255,255,255,.06)}
-.w3-pill svg{width:12px;height:12px}
-.w3-hd .ic{width:28px;height:28px;display:grid;place-items:center;color:#cfd9d3}.w3-hd svg{width:20px;height:20px}
-.w3-skip{font-size:13px;font-weight:600;color:var(--g)}
-.w3-hero{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;transition:opacity .4s}
-.w3-hero.dim{opacity:.22}
-.w3-orb{width:min(46vw,190px);aspect-ratio:1;position:relative;margin-bottom:22px}
-.w3-orb svg{width:100%;height:100%;overflow:visible}
-.w3-orb .d{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;animation:w3f 4s ease-in-out infinite}
-@keyframes w3f{50%{transform:translateY(-6px);opacity:.5}}
-.w3-hero h1{margin:0;font-size:21px;line-height:1.3;font-weight:700}.w3-hero h1 b{display:block;color:var(--g)}
-.w3-card{flex:none;background:#101a15;border-radius:22px 22px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom,0px))}
-.w3-seg{display:flex;gap:6px;margin-bottom:14px}.w3-seg i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.14)}.w3-seg i.on{background:#fff}
-.w3-card h2{margin:0 0 10px;font-size:15px;font-weight:700}
-.w3-art{height:clamp(110px,22vh,170px);border-radius:12px;overflow:hidden;background:radial-gradient(120% 100% at 50% 0,#17382a,#0b1410);margin-bottom:12px;display:grid;place-items:center}
-.w3-art svg{height:100%;width:auto;max-width:100%}
-.w3-card p{margin:0 0 16px;font-size:12.5px;line-height:1.5;color:var(--wm);min-height:38px}
-.w3-btns{display:flex;gap:10px}.w3-btns button{flex:1;height:42px;border-radius:999px;font-weight:700;font-size:13px;background:rgba(255,255,255,.1)}.w3-btns .pri{background:#fff;color:#07100c}
-.w3-opt{display:block;width:100%;text-align:left;padding:16px;margin:0 0 12px;border-radius:12px;background:#132019;border:1px solid rgba(255,255,255,.14)}
-.w3-opt b{display:block;font-size:13.5px;margin-bottom:4px}.w3-opt small{font-size:11.5px;color:var(--wm);line-height:1.4;display:block}
-.w3-ck{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--wm);padding:2px 2px 8px;cursor:pointer;text-align:left}
-.w3-ck i{width:16px;height:16px;border-radius:50%;border:1.5px solid #5c6a62;flex:none;display:grid;place-items:center}.w3-ck.on i{background:var(--g);border-color:var(--g)}.w3-ck.on i::after{content:"";width:5px;height:8px;border:solid #07100c;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
-.w3-tip{display:inline-block;margin:0 2px;padding:8px 10px;border-radius:6px;background:#27322c;font-size:11px;color:#dfe8e3}
-.w3-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 16px 96px;-webkit-overflow-scrolling:touch}
-.w3-q{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:10px;background:rgba(255,255,255,.06);margin:4px 0 12px}
-.w3-q svg{width:16px;height:16px;color:var(--wm);flex:none}.w3-q input{flex:1;min-width:0;background:none;border:0;outline:0;color:#eaf3ee;font:inherit;font-size:13px}.w3-q input::placeholder{color:#6f7d75}
-.w3-bal{border-radius:16px;padding:16px;background:linear-gradient(135deg,#123a29,#0c1a13 70%);border:1px solid rgba(47,224,138,.16);margin-bottom:14px}
-.w3-bal small{display:block;font-size:12px;color:var(--wm)}.w3-bal b{display:block;font-family:var(--display);font-size:26px;margin:6px 0 4px;font-variant-numeric:tabular-nums}
-.w3-bal em{font-style:normal;font-size:12.5px;font-weight:700}
-.w3-ban{border-radius:16px;padding:18px;background:linear-gradient(135deg,#133f2c,#0c1a13);border:1px solid rgba(47,224,138,.16);margin-bottom:14px}
-.w3-ban h3{margin:0 0 14px;font-size:15px;line-height:1.35;max-width:75%}
-.w3-ban .go{display:block;width:100%;height:40px;border-radius:999px;background:#fff;color:#07100c;font-weight:700;font-size:13px}
-.w3-act{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}.w3-act button{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:#cfd9d3}
-.w3-act i{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.07);display:grid;place-items:center}.w3-act svg{width:19px;height:19px}
-.w3-pr{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px;scrollbar-width:none}.w3-pr::-webkit-scrollbar{display:none}
-.w3-pr button{flex:0 0 82%;scroll-snap-align:start;text-align:left;border-radius:14px;padding:14px;background:#0f1713;border:1px solid var(--wl);display:flex;align-items:center;gap:10px;min-height:78px}
-.w3-pr b{display:block;font-size:13.5px;margin-bottom:3px}.w3-pr small{font-size:11.5px;color:var(--wm)}.w3-pr .t{flex:1}.w3-pr .em{font-size:30px}
-.w3-sh{display:flex;align-items:center;justify-content:space-between;margin:4px 0 8px}.w3-sh b{font-size:14px}.w3-sh button{font-size:12px;color:var(--g);font-weight:600}
-.w3-as{display:flex;align-items:center;gap:12px;width:100%;padding:11px 0;text-align:left}
-.w3-as .mid{flex:1;min-width:0}.w3-as b{display:block;font-size:14px}.w3-as small{font-size:11px;color:var(--wm);display:block;margin-top:2px}.w3-as .rt{text-align:right}
-.w3 .up{color:var(--g)}.w3 .down{color:#ff6b5e}
-.w3c{width:36px!important;height:36px!important;font-size:13px!important}
-.w3-tabs{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;margin:2px 0 10px}.w3-tabs::-webkit-scrollbar{display:none}
-.w3-tabs button{font-size:13px;font-weight:600;color:var(--wm);white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent}.w3-tabs button.on{color:#fff;border-color:#fff}
-.w3-h{font-size:22px;font-weight:700;margin:6px 0 10px}
-.w3-mk{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:12px 0;text-align:left}
-.w3-mk b{display:block;font-size:14px}.w3-mk small{font-size:11px;color:var(--wm)}.w3-mk .rt{text-align:right}.w3-mk .rt b{font-variant-numeric:tabular-nums}
-.w3-mk .rt small{font-size:12px;font-weight:700}
-.w3-gh{margin:16px 0 4px}.w3-gh b{display:block;font-size:15px}.w3-gh small{font-size:11.5px;color:var(--wm)}
-.w3-ap{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px;border-radius:14px;background:#0f1713;margin-top:8px}
-.w3-ap button{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10.5px;color:#cfd9d3;min-width:0}.w3-ap button span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.w3-ap i{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:17px;color:#fff;font-family:var(--display);position:relative}
-.w3-ap i em{position:absolute;bottom:-5px;font-style:normal;font-size:8px;font-family:var(--body);background:#2a3530;border-radius:4px;padding:1px 4px;font-weight:700}
-.w3-nav{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(460px,100%);display:flex;background:rgba(10,18,14,.96);border-top:1px solid var(--wl);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
-.w3-nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:#6f7d75;padding:2px 0}.w3-nav button.on{color:#fff}.w3-nav svg{width:22px;height:22px}
-.w3-empty{padding:28px 0;text-align:center;color:var(--wm);font-size:13px}
-@media (prefers-reduced-motion:reduce){.w3-orb .d{animation:none}}
+/* Web3 cüzdanı */
+.w3{position:fixed;inset:0;z-index:39;--w-bg:#0a0b0b;--w-c1:#141615;--w-c2:#1e2120;--w-ln:rgba(255,255,255,.07);--w-tx:#f1f4f2;--w-mu:#8b938f;--w-g:#25e38a;--w-r:#ff5d5d;background:var(--w-bg);color:var(--w-tx);font-family:var(--body);-webkit-font-smoothing:antialiased;outline:none}
+.w3 .w3-col{position:relative;height:100%;width:min(460px,100%);margin:0 auto;display:flex;flex-direction:column;overflow:hidden}
+:where(.w3) button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0;text-align:inherit;-webkit-tap-highlight-color:transparent}
+:where(.w3) input{font:inherit;color:inherit}
+.w3 :focus-visible{outline:2px solid var(--w-g);outline-offset:2px}
+.w3 .up{color:var(--w-g)}.w3 .down{color:var(--w-r)}.w3 .mu{color:var(--w-mu)}
+.w3 svg{flex:none}
+.w3 .w3-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:calc(6px + env(safe-area-inset-top,0px)) 8px 6px;flex:none;min-height:52px}
+.w3 .w3-ib{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#d6ded9;flex:none}
+.w3 .w3-ib svg{width:21px;height:21px}
+.w3 .w3-ib.sm{width:34px;height:34px;color:var(--w-mu)}.w3 .w3-ib.sm svg{width:18px;height:18px}
+.w3 .w3-ib.fav{color:#ffc93c}
+.w3 .w3-pill{display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 12px 0 14px;border-radius:999px;background:rgba(255,255,255,.07);font-size:14px;font-weight:700}
+.w3 .w3-pill svg{width:14px;height:14px;opacity:.75}
+.w3 .w3-skip{height:40px;padding:0 10px;font-size:14.5px;font-weight:600;color:var(--w-g)}
+.w3 .w3-ht{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;text-align:left}
+.w3 .w3-ht b{display:block;font-size:16px;font-weight:700}.w3 .w3-ht small{display:block;font-size:11.5px;color:var(--w-mu);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* hero: parlayan halka içinde elmas */
+.w3 .w3-hero{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;transition:opacity .45s ease}
+.w3 .w3-hero.dim{opacity:.2}
+.w3 .w3-orb{position:relative;width:min(50vw,200px,27vh);aspect-ratio:1;margin-bottom:clamp(12px,3vh,24px)}
+.w3 .w3-orb svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.w3 .w3-orb .gl{animation:w3pulse 4s ease-in-out infinite}
+@keyframes w3pulse{50%{opacity:.6}}
+.w3 .w3-orb i{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(255,255,255,.6);animation:w3f 5s ease-in-out infinite}
+@keyframes w3f{50%{transform:translateY(-6px);opacity:.4}}
+.w3 .w3-hero h1{margin:0;font-size:clamp(20px,5.6vw,24px);line-height:1.28;font-weight:700;letter-spacing:-.01em}
+.w3 .w3-hero h1 span{display:block;color:var(--w-g)}
+/* tanıtım kartı */
+.w3 .w3-card{flex:none;background:var(--w-c1);border-radius:22px 22px 0 0;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px));box-shadow:0 -14px 40px rgba(0,0,0,.55);touch-action:pan-y}
+.w3 .w3-seg{display:flex;gap:6px;margin:0 2px 14px}.w3 .w3-seg i{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.12);transition:background .3s}.w3 .w3-seg i.done{background:rgba(255,255,255,.4)}.w3 .w3-seg i.on{background:#fff}
+.w3 .w3-card h2{margin:0 0 10px;font-size:16px;font-weight:700}
+.w3 .w3-art{position:relative;height:clamp(128px,23vh,188px);border-radius:14px;overflow:hidden;background:radial-gradient(130% 110% at 50% 0,#1e3d2d 0,#111c16 55%,#0c1210 100%);margin-bottom:12px;container-type:size}
+.w3 .w3-card p{margin:0 0 16px;font-size:13px;line-height:1.5;color:var(--w-mu);min-height:39px}
+.w3 .w3-btns{display:flex;gap:10px}.w3 .w3-btns button{flex:1;height:46px;border-radius:999px;font-weight:700;font-size:14.5px;background:#272b29;display:inline-flex;align-items:center;justify-content:center;gap:6px}.w3 .w3-btns .pri{background:#fff;color:#0a0b0b}.w3 .w3-btns svg{width:16px;height:16px}
+/* tanıtım görselleri: yükseklik = 17em */
+.w3 .ia{position:absolute;inset:0;font-size:10px;font-size:5.9cqh;color:#f1f4f2}
+.w3 .ia .coin.iac{width:3.4em;height:3.4em;font-size:1em;box-shadow:0 .5em 1.4em rgba(0,0,0,.45)}
+.w3 .ia em{font-style:normal;font-weight:700}
+.w3 .ia1 .ia-ph{position:absolute;left:50%;top:1.5em;width:15.5em;height:19em;margin-left:-7.75em;border-radius:1.9em;background:#0b0e0c;border:1px solid rgba(255,255,255,.13);padding:1.1em 1.3em;box-shadow:0 0 0 .45em rgba(255,255,255,.03),0 1.4em 3em rgba(0,0,0,.6)}
+.w3 .ia1 .ia-pt{display:flex;align-items:center;justify-content:center;gap:.3em;font-size:.95em;font-weight:700;margin-bottom:1em;color:#cfd8d3}.w3 .ia1 .ia-pt svg{width:1em;height:1em}
+.w3 .ia1 small{display:block;font-size:.9em;color:#8b938f}.w3 .ia1 b{display:block;font-size:1.75em;font-weight:800;letter-spacing:-.02em;margin:.15em 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.w3 .ia1 .ia-ph>em{font-size:.9em;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w3 .ia1 .ia-sp{height:5.2em;margin:.8em -.4em 0}.w3 .ia1 .ia-sp svg{width:100%;height:100%;display:block}
+.w3 .ia1 .ia-fl{position:absolute;animation:w3f 5s ease-in-out infinite}.w3 .ia1 .f1{left:9%;top:52%}.w3 .ia1 .f2{right:8%;top:40%;animation-delay:-1.4s}.w3 .ia1 .f3{right:19%;top:7%;animation-delay:-2.6s}.w3 .ia1 .f4{left:17%;top:9%;animation-delay:-3.5s}
+.w3 .ia1 .f2 .coin.iac{width:4.2em;height:4.2em}.w3 .ia1 .f3 .coin.iac,.w3 .ia1 .f4 .coin.iac{width:2.7em;height:2.7em}
+.w3 .ia2 .ia-rc{position:absolute;left:50%;width:min(27em,86%);transform:translateX(-50%);background:#fff;color:#141615;border-radius:1.2em;padding:1em 1.3em 1.1em;box-shadow:0 1em 2.4em rgba(0,0,0,.45)}
+.w3 .ia2 .ia-rc.bk{top:1em;transform:translateX(-50%) scale(.9);transform-origin:top center;opacity:.45}
+.w3 .ia2 .ia-rc.fr{top:3.3em}
+.w3 .ia2 .h{display:flex;align-items:center;gap:.8em}.w3 .ia2 .coin.iac{width:2.6em;height:2.6em;box-shadow:none}
+.w3 .ia2 .n{flex:1;min-width:0}.w3 .ia2 .n b{display:block;font-size:1.25em;font-weight:800}.w3 .ia2 .n small{display:block;font-size:.9em;color:#6b7570}
+.w3 .ia2 .r{text-align:right}.w3 .ia2 .r b{display:block;font-size:1.25em;font-weight:800}.w3 .ia2 .r em{font-size:.95em}
+.w3 .ia2 .up{color:#0c9a56}.w3 .ia2 .down{color:#e0403f}
+.w3 .ia2 .bar{position:relative;height:.6em;border-radius:.3em;margin:1.1em 0 .5em;background:linear-gradient(90deg,#ff5d5d,#ffc93c 50%,#25e38a)}
+.w3 .ia2 .bar i{position:absolute;top:50%;width:1.3em;height:1.3em;border-radius:50%;background:#141615;border:.28em solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);transform:translate(-50%,-50%)}
+.w3 .ia2 .lh{display:flex;justify-content:space-between;font-size:.9em;color:#6b7570;font-weight:600}
+.w3 .ia2 .ia-chip{position:absolute;right:7%;bottom:1em;display:inline-flex;align-items:center;gap:.4em;background:#25e38a;color:#05361d;font-weight:800;font-size:1em;padding:.5em .95em;border-radius:99em;box-shadow:0 .6em 1.6em rgba(37,227,138,.35)}.w3 .ia2 .ia-chip svg{width:1.2em;height:1.2em}
+.w3 .ia3 .ia-glow{position:absolute;left:50%;top:50%;width:22em;height:22em;margin:-11em 0 0 -11em;border-radius:50%;background:radial-gradient(circle,rgba(37,227,138,.25),transparent 65%)}
+.w3 .ia3 .ia-mm{position:absolute;top:3.4em;width:9.5em;margin-left:-4.75em;display:flex;flex-direction:column;align-items:center;gap:.2em;text-align:center}
+.w3 .ia3 .m0{left:50%;top:1.2em}.w3 .ia3 .m1{left:20%}.w3 .ia3 .m2{left:80%}
+.w3 .ia3 .coin.iac{width:4.4em;height:4.4em;margin-bottom:.4em}.w3 .ia3 .m0 .coin.iac{width:6em;height:6em;box-shadow:0 0 0 .35em rgba(37,227,138,.25),0 1em 2.4em rgba(0,0,0,.5)}
+.w3 .ia3 b{font-size:1.25em;font-weight:800}.w3 .ia3 span{font-size:1.05em;color:#cfd8d3;font-weight:600}.w3 .ia3 em{font-size:1em}
+.w3 .ia4 .ia-pc{position:absolute;left:50%;top:1.3em;width:min(29em,88%);transform:translateX(-50%);background:#fff;color:#141615;border-radius:1.2em;padding:.7em 1.2em 1.1em;box-shadow:0 1em 2.4em rgba(0,0,0,.45)}
+.w3 .ia4 .r{display:flex;align-items:center;gap:.7em;padding:.45em 0}.w3 .ia4 .r+.r{border-top:1px solid #eef1ef}
+.w3 .ia4 .coin.iac{width:2.3em;height:2.3em;box-shadow:none}.w3 .ia4 .r>b{font-size:1.15em;font-weight:800}
+.w3 .ia4 .lv{font-size:.85em;font-weight:800;padding:.15em .5em;border-radius:.4em;background:#e6f8ee;color:#0c9a56}
+.w3 .ia4 .px{margin-left:auto;text-align:right;display:flex;flex-direction:column}.w3 .ia4 .px b{font-size:1.1em;font-weight:800}.w3 .ia4 .px em{font-size:.9em}
+.w3 .ia4 .up{color:#0c9a56}.w3 .ia4 .down{color:#e0403f}
+.w3 .ia4 .ls{display:flex;gap:.8em;margin-top:.7em}.w3 .ia4 .ls span{flex:1;text-align:center;font-weight:800;font-size:1.05em;padding:.6em 0;border-radius:99em}.w3 .ia4 .ls .l{background:#25e38a;color:#05361d}.w3 .ia4 .ls .s{background:#ff5d5d;color:#fff}
+.w3 .ia5 .ia-wc{position:absolute;left:50%;top:1.3em;width:min(27em,84%);transform:translateX(-50%);background:linear-gradient(160deg,#1c2e25,#0f1613);border:1px solid rgba(255,255,255,.1);border-radius:1.3em;padding:1em 1.3em .6em;box-shadow:0 1em 2.4em rgba(0,0,0,.45)}
+.w3 .ia5 .t small{font-size:.95em;color:#8b938f}.w3 .ia5 .t b{display:block;font-size:1.8em;font-weight:800;letter-spacing:-.02em;margin:.1em 0 .45em}
+.w3 .ia5 .r{display:flex;align-items:center;gap:.7em;padding:.45em 0;border-top:1px solid rgba(255,255,255,.07)}.w3 .ia5 .coin.iac{width:2.3em;height:2.3em;box-shadow:none}.w3 .ia5 .r>b{font-size:1.1em}
+.w3 .ia5 .v{margin-left:auto;text-align:right;display:flex;flex-direction:column}.w3 .ia5 .v b{font-size:1.05em}.w3 .ia5 .v small{font-size:.85em;color:#8b938f}
+.w3 .ia5 .ia-sh{position:absolute;right:6%;top:.6em;width:3.8em;height:3.8em;border-radius:50%;background:#25e38a;color:#05361d;display:grid;place-items:center;box-shadow:0 0 2em rgba(37,227,138,.5)}.w3 .ia5 .ia-sh svg{width:2em;height:2em}
+/* cüzdan oluştur / bağla */
+.w3 .w3-cr{flex:none;padding:0 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.w3 .w3-opt{display:flex;align-items:center;gap:12px;width:100%;padding:15px 14px;margin-bottom:10px;border-radius:16px;background:var(--w-c1);border:1px solid rgba(255,255,255,.09);text-align:left;transition:border-color .15s}
+.w3 .w3-opt:active{border-color:rgba(37,227,138,.5)}
+.w3 .w3-opt .ic{width:42px;height:42px;border-radius:12px;background:rgba(37,227,138,.12);color:var(--w-g);display:grid;place-items:center;flex:none}.w3 .w3-opt .ic svg{width:21px;height:21px}
+.w3 .w3-opt .tx{flex:1;min-width:0}.w3 .w3-opt b{display:block;font-size:15px;font-weight:700;margin-bottom:3px}.w3 .w3-opt small{display:block;font-size:12.5px;color:var(--w-mu);line-height:1.4}
+.w3 .w3-opt>svg{width:17px;height:17px;color:var(--w-mu)}
+.w3 .w3-ck{display:flex;align-items:flex-start;gap:10px;width:100%;padding:8px 2px 4px;font-size:12.5px;line-height:1.45;color:var(--w-mu);text-align:left}
+.w3 .w3-ck i{width:18px;height:18px;margin-top:1px;border-radius:50%;border:1.5px solid #5d6863;flex:none;display:grid;place-items:center;color:#05361d}.w3 .w3-ck i svg{width:12px;height:12px}
+.w3 .w3-ck.on i{background:var(--w-g);border-color:var(--w-g)}
+.w3 .w3-tip{position:relative;display:inline-block;margin:10px 0 0;padding:9px 12px;border-radius:8px;background:#2b302d;color:#e8eeea;font-size:12px}
+.w3 .w3-tip::before{content:"";position:absolute;left:14px;top:-5px;width:10px;height:10px;background:#2b302d;transform:rotate(45deg)}
+/* uygulama gövdesi */
+.w3 .w3-body,.w3 .w3-sb{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.w3 .w3-body{padding:0 16px calc(84px + env(safe-area-inset-bottom,0px))}
+.w3 .w3-sb{padding:0 16px calc(96px + env(safe-area-inset-bottom,0px))}
+.w3 .w3-body::-webkit-scrollbar,.w3 .w3-sb::-webkit-scrollbar{display:none}
+.w3 .w3-q{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:12px;background:var(--w-c1);margin:2px 0 14px}
+.w3 .w3-q svg{width:17px;height:17px;color:#6f7873}.w3 .w3-q input{flex:1;min-width:0;height:100%;background:none;border:0;outline:0;font-size:14px;-webkit-appearance:none;appearance:none}.w3 .w3-q input::placeholder{color:#6f7873}
+.w3 .w3-q input::-webkit-search-cancel-button{-webkit-appearance:none}
+.w3 .w3-bal{position:relative;border-radius:20px;padding:16px 16px 14px;background:radial-gradient(120% 140% at 100% 0,#1f5a3d 0,#14301f 36%,#121614 72%);border:1px solid rgba(37,227,138,.18);overflow:hidden}
+.w3 .w3-bal .t{display:flex;align-items:center;gap:4px;font-size:12.5px;color:#a9b4ae}
+.w3 .w3-eye{width:28px;height:28px;display:grid;place-items:center;color:#a9b4ae}.w3 .w3-eye svg{width:16px;height:16px}
+.w3 .w3-bal>b{display:block;font-size:31px;font-weight:800;letter-spacing:-.02em;margin:4px 0 3px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w3 .w3-bal .pn{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}.w3 .w3-bal .pn span{color:#8f9a94;font-weight:500}.w3 .w3-bal .pn.mu{font-weight:500;color:#8f9a94;line-height:1.45}
+.w3 .w3-bal.sm>b{font-size:24px}
+.w3 .w3-bsp{height:54px;margin:12px -4px 0}.w3 .w3-bsp svg{width:100%;height:100%;display:block}
+.w3 .w3-bspl{display:flex;justify-content:space-between;font-size:10.5px;color:#76817b;margin-top:4px}
+.w3 .w3-bk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)}
+.w3 .w3-bk span{min-width:0}.w3 .w3-bk small{display:block;font-size:11px;color:#8f9a94;margin-bottom:2px}.w3 .w3-bk b{display:block;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w3 .w3-ban{position:relative;display:flex;align-items:center;gap:8px;border-radius:20px;padding:18px 14px 18px 18px;background:radial-gradient(120% 140% at 100% 0,#1f5a3d 0,#14301f 40%,#121614 78%);border:1px solid rgba(37,227,138,.18)}
+.w3 .w3-ban .tx{flex:1;min-width:0}.w3 .w3-ban h3{margin:0 0 14px;font-size:16.5px;line-height:1.35;font-weight:700}
+.w3 .w3-ban .go{display:block;width:100%;height:42px;border-radius:999px;background:#fff;color:#0a0b0b;font-weight:700;font-size:14px;text-align:center}
+.w3 .gem{width:84px;height:84px;flex:none;align-self:flex-start}.w3 .gem svg{width:100%;height:100%;overflow:visible}
+.w3 .w3-act{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:18px 0 16px}
+.w3 .w3-act button{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:12px;color:#d3dbd7;text-align:center}
+.w3 .w3-act i{width:48px;height:48px;border-radius:50%;background:var(--w-c1);border:1px solid var(--w-ln);display:grid;place-items:center}.w3 .w3-act svg{width:21px;height:21px}
+.w3 .w3-pr{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px;scrollbar-width:none;overscroll-behavior-x:contain}.w3 .w3-pr::-webkit-scrollbar{display:none}
+.w3 .w3-pr .pc{flex:0 0 86%;scroll-snap-align:center;display:flex;align-items:center;gap:12px;min-height:88px;padding:14px 14px 14px 16px;border-radius:18px;background:var(--w-c1);border:1px solid var(--w-ln);text-align:left;overflow:hidden}
+.w3 .w3-pr .tx{flex:1;min-width:0}.w3 .w3-pr .tx b{display:block;font-size:14.5px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.w3 .w3-pr .tx small{display:block;font-size:12px;color:var(--w-mu);line-height:1.4}
+.w3 .w3-pr .ar{width:54px;height:54px;flex:none;border-radius:16px;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,rgba(37,227,138,.32),rgba(37,227,138,.06));color:var(--w-g)}.w3 .w3-pr .ar svg{width:26px;height:26px}
+.w3 .coin.w3pa{width:46px;height:46px;font-size:15px}
+.w3 .w3-dots{display:flex;justify-content:center;gap:5px;margin:10px 0 20px}.w3 .w3-dots i{width:5px;height:3px;border-radius:2px;background:rgba(255,255,255,.2);transition:width .2s,background .2s}.w3 .w3-dots i.on{width:14px;background:#fff}
+.w3 .w3-ah{display:flex;align-items:center;justify-content:space-between;margin:6px 0 4px;min-height:34px}.w3 .w3-ah b{font-size:16.5px;font-weight:700}
+.w3 .va{display:inline-flex;align-items:center;gap:2px;font-size:12.5px;color:var(--w-mu);white-space:nowrap;padding:4px 0}.w3 .va svg{width:13px;height:13px}
+.w3 .w3-cols{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:#6f7873;padding:4px 0 2px}
+.w3 .w3-sc button{display:inline-flex;align-items:center;gap:3px;padding:4px 0;color:#6f7873}.w3 .w3-sc button.on{color:#cfd8d3}.w3 .w3-sc i{font-style:normal;font-size:10px}
+.w3 .w3-row{display:flex;align-items:center;gap:12px;width:100%;padding:11px 0;text-align:left;border-radius:10px}
+.w3 button.w3-row:active{background:rgba(255,255,255,.03)}
+.w3 .w3-row.sel .nm b{color:var(--w-g)}
+.w3 .w3-ci{position:relative;flex:none;display:inline-block}
+.w3 .w3-ci.w3c{width:38px;height:38px}.w3 .w3-ci.w3cs{width:26px;height:26px}
+.w3 .coin.w3c{width:38px;height:38px;font-size:13px}.w3 .coin.w3cs{width:26px;height:26px;font-size:10px}
+.w3 .w3-cb{position:absolute;right:-3px;bottom:-3px;width:16px;height:16px;border-radius:50%;border:2px solid var(--w-bg);background:#222;object-fit:cover}
+.w3 .w3-cs .w3-cb{width:12px;height:12px}
+.w3 .w3-hi{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:var(--w-c2);color:#cfd8d3}.w3 .w3-hi svg{width:18px;height:18px}
+.w3 .w3-row .nm{flex:1;min-width:0}.w3 .w3-row .nm b{display:block;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w3 .w3-row .nm small{display:block;font-size:12px;color:var(--w-mu);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.w3 .w3-row .rt{text-align:right;flex:none;max-width:52%}.w3 .w3-row .rt b{display:block;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.w3 .w3-row .rt small{display:block;font-size:12px;color:var(--w-mu);margin-top:2px;font-variant-numeric:tabular-nums;font-weight:600}
+.w3 .w3-mt{display:flex;align-items:center;gap:7px;margin:14px auto 4px;height:38px;padding:0 18px;border-radius:999px;background:var(--w-c1);font-size:13px;font-weight:600;color:#cfd8d3}.w3 .w3-mt svg{width:16px;height:16px}
+.w3 .w3-empty{padding:30px 10px;text-align:center;color:var(--w-mu);font-size:13px;line-height:1.5}
+.w3 .w3-tt{display:flex;align-items:center;justify-content:space-between;margin:2px 0 12px}.w3 .w3-tt h2{margin:0;font-size:23px;font-weight:800;letter-spacing:-.01em}
+.w3 .w3-tabs{display:flex;gap:20px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 6px;padding:0 16px;border-bottom:1px solid var(--w-ln)}.w3 .w3-tabs::-webkit-scrollbar{display:none}
+.w3 .w3-tabs button{position:relative;padding:8px 0 11px;font-size:14px;font-weight:600;color:var(--w-mu);white-space:nowrap}
+.w3 .w3-tabs button.on{color:#fff}.w3 .w3-tabs button.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;border-radius:2px;background:#fff}
+.w3 .w3-tabs.sm{border:0;margin-bottom:2px}.w3 .w3-tabs.sm button{font-size:13.5px}
+.w3 .w3-bt{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;margin:2px -16px 14px;padding:0 16px}.w3 .w3-bt::-webkit-scrollbar{display:none}
+.w3 .w3-bt button{font-size:19px;font-weight:800;color:#59615d;white-space:nowrap;letter-spacing:-.01em}.w3 .w3-bt button.on{color:#fff}
+/* takas */
+.w3 .w3-sw .sc{background:var(--w-c1);border:1px solid var(--w-ln);border-radius:18px;padding:14px 14px 12px}
+.w3 .w3-sw .r1{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--w-mu);gap:8px}
+.w3 .w3-sw .mx{color:var(--w-g);font-weight:700;margin-left:8px}
+.w3 .w3-sw .r2{display:flex;align-items:center;gap:10px;margin:10px 0 6px}
+.w3 .w3-sw input,.w3 .w3-sw .r2 b{flex:1;min-width:0;background:none;border:0;outline:0;font-size:27px;font-weight:700;padding:0;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w3 .w3-sw input::placeholder{color:#505855}
+.w3 .w3-sw .tk{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 10px 0 6px;border-radius:999px;background:var(--w-c2);font-weight:700;font-size:14.5px;flex:none}.w3 .w3-sw .tk>svg{width:14px;height:14px;color:var(--w-mu)}
+.w3 .w3-sw .r3{font-size:12px;color:var(--w-mu);font-variant-numeric:tabular-nums}
+.w3 .w3-sw .fl{display:grid;place-items:center;width:42px;height:42px;margin:-10px auto;position:relative;z-index:1;border-radius:14px;background:#232725;border:4px solid var(--w-bg);color:#dfe6e2}.w3 .w3-sw .fl svg{width:18px;height:18px}
+.w3 .w3-si{margin:14px 2px 4px;display:grid;gap:9px;font-size:12.5px}.w3 .w3-si div{display:flex;justify-content:space-between;gap:10px;color:var(--w-mu)}.w3 .w3-si span:last-child{color:#dfe6e2;text-align:right;font-variant-numeric:tabular-nums}
+.w3 .w3-err{color:var(--w-r);font-size:12.5px;min-height:18px;margin:6px 2px}
+.w3 .w3-go{display:block;width:100%;height:52px;border-radius:999px;background:var(--w-g);color:#04140c;font-weight:800;font-size:15.5px;text-align:center;transition:opacity .15s}.w3 .w3-go:disabled{opacity:.4;cursor:default}
+.w3 .w3-row.st{cursor:default}
+/* keşfet */
+.w3 .w3-wel{display:flex;align-items:center;gap:10px;border-radius:20px;padding:16px 12px 16px 18px;background:radial-gradient(120% 140% at 100% 0,#1f5a3d 0,#14301f 40%,#121614 78%);border:1px solid rgba(37,227,138,.18);margin:6px 0 12px}
+.w3 .w3-wel .tx{flex:1;min-width:0}.w3 .w3-wel b{display:block;font-size:15.5px;margin-bottom:5px}.w3 .w3-wel small{display:block;font-size:12px;color:#a9b4ae;line-height:1.45}.w3 .w3-wel .gem{width:70px;height:70px;align-self:center}
+.w3 .w3-gh{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:22px 0 10px}.w3 .w3-gh b{display:block;font-size:16px;font-weight:700}.w3 .w3-gh small{display:block;font-size:12px;color:var(--w-mu);margin-top:2px}
+.w3 .w3-ap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 6px;padding:16px 8px 14px;border-radius:18px;background:var(--w-c1)}
+.w3 .w3-ap button{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0;font-size:11.5px;color:#cdd6d1;text-align:center}
+.w3 .w3-ap .nm{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w3 .w3-dl{position:relative;width:48px;height:48px;flex:none;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:18px;color:#fff;font-family:var(--display)}
+.w3 .w3-dl img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;background:#fff;padding:9px;object-fit:contain}
+.w3 .w3-dl.cn img{padding:0;object-fit:cover;background:none}
+.w3 .w3-dl em{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);font-style:normal;font-family:var(--body);font-size:8.5px;font-weight:800;padding:1px 5px;border-radius:4px;background:#2b302d;color:#dfe6e2;white-space:nowrap}
+.w3 .w3-dl.s42{width:42px;height:42px;font-size:16px}.w3 .w3-dl.s42 img{padding:8px}.w3 .w3-dl.s56{width:56px;height:56px;font-size:21px}.w3 .w3-dl.s56 img{padding:11px}
+.w3 .w3-dl.cn.s42 img,.w3 .w3-dl.cn.s56 img{padding:0}
+.w3 .w3-dl.ex{background:var(--w-c2)!important;color:var(--w-g)}.w3 .w3-dl.ex svg{width:19px;height:19px}
+.w3 .w3-tag{flex:none;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--w-c2);color:#cfd8d3}
+.w3 .w3-cards{display:grid;gap:10px}
+.w3 .w3-cd{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:16px;background:var(--w-c1);border:1px solid var(--w-ln);text-align:left}
+.w3 .w3-cd .ic{width:42px;height:42px;border-radius:12px;background:rgba(37,227,138,.12);color:var(--w-g);display:grid;place-items:center;flex:none}.w3 .w3-cd .ic svg{width:21px;height:21px}
+.w3 .w3-cd .tx{flex:1;min-width:0}.w3 .w3-cd b{display:block;font-size:14.5px;margin-bottom:3px}.w3 .w3-cd small{display:block;font-size:12px;color:var(--w-mu);line-height:1.4}.w3 .w3-cd>svg{width:16px;height:16px;color:var(--w-mu)}
+.w3 .w3-cp{display:block;width:100%;text-align:left;padding:14px;margin-bottom:10px;border-radius:16px;background:var(--w-c1);border:1px solid var(--w-ln)}
+.w3 .w3-cp .h{display:flex;align-items:center;justify-content:space-between;gap:10px}.w3 .w3-cp .h b{font-size:15px;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w3 .w3-cp .st{flex:none;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--w-c2);color:var(--w-mu)}.w3 .w3-cp .st.live{background:rgba(37,227,138,.14);color:var(--w-g)}.w3 .w3-cp .st.soon{background:rgba(255,201,60,.14);color:#ffc93c}
+.w3 .w3-cp>small{display:block;font-size:12px;color:var(--w-mu);margin-top:3px}
+.w3 .w3-cp .pg{height:6px;border-radius:3px;background:var(--w-c2);margin:12px 0 9px;overflow:hidden}.w3 .w3-cp .pg i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#0fb26a,#25e38a)}
+.w3 .w3-cp .f{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:#cfd8d3;margin-top:3px}.w3 .w3-cp .f.mu{color:var(--w-mu)}.w3 .w3-cp .f b{font-variant-numeric:tabular-nums}
+.w3 .w3-sk{height:62px;border-radius:14px;margin-bottom:8px;background:linear-gradient(90deg,#141615 25%,#1c1f1d 50%,#141615 75%);background-size:200% 100%;animation:w3sk 1.2s linear infinite}
+@keyframes w3sk{to{background-position:-200% 0}}
+/* DApp ayrıntısı */
+.w3 .w3-scrim{position:absolute;inset:0;z-index:6;background:rgba(0,0,0,.62)}
+.w3 .w3-dsh{position:absolute;left:0;right:0;bottom:0;z-index:7;background:#151817;border-radius:24px 24px 0 0;padding:10px 18px calc(18px + env(safe-area-inset-bottom,0px));animation:w3up .25s ease}
+@keyframes w3up{from{transform:translateY(40px);opacity:0}}
+.w3 .w3-dsh .grab{width:40px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);margin:0 auto 16px}
+.w3 .w3-dsh .hd{display:flex;align-items:center;gap:14px}.w3 .w3-dsh h3{margin:0 0 5px;font-size:19px}
+.w3 .w3-dsh p{margin:14px 0 12px;font-size:13.5px;line-height:1.5;color:#c3ccc7}
+.w3 .w3-dsh .dom{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--w-g);font-weight:600}.w3 .w3-dsh .dom svg{width:15px;height:15px}
+.w3 .w3-dsh .tk{margin-top:10px;padding:10px 12px;background:var(--w-c1)}
+.w3 .w3-dsh .note{margin:12px 0 16px;padding:10px 12px;border-radius:12px;background:rgba(255,201,60,.08);color:#d9c58c;font-size:12px;line-height:1.45}
+/* alt ekranlar */
+.w3 .w3-sub{position:absolute;inset:0;z-index:5;background:var(--w-bg);display:flex;flex-direction:column;animation:w3in .22s ease}
+@keyframes w3in{from{opacity:0;transform:translateX(18px)}}
+.w3 .w3-tpx{padding:2px 0 0}.w3 .w3-tpx b{display:block;font-size:32px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.w3 .w3-tpx>span{font-size:14px;font-weight:700}.w3 .w3-tpx em{font-style:normal;color:var(--w-mu);font-weight:500;font-size:12.5px;margin-left:4px}
+.w3 .w3-chart{position:relative;height:200px;margin:12px -16px 8px;padding:18px 0}
+.w3 .w3-chart svg{width:100%;height:100%;display:block}
+.w3 .w3-chart .hl{position:absolute;transform:translateX(-50%);font-size:11px;color:var(--w-mu);white-space:nowrap;font-variant-numeric:tabular-nums}
+.w3 .w3-chart .pt{position:absolute;right:0;width:9px;height:9px;margin:-4.5px -4.5px 0 0;border-radius:50%;box-shadow:0 0 0 4px rgba(37,227,138,.18)}
+.w3 .w3-tf{display:flex;gap:6px;margin-bottom:6px}.w3 .w3-tf button{height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;color:var(--w-mu)}.w3 .w3-tf button.on{background:var(--w-c2);color:#fff}
+.w3 .w3-hold,.w3 .w3-stats,.w3 .w3-about,.w3 .w3-mgo{margin-top:12px;padding:14px;border-radius:16px;background:var(--w-c1)}
+.w3 .w3-hold .h{font-size:12.5px;color:var(--w-mu)}.w3 .w3-hold .v{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:4px 0 2px}.w3 .w3-hold .v b{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.w3 .w3-hold .v span{color:#cfd8d3;font-size:13.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.w3 .w3-hold .kv{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--w-mu);padding-top:10px;margin-top:10px;border-top:1px solid var(--w-ln)}.w3 .w3-hold .kv b{color:#e8eeea;font-variant-numeric:tabular-nums}.w3 .w3-hold .kv b.up{color:var(--w-g)}.w3 .w3-hold .kv b.down{color:var(--w-r)}
+.w3 .w3-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px 14px}.w3 .w3-stats small{display:block;font-size:11.5px;color:var(--w-mu);margin-bottom:3px}.w3 .w3-stats b{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;word-break:break-word}
+.w3 .w3-about b{display:block;font-size:14.5px;margin-bottom:6px}.w3 .w3-about p{margin:0;font-size:13px;line-height:1.55;color:#c3ccc7}
+.w3 .w3-abar{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;align-items:center;gap:4px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(10,11,11,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--w-ln)}
+.w3 .w3-abar .ab{width:58px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11.5px;color:#cfd8d3}.w3 .w3-abar .ab svg{width:21px;height:21px}
+.w3 .w3-abar .w3-tr{flex:1;height:48px;border-radius:999px;background:var(--w-g);color:#04140c;font-weight:800;font-size:15px;text-align:center;margin-left:4px}
+.w3 .w3-mgo{display:flex;align-items:center;gap:12px;margin:2px 0 14px}.w3 .w3-mgo>span{flex:1;min-width:0}.w3 .w3-mgo b{display:block;font-size:14.5px}.w3 .w3-mgo small{display:block;font-size:12px;color:var(--w-mu);margin-top:2px}
+.w3 .w3-tg{position:relative;width:46px;height:28px;border-radius:14px;background:#3a413e;flex:none;transition:background .18s}
+.w3 .w3-tg::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .18s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.w3 .w3-tg.on{background:var(--w-g)}.w3 .w3-tg.on::after{transform:translateX(18px)}.w3 .w3-tg:disabled{opacity:.45;cursor:default}
+/* alt gezinme */
+.w3 .w3-nav{position:absolute;left:0;right:0;bottom:0;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(12,13,13,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--w-ln);padding:7px 6px calc(7px + env(safe-area-inset-bottom,0px))}
+.w3 .w3-nav button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:#69716d;padding:2px 0}.w3 .w3-nav button.on{color:#fff}.w3 .w3-nav svg{width:23px;height:23px}
+@media (prefers-reduced-motion:reduce){.w3 .w3-orb i,.w3 .w3-orb .gl,.w3 .ia1 .ia-fl,.w3 .w3-sk{animation:none}.w3 .w3-sub,.w3 .w3-dsh{animation:none}.w3 .w3-hero{transition:none}}
 </style>
 
 </head>
 <body class="v-home">
 <div class="boot" id="boot">Yükleniyor…</div>
 <div class="ads" id="ads" hidden role="dialog" aria-modal="true" aria-label="Reklam" tabindex="-1"></div>
-<div class="w3" id="w3" hidden role="dialog" aria-label="Web3"></div>
+<div class="w3" id="w3" hidden role="dialog" aria-modal="true" aria-label="Web3" tabindex="-1"></div>
 <div class="wl" id="welcome" hidden>
   <div class="wl-splash" id="wlSplash" aria-hidden="true"></div><div class="wl-fl" aria-hidden="true"></div><div class="wl-dm a" aria-hidden="true"></div><div class="wl-dm b" aria-hidden="true"></div>
   <div class="wl-sc" id="wlHome">
@@ -2317,7 +2473,7 @@ nav.bar button svg{width:22px;height:22px}
   <div class="md-list">
     <button type="button" class="md-opt" data-mode="pro"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3"/></svg></i><span><b>Pro</b><small data-en="For experienced traders, with a full range of powerful features.">Deneyimli yatırımcılar için; tüm güçlü özellikler açık.</small></span></button>
     <button type="button" class="md-opt" data-mode="lite"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5L12 5l10 4.5-10 4.5z"/><path d="M6 11.3V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.7"/></svg></i><span><b>Lite</b><small data-en="For beginners, or those who prefer a simple and easy-to-use interface.">Yeni başlayanlar ya da sade, kolay bir arayüz isteyenler için.</small></span></button>
-    <button type="button" class="md-opt" data-mode="web3"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L3 12l8 9 8-9z"/><path d="M3 12h16M11 3v18"/><path d="M19.5 2.5v4M17.5 4.5h4"/></svg></i><span><b>Web3<em class="md-dot"></em></b><small data-en="Your virtual wallet: manage assets, explore markets and discover apps.">Sanal cüzdanın: varlıklarını yönet, piyasaları ve uygulamaları keşfet.</small></span></button>
+    <button type="button" class="md-opt" data-mode="web3"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L3 12l8 9 8-9z"/><path d="M3 12h16M11 3v18"/><path d="M19.5 2.5v4M17.5 4.5h4"/></svg></i><span><b>Web3<em class="md-dot"></em></b><small data-en="Your Web3 wallet: manage assets, explore markets and discover apps.">Web3 cüzdanın: varlıklarını yönet, piyasaları ve uygulamaları keşfet.</small></span></button>
   </div>
 </div>
 <div class="sheet" id="sh-banner" role="dialog" aria-label="Banner">
@@ -5657,137 +5813,384 @@ function adsWhenReady(fn){let n=0;const t=setInterval(()=>{const ok=me&&$("boot"
 $("ads").addEventListener("click",e=>{if(!AD||AD.done)return;if(e.target.closest("#adSkip")){if(AD.skip)adsClose();return}
   const g=e.target.closest("[data-adgo]");if(g){const a=AD.list[+g.dataset.adgo];adsClose(a&&a.act)}});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&AD&&!AD.done&&!$("ads").hidden){e.stopPropagation();e.preventDefault();if(AD.skip)adsClose()}},true);
-// ---------- Web3 modu (sanal cüzdan): tanıtım → cüzdan oluştur → Cüzdan / Piyasalar / Keşfet
-// Gerçek cüzdan, seed phrase ya da özel anahtar yoktur; bakiyeler hesabındaki sanal bakiyedir.
-const W3={step:"app",i:0,tab:"wallet",mk:"hot",ds:"dapps",dq:"",mq:"",xq:"",more:false,ck:false,tip:false};
+// ---------- Web3 modu: tanıtım → cüzdan oluştur/bağla → Cüzdan / Piyasalar / Takas / Keşfet
+// Bakiye, varlıklar ve fiyatlar hesabın kendi verisinden ve canlı fiyatlardan gelir (ana ekranla aynı hesap).
+// Hiçbir zaman seed phrase, özel anahtar ya da şifre istenmez. Takas, ana uygulamadaki "swap" işlemini kullanır.
+const W3={step:"app",i:0,tab:"wallet",mk:"hot",sort:"",dir:-1,ds:"dapps",dv:"feat",dq:"",mq:"",xq:"",tq:"",pq:"",sub:null,tok:null,tf:"7d",ck:false,tip:false,from:"USDT",to:"SOL",amt:"",earn:null,earnBusy:false,dapp:null,open:{},pick:null,px:null,py:0};
 const w3L=(a,b)=>EN?b:a;
 const w3Vis=()=>!$("w3").hidden;
-function w3Get(){try{return JSON.parse(localStorage.getItem("cf_w3:"+(me?me.id:"x"))||"{}")||{}}catch(e){return{}}}
+function w3Get(){try{const o=JSON.parse(localStorage.getItem("cf_w3:"+(me?me.id:"x"))||"{}");return o&&typeof o==="object"?o:{}}catch(e){return{}}}
 function w3Set(o){try{localStorage.setItem("cf_w3:"+(me?me.id:"x"),JSON.stringify(Object.assign(w3Get(),o)))}catch(e){}}
-const W3I={
-  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
-  scan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 011-1h4M15 4h4a1 1 0 011 1v4M20 15v4a1 1 0 01-1 1h-4M9 20H5a1 1 0 01-1-1v-4"/></svg>',
-  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
-  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>',
-  drop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.2 6 10.5A6 6 0 016 13.5C6 9.2 12 3 12 3z"/></svg>',
-  mk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>',
-  more:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="1.8"/><circle cx="18" cy="6" r="1.8"/><circle cx="6" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/></svg>',
-  wallet:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 7a3 3 0 013-3h10a2 2 0 012 2v1H7a1 1 0 000 2h12a1 1 0 011 1v8a2 2 0 01-2 2H7a3 3 0 01-3-3z"/><circle cx="16.5" cy="14" r="1.3" fill="#07100c"/></svg>',
-  disc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>',
-  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>'};
-const w3Orb=()=>`<div class="w3-orb"><svg viewBox="0 0 200 200"><defs><radialGradient id="w3og" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#2fe08a" stop-opacity=".35"/><stop offset="1" stop-color="#2fe08a" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="98" fill="url(#w3og)"/><circle cx="100" cy="100" r="62" fill="#07100c" stroke="#2fe08a" stroke-width="3" opacity=".95"/><circle cx="100" cy="100" r="50" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-dasharray="4 6"/><path d="M88 112l24-24M92 92l16 16" stroke="#e9fff3" stroke-width="5" stroke-linecap="round"/></svg><i class="d" style="left:8%;top:62%"></i><i class="d" style="left:84%;top:58%;animation-delay:-1s"></i><i class="d" style="left:46%;top:-3%;animation-delay:-2s"></i><i class="d" style="left:92%;top:20%;animation-delay:-3s"></i></div>`;
-const w3Hero=dim=>`<div class="w3-hero${dim?" dim":""}">${w3Orb()}<h1>${w3L("Sonraki Kripto Cevherini","Find the Next")}<b>${w3L("Web3'te Bul","Crypto Gem on Web3")}</b></h1></div>`;
+const w3Svg=(p,w)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w||2}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const W3I={down:w3Svg('<path d="M6 9l6 6 6-6"/>',2.4),back:w3Svg('<path d="M15 5l-7 7 7 7"/>',2.3),chev:w3Svg('<path d="M9 5l7 7-7 7"/>',2.3),
+  scan:w3Svg('<path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3M7 12h10"/>'),
+  search:w3Svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',2.2),send:w3Svg('<path d="M12 19V5M6 11l6-6 6 6"/>'),recv:w3Svg('<path d="M12 5v14M6 13l6 6 6-6"/>'),
+  swap:w3Svg('<path d="M7 4v15M3.5 15.5L7 19l3.5-3.5M17 20V5M13.5 8.5L17 5l3.5 3.5"/>'),
+  gift:w3Svg('<rect x="3.5" y="8" width="17" height="4.5" rx="1"/><path d="M5 12.5V20h14v-7.5M12 8v12M12 8C10.5 5 7 4.5 7 6.8 7 8 9.5 8 12 8zm0 0c1.5-3 5-3.5 5-1.2C17 8 14.5 8 12 8z"/>'),
+  more:w3Svg('<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'),
+  wallet:w3Svg('<path d="M4.5 7.5A2.5 2.5 0 017 5h10.5a2 2 0 012 2v1"/><rect x="4.5" y="8" width="16" height="11.5" rx="2.6"/><path d="M16.3 13.8h.01" stroke-width="3"/>'),
+  mk:w3Svg('<path d="M4 20h16M7 16.5v-5M12 16.5V6M17 16.5V9"/>'),disc:w3Svg('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'),
+  eye:w3Svg('<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>'),
+  eyeOff:w3Svg('<path d="M3 3l18 18M10.6 5.6A9.7 9.7 0 0112 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 01-3.2 3.9M6.6 6.6C3.9 8.4 2.5 12 2.5 12S6 18.5 12 18.5c1.8 0 3.3-.5 4.6-1.2M9.9 9.9a3 3 0 004.2 4.2"/>'),
+  filter:w3Svg('<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>'),
+  star:w3Svg('<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>'),
+  starOn:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
+  plus:w3Svg('<path d="M12 5v14M5 12h14"/>',2.3),link:w3Svg('<path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/>'),
+  ext:w3Svg('<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/>'),
+  trophy:w3Svg('<path d="M8 4h8v5a4 4 0 01-8 0zM8 6H4.5a3 3 0 003.6 4M16 6h3.5a3 3 0 01-3.6 4M12 13v4M8.5 20h7M10 17h4"/>'),
+  lock:w3Svg('<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/>'),
+  bot:w3Svg('<rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9.5 13h.01M14.5 13h.01M9 16.5h6"/>'),
+  check:w3Svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>',2.6),bell:w3Svg('<path d="M6 16v-5a6 6 0 1112 0v5l1.5 2h-15zM10 21h4"/>'),
+  coin:w3Svg('<circle cx="12" cy="12" r="8.5"/><path d="M14.8 9.3c-.5-.9-1.6-1.4-2.8-1.4-1.6 0-2.8.8-2.8 2s1.2 1.7 2.8 2.1 2.8.9 2.8 2.1-1.2 2-2.8 2c-1.3 0-2.4-.5-2.9-1.5M12 6.5v11"/>')};
+// Elmas: "sonraki cevheri bul"
+const w3Gem=(s)=>`<g transform="translate(100 102) scale(${s||1})"><path d="M-27-8l12-14h30l12 14L0 25z" fill="url(#w3gm)"/><path d="M-27-8h54M-15-22l9 14L0 25M15-22l-9 14L0 25M-6-8L0-22 6-8" fill="none" stroke="#0a5c36" stroke-width="1.7" stroke-linejoin="round"/><path d="M-15-22h30" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/></g>`;
+const w3Defs=()=>`<defs><radialGradient id="w3oG" cx=".5" cy=".5" r=".5"><stop offset=".45" stop-color="#25e38a" stop-opacity=".42"/><stop offset="1" stop-color="#25e38a" stop-opacity="0"/></radialGradient><linearGradient id="w3oR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8dffc8"/><stop offset=".55" stop-color="#25e38a"/><stop offset="1" stop-color="#0a8f52"/></linearGradient><radialGradient id="w3oC" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#173a29"/><stop offset="1" stop-color="#06100b"/></radialGradient><linearGradient id="w3gm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2fff8"/><stop offset=".55" stop-color="#9ff7cb"/><stop offset="1" stop-color="#2fd987"/></linearGradient></defs>`;
+const w3Orb=()=>`<div class="w3-orb" aria-hidden="true"><svg viewBox="0 0 200 200">${w3Defs()}<circle class="gl" cx="100" cy="100" r="98" fill="url(#w3oG)"/><circle cx="100" cy="100" r="64" fill="url(#w3oC)"/><circle cx="100" cy="100" r="64" fill="none" stroke="url(#w3oR)" stroke-width="3.5"/><circle cx="100" cy="100" r="53" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.2" stroke-dasharray="3 5"/>${w3Gem()}</svg>
+  <i style="left:6%;top:63%;width:6px;height:6px"></i><i style="left:86%;top:57%;width:5px;height:5px;animation-delay:-1.2s"></i><i style="left:48%;top:-4%;width:6px;height:6px;animation-delay:-2.4s"></i><i style="left:93%;top:18%;width:7px;height:7px;animation-delay:-3.1s"></i><i style="left:14%;top:12%;width:4px;height:4px;animation-delay:-.6s"></i></div>`;
+const w3GemMini=()=>`<svg viewBox="40 40 120 120" aria-hidden="true">${w3Defs()}<circle cx="100" cy="100" r="58" fill="url(#w3oG)"/><circle cx="100" cy="100" r="40" fill="url(#w3oC)" stroke="url(#w3oR)" stroke-width="3"/>${w3Gem(.85)}</svg>`;
+const w3Hero=dim=>`<div class="w3-hero${dim?" dim":""}">${w3Orb()}<h1>${w3L("Sonraki Kripto Cevherini","Find the Next")}<span>${w3L("Web3'te Bul","Crypto Gem on Web3")}</span></h1></div>`;
+
+// ---------- biçimler ve ortak parçalar
+const W3USDT="https://coin-images.coingecko.com/coins/images/325/large/Tether.png";
+const W3SOLT=new Set(["JUP","BONK","WIF","TRUMP","PENGU","FARTCOIN","BOME","POPCAT","MEW"]),W3ETHT=new Set(["UNI","LINK","AAVE","ENA","ONDO","SHIB","PEPE","MOG","TURBO","POL","MNT","SPX","FLOKI"]);
+function w3Chain(t){if(!t||t.custom||t.s==="USDT")return "";if(t.dex){const n=t.dex[0];return n==="solana"?"SOL":n==="eth"?"ETH":n==="bsc"?"BNB":""}return W3SOLT.has(t.s)?"SOL":W3ETHT.has(t.s)?"ETH":""}
+const w3Net=c=>({SOL:"Solana",ETH:"Ethereum",BNB:"BNB Chain"})[c]||"";
+function w3Ico(t,cls){cls=cls||"w3c";
+  if(!t||t.s==="USDT")return `<span class="w3-ci ${cls}"><span class="coin ${cls}" style="background:#26a17b"><img src="${W3USDT}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="mono">$</span></span></span>`;
+  const ch=w3Chain(t),c=ch&&find(ch),u=c&&c.img?logoUrl(c.img):"";
+  return `<span class="w3-ci ${cls}">${coinHTML(t,cls)}${u?`<img class="w3-cb" src="${u}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}</span>`}
+const w3Pct=c=>`<span class="${c>=0?"up":"down"}">${c>=0?"+":""}${fmtN(c,2)}%</span>`;
+function w3Qty(q){q=+q||0;if(!q)return "0";return q>=1?Number(q).toLocaleString(LOC,{maximumFractionDigits:4}):Number(q).toLocaleString(LOC,{maximumSignificantDigits:6})}
+function w3Cn(v){v=+v||0;const u=EN?["K","M","B","T"]:[" B"," Mn"," Mr"," Tn"];return v>=1e12?fmtN(v/1e12,2)+u[3]:v>=1e9?fmtN(v/1e9,2)+u[2]:v>=1e6?fmtN(v/1e6,2)+u[1]:v>=1e3?fmtN(v/1e3,2)+u[0]:fmtN(v,0)}
+const w3C=v=>"$"+w3Cn(v);
+const w3Cc=()=>curRate()?CUR:"USD";
+function w3Left(ms){const m=Math.max(0,Math.floor(ms/6e4)),d=Math.floor(m/1440),h=Math.floor(m%1440/60),n=m%60;return d?`${d}${w3L("g","d")} ${h}${w3L("sa","h")}`:h?`${h}${w3L("sa","h")} ${n}${w3L("dk","m")}`:`${n}${w3L("dk","m")}`}
+const w3Hid=()=>!!w3Get().hide;
+let w3G=0;
+function w3Spark(a,w,h){a=(a||[]).map(Number).filter(x=>x>0);if(a.length<2)return "";const mn=Math.min(...a),mx=Math.max(...a),c=a[a.length-1]>=a[0]?"#25e38a":"#ff5d5d",id="w3g"+(++w3G);
+  const d="M"+a.map((v,i)=>(i/(a.length-1)*w).toFixed(1)+" "+(h-2-(mx===mn?.5:(v-mn)/(mx-mn))*(h-4)).toFixed(1)).join(" L");
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".3"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs><path d="${d} L${w} ${h} L0 ${h}Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="${c}" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/></svg>`}
+// Ana ekrandaki toplam bakiye ve 24 saatlik kâr/zarar ile aynı hesap
+function w3Bal(){let v=0,v0=0;try{const p=portfolio();v=p.v;v0=p.v0}catch(e){}const earn=P24?+P24.earn||0:0;let d=v-v0;
+  try{const S=PR&&PR.data&&PR.data["24h"];if(S)d=+S.pnl;else{const P=pnl24();if(P.ok)d=P.d}}catch(e){}
+  const cv=Math.max(0,v-(+st.usdt||0)),b0=cv-d,dp=b0>0?d/b0*100:0;let fut=0;(st.perps||[]).forEach(p=>{try{fut+=perpEq(p)}catch(e){}});
+  return{tot:v+earn,d,dp,fut,earn,spot:Math.max(0,v-fut)}}
+const w3PnlTxt=b=>`${b.d>=0?"+":"-"}${curFmt(Math.abs(b.d))} (${b.d>=0?"+":"-"}${fmtN(Math.abs(b.dp),2)}%)`;
+// Eldeki varlıkların son 7 gündeki değeri (her coinin 7 günlük saatlik fiyatlarıyla)
+function w3Series(){const ent=Object.entries(st.h||{}).map(([s,q])=>[find(s),+q]).filter(([t,q])=>t&&q>0&&t.p>0);if(!ent.length)return null;
+  let n=0;ent.forEach(([t])=>{const l=t.spark7?t.spark7.length:0;if(l>n)n=l});if(n<12)return null;n=Math.min(n,168);
+  const out=new Array(n+1).fill(+st.usdt||0);
+  ent.forEach(([t,q])=>{const sp=t.spark7&&t.spark7.length>=12?t.spark7:null;for(let i=0;i<n;i++){let px=t.p;if(sp){const j=sp.length-n+i;px=+sp[Math.max(0,j)]||t.p}out[i]+=q*px}out[n]+=q*t.p});
+  return out}
+const W3DEF=["BTC","ETH","SOL","BNB","XRP"];
+function w3Toks(){const o=w3Get();return (Array.isArray(o.toks)?o.toks:W3DEF).filter(s=>find(s))}
+function w3Assets(all){const rows=[{s:"USDT",q:+st.usdt||0,v:+st.usdt||0}];
+  Object.entries(st.h||{}).forEach(([s,q])=>{const t=find(s);if(t&&q>0)rows.push({s,q:+q,v:q*t.p})});
+  const have=new Set(rows.map(r=>r.s));w3Toks().forEach(s=>{if(!have.has(s)){have.add(s);rows.push({s,q:0,v:0})}});
+  rows.sort((a,b)=>b.v-a.v);return !all&&w3Get().small?rows.filter(r=>r.v>=1):rows}
+const w3Q=(id,ph,v)=>`<label class="w3-q">${W3I.search}<input id="${id}" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${ph}" value="${esc(v)}"></label>`;
+const w3SubHd=(t,right)=>`<div class="w3-hd"><button type="button" class="w3-ib" data-w3="subx" aria-label="${w3L("Geri","Back")}">${W3I.back}</button><div class="w3-ht">${t}</div>${right||`<span class="w3-ib"></span>`}</div>`;
+
+// ---------- tanıtım: görseller canlı fiyatlarla ve hesabın kendi bakiyesiyle çizilir
+const w3Pick=l=>l.map(find).filter(Boolean);
+const w3Ch=t=>{const c=t?chg(t):0;return `<em class="${c>=0?"up":"down"}">${c>=0?"+":""}${fmtN(c,2)}%</em>`};
+function w3Art1(){const b=w3Bal(),bt=find("BTC"),ser=w3Series()||(bt&&bt.spark7?bt.spark7.slice(-72):[]),fl=w3Pick(["SOL","ETH","BNB","BTC"]);
+  return `<div class="ia ia1"><div class="ia-ph"><span class="ia-pt">Web3 ${W3I.down}</span><small>${w3L("Toplam Bakiye","Total Balance")}</small><b>${curFmt(b.tot)}</b><em class="${b.d>=0?"up":"down"}">${w3PnlTxt(b)}</em><div class="ia-sp">${w3Spark(ser,160,60)}</div></div>${fl.map((t,k)=>`<span class="ia-fl f${k+1}">${coinHTML(t,"iac")}</span>`).join("")}</div>`}
+function w3RangeCard(t,cls){const lo=+t.lo24||Math.min(t.p,t.open),hi=+t.hi24||Math.max(t.p,t.open),pos=hi>lo?Math.min(100,Math.max(0,(t.p-lo)/(hi-lo)*100)):50;
+  return `<div class="ia-rc ${cls}"><div class="h">${coinHTML(t,"iac")}<span class="n"><b>${t.s}/USDT</b><small>${w3L("24 saatlik aralık","24h range")}</small></span><span class="r"><b>${usd(t.p,t.d)}</b>${w3Ch(t)}</span></div><div class="bar"><i style="left:${pos.toFixed(1)}%"></i></div><div class="lh"><span>${usd(lo,t.d)}</span><span>${usd(hi,t.d)}</span></div></div>`}
+function w3Art2(){const a=find("BTC"),e=find("ETH");return `<div class="ia ia2">${e?w3RangeCard(e,"bk"):""}${a?w3RangeCard(a,"fr"):""}<span class="ia-chip">${W3I.bell}${w3L("Fiyat alarmı","Price alert")}</span></div>`}
+function w3Memes(){const m=[...T].filter(t=>t.cat==="meme"&&!t.custom&&t.p>0).sort((a,b)=>(!!b.img-!!a.img)||(+b.vol||0)-(+a.vol||0)).slice(0,3);
+  for(const s of ["DOGE","PEPE","TRUMP","PENGU","BONK","WIF","SHIB"]){if(m.length>=3)break;const t=find(s);if(t&&t.p>0&&!m.includes(t))m.push(t)}
+  if(m.length<3)[...T].filter(t=>!t.custom&&t.p>0&&!m.includes(t)).sort((a,b)=>(b.mc||0)-(a.mc||0)).slice(0,3-m.length).forEach(t=>m.push(t));return m}
+function w3Art3(){const m=w3Memes(),o=[1,0,2];return `<div class="ia ia3"><div class="ia-glow"></div>${o.map(k=>m[k]).filter(Boolean).map((t,k)=>`<div class="ia-mm m${o[k]}">${coinHTML(t,"iac")}<b>${t.s}</b><span>${usd(t.p,t.d)}</span>${w3Ch(t)}</div>`).join("")}</div>`}
+const w3Perps=()=>w3Pick(["BTC","SOL","HYPE"]);
+function w3Art4(){return `<div class="ia ia4"><div class="ia-pc">${w3Perps().map(t=>`<div class="r">${coinHTML(t,"iac")}<b>${t.s}-USDT</b><span class="lv">${maxLev(t)}x</span><span class="px"><b>${usd(t.p,t.d)}</b>${w3Ch(t)}</span></div>`).join("")}<div class="ls"><span class="l">Long</span><span class="s">Short</span></div></div></div>`}
+function w3Art5(){const r=w3Assets(true).filter(x=>x.s!=="USDT"),l=(r.length?r:W3DEF.map(s=>({s,q:0,v:0}))).slice(0,3),b=w3Bal();
+  return `<div class="ia ia5"><div class="ia-wc"><div class="t"><small>${w3L("Toplam Bakiye","Total Balance")}</small><b>${curFmt(b.tot)}</b></div>${l.map(x=>{const t=find(x.s);return t?`<div class="r">${coinHTML(t,"iac")}<b>${x.s}</b><span class="v"><b>${w3Qty(x.q)}</b><small>${usd(x.v)}</small></span></div>`:""}).join("")}</div><span class="ia-sh">${W3I.check}</span></div>`}
 const W3S=[
- {t:["Hepsi Bir Arada Web3 Cüzdanın","Your All-in-One Web3 Wallet"],p:["Sanal bakiyeni tek yerden yönet, coinleri keşfet ve işlem yap.","Manage your virtual balance in one place, discover coins and trade."],
-  a:'<svg viewBox="0 0 260 150"><rect x="86" y="10" width="88" height="150" rx="12" fill="#0a120e" stroke="#2b3a32"/><text x="130" y="48" text-anchor="middle" fill="#fff" font-size="12" font-weight="800">$18.529,23</text><path d="M96 124l14-10 12 6 14-24 12 10 14-22 8-4" fill="none" stroke="#2fe08a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>{{SOL|62|92|16|#1a7f6e|}}{{ETH|204|82|18|#2563a8|}}{{BTC|196|40|11|#f7931a|}}</svg>'},
- {t:["Öngörülerini İşe Dök","Put Your Insights to Work"],p:["Piyasaları takip et, favorilerini ekle ve fırsatları kaçırma.","Follow the markets, add favorites and don't miss opportunities."],
-  a:'<svg viewBox="0 0 260 150"><rect x="40" y="28" width="180" height="66" rx="10" fill="#fff"/>{{BTC|62|48|10|#f7931a|}}<text x="80" y="52" fill="#111" font-size="12" font-weight="800">BTC ↑ / ↓ 5dk</text><rect x="54" y="66" width="152" height="14" rx="7" fill="#ff5c5c"/><rect x="54" y="66" width="86" height="14" rx="7" fill="#2fe08a"/><rect x="52" y="100" width="156" height="30" rx="8" fill="#2a2f33" opacity=".7"/></svg>'},
- {t:["Meme Coin Piyasalarına Eriş","Access Memecoin Markets"],p:["Solana zincirindeki memecoinlerde ve yeni listelenen coinlerde sanal bakiyeyle işlem yap.","Trade Solana memecoins and newly listed coins with your virtual balance."],
-  a:'<svg viewBox="0 0 260 150"><g fill="#4a5a52"><rect x="60" y="86" width="12" height="52" rx="3"/><rect x="82" y="72" width="12" height="66" rx="3"/><rect x="104" y="92" width="12" height="46" rx="3"/><rect x="126" y="64" width="12" height="74" rx="3"/></g>{{TSLA|168|50|22|#d6342f|T}}{{PAXG|200|100|17|#d9a62b|AU}}{{SOL|120|34|14|#1a7f6e|}}</svg>'},
- {t:["Vadeli İşlem Yap","Trade Perpetuals"],p:["Kaldıraçlı vadeli işlemlere cüzdanından tek dokunuşla geç.","Jump into leveraged perpetuals straight from your wallet."],
-  a:'<svg viewBox="0 0 260 150"><rect x="30" y="14" width="200" height="124" rx="10" fill="#fff"/><g font-size="10" font-weight="700" fill="#111">{{NVDA|50|38|9|#76b900|N}}<text x="68" y="42">NVDA-USDC</text><text x="200" y="42" text-anchor="end">201,2</text>{{CL|50|64|9|#111|}}<path d="M50 57.5s4 4.2 4 7a4 4 0 01-8 0c0-2.8 4-7 4-7z" fill="#fff"/><text x="68" y="68">CL-USDC</text><text x="200" y="68" text-anchor="end">78,97</text>{{HYPE|50|90|9|#0b8e72|H}}<text x="68" y="94">HYPE-USDC</text><text x="200" y="94" text-anchor="end">58,67</text></g><rect x="46" y="108" width="78" height="18" rx="9" fill="#2fe08a"/><rect x="132" y="108" width="78" height="18" rx="9" fill="#ff5c5c"/><text x="85" y="121" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">Long</text><text x="171" y="121" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">Short</text></svg>'},
- {t:["Varlıklarını Tek Yerde Yönet","Manage Your Assets in One Place"],p:["Web3 yolculuğuna tüm varlıklarınla, sanal bakiyeyle güvenle başla.","Start your Web3 journey safely with all your assets and a virtual balance."],
-  a:'<svg viewBox="0 0 260 150"><path d="M130 14l58 20v38c0 34-24 56-58 66-34-10-58-32-58-66V34z" fill="#12301f" stroke="#2fe08a" stroke-width="3"/><path d="M104 78l18 18 34-36" fill="none" stroke="#2fe08a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="40" r="11" fill="#d9a62b"/><circle cx="214" cy="34" r="11" fill="#2563a8"/><circle cx="220" cy="104" r="11" fill="#c0603a"/></svg>'}];
-let w3U=0;
-function w3Lg(s,cx,cy,r,col,txt){const t=adCoin(s),u=t.img?logoUrl(t.img):"",id="w3cp"+(++w3U);
-  return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${col}"/>`+(txt?`<text x="${cx}" y="${+cy+r*.36}" text-anchor="middle" fill="#fff" font-size="${r}" font-weight="800">${txt}</text>`:"")+(u?`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath><image href="${u}" x="${cx-r}" y="${cy-r}" width="${2*r}" height="${2*r}" clip-path="url(#${id})" preserveAspectRatio="xMidYMid slice"/>`:"")}
-const w3Art=a=>a.replace(/\{\{([A-Z]+)\|([\d.]+)\|([\d.]+)\|([\d.]+)\|(#[0-9a-f]+)\|([^}]*)\}\}/g,(_,s,x,y,r,c,t)=>w3Lg(s,+x,+y,+r,c,t));
+  {t:["Hepsi Bir Arada Web3 Cüzdanın","Your All-in-One Web3 Wallet"],p:["Tüm varlıklarını tek yerden yönet, spot ve vadeli işlem yap, yeni coinleri keşfet.","Manage all your assets in one place, trade spot and futures, and discover new coins."],a:w3Art1},
+  {t:["Öngörülerini İşe Dök","Put Your Insights to Work"],p:["Piyasayı canlı takip et, 24 saatlik fiyat aralığını gör ve doğru anda işlem yap.","Follow the market live, see the 24h price range and trade at the right moment."],a:w3Art2},
+  {t:["Meme Coin Piyasalarına Eriş","Access Memecoin Markets"],p:["En çok işlem gören memecoinlere ve yeni listelenen coinlere tek dokunuşla ulaş.","Reach the most traded memecoins and new listings in one tap."],a:w3Art3},
+  {t:["Vadeli İşlem Yap","Trade Perpetuals"],p:null,a:w3Art4},
+  {t:["Varlıklarını Tek Yerde Yönet","Manage Your Assets in One Place"],p:["Web3 yolculuğuna tüm varlıklarınla tek yerden başla.","Start your Web3 journey with all your assets in one place."],a:w3Art5}];
+function w3PerpTxt(){const lv=Math.max(10,...w3Perps().map(maxLev));return w3L(`BTC, SOL, HYPE ve daha fazlasında ${lv}x'e varan kaldıraçla long ya da short pozisyon aç.`,`Go long or short on BTC, SOL, HYPE and more with up to ${lv}x leverage.`)}
 function w3Intro(){const s=W3S[W3.i],last=W3.i===W3S.length-1;
-  return `<div class="w3-hd"><span class="lg" style="visibility:hidden"></span><button type="button" class="w3-pill" data-w3="mode">Web3 ${W3I.down}</button><button type="button" class="w3-skip" data-w3="skip">${w3L("Geç","Skip")}</button></div>${w3Hero(!last)}
-  <div class="w3-card"><div class="w3-seg">${W3S.map((_,k)=>`<i class="${k<=W3.i?"on":""}"></i>`).join("")}</div><h2>${s.t[+EN]}</h2><div class="w3-art">${w3Art(s.a)}</div><p>${s.p[+EN]}</p>
+  return `<div class="w3-hd"><span class="w3-ib"></span><button type="button" class="w3-pill" data-w3="mode" aria-haspopup="dialog">Web3 ${W3I.down}</button><button type="button" class="w3-skip" data-w3="skip">${w3L("Geç","Skip")}</button></div>${w3Hero(!last)}
+  <div class="w3-card"><div class="w3-seg" aria-hidden="true">${W3S.map((_,k)=>`<i class="${k===W3.i?"on":k<W3.i?"done":""}"></i>`).join("")}</div><h2>${s.t[+EN]}</h2><div class="w3-art" aria-hidden="true">${s.a()}</div><p>${s.p?s.p[+EN]:w3PerpTxt()}</p>
   <div class="w3-btns"><button type="button" data-w3="skip">${w3L("Geç","Skip")}</button><button type="button" class="pri" data-w3="next">${last?w3L("Başla","Get Started"):w3L("İleri","Next")}</button></div></div>`}
 function w3Create(){
-  return `<div class="w3-hd"><button type="button" class="ic" data-w3="exit" aria-label="${w3L("COINFORCE'a dön","Back to COINFORCE")}">${W3I.back}</button><button type="button" class="w3-pill" data-w3="mode">Web3 ${W3I.down}</button><span style="width:28px"></span></div>${w3Hero(false)}
-  <div class="w3-card" style="background:none;padding-top:0"><button type="button" class="w3-opt" data-w3="mk"><b>${w3L("Yeni Sanal Cüzdan Oluştur","Create New Virtual Wallet")}</b><small>${w3L("Tek dokunuşla cüzdanın hazır olur. Seed phrase ya da özel anahtar gerekmez.","Your wallet is ready in one tap. No seed phrase or private key needed.")}</small></button>
-  <button type="button" class="w3-opt" data-w3="mk"><b>${w3L("Hesabımdaki Varlıkları Bağla","Link My Account Assets")}</b><small>${w3L("COINFORCE hesabındaki sanal bakiyeni ve coinlerini cüzdanda göster.","Show your COINFORCE virtual balance and coins in the wallet.")}</small></button>
-  <button type="button" class="w3-ck${W3.ck?" on":""}" data-w3="ck"><i></i><span>${w3L("Sanal bakiyenin gerçek para olmadığını ve yatırım tavsiyesi sunmadığımızı kabul ediyorum.","I understand the balance is virtual, not real money, and this is not investment advice.")}</span></button>
-  ${W3.tip?`<div><span class="w3-tip">${w3L("Cüzdanı oluşturmadan önce kutuyu işaretle.","Please check the box before creating your wallet.")}</span></div>`:""}</div>`}
-const w3NavB=(k,ic,l)=>`<button type="button" data-w3t="${k}" class="${W3.tab===k?"on":""}">${W3I[ic]}<span>${l}</span></button>`;
+  return `<div class="w3-hd"><button type="button" class="w3-ib" data-w3="exit" aria-label="${w3L("COINFORCE'a dön","Back to COINFORCE")}">${W3I.back}</button><button type="button" class="w3-pill" data-w3="mode" aria-haspopup="dialog">Web3 ${W3I.down}</button><span class="w3-ib"></span></div>${w3Hero(false)}
+  <div class="w3-cr"><button type="button" class="w3-opt" data-w3="mk"><span class="ic">${W3I.plus}</span><span class="tx"><b>${w3L("Yeni Cüzdan Oluştur","Create New Wallet")}</b><small>${w3L("Tek dokunuşla yeni Web3 cüzdanını oluştur.","Create your new Web3 wallet in one tap.")}</small></span>${W3I.chev}</button>
+  <button type="button" class="w3-opt" data-w3="mk"><span class="ic">${W3I.link}</span><span class="tx"><b>${w3L("Mevcut Hesabı Bağla","Link Existing Account")}</b><small>${w3L("COINFORCE hesabındaki varlıklarını cüzdanına aktar.","Bring your COINFORCE account assets into your wallet.")}</small></span>${W3I.chev}</button>
+  <button type="button" class="w3-ck${W3.ck?" on":""}" data-w3="ck" role="checkbox" aria-checked="${W3.ck}"><i>${W3.ck?W3I.check:""}</i><span>${w3L("Cüzdanımın COINFORCE hesabımla eşitlenmesini onaylıyorum.","I agree to sync my wallet with my COINFORCE account.")}</span></button>
+  ${W3.tip?`<div class="w3-tip" role="alert">${w3L("Cüzdanı oluşturmadan önce kutuyu işaretle.","Please check the box before creating your wallet.")}</div>`:""}</div>`}
+
+// ---------- uygulama kabuğu
+const W3TABS=[["wallet","wallet",["Cüzdan","Wallet"]],["markets","mk",["Piyasalar","Markets"]],["swap","swap",["Takas","Swap"]],["discover","disc",["Keşfet","Discover"]]];
 function w3App(){
-  return `<div class="w3-hd"><button type="button" class="ic" data-w3="exit" aria-label="${w3L("COINFORCE'a dön","Back to COINFORCE")}">${W3I.back}</button><button type="button" class="w3-pill" data-w3="mode">Web3 ${W3I.down}</button><button type="button" class="ic" data-w3="scan" aria-label="${w3L("Tara","Scan")}">${W3I.scan}</button></div>
-  <div class="w3-body" id="w3Body"></div><nav class="w3-nav">${w3NavB("wallet","wallet",w3L("Cüzdan","Wallet"))}${w3NavB("markets","mk",w3L("Piyasalar","Markets"))}${w3NavB("discover","disc",w3L("Keşfet","Discover"))}</nav>`}
-const w3Q=(id,ph,v)=>`<label class="w3-q">${W3I.search}<input id="${id}" type="search" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${ph}" value="${esc(v)}"></label>`;
-const w3C=v=>{v=+v||0;return v>=1e9?"$"+(v/1e9).toFixed(2)+"B":v>=1e6?"$"+(v/1e6).toFixed(2)+"M":v>=1e3?"$"+(v/1e3).toFixed(2)+"K":"$"+v.toFixed(0)}
-const w3Pc=c=>`<span class="${c>=0?"up":"down"}">${c>=0?"+":""}${fmtN(c,2)}%</span>`;
-const w3Qty=q=>Number(q).toLocaleString(LOC,{maximumFractionDigits:q<1?6:2});
-function w3Assets(){const rows=[];const held=Object.entries(st.h||{}).filter(([s,q])=>q>0&&find(s)).map(([s,q])=>({s,q,v:q*find(s).p})).sort((a,b)=>b.v-a.v);
-  rows.push({s:"USDT",q:st.usdt||0,v:st.usdt||0});held.forEach(h=>rows.push(h));
-  const have=new Set(rows.map(r=>r.s)),fill=(W3.more?[...T].filter(t=>!t.custom&&t.p>0).sort((a,b)=>(b.mc||0)-(a.mc||0)).slice(0,25).map(t=>t.s):["BTC","ETH","SOL","BNB","XRP"]);
-  fill.forEach(s=>{if(!have.has(s)&&find(s)&&(W3.more||rows.length<6)){have.add(s);rows.push({s,q:0,v:0})}});return rows}
-function w3AssetRow(r){if(r.s==="USDT")return `<div class="w3-as"><div class="coin w3c" style="background:#26a17b">$</div><span class="mid"><b>USDT</b><small>$1 <span style="color:var(--wm)">0,00%</span></small></span><span class="rt"><b>${w3Qty(r.q)}</b><small>${usd(r.v)}</small></span></div>`;
-  const t=find(r.s),c=chg(t);return `<button type="button" class="w3-as" data-sym="${r.s}">${coinHTML(t,"w3c")}<span class="mid"><b>${r.s}</b><small>${usd(t.p,t.d)} ${w3Pc(c)}</small></span><span class="rt"><b>${w3Qty(r.q)}</b><small>${usd(r.v)}</small></span></button>`}
-function w3Total(){let v=0,v0=0;v+=st.usdt||0;v0+=st.usdt||0;for(const[s,q]of Object.entries(st.h||{})){const t=find(s);if(t&&q>0){v+=q*t.p;v0+=q*t.open}}return{v,c:v0>0?(v/v0-1)*100:0}}
-function w3WalletTop(){const o=w3Get();
-  if(!o.wallet)return `<div class="w3-ban"><h3>${w3L("Sonraki Kripto Cevherini Web3'te Bul","Find the Next Crypto Gem on Web3")}</h3><button type="button" class="go" data-w3="create">${w3L("Cüzdan Oluştur","Create Wallet")}</button></div>`;
-  const t=w3Total();return `<div class="w3-bal"><small>${w3L("Toplam Sanal Bakiye","Total Virtual Balance")}</small><b id="w3Tot">${usd(t.v)}</b><em id="w3Chg" class="${t.c>=0?"up":"down"}">${t.c>=0?"▲ +":"▼ "}${fmtN(t.c,2)}% · 24${w3L("s","h")}</em></div>`}
-function w3Wallet(){const b=$("w3Body");
-  b.innerHTML=w3Q("w3Dq",w3L("Coin / kontrat ara","Search coin/contract"),W3.dq)+w3WalletTop()+
-  `<div class="w3-act"><button type="button" data-w3="send"><i>${W3I.send}</i>${w3L("Gönder","Send")}</button><button type="button" data-w3="airdrop"><i>${W3I.drop}</i>Airdrop</button><button type="button" data-w3t="markets"><i>${W3I.mk}</i>${w3L("Piyasalar","Markets")}</button><button type="button" data-w3="more"><i>${W3I.more}</i>${w3L("Daha fazla","More")}</button></div>`+
-  `<div class="w3-pr"><button type="button" data-w3="camp"><span class="t"><b>FOMO Trading Week</b><small>${w3L("1 milyon dolar hacme 10.000 dolar ödül","$10,000 for $1M in volume")}</small></span><span class="em">🏆</span></button><button type="button" data-sym="FOREVER"><span class="t"><b>FOREVER</b><small>${w3L("Hiç yerinde durmayan Solana memecoini","The Solana memecoin that never sits still")}</small></span><span class="em">🐎</span></button><button type="button" data-w3="airdrop"><span class="t"><b>Airdrop</b><small>${w3L("QR ile arkadaşına anında coin gönder","Send coins to a friend instantly with a QR")}</small></span><span class="em">🎁</span></button></div>`+
-  `<div id="w3L"></div>`;w3List()}
-function w3List(){const L=$("w3L");if(!L)return;
-  if(W3.dq.trim()){const q=W3.dq.trim().toLowerCase(),a=T.filter(t=>t.s.toLowerCase().includes(q)||String(t.n||"").toLowerCase().includes(q)).slice(0,25);
-    L.innerHTML=a.length?a.map(w3MkRow).join(""):`<div class="w3-empty">${w3L("Sonuç bulunamadı","No results")}</div>`;return}
-  L.innerHTML=`<div class="w3-sh"><b>${w3L("Varlıklarım","My Assets")}</b><button type="button" data-w3="more2">${W3.more?w3L("Daha az","Less"):w3L("Tokenları Yönet","Manage Tokens")}</button></div>`+w3Assets().map(w3AssetRow).join("")}
-function w3MkRow(t){const c=chg(t);return `<button type="button" class="w3-mk" data-sym="${t.s}"><span style="display:flex;align-items:center;gap:10px;min-width:0">${coinHTML(t,"w3c")}<span><b>${t.s}</b><small>${t.vol?w3C(t.vol):esc(t.n||"")}</small></span></span><span class="rt"><b>${usd(t.p,t.d)}</b><small class="${c>=0?"up":"down"}">${c>=0?"+":""}${fmtN(c,2)}%</small></span></button>`}
-const W3SOL=["SOL","TRUMP","PENGU","BONK","WIF","FARTCOIN","BOME","POPCAT","MEW","FOREVER"];
-function w3MkList(){const L=$("w3L");if(!L)return;let a=T.filter(t=>t.live||t.p>0);const q=W3.mq.trim().toLowerCase();
+  return `<div class="w3-hd"><button type="button" class="w3-ib" data-w3="exit" aria-label="${w3L("COINFORCE'a dön","Back to COINFORCE")}">${W3I.back}</button><button type="button" class="w3-pill" data-w3="mode" aria-haspopup="dialog">Web3 ${W3I.down}</button><button type="button" class="w3-ib" data-w3="recv" aria-label="${w3L("Adresim ve QR kodum","My address and QR code")}">${W3I.scan}</button></div>
+  <div class="w3-body" id="w3Body"></div><nav class="w3-nav" aria-label="Web3">${W3TABS.map(x=>`<button type="button" data-w3t="${x[0]}" class="${W3.tab===x[0]?"on":""}"${W3.tab===x[0]?' aria-current="page"':""}>${W3I[x[1]]}<span>${x[2][+EN]}</span></button>`).join("")}</nav><div id="w3Sub"></div><div id="w3Sh"></div>`}
+function w3Tab(){const b=$("w3Body");if(!b)return;b.scrollTop=0;
+  document.querySelectorAll("#w3 .w3-nav [data-w3t]").forEach(n=>{const on=n.dataset.w3t===W3.tab;n.classList.toggle("on",on);if(on)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current")});
+  ({wallet:w3Wallet,markets:w3Markets,swap:w3Swap,discover:w3Discover})[W3.tab]()}
+function w3Render(){const el=$("w3");
+  el.innerHTML=`<div class="w3-col">${W3.step==="intro"?w3Intro():W3.step==="create"?w3Create():w3App()}</div>`;
+  if(W3.step==="app"){w3Tab();w3SubRender();w3ShRender()}}
+
+// ---------- Cüzdan
+const w3Act=(a,ic,l)=>`<button type="button" data-w3="${a}"><i>${W3I[ic]}</i><span>${l}</span></button>`;
+function w3BalCard(){const b=w3Bal(),hid=w3Hid(),ser=w3Series();
+  return `<div class="w3-bal"><div class="t"><span>${w3L("Toplam Bakiye","Total Balance")} (${w3Cc()})</span><button type="button" class="w3-eye" data-w3="eye" aria-pressed="${hid}" aria-label="${hid?w3L("Bakiyeyi göster","Show balance"):w3L("Bakiyeyi gizle","Hide balance")}">${hid?W3I.eyeOff:W3I.eye}</button></div>
+  <b id="w3Tot">${hid?"******":curFmt(b.tot)}</b><div id="w3Pnl" class="pn ${b.d>=0?"up":"down"}">${hid?"****":w3PnlTxt(b)} <span>${w3L("24s","24h")}</span></div>
+  ${ser?`<div class="w3-bsp" aria-hidden="true">${w3Spark(ser,300,54)}</div><div class="w3-bspl"><span>${w3L("Mevcut varlıkların","Current holdings")}</span><span>${w3L("7 gün","7 days")}</span></div>`:""}
+  <div class="w3-bk" id="w3Bk">${w3BkHTML(b,hid)}</div></div>`}
+function w3BkHTML(b,hid){const f=x=>hid?"****":curFmt(x);return `<span><small>Spot</small><b>${f(b.spot)}</b></span><span><small>${w3L("Vadeli","Futures")}</small><b>${f(b.fut)}</b></span><span><small>Earn</small><b>${f(b.earn)}</b></span>`}
+function w3Banner(){return `<div class="w3-ban"><div class="tx"><h3>${w3L("Sonraki Kripto Cevherini Web3'te Bul","Find the Next Crypto Gem on Web3")}</h3><button type="button" class="go" data-w3="create">${w3L("Cüzdan Oluştur / Bağla","Create / Link Wallet")}</button></div><span class="gem">${w3GemMini()}</span></div>`}
+function w3Promo(){const cards=[],c=(st.camps||[]).find(x=>campState(x)==="live");
+  if(c)cards.push(`<button type="button" class="pc" data-w3="camp" data-id="${esc(c.id)}"><span class="tx"><b>${esc(c.title)}</b><small>${w3L("En yüksek ödül","Top reward")} ${usd(campMax(c),0)} · ${w3L("bitişe","ends in")} ${w3Left(Date.parse(c.ends_at)-Date.now())}</small></span><span class="ar">${W3I.trophy}</span></button>`);
+  const fv=find("FOREVER");if(fv)cards.push(`<button type="button" class="pc" data-tok="FOREVER"><span class="tx"><b>FOREVER · ${usd(fv.p,fv.d)}</b><small>${w3Pct(chg(fv))} ${w3L("son 24 saatte","in the last 24h")}</small></span><span class="ar">${coinHTML(fv,"w3pa")}</span></button>`);
+  const ea=W3.earn&&W3.earn.length?W3.earn.reduce((a,x)=>+x.apr>+a.apr?x:a):null;
+  cards.push(`<button type="button" class="pc" data-w3="goearn"><span class="tx"><b>Earn</b><small>${ea?w3L(`USDT'ni kilitle · yıllık getiri en çok %${fmtN(+ea.apr,+ea.apr%1?1:0)}`,`Lock USDT · up to ${fmtN(+ea.apr,+ea.apr%1?1:0)}% APR`):w3L("USDT'ni kilitle, süre sonunda faiziyle geri al","Lock USDT and get it back with interest")}</small></span><span class="ar">${W3I.lock}</span></button>`);
+  cards.push(`<button type="button" class="pc" data-w3="airdrop"><span class="tx"><b>Airdrop</b><small>${w3L("Topluluğuna ya da arkadaşlarına tek seferde coin gönder","Send coins to your community or friends at once")}</small></span><span class="ar">${W3I.gift}</span></button>`);
+  return `<div class="w3-pr" id="w3Pr">${cards.join("")}</div><div class="w3-dots" id="w3Dots" aria-hidden="true">${cards.map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("")}</div>`}
+function w3Wallet(){const o=w3Get(),q=W3.dq.trim();
+  $("w3Body").innerHTML=w3Q("w3Dq",w3L("Coin ya da kontrat ara","Search coin or contract"),W3.dq)+`<div id="w3Dr"${q?"":" hidden"}></div><div id="w3Wm"${q?" hidden":""}>`+
+  (o.wallet?w3BalCard():w3Banner())+
+  `<div class="w3-act">${w3Act("send","send",w3L("Gönder","Send"))}${w3Act("recv","recv",w3L("Yatır","Deposit"))}${w3Act("airdrop","gift","Airdrop")}${w3Act("more","more",w3L("Daha fazla","More"))}</div>`+w3Promo()+
+  `<div class="w3-ah"><b>${w3L("Varlıklarım","My Assets")}</b><button type="button" class="w3-ib sm" data-w3="manage" aria-label="${w3L("Tokenları yönet","Manage tokens")}">${W3I.filter}</button></div>
+  <div class="w3-cols"><span>${w3L("Token / Fiyat","Token / Price")}</span><span>${w3L("Miktar / Tahmini Değer","Amount / Est. Value")}</span></div><div id="w3L"></div>
+  <button type="button" class="w3-mt" data-w3="manage">${W3I.filter}<span>${w3L("Tokenları Yönet","Manage Tokens")}</span></button></div>`;
+  w3List();w3Search();const pr=$("w3Pr");if(pr)pr.addEventListener("scroll",w3Dots,{passive:true})}
+function w3Dots(){const pr=$("w3Pr"),d=$("w3Dots");if(!pr||!d||!pr.firstElementChild)return;const w=pr.firstElementChild.getBoundingClientRect().width+10,i=Math.round(pr.scrollLeft/w);[...d.children].forEach((x,k)=>x.classList.toggle("on",k===i))}
+function w3AssetRow(r,hid){const t=r.s==="USDT"?null:find(r.s),c=t?chg(t):0;
+  return `<button type="button" class="w3-row" data-tok="${r.s}">${w3Ico(t||{s:"USDT"})}<span class="nm"><b>${r.s}</b><small>${usd(t?t.p:1,t?t.d:2)} ${t?w3Pct(c):`<span class="mu">0,00%</span>`}</small></span><span class="rt"><b>${hid?"****":w3Qty(r.q)}</b><small>${hid?"****":usd(r.v)}</small></span></button>`}
+function w3List(){const L=$("w3L");if(!L)return;const hid=w3Hid(),rows=w3Assets();
+  L.innerHTML=rows.length?rows.map(r=>w3AssetRow(r,hid)).join(""):`<div class="w3-empty">${w3L("1 $ altındaki varlıklar gizli.","Balances under $1 are hidden.")}</div>`}
+function w3Search(){const R=$("w3Dr");if(!R)return;const q=W3.dq.trim().toLowerCase();R.hidden=!q;const W=$("w3Wm");if(W)W.hidden=!!q;if(!q){R.innerHTML="";return}
+  const a=T.filter(t=>t.p>0&&(t.s.toLowerCase().includes(q)||String(t.n||"").toLowerCase().includes(q))).sort((x,y)=>(y.s.toLowerCase()===q)-(x.s.toLowerCase()===q)||(+y.vol||0)-(+x.vol||0)).slice(0,30);
+  R.innerHTML=a.length?`<div class="w3-cols"><span>${w3L("Sonuçlar","Results")}</span><span>${w3L("Fiyat / 24s","Price / 24h")}</span></div>`+a.map(w3MkRow).join(""):`<div class="w3-empty">${w3L("Sonuç bulunamadı","No results")}</div>`}
+function w3WalletLive(){const hid=w3Hid(),b=w3Bal(),t=$("w3Tot");if(t){t.textContent=hid?"******":curFmt(b.tot);const p=$("w3Pnl");if(p){p.className="pn "+(b.d>=0?"up":"down");p.innerHTML=`${hid?"****":w3PnlTxt(b)} <span>${w3L("24s","24h")}</span>`}const k=$("w3Bk");if(k)k.innerHTML=w3BkHTML(b,hid)}
+  if(W3.dq.trim())w3Search();else w3List()}
+
+// ---------- Piyasalar
+const W3MT=[["fav",["Favoriler","Favorites"]],["hot",["Hot","Hot"]],["gain",["Kazananlar","Gainers"]],["lose",["Kaybedenler","Losers"]],["meme",["Meme","Meme"]],["sol",["Solana","Solana"]],["new",["Yeni","New"]]];
+function w3MkRow(t){const c=chg(t);return `<button type="button" class="w3-row" data-tok="${t.s}">${w3Ico(t)}<span class="nm"><b>${t.s}</b><small>${t.vol?w3C(t.vol):esc(t.n||"")}</small></span><span class="rt"><b>${usd(t.p,t.d)}</b><small class="${c>=0?"up":"down"}">${c>=0?"+":""}${fmtN(c,2)}%</small></span></button>`}
+function w3Markets(){$("w3Body").innerHTML=`<div class="w3-tt"><h2>${w3L("Piyasalar","Markets")}</h2></div>`+w3Q("w3Mq",w3L("Coin ya da kontrat ara","Search coin or contract"),W3.mq)+
+  `<div class="w3-tabs" role="tablist">${W3MT.map(x=>`<button type="button" role="tab" aria-selected="${W3.mk===x[0]}" data-w3m="${x[0]}" class="${W3.mk===x[0]?"on":""}">${x[1][+EN]}</button>`).join("")}</div><div class="w3-cols w3-sc" id="w3Sc"></div><div id="w3L"></div>`;w3MkList()}
+function w3SortKey(){if(W3.sort)return[W3.sort,W3.dir];return W3.mk==="gain"?["chg",-1]:W3.mk==="lose"?["chg",1]:W3.mk==="new"?["age",-1]:["vol",-1]}
+function w3MkList(){const L=$("w3L");if(!L)return;const q=W3.mq.trim().toLowerCase();let a=T.filter(t=>t.p>0);
   if(q)a=a.filter(t=>t.s.toLowerCase().includes(q)||String(t.n||"").toLowerCase().includes(q));
   else if(W3.mk==="fav")a=a.filter(t=>(st.watch||[]).includes(t.s));
-  else if(W3.mk==="sol")a=a.filter(t=>W3SOL.includes(t.s));
-  else if(W3.mk==="new")a=a.filter(t=>t.age>0).sort((x,y)=>y.age-x.age);
-  if(!q&&W3.mk!=="new")a=[...a].sort((x,y)=>(+y.vol||0)-(+x.vol||0)||(y.mc||0)-(x.mc||0));
-  L.innerHTML=a.length?a.slice(0,60).map(w3MkRow).join(""):`<div class="w3-empty">${W3.mk==="fav"&&!q?w3L("Favori coinin yok. Bir coini yıldızlayarak ekle.","No favorites yet. Star a coin to add it."):w3L("Sonuç bulunamadı","No results")}</div>`}
-function w3Markets(){const T3=[["fav",w3L("Favoriler","Favorites")],["hot","Hot"],["sol","Solana"],["new",w3L("Yeni","New")]];
-  $("w3Body").innerHTML=`<div class="w3-h">${w3L("Piyasalar","Markets")}</div>`+w3Q("w3Mq",w3L("Coin / kontrat ara","Search coin/contract"),W3.mq)+`<div class="w3-tabs">${T3.map(x=>`<button type="button" data-w3m="${x[0]}" class="${W3.mk===x[0]?"on":""}">${x[1]}</button>`).join("")}</div><div id="w3L"></div>`;w3MkList()}
-const W3G=[
- ["Solana Projeleri","En iyi Solana projeleri",[["Jupiter",""],["Raydium","DEX"],["Meteora",""],["Orca",""]],"Top Solana Projects","Top Solana projects"],
- ["DeFi Araçları","Web3'e yeni başlayanlar için gerekli araçlar",[["World Liberty","DeFi"],["Smolrefuel","DeFi"],["DefiLlama",""],["Revoke.cash",""]],"DeFi Tools","Must-have tools for Web3 beginners"],
- ["Meme Araçları","Zincir üstü meme araçları; bir sonraki cevheri bul",[["Ave.ai","DeFi"],["Pancakeswap","DEX"],["Phantom SOL",""],["BigPump","NFT"]],"Meme Tools","On-chain meme tools to find the next gem"],
- ["Yeniden Stake","En yeni yeniden stake uygulamaları",[["ether.fi","Stake"],["EigenLayer","Stake"],["Symbiotic",""],["Solayer",""]],"Restaking Zone","The newest restaking apps"],
- ["Yükselen Yıldızlar","Güçlü büyüme potansiyeli olan projeler",[["Raydium","DEX"],["Dydx",""],["Pancake Swap","DEX"],["Uniswap","DEX"]],"Rising Stars","Projects with strong growth potential"]];
-function w3Discover(){const T2=[["dapps","DApps"],["air","Airdrop"]];
-  $("w3Body").innerHTML=`<div class="w3-tabs" style="gap:18px;margin-top:6px">${T2.map(x=>`<button type="button" data-w3d="${x[0]}" class="${W3.ds===x[0]?"on":""}" style="font-size:18px">${x[1]}</button>`).join("")}</div>`+(W3.ds==="dapps"?w3Q("w3Xq",w3L("DApp ara","Search DApps"),W3.xq)+`<div id="w3L"></div>`:`<div id="w3L"></div>`);w3DList()}
-function w3DList(){const L=$("w3L");if(!L)return;
-  if(W3.ds==="air"){L.innerHTML=`<div class="w3-pr" style="flex-direction:column;margin:0;padding:0;overflow:visible"><button type="button" style="flex:none" data-w3="camp"><span class="t"><b>FOMO Trading Week</b><small>${w3L("SOL ve Solana memecoinlerinde hacim yap, 10.000 $'a kadar ödül kazan.","Trade SOL and Solana memecoins for up to $10,000 in rewards.")}</small></span><span class="em">🏆</span></button><button type="button" style="flex:none" data-w3="airdrop"><span class="t"><b>Airdrop</b><small>${w3L("Yakındaki arkadaşına QR ile coin gönder ya da al.","Send or receive coins with a nearby friend via QR.")}</small></span><span class="em">🎁</span></button><button type="button" style="flex:none" data-w3="rewards"><span class="t"><b>${w3L("Ödüller","Rewards")}</b><small>${w3L("Görevleri tamamla, günlük ödülleri topla.","Complete tasks and collect daily rewards.")}</small></span><span class="em">⭐</span></button></div>`;return}
-  const q=W3.xq.trim().toLowerCase();let h="";
-  W3G.forEach(g=>{const it=g[2].filter(x=>!q||x[0].toLowerCase().includes(q));if(!it.length)return;
-    h+=`<div class="w3-gh"><b>${g[+EN?3:0]}</b><small>${g[+EN?4:1]}</small></div><div class="w3-ap">${it.map(x=>`<button type="button" data-w3="dapp"><i style="background:${colorFor(x[0])}">${esc(x[0][0])}${x[1]?`<em>${x[1]}</em>`:""}</i><span>${esc(x[0])}</span></button>`).join("")}</div>`});
-  L.innerHTML=h||`<div class="w3-empty">${w3L("Sonuç bulunamadı","No results")}</div>`}
-function w3Render(){const el=$("w3"),o=w3Get();
-  if(W3.step==="intro"){el.innerHTML=w3Intro();return}
-  if(W3.step==="create"){el.innerHTML=w3Create();return}
-  el.innerHTML=w3App();({wallet:w3Wallet,markets:w3Markets,discover:w3Discover})[W3.tab]()}
-function w3Open(){if(!me)return;try{adPreload()}catch(e){}const o=w3Get();W3.step=!o.seen?"intro":"app";W3.i=0;W3.tab="wallet";W3.dq=W3.mq=W3.xq="";W3.more=false;W3.ck=false;W3.tip=false;
-  closeSheet();$("w3").hidden=false;w3Render();try{renderMode()}catch(e){}}
-function w3Close(){const el=$("w3");if(el.hidden)return;el.hidden=true;el.innerHTML=""}
-function w3Sym(s){w3Close();prev=view;go("detail",s)}
-$("w3").addEventListener("input",e=>{const i=e.target;if(i.id==="w3Dq"){W3.dq=i.value;w3List()}else if(i.id==="w3Mq"){W3.mq=i.value;w3MkList()}else if(i.id==="w3Xq"){W3.xq=i.value;w3DList()}});
-$("w3").addEventListener("click",e=>{const t=e.target;let b;
-  if(b=t.closest("[data-sym]")){w3Sym(b.dataset.sym);return}
-  if(b=t.closest("[data-w3t]")){W3.tab=b.dataset.w3t;w3Render();return}
-  if(b=t.closest("[data-w3m]")){W3.mk=b.dataset.w3m;w3Markets();return}
-  if(b=t.closest("[data-w3d]")){W3.ds=b.dataset.w3d;w3Discover();return}
-  if(!(b=t.closest("[data-w3]")))return;const a=b.dataset.w3;
+  else if(W3.mk==="meme")a=a.filter(t=>t.cat==="meme");
+  else if(W3.mk==="sol")a=a.filter(t=>t.s==="SOL"||w3Chain(t)==="SOL");
+  else if(W3.mk==="new")a=a.filter(t=>t.age>0);
+  else if(W3.mk==="gain")a=a.filter(t=>chg(t)>0);
+  else if(W3.mk==="lose")a=a.filter(t=>chg(t)<0);
+  const [k,d]=w3SortKey(),val=t=>k==="px"?t.p:k==="chg"?chg(t):k==="age"?(t.age||0):((+t.vol||0)||(t.mc||0)/1e3);
+  a=[...a].sort((x,y)=>(val(x)-val(y))*d);
+  const sc=$("w3Sc"),ar=kk=>k===kk?(d<0?"↓":"↑"):"↕";
+  if(sc)sc.innerHTML=`<button type="button" data-w3s="vol" class="${k==="vol"?"on":""}">${w3L("Sembol / 24s Hacim","Symbol / 24h Vol")} <i>${ar("vol")}</i></button><span><button type="button" data-w3s="px" class="${k==="px"?"on":""}">${w3L("Fiyat","Price")} <i>${ar("px")}</i></button> / <button type="button" data-w3s="chg" class="${k==="chg"?"on":""}">${w3L("24s Değişim","24h Chg")} <i>${ar("chg")}</i></button></span>`;
+  L.innerHTML=a.length?a.slice(0,100).map(w3MkRow).join(""):`<div class="w3-empty">${W3.mk==="fav"&&!q?w3L("Henüz favorin yok. Bir coinin sayfasındaki yıldıza dokunarak ekleyebilirsin.","No favorites yet. Tap the star on a coin page to add one."):w3L("Sonuç bulunamadı","No results")}</div>`}
+
+// ---------- Takas (ana uygulamadaki "swap" işlemi)
+const w3Has=s=>s==="USDT"||!!find(s);
+const w3TkBtn=s=>`${w3Ico(s==="USDT"?{s:"USDT"}:find(s),"w3cs")}<b>${s}</b>${W3I.down}`;
+function w3Swap(){
+  $("w3Body").innerHTML=`<div class="w3-tt"><h2>${w3L("Takas","Swap")}</h2></div>
+  <div class="w3-sw"><div class="sc"><div class="r1"><span>${w3L("Öde","Pay")}</span><span><span id="w3Fb"></span><button type="button" class="mx" data-w3="max">${w3L("Maks","Max")}</button></span></div>
+  <div class="r2"><input id="w3Sa" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="${w3L("Ödenecek miktar","Amount to pay")}" value="${esc(W3.amt)}"><button type="button" class="tk" data-w3="pickf" id="w3Ft" aria-label="${w3L("Ödenecek token","Token to pay")}"></button></div><div class="r3" id="w3Fu"></div></div>
+  <button type="button" class="fl" data-w3="flip" aria-label="${w3L("Yönü değiştir","Switch direction")}">${W3I.swap}</button>
+  <div class="sc"><div class="r1"><span>${w3L("Alacağın","You get")}</span><span id="w3Tb"></span></div><div class="r2"><b id="w3Out">0</b><button type="button" class="tk" data-w3="pickt" id="w3Tt" aria-label="${w3L("Alınacak token","Token to get")}"></button></div><div class="r3" id="w3Tu"></div></div>
+  <div class="w3-si" id="w3Si"></div><div class="w3-err" id="w3Se" role="alert"></div><button type="button" class="w3-go" id="w3Go" data-w3="doswap">${w3L("Takas Et","Swap")}</button></div>
+  <div class="w3-ah"><b>${w3L("Son takasların","Recent swaps")}</b></div><div id="w3SwH"></div>`;w3SwCalc();w3SwHist()}
+function w3SwCalc(){if(!$("w3Go"))return;if(!w3Has(W3.from))W3.from="USDT";if(!w3Has(W3.to)||W3.to===W3.from)W3.to=W3.from==="SOL"?"USDT":"SOL";
+  const a=parseAmt(W3.amt),pf=priceOf(W3.from),pt=priceOf(W3.to),rate=vipRate(),out=a>0?a*pf/pt*(1-rate):0,bal=balOf(W3.from);
+  $("w3Ft").innerHTML=w3TkBtn(W3.from);$("w3Tt").innerHTML=w3TkBtn(W3.to);
+  $("w3Fb").textContent=w3L("Bakiye: ","Balance: ")+w3Qty(bal);$("w3Tb").textContent=w3L("Bakiye: ","Balance: ")+w3Qty(balOf(W3.to));
+  $("w3Out").textContent=out?w3Qty(out):"0";$("w3Fu").textContent="≈ "+usd(a>0?a*pf:0);$("w3Tu").textContent="≈ "+usd(out*pt);
+  $("w3Si").innerHTML=`<div><span>${w3L("Kur","Rate")}</span><span>1 ${W3.from} ≈ ${w3Qty(pf/pt)} ${W3.to}</span></div><div><span>${w3L("Komisyon","Fee")}</span><span>%${feeTxt(rate)}${a>0?" · "+usd(a*pf*rate):""}</span></div><div><span>${w3L("Fiyat","Price")}</span><span>${w3L("Anlık piyasa fiyatı","Live market price")}</span></div>`;
+  const g=$("w3Go"),bad=!(a>0)||a>bal+1e-9;g.textContent=!(a>0)?w3L("Miktar gir","Enter an amount"):a>bal+1e-9?w3L(`Yetersiz ${W3.from} bakiyesi`,`Insufficient ${W3.from}`):w3L("Takas Et","Swap");g.disabled=bad}
+function w3SwHist(){const L=$("w3SwH");if(!L)return;const h=(st.hist||[]).filter(x=>x.k==="swap").slice(0,6);
+  L.innerHTML=h.length?h.map(x=>`<div class="w3-row st"><span class="w3-ci w3c"><span class="w3-hi">${W3I.swap}</span></span><span class="nm"><b>${esc(String(x.txt||"").replace(/ takas$/,""))}</b><small>${new Date(x.t).toLocaleString(LOC,{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</small></span><span class="rt"><b>${usd(Math.abs(+x.v||0))}</b></span></div>`).join(""):`<div class="w3-empty">${w3L("Henüz takas yapmadın.","You haven't swapped yet.")}</div>`}
+async function w3DoSwap(btn){const a=parseAmt(W3.amt),bal=balOf(W3.from);if(!(a>0)||a>bal+1e-9)return;
+  await busy(btn,async()=>{$("w3Se").textContent="";const from=W3.from,to=W3.to;const r=await call("swap",{p_from:from,p_to:to,p_amount:Math.min(a,bal)},"w3Se");if(r.err)return;
+    W3.amt="";const i=$("w3Sa");if(i)i.value="";await loadAll();toast(w3L(`${w3Qty(+r.data.out)} ${to} alındı`,`Received ${w3Qty(+r.data.out)} ${to}`));if(w3Vis()&&W3.tab==="swap"){w3SwCalc();w3SwHist()}})}
+function w3PickHTML(){return w3SubHd(`<b>${W3.pick==="from"?w3L("Ödenecek token","Token to pay"):w3L("Alınacak token","Token to get")}</b>`)+`<div class="w3-sb">${w3Q("w3Pq",w3L("Token ara","Search tokens"),W3.pq)}<div id="w3PL"></div></div>`}
+function w3PkList(){const L=$("w3PL");if(!L)return;const q=W3.pq.trim().toLowerCase(),cur=W3.pick==="from"?W3.from:W3.to;
+  const l=[{s:"USDT",n:"Tether",p:1},...T.filter(t=>t.p>0)].filter(t=>!q||t.s.toLowerCase().includes(q)||String(t.n||"").toLowerCase().includes(q))
+    .map(t=>({t,v:balOf(t.s)*(t.s==="USDT"?1:t.p)})).sort((a,b)=>b.v-a.v||(b.t.s==="USDT")-(a.t.s==="USDT")||(b.t.mc||0)-(a.t.mc||0)).slice(0,120);
+  L.innerHTML=l.length?l.map(({t,v})=>`<button type="button" class="w3-row${t.s===cur?" sel":""}" data-pk="${t.s}">${w3Ico(t.s==="USDT"?{s:"USDT"}:t)}<span class="nm"><b>${t.s}</b><small>${esc(t.n||"")}</small></span><span class="rt"><b>${w3Qty(balOf(t.s))}</b><small>${usd(v)}</small></span></button>`).join(""):`<div class="w3-empty">${w3L("Sonuç bulunamadı","No results")}</div>`}
+
+// ---------- Keşfet: gerçek merkeziyetsiz uygulamalar (resmî adresleriyle), Earn, Airdrop, Kampanyalar
+const W3D=[
+  {n:"Jupiter",d:"jup.ag",g:"sol",k:"DEX",c:"JUP",tr:"Solana'nın en büyük DEX toplayıcısı; takasları en iyi fiyata yönlendirir.",en:"Solana's largest DEX aggregator, routing swaps to the best price."},
+  {n:"Raydium",d:"raydium.io",g:"sol",k:"DEX",tr:"Solana üzerinde AMM ve likidite havuzları.",en:"AMM and liquidity pools on Solana."},
+  {n:"Orca",d:"orca.so",g:"sol",k:"DEX",tr:"Solana'da kolay takas ve yoğunlaştırılmış likidite.",en:"Easy swaps and concentrated liquidity on Solana."},
+  {n:"Meteora",d:"meteora.ag",g:"sol",k:"DeFi",tr:"Dinamik likidite havuzlarıyla Solana DeFi.",en:"Solana DeFi with dynamic liquidity pools."},
+  {n:"Jito",d:"jito.network",g:"sol",k:"Stake",tr:"SOL'ünü stake et, JitoSOL ile likit kal.",en:"Stake SOL and stay liquid with JitoSOL."},
+  {n:"Kamino",d:"kamino.finance",g:"sol",k:"DeFi",tr:"Solana'da borç verme, borç alma ve otomatik likidite kasaları.",en:"Lending, borrowing and automated liquidity vaults on Solana."},
+  {n:"Marinade",d:"marinade.finance",g:"sol",k:"Stake",tr:"SOL için likit ve yerel stake.",en:"Liquid and native staking for SOL."},
+  {n:"Drift",d:"drift.trade",g:"sol",k:"Perp",tr:"Solana üzerinde vadeli işlem ve borç verme.",en:"Perpetuals and lending on Solana."},
+  {n:"pump.fun",d:"pump.fun",g:"meme",k:"Meme",tr:"Solana'da memecoin oluşturma ve alım satım platformu.",en:"Create and trade memecoins on Solana."},
+  {n:"DEX Screener",d:"dexscreener.com",g:"meme",k:"Grafik",tr:"Tüm zincirlerde canlı DEX grafikleri ve yeni çiftler.",en:"Live DEX charts and new pairs across chains."},
+  {n:"Birdeye",d:"birdeye.so",g:"meme",k:"Analiz",tr:"Solana ve diğer zincirlerde token analizleri.",en:"Token analytics on Solana and other chains."},
+  {n:"GeckoTerminal",d:"geckoterminal.com",g:"meme",k:"Grafik",tr:"DEX havuzlarında fiyat ve hacim takibi.",en:"Price and volume tracking for DEX pools."},
+  {n:"Uniswap",d:"uniswap.org",g:"dex",k:"DEX",c:"UNI",tr:"Ethereum ve katman 2 ağlarında en büyük merkeziyetsiz borsa.",en:"The largest decentralized exchange on Ethereum and L2s."},
+  {n:"PancakeSwap",d:"pancakeswap.finance",g:"dex",k:"DEX",tr:"BNB Chain'in önde gelen merkeziyetsiz borsası.",en:"The leading decentralized exchange on BNB Chain."},
+  {n:"Aave",d:"aave.com",g:"defi",k:"DeFi",c:"AAVE",tr:"En büyük merkeziyetsiz borç verme ve borç alma protokolü.",en:"The largest decentralized lending and borrowing protocol."},
+  {n:"Lido",d:"lido.fi",g:"defi",k:"Stake",tr:"ETH'ni stake et, stETH ile likit kal.",en:"Stake ETH and stay liquid with stETH."},
+  {n:"Ethena",d:"ethena.fi",g:"defi",k:"DeFi",c:"ENA",tr:"USDe sentetik dolarının arkasındaki protokol.",en:"The protocol behind the USDe synthetic dollar."},
+  {n:"Pendle",d:"pendle.finance",g:"defi",k:"DeFi",tr:"Getiriyi tokenlaştırıp alıp satmaya yarayan protokol.",en:"Tokenize and trade yield."},
+  {n:"DefiLlama",d:"defillama.com",g:"defi",k:"Analiz",tr:"Tüm zincirlerde TVL ve DeFi verileri.",en:"TVL and DeFi data across all chains."},
+  {n:"Revoke.cash",d:"revoke.cash",g:"defi",k:"Güvenlik",tr:"Cüzdanına verdiğin token izinlerini kontrol et ve iptal et.",en:"Check and revoke token approvals on your wallet."},
+  {n:"Hyperliquid",d:"hyperliquid.xyz",g:"perp",k:"Perp",c:"HYPE",tr:"Kendi zincirinde çalışan yüksek hızlı vadeli işlem borsası.",en:"A high-speed perpetuals exchange on its own chain."},
+  {n:"dYdX",d:"dydx.trade",g:"perp",k:"Perp",tr:"Merkeziyetsiz vadeli işlem borsası.",en:"Decentralized perpetuals exchange."},
+  {n:"GMX",d:"gmx.io",g:"perp",k:"Perp",tr:"Arbitrum ve Avalanche üzerinde vadeli işlem.",en:"Perpetuals on Arbitrum and Avalanche."},
+  {n:"ether.fi",d:"ether.fi",g:"rst",k:"Stake",tr:"Likit yeniden stake ile ETH'nden ek getiri.",en:"Extra yield on ETH through liquid restaking."},
+  {n:"EigenLayer",d:"eigenlayer.xyz",g:"rst",k:"Stake",tr:"Ethereum'da yeniden stake protokolü.",en:"Restaking protocol on Ethereum."},
+  {n:"Symbiotic",d:"symbiotic.fi",g:"rst",k:"Stake",tr:"Esnek, izinsiz yeniden stake protokolü.",en:"Flexible, permissionless restaking protocol."},
+  {n:"Solayer",d:"solayer.org",g:"rst",k:"Stake",tr:"Solana üzerinde yeniden stake.",en:"Restaking on Solana."},
+  {n:"Magic Eden",d:"magiceden.io",g:"nft",k:"NFT",tr:"Çok zincirli NFT pazar yeri.",en:"Multi-chain NFT marketplace."},
+  {n:"OpenSea",d:"opensea.io",g:"nft",k:"NFT",tr:"En bilinen NFT pazar yeri.",en:"The best-known NFT marketplace."},
+  {n:"Tensor",d:"tensor.trade",g:"nft",k:"NFT",tr:"Solana NFT alım satım platformu.",en:"Solana NFT trading platform."}];
+const W3DG=[["sol",["Solana Ekosistemi","Solana Ecosystem"],["Solana'nın en çok kullanılan uygulamaları","Solana's most used apps"]],["meme",["Meme Araçları","Meme Tools"],["Bir sonraki cevheri herkesten önce bul","Find the next gem before everyone else"]],
+  ["dex",["DEX ve Takas","DEX & Swap"],["Zincir üstü takas için en büyük borsalar","The biggest on-chain swap venues"]],["defi",["DeFi Araçları","DeFi Tools"],["Web3'e yeni başlayanlar için gerekli araçlar","Must-have tools for Web3 beginners"]],
+  ["perp",["Vadeli İşlem","Perpetuals"],["Zincir üstü vadeli işlem borsaları","On-chain perpetuals exchanges"]],["rst",["Yeniden Stake","Restaking"],["Stake ettiğin varlıktan ek getiri","Extra yield on your staked assets"]],["nft",["NFT","NFT"],["NFT pazar yerleri","NFT marketplaces"]]];
+const W3FEAT=["Jupiter","Hyperliquid","Uniswap","pump.fun"];
+const w3K=k=>EN?({Grafik:"Charts",Analiz:"Analytics","Güvenlik":"Security"})[k]||k:k;
+function w3DIco(d,cls){const t=d.c&&find(d.c),u=t&&t.img?logoUrl(t.img):"https://www.google.com/s2/favicons?domain="+encodeURIComponent(d.d)+"&sz=128";
+  return `<span class="w3-dl ${cls||""}${t&&t.img?" cn":""}" style="background:${colorFor(d.n)}"><b>${esc(d.n.charAt(0).toUpperCase())}</b><img src="${u}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">${cls?"":`<em>${esc(w3K(d.k))}</em>`}</span>`}
+const w3DCell=d=>`<button type="button" data-dapp="${W3D.indexOf(d)}">${w3DIco(d)}<span class="nm">${esc(d.n)}</span></button>`;
+const w3DRow=d=>`<button type="button" class="w3-row" data-dapp="${W3D.indexOf(d)}">${w3DIco(d,"s42")}<span class="nm"><b>${esc(d.n)}</b><small>${esc(EN?d.en:d.tr)}</small></span><span class="w3-tag">${esc(w3K(d.k))}</span></button>`;
+const W3DT=[["dapps",["DApps","DApps"]],["earn",["Earn","Earn"]],["air",["Airdrop","Airdrop"]],["camp",["Kampanyalar","Campaigns"]]];
+function w3Discover(){$("w3Body").innerHTML=`<div class="w3-bt" role="tablist">${W3DT.map(x=>`<button type="button" role="tab" aria-selected="${W3.ds===x[0]}" data-w3d="${x[0]}" class="${W3.ds===x[0]?"on":""}">${x[1][+EN]}</button>`).join("")}</div><div id="w3Dc"></div>`;w3DiscBody()}
+function w3DiscBody(){const c=$("w3Dc");if(!c)return;
+  if(W3.ds==="dapps"){c.innerHTML=w3Q("w3Xq",w3L("DApp ara ya da adres gir","Search DApps or enter a URL"),W3.xq)+`<div class="w3-tabs sm" role="tablist">${[["feat",w3L("Öne Çıkan","Featured")],["all",w3L("Tümü","All")]].map(x=>`<button type="button" role="tab" aria-selected="${W3.dv===x[0]}" data-w3v="${x[0]}" class="${W3.dv===x[0]?"on":""}">${x[1]}</button>`).join("")}</div><div id="w3L"></div>`;w3DList();return}
+  if(W3.ds==="earn"){w3EarnView(c);return}
+  if(W3.ds==="air"){c.innerHTML=`<div class="w3-cards">${w3Card("airdrop","gift","Airdrop",w3L("Topluluğuna ya da arkadaşlarına tek seferde coin gönder.","Send coins to your community or friends at once."))}${w3Card("rewards","trophy",w3L("Ödüller","Rewards"),w3L("Görevleri tamamla, günlük ödüllerini topla.","Complete tasks and collect your daily rewards."))}${w3Card("recv","recv",w3L("Coin al","Receive coins"),w3L("Adresini paylaş, başka kullanıcılardan coin al.","Share your address and receive coins from other users."))}</div>`;return}
+  w3CampView(c)}
+const w3Card=(a,ic,t,s,extra)=>`<button type="button" class="w3-cd" data-w3="${a}"${extra||""}><span class="ic">${W3I[ic]}</span><span class="tx"><b>${t}</b><small>${s}</small></span>${W3I.chev}</button>`;
+function w3DList(){const L=$("w3L");if(!L)return;const q=W3.xq.trim().toLowerCase();
+  if(q){const m=W3D.filter(d=>d.n.toLowerCase().includes(q)||d.d.includes(q)),url=/^[a-z0-9-]+(\.[a-z0-9-]+)+(\/[^\s]*)?$/i.test(q)?q:"";
+    L.innerHTML=(url?`<button type="button" class="w3-row" data-url="${esc(url)}"><span class="w3-dl s42 ex">${W3I.ext}</span><span class="nm"><b>${esc(url)}</b><small>${w3L("Siteyi yeni sekmede aç","Open the site in a new tab")}</small></span></button>`:"")+(m.length?m.map(w3DRow).join(""):url?"":`<div class="w3-empty">${w3L("Sonuç bulunamadı","No results")}</div>`);return}
+  if(W3.dv==="all"){L.innerHTML=W3DG.map(g=>`<div class="w3-gh"><span><b>${g[1][+EN]}</b></span></div>`+W3D.filter(d=>d.g===g[0]).map(w3DRow).join("")).join("");return}
+  L.innerHTML=`<div class="w3-wel"><div class="tx"><b>${w3L("COINFORCE Web3'e Hoş Geldin","Welcome to COINFORCE Web3")}</b><small>${w3L("Kripto dünyasının en çok kullanılan merkeziyetsiz uygulamaları tek yerde.","The most used decentralized apps in crypto, in one place.")}</small></div><span class="gem">${w3GemMini()}</span></div>`+
+    `<div class="w3-ap">${W3FEAT.map(n=>w3DCell(W3D.find(d=>d.n===n))).join("")}</div>`+
+    W3DG.map(g=>{const all=W3D.filter(d=>d.g===g[0]),open=!!W3.open[g[0]],l=open?all:all.slice(0,4);return `<div class="w3-gh"><span><b>${g[1][+EN]}</b><small>${g[2][+EN]}</small></span>${all.length>4?`<button type="button" class="va" data-w3g="${g[0]}" aria-expanded="${open}">${open?w3L("Daha az","Less"):w3L("Tümü","View all")}${W3I.chev}</button>`:""}</div><div class="w3-ap">${l.map(w3DCell).join("")}</div>`}).join("")}
+function w3DSheet(){const d=W3D[W3.dapp];if(!d)return "";const t=d.c&&find(d.c);
+  return `<div class="w3-scrim" data-w3="dshx"></div><div class="w3-dsh" role="dialog" aria-modal="true" aria-label="${esc(d.n)}"><div class="grab"></div><div class="hd">${w3DIco(d,"s56")}<span><h3>${esc(d.n)}</h3><span class="w3-tag">${esc(w3K(d.k))}</span></span></div><p>${esc(EN?d.en:d.tr)}</p>
+  <div class="dom">${W3I.link}<span>${esc(d.d)}</span></div>
+  ${t?`<button type="button" class="w3-row tk" data-tok="${t.s}">${w3Ico(t)}<span class="nm"><b>${t.s}</b><small>${esc(t.n||"")}</small></span><span class="rt"><b>${usd(t.p,t.d)}</b><small class="${chg(t)>=0?"up":"down"}">${chg(t)>=0?"+":""}${fmtN(chg(t),2)}%</small></span></button>`:""}
+  <div class="note">${w3L("Harici bir sitedir, COINFORCE'a ait değildir. Bağlanmadan önce adresin doğru olduğunu kontrol et.","This is an external site not operated by COINFORCE. Check the address before you connect.")}</div>
+  <div class="w3-btns"><button type="button" data-w3="dshx">${w3L("Kapat","Close")}</button><button type="button" class="pri" data-url="${esc(d.d)}">${w3L("Siteyi aç","Open site")}${W3I.ext}</button></div></div>`}
+function w3ShRender(){const s=$("w3Sh");if(!s)return;s.innerHTML=W3.dapp!=null?w3DSheet():"";if(W3.dapp!=null){const b=s.querySelector(".w3-btns .pri");if(b)try{b.focus({preventScroll:true})}catch(e){}}}
+function w3PromoRefresh(){const pr=$("w3Pr"),d=$("w3Dots");if(!pr||!d)return;const x=pr.scrollLeft,tmp=document.createElement("div");tmp.innerHTML=w3Promo();const np=tmp.querySelector("#w3Pr"),nd=tmp.querySelector("#w3Dots");if(!np||!nd)return;pr.replaceWith(np);d.replaceWith(nd);np.scrollLeft=x;np.addEventListener("scroll",w3Dots,{passive:true});w3Dots()}
+async function w3EarnLoad(){if(W3.earnBusy)return;W3.earnBusy=true;try{const r=await sb.rpc("earn_products");W3.earn=r.error?[]:(r.data||[])}catch(e){W3.earn=[]}finally{W3.earnBusy=false}
+  if(w3Vis()&&W3.step==="app"&&!W3.sub){if(W3.tab==="discover"&&W3.ds==="earn")w3DiscBody();else if(W3.tab==="wallet")w3PromoRefresh()}}
+function w3EarnView(c){const e=W3.earn,lk=P24?+P24.earn||0:null;
+  c.innerHTML=(lk!=null?`<div class="w3-bal sm"><div class="t"><span>${w3L("Earn'deki varlıkların","Your assets in Earn")}</span></div><b>${w3Hid()?"******":curFmt(lk)}</b><div class="pn mu">${w3L("Süre sonunda faiziyle birlikte bakiyene döner.","Returns to your balance with interest at the end of the term.")}</div></div>`:"")+
+  `<div class="w3-ah"><b>${w3L("USDT ile kazan","Earn with USDT")}</b><button type="button" class="va" data-w3="myearn">${w3L("Kazançlarım","My earnings")}${W3I.chev}</button></div>`+
+  (e==null?`<div class="w3-sk"></div><div class="w3-sk"></div><div class="w3-sk"></div>`:e.length?e.map(x=>`<button type="button" class="w3-row" data-ea="${+x.days}">${w3Ico({s:"USDT"})}<span class="nm"><b>USDT</b><small>${+x.days} ${w3L("gün kilitli","days locked")}</small></span><span class="rt"><b class="up">%${fmtN(+x.apr,+x.apr%1?1:0)}</b><small>${w3L("yıllık","APR")}</small></span></button>`).join(""):`<div class="w3-empty">${w3L("Şu an açık bir Earn ürünü yok.","No Earn products are open right now.")}</div>`)+
+  `<div class="w3-cards" style="margin-top:14px">${w3Card("grid","bot","Grid Bot",w3L("Belirlediğin fiyat aralığında otomatik al-sat yap.","Buy low and sell high automatically within your price range."))}</div>`;
+  if(e==null)w3EarnLoad()}
+function w3CampView(c){const ord={live:0,soon:1,ended:2},cs=(st.camps||[]).slice().sort((a,b)=>ord[campState(a)]-ord[campState(b)]||Date.parse(b.ends_at)-Date.parse(a.ends_at));
+  c.innerHTML=cs.length?cs.map(x=>{const s=campState(x),mx=Math.max(0,...x.tiers.map(t=>+t.volume)),pct=mx>0?Math.min(100,x.my_volume/mx*100):0,now=Date.now();
+    return `<button type="button" class="w3-cp" data-w3="camp" data-id="${esc(x.id)}"><div class="h"><b>${esc(x.title)}</b><span class="st ${s}">${s==="live"?w3L("Devam ediyor","Live"):s==="soon"?w3L("Yakında","Soon"):w3L("Bitti","Ended")}</span></div>${x.scope_label||x.symbol?`<small>${esc(x.scope_label||x.symbol)}</small>`:""}
+    <div class="pg" aria-hidden="true"><i style="width:${pct.toFixed(1)}%"></i></div><div class="f"><span>${w3L("Hacmin","Your volume")} <b>${usd(x.my_volume,0)}</b></span><span>${w3L("En yüksek ödül","Top reward")} <b>${usd(campMax(x),0)}</b></span></div>
+    <div class="f mu"><span>${s==="live"?w3L("Bitişe ","Ends in ")+w3Left(Date.parse(x.ends_at)-now):s==="soon"?w3L("Başlangıca ","Starts in ")+w3Left(Date.parse(x.starts_at)-now):w3L("Sona erdi","Finished")}</span><span>${nfmt(x.participants)} ${w3L("katılımcı","participants")}</span></div></button>`}).join(""):`<div class="w3-empty">${w3L("Şu an kampanya yok.","There are no campaigns right now.")}</div>`}
+
+// ---------- alt ekranlar: token sayfası, token yönetimi, token seçici
+function w3ChartSvg(a,t){const W=340,H=180,mn=Math.min(...a),mx=Math.max(...a),c=a[a.length-1]>=a[0]?"#25e38a":"#ff5d5d",id="w3g"+(++w3G),
+  y=v=>H-16-(mx===mn?.5:(v-mn)/(mx-mn))*(H-34),x=i=>i/(a.length-1)*W,d="M"+a.map((v,i)=>x(i).toFixed(1)+" "+y(v).toFixed(1)).join(" L"),iMx=a.indexOf(mx),iMn=a.indexOf(mn),cl=p=>Math.min(88,Math.max(12,p));
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".28"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs><path d="${d} L${W} ${H} L0 ${H}Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="${c}" stroke-width="2.2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/></svg>
+  <span class="hl" style="left:${cl(x(iMx)/W*100).toFixed(1)}%;top:0">${usd(mx,t.d)}</span><span class="hl" style="left:${cl(x(iMn)/W*100).toFixed(1)}%;bottom:0">${usd(mn,t.d)}</span><span class="pt" style="top:${(y(a[a.length-1])/H*100).toFixed(1)}%;background:${c}"></span>`}
+function w3TokBody(){const s=W3.tok,t=s==="USDT"?null:find(s),q=s==="USDT"?(+st.usdt||0):(+(st.h||{})[s]||0),px=t?t.p:1,hid=w3Hid();
+  let h=`<div class="w3-tpx"><b id="w3Tp">${usd(px,t?t.d:2)}</b>${t?`<span>${w3Pct(chg(t))} <em>${w3L("son 24 saat","last 24h")}</em></span>`:""}</div>`;
+  if(t){const sp=(t.spark7||[]).map(Number).filter(x=>x>0),arr=(W3.tf==="24h"?sp.slice(-25):sp).concat(sp.length?[t.p]:[]);
+    h+=`<div class="w3-chart">${arr.length>3?w3ChartSvg(arr,t):`<div class="w3-empty">${w3L("Bu coin için grafik verisi yok.","No chart data for this coin.")}</div>`}</div><div class="w3-tf" role="tablist">${[["24h",w3L("24S","24H")],["7d",w3L("7G","7D")]].map(x=>`<button type="button" role="tab" aria-selected="${W3.tf===x[0]}" data-w3f="${x[0]}" class="${W3.tf===x[0]?"on":""}">${x[1]}</button>`).join("")}</div>`}
+  h+=`<div class="w3-hold"><div class="h">${w3L("Bakiyem","My balance")}</div><div class="v"><b>${hid?"****":w3Qty(q)+" "+s}</b><span>${hid?"****":"≈ "+usd(q*px)}</span></div>`;
+  if(t&&q>0){const cost=+(st.cost||{})[s]||0;if(cost>0){const pl=q*t.p-cost,pp=pl/cost*100;h+=`<div class="kv"><span>${w3L("Ortalama maliyet","Average cost")}</span><b>${usd(cost/q,t.d)}</b></div><div class="kv"><span>${w3L("Kâr / Zarar","Profit / Loss")}</span><b class="${pl>=0?"up":"down"}">${hid?"****":`${pl>=0?"+":"-"}${usd(Math.abs(pl))} (${pl>=0?"+":"-"}${fmtN(Math.abs(pp),2)}%)`}</b></div>`}}
+  h+=`</div>`;
+  if(t){const ch=w3Chain(t),rows=[[w3L("24s En Yüksek","24h High"),t.hi24?usd(t.hi24,t.d):"—"],[w3L("24s En Düşük","24h Low"),t.lo24?usd(t.lo24,t.d):"—"],[w3L("24s Hacim","24h Volume"),t.vol?w3C(t.vol):"—"],[w3L("Piyasa Değeri","Market Cap"),t.mc?w3C(t.mc):"—"],[w3L("Dolaşımdaki Arz","Circulating Supply"),t.sup?w3Cn(t.sup)+" "+t.s:"—"],[w3L("Tüm Zamanların En Yükseği","All-Time High"),t.ath?usd(t.ath,t.d):"—"]];
+    if(ch)rows.push([w3L("Ağ","Network"),w3Net(ch)]);if(maxLev(t)>1&&!t.custom)rows.push([w3L("Vadeli kaldıraç","Futures leverage"),w3L("En çok ","Up to ")+maxLev(t)+"x"]);
+    h+=`<div class="w3-stats">${rows.map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join("")}</div>`;
+    if(t.about)h+=`<div class="w3-about"><b>${w3L("Hakkında","About")}</b><p>${esc(t.about)}</p></div>`}
+  return h}
+function w3TokHTML(){const s=W3.tok,t=s==="USDT"?null:find(s),fav=!!t&&(st.watch||[]).includes(s);
+  return w3SubHd(`${w3Ico(t||{s:"USDT"},"w3cs")}<span><b>${s}</b><small>${esc(t?t.n||s:"Tether")}</small></span>`,t?`<button type="button" class="w3-ib${fav?" fav":""}" data-w3="fav" aria-pressed="${fav}" aria-label="${fav?w3L("Favorilerden çıkar","Remove from favorites"):w3L("Favorilere ekle","Add to favorites")}">${fav?W3I.starOn:W3I.star}</button>`:"")+
+  `<div class="w3-sb" id="w3TokB">${w3TokBody()}</div><div class="w3-abar">${[["tsend","send",w3L("Gönder","Send")],["trecv","recv",w3L("Yatır","Deposit")],["tswap","swap",w3L("Takas","Swap")]].map(x=>`<button type="button" class="ab" data-w3="${x[0]}">${W3I[x[1]]}<span>${x[2]}</span></button>`).join("")}${t?`<button type="button" class="w3-tr" data-w3="trade">${w3L("İşlem yap","Trade")}</button>`:""}</div>`}
+function w3MgHTML(){const o=w3Get();return w3SubHd(`<b>${w3L("Tokenları Yönet","Manage Tokens")}</b>`)+`<div class="w3-sb"><div class="w3-mgo"><span><b>${w3L("Küçük bakiyeleri gizle","Hide small balances")}</b><small>${w3L("1 $ altındaki varlıkları listede gösterme","Don't list assets worth less than $1")}</small></span><button type="button" class="w3-tg${o.small?" on":""}" role="switch" aria-checked="${!!o.small}" aria-label="${w3L("Küçük bakiyeleri gizle","Hide small balances")}" data-w3="small"></button></div>`+
+  w3Q("w3Tq",w3L("Token ara","Search tokens"),W3.tq)+`<div class="w3-cols"><span>${w3L("Token","Token")}</span><span>${w3L("Listede göster","Show in list")}</span></div><div id="w3ML"></div></div>`}
+function w3MgList(){const L=$("w3ML");if(!L)return;const q=W3.tq.trim().toLowerCase(),on=new Set(w3Toks()),held=new Set(Object.entries(st.h||{}).filter(([s,v])=>v>0).map(([s])=>s));
+  const l=T.filter(t=>t.p>0&&(!q||t.s.toLowerCase().includes(q)||String(t.n||"").toLowerCase().includes(q))).sort((a,b)=>held.has(b.s)-held.has(a.s)||on.has(b.s)-on.has(a.s)||(b.mc||0)-(a.mc||0)).slice(0,150);
+  L.innerHTML=l.length?l.map(t=>{const h=held.has(t.s),v=h||on.has(t.s);return `<div class="w3-row st">${w3Ico(t)}<span class="nm"><b>${t.s}</b><small>${h?w3L("Bakiyende var","In your balance"):esc(t.n||"")}</small></span><button type="button" class="w3-tg${v?" on":""}" role="switch" aria-checked="${v}" aria-label="${t.s}" data-w3tg="${t.s}"${h?" disabled":""}></button></div>`}).join(""):`<div class="w3-empty">${w3L("Sonuç bulunamadı","No results")}</div>`}
+function w3SubRender(){const s=$("w3Sub");if(!s)return;if(!W3.sub){s.innerHTML="";return}
+  s.innerHTML=`<div class="w3-sub" role="dialog" aria-modal="true">${W3.sub==="tok"?w3TokHTML():W3.sub==="manage"?w3MgHTML():w3PickHTML()}</div>`;
+  if(W3.sub==="manage")w3MgList();if(W3.sub==="pick")w3PkList();const b=s.querySelector('[data-w3="subx"]');if(b)try{b.focus({preventScroll:true})}catch(e){}}
+function w3SubClose(){W3.sub=null;w3SubRender();if(W3.tab==="wallet")w3WalletLive();else if(W3.tab==="markets")w3MkList();else if(W3.tab==="swap")w3SwCalc()}
+
+// ---------- aç / kapat ve olaylar
+function w3Open(){if(!me)return;try{adPreload()}catch(e){}const o=w3Get();
+  Object.assign(W3,{step:o.seen?"app":"intro",i:0,tab:"wallet",dq:"",mq:"",xq:"",tq:"",pq:"",sub:null,dapp:null,ck:false,tip:false,amt:"",open:{}});
+  closeSheet();const el=$("w3");el.hidden=false;w3Render();try{renderMode()}catch(e){}try{el.focus({preventScroll:true})}catch(e){}if(W3.earn==null)w3EarnLoad()}
+function w3Close(){const el=$("w3");if(el.hidden)return;el.hidden=true;el.innerHTML="";W3.sub=null;W3.dapp=null}
+function w3Next(d){const n=W3.i+d;if(n<0)return;if(n<W3S.length){W3.i=n;w3Render();return}w3Set({seen:1});W3.step=w3Get().wallet?"app":"create";W3.tip=false;w3Render()}
+function w3OpenUrl(u){u=String(u||"").trim();if(!/^[a-z0-9-]+(\.[a-z0-9-]+)+(\/[^\s]*)?$/i.test(u))return;try{window.open("https://"+u,"_blank","noopener,noreferrer")}catch(e){}}
+$("w3").addEventListener("input",e=>{const i=e.target;
+  if(i.id==="w3Dq"){W3.dq=i.value;w3Search()}else if(i.id==="w3Mq"){W3.mq=i.value;w3MkList()}else if(i.id==="w3Xq"){W3.xq=i.value;w3DList()}
+  else if(i.id==="w3Tq"){W3.tq=i.value;w3MgList()}else if(i.id==="w3Pq"){W3.pq=i.value;w3PkList()}else if(i.id==="w3Sa"){W3.amt=i.value;w3SwCalc()}});
+$("w3").addEventListener("pointerdown",e=>{if(W3.step==="intro"&&e.target.closest(".w3-card,.w3-hero")){W3.px=e.clientX;W3.py=e.clientY;W3.pb=!!e.target.closest("[data-w3]")}else W3.px=null});
+$("w3").addEventListener("pointerup",e=>{if(W3.px==null||W3.step!=="intro")return;const dx=e.clientX-W3.px,dy=e.clientY-W3.py;W3.px=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4){W3.sw=W3.pb?Date.now():0;w3Next(dx<0?1:-1)}});
+$("w3").addEventListener("click",e=>{const g=e.target;let b;
+  if(b=g.closest("[data-url]")){w3OpenUrl(b.dataset.url);return}
+  if(b=g.closest("[data-tok]")){const s=b.dataset.tok;if(s!=="USDT"&&!find(s))return;W3.dapp=null;w3ShRender();W3.tok=s;W3.tf="7d";W3.sub="tok";w3SubRender();return}
+  if(b=g.closest("[data-pk]")){const s=b.dataset.pk;if(W3.pick==="from"){if(s===W3.to)W3.to=W3.from;W3.from=s}else{if(s===W3.from)W3.from=W3.to;W3.to=s}W3.sub=null;w3SubRender();w3SwCalc();return}
+  if(b=g.closest("[data-dapp]")){W3.dapp=+b.dataset.dapp;w3ShRender();return}
+  if(b=g.closest("[data-w3t]")){W3.tab=b.dataset.w3t;w3Tab();return}
+  if(b=g.closest("[data-w3m]")){W3.mk=b.dataset.w3m;W3.sort="";w3Markets();return}
+  if(b=g.closest("[data-w3s]")){const k=b.dataset.w3s,[ck,cd]=w3SortKey();W3.sort=k;W3.dir=ck===k?-cd:-1;w3MkList();return}
+  if(b=g.closest("[data-w3d]")){W3.ds=b.dataset.w3d;w3Discover();return}
+  if(b=g.closest("[data-w3v]")){W3.dv=b.dataset.w3v;w3DiscBody();return}
+  if(b=g.closest("[data-w3g]")){const k=b.dataset.w3g;W3.open[k]=!W3.open[k];w3DList();return}
+  if(b=g.closest("[data-w3f]")){W3.tf=b.dataset.w3f;const tb=$("w3TokB");if(tb)tb.innerHTML=w3TokBody();return}
+  if(b=g.closest("[data-ea]")){eaDays=+b.dataset.ea;openSheet("earn");return}
+  if(b=g.closest("[data-w3tg]")){if(b.disabled)return;const s=b.dataset.w3tg,l=w3Toks(),i=l.indexOf(s);if(i<0)l.push(s);else l.splice(i,1);w3Set({toks:l});w3MgList();return}
+  if(!(b=g.closest("[data-w3]")))return;const a=b.dataset.w3;if((a==="next"||a==="skip")&&W3.sw&&Date.now()-W3.sw<450)return;
   if(a==="mode")openSheet("mode");
   else if(a==="skip"){w3Set({seen:1});W3.step=w3Get().wallet?"app":"create";W3.tip=false;w3Render()}
-  else if(a==="next"){if(W3.i<W3S.length-1){W3.i++;w3Render()}else{w3Set({seen:1});W3.step=w3Get().wallet?"app":"create";w3Render()}}
+  else if(a==="next")w3Next(1);
   else if(a==="exit")w3Close();
   else if(a==="ck"){W3.ck=!W3.ck;if(W3.ck)W3.tip=false;w3Render()}
-  else if(a==="mk"){if(!W3.ck){W3.tip=true;w3Render();return}w3Set({seen:1,wallet:1});W3.step="app";W3.tab="wallet";w3Render();toast(w3L("Sanal cüzdanın hazır","Your virtual wallet is ready"))}
+  else if(a==="mk"){if(!W3.ck){W3.tip=true;w3Render();return}w3Set({seen:1,wallet:1});W3.step="app";W3.tab="wallet";w3Render();toast(w3L("Cüzdanın hazır","Your wallet is ready"))}
   else if(a==="create"){W3.step="create";W3.ck=false;W3.tip=false;w3Render()}
-  else if(a==="more2"){W3.more=!W3.more;w3List()}
+  else if(a==="eye"){w3Set({hide:!w3Hid()});if(W3.tab==="wallet")w3Wallet()}
+  else if(a==="small"){w3Set({small:!w3Get().small});if(W3.sub==="manage"){const t=b;t.classList.toggle("on",!!w3Get().small);t.setAttribute("aria-checked",String(!!w3Get().small))}if(W3.tab==="wallet")w3List()}
+  else if(a==="manage"){W3.tq="";W3.sub="manage";w3SubRender()}
+  else if(a==="subx")w3SubClose();
   else if(a==="send")openSheet("send");
+  else if(a==="recv")openSheet("recv");
   else if(a==="airdrop")openSheet("airdrop");
   else if(a==="more")openSheet("more");
   else if(a==="rewards")openSheet("rewards");
-  else if(a==="camp"){w3Close();const c=(st.camps||[]).find(x=>x.title==="FOMO Trading Week");if(c)openCampaign(c.id);else openSheet("campaigns")}
-  else if(a==="scan")openSheet("recv");
-  else if(a==="dapp")toast(w3L("Bu uygulama sanal cüzdanda yakında","This app is coming soon to the virtual wallet"))});
-addEventListener("keydown",e=>{if(e.key==="Escape"&&w3Vis()&&!openId&&!(AD&&!AD.done&&!$("ads").hidden)){e.preventDefault();w3Close()}});
-setInterval(()=>{if(!w3Vis()||W3.step!=="app"||document.hidden)return;
-  if(W3.tab==="wallet"){const tt=$("w3Tot");if(tt){const t=w3Total();tt.textContent=usd(t.v);const c=$("w3Chg");if(c){c.className=t.c>=0?"up":"down";c.textContent=(t.c>=0?"▲ +":"▼ ")+fmtN(t.c,2)+"% · 24"+w3L("s","h")}}w3List()}
-  else if(W3.tab==="markets")w3MkList()},3000);
+  else if(a==="grid")openSheet("grid");
+  else if(a==="myearn")openSheet("earn");
+  else if(a==="camp"){const id=b.dataset.id;if(id&&(st.camps||[]).some(x=>String(x.id)===id))openCampaign((st.camps.find(x=>String(x.id)===id)).id);else openSheet("campaigns")}
+  else if(a==="goearn"){W3.tab="discover";W3.ds="earn";w3Tab()}
+  else if(a==="max"){const v=balOf(W3.from);W3.amt=v>0?String(+v.toFixed(W3.from==="USDT"?2:8)).replace(".",DEC):"";const i=$("w3Sa");if(i)i.value=W3.amt;w3SwCalc()}
+  else if(a==="flip"){[W3.from,W3.to]=[W3.to,W3.from];w3SwCalc()}
+  else if(a==="pickf"||a==="pickt"){W3.pick=a==="pickf"?"from":"to";W3.pq="";W3.sub="pick";w3SubRender()}
+  else if(a==="doswap")w3DoSwap(b);
+  else if(a==="fav"){const s=W3.tok;if(!s||!find(s))return;st.watch=st.watch||[];const i=st.watch.indexOf(s);if(i<0)st.watch.push(s);else st.watch.splice(i,1);save();const on=i<0;b.classList.toggle("fav",on);b.setAttribute("aria-pressed",String(on));b.setAttribute("aria-label",on?w3L("Favorilerden çıkar","Remove from favorites"):w3L("Favorilere ekle","Add to favorites"));b.innerHTML=on?W3I.starOn:W3I.star;toast(i<0?w3L(`${s} favorilere eklendi`,`${s} added to favorites`):w3L(`${s} favorilerden çıkarıldı`,`${s} removed from favorites`))}
+  else if(a==="tsend"){const s=W3.tok;openSheet("send");if(s){sendSym=s;sendNet=null;renderSend()}}
+  else if(a==="trecv"){const s=W3.tok;openSheet("recv");if(s){recvSym=s;recvNet=null;renderRecv()}}
+  else if(a==="tswap"){const s=W3.tok;if(s==="USDT"){W3.from="USDT";if(W3.to==="USDT")W3.to="SOL"}else if(balOf(s)>0){W3.from=s;W3.to="USDT"}else{W3.from="USDT";W3.to=s}W3.amt="";W3.sub=null;w3SubRender();W3.tab="swap";w3Tab()}
+  else if(a==="trade"){const s=W3.tok;if(!find(s))return;w3Close();prev=view;go("detail",s)}
+  else if(a==="dshx"){W3.dapp=null;w3ShRender()}});
+addEventListener("keydown",e=>{if(e.key!=="Escape"||!w3Vis()||openId||(AD&&!AD.done&&!$("ads").hidden))return;e.preventDefault();
+  if(W3.dapp!=null){W3.dapp=null;w3ShRender()}else if(W3.sub)w3SubClose();else w3Close()});
+setInterval(()=>{if(!w3Vis()||document.hidden||W3.step!=="app")return;
+  if(W3.sub==="tok"){const tb=$("w3TokB");if(tb)tb.innerHTML=w3TokBody();return}if(W3.sub)return;
+  if(W3.tab==="wallet")w3WalletLive();else if(W3.tab==="markets")w3MkList();else if(W3.tab==="swap")w3SwCalc()},3000);
 // boot
 (async function boot(){
   const {data}=await sb.auth.getSession();
