@@ -52,6 +52,7 @@ h2{font-size:20px;font-weight:700;margin:6px 0 14px;text-wrap:balance}
 .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
 .logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:.02em;min-width:0}
 .logo svg{width:30px;height:30px}
+.own-tag{flex:0 1 auto;min-width:0;max-width:128px;margin-left:2px;padding-left:9px;border-left:1px solid var(--line);font-family:var(--body,inherit);font-weight:600;font-size:10.5px;line-height:1.2;letter-spacing:0;color:var(--muted);white-space:normal}.own-tag[hidden]{display:none}
 .icon-btn{width:38px;height:38px;border-radius:50%;background:var(--surface);display:grid;place-items:center;border:1px solid var(--line)}
 .icon-btn svg{width:18px;height:18px}
 .demo-tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:3px 7px;border-radius:5px;margin-left:4px}
@@ -2150,7 +2151,7 @@ nav.bar button svg{width:22px;height:22px}
 <!-- HOME -->
 <div class="screen" id="s-home">
   <div class="top">
-    <div class="logo"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="lgA2" cx=".3" cy=".25" r="1"><stop offset="0" stop-color="#2a1d4e"/><stop offset="1" stop-color="#0b0a17"/></radialGradient><linearGradient id="lgB2" gradientUnits="userSpaceOnUse" x1="20" y1="80" x2="80" y2="20"><stop offset="0" stop-color="#b58cff"/><stop offset="1" stop-color="#5de0c5"/></linearGradient></defs><rect width="100" height="100" rx="24" fill="url(#lgA2)"/><g transform="translate(50 50) scale(1) translate(-50 -50)"><path d="M71 65 A26 26 0 1 1 64 28" fill="none" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round"/><path d="M64 28 L76 17" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round"/><path d="M66 16 H77 V27" fill="none" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></g></svg>COINFORCE</div>
+    <div class="logo"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="lgA2" cx=".3" cy=".25" r="1"><stop offset="0" stop-color="#2a1d4e"/><stop offset="1" stop-color="#0b0a17"/></radialGradient><linearGradient id="lgB2" gradientUnits="userSpaceOnUse" x1="20" y1="80" x2="80" y2="20"><stop offset="0" stop-color="#b58cff"/><stop offset="1" stop-color="#5de0c5"/></linearGradient></defs><rect width="100" height="100" rx="24" fill="url(#lgA2)"/><g transform="translate(50 50) scale(1) translate(-50 -50)"><path d="M71 65 A26 26 0 1 1 64 28" fill="none" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round"/><path d="M64 28 L76 17" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round"/><path d="M66 16 H77 V27" fill="none" stroke="url(#lgB2)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></g></svg>COINFORCE<span class="own-tag" id="ownTag" hidden>Uygulama sahibi Egemen Alp Arslan</span></div>
     <div class="top-r"><button class="icon-btn bell" type="button" data-open="notifs" aria-label="Bildirimler"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="badge" id="notifBadge" hidden>0</span></button>
     <button class="icon-btn mode-btn" id="modeBtn" type="button" data-open="mode" aria-label="Mod seç"><span id="modeIc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.5 14.5l3-3 2 2 4-4M13.5 9.5h3v3"/></svg></span></button>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Temayı değiştir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button></div>
@@ -5772,7 +5773,10 @@ function tick(){tickN++;
 }
 function renderTradeSoft(){const e=$("trErr").textContent;renderTrade();$("trErr").textContent=e}
 function renderSwapSoft(){const e=$("swErr").textContent;renderSwap();$("swErr").textContent=e}
-function renderAll(){try{renderProW();pwLoadAuc()}catch(e){}renderBal();renderTop();renderCampHome();renderPromoArt();setAv($("navAv"),st.prof.avatar,initial(st.prof.name));renderList();if(view==="detail")renderDetail();if(view==="profile")renderProfile();if(view==="search")renderSearch();renderBadge()}
+// goldenbob hesabına özel, süreli unvan (yalnızca lite modun üst çubuğunda görünür; süre dolunca kendiliğinden kalkar)
+const OWN_UNTIL=1793738449301;let ownT=0;
+function ownTag(){const el=$("ownTag");if(!el)return;const left=OWN_UNTIL-Date.now(),on=left>0&&!!st&&!!st.prof&&String(st.prof.handle||"").toLowerCase()==="goldenbob";el.hidden=!on;clearTimeout(ownT);if(on)ownT=setTimeout(ownTag,Math.min(left+50,2147483000))}
+function renderAll(){try{renderProW();pwLoadAuc()}catch(e){}renderBal();renderTop();renderCampHome();renderPromoArt();setAv($("navAv"),st.prof.avatar,initial(st.prof.name));renderList();if(view==="detail")renderDetail();if(view==="profile")renderProfile();if(view==="search")renderSearch();renderBadge();ownTag()}
 // ---------- engine: orders, alerts, perps
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const maxLev=t=>t.maxLev||(t.mc>5e10?50:t.mc>5e9?25:10);
