@@ -2877,6 +2877,7 @@ nav.bar button svg{width:22px;height:22px}
     <div class="rev-t"><span id="revEl0">Hesap açılışından bu yana geçen süre</span><b id="revEl">—</b></div>
     <p id="revTx">Sayın kullanıcımız, hesabınızın açıldığı tarihten itibaren 14 gün dolmadan 1.000 $ üzerinde alım-satım işlemi gerçekleştirdiğiniz tespit edilmiştir. Bu nedenle hesabınız değerlendirme sürecine alınmıştır. Değerlendirme tamamlandığında hesabınızdaki bakiyenin tamamı, tutarı ne olursa olsun, en kısa sürede çekilebilir duruma getirilecektir.</p>
     <div class="rev-s"><i></i><span id="revSt">Değerlendirme süreci devam etmektedir</span></div>
+    <button type="button" class="btn btn-ghost full" id="revX" hidden>Önizlemeyi kapat</button>
   </div>
 </div>
 
@@ -5092,14 +5093,21 @@ let REV=null,revT=0,revP=0,revOff=0;
 const revFmt=ms=>{const s=Math.max(0,Math.floor(ms/1000)),p=n=>String(n).padStart(2,"0");return Math.floor(s/86400)+(EN?"d ":" gün ")+p(Math.floor(s%86400/3600))+":"+p(Math.floor(s%3600/60))+":"+p(s%60)};
 function revRender(){const el=$("revLock");if(!el)return;const on=!!(REV&&REV.pending);
   if(!on){if(!el.hidden){el.hidden=true;$("app").inert=false}return}
-  if(el.hidden){el.hidden=false;$("app").inert=true;try{closeSheet(true)}catch(_){}
+  $("app").inert=!REV.preview;$("revX").hidden=!REV.preview;
+  if(el.hidden){el.hidden=false;try{closeSheet(true)}catch(_){}
     $("revT").textContent=EN?"Account Review in Progress":"Hesap Değerlendirme Süreci";$("revEl0").textContent=EN?"Time since your account was opened":"Hesap açılışından bu yana geçen süre";
     $("revSt").textContent=EN?"The review is in progress":"Değerlendirme süreci devam etmektedir";
     $("revTx").textContent=EN?"Dear user, a trade above $1,000 was made within 14 days of your account being opened. Your account has therefore entered the review process. Once the review is complete, your entire balance, whatever the amount, will be made available for withdrawal as soon as possible.":"Sayın kullanıcımız, hesabınızın açıldığı tarihten itibaren 14 gün dolmadan 1.000 $ üzerinde alım-satım işlemi gerçekleştirdiğiniz tespit edilmiştir. Bu nedenle hesabınız değerlendirme sürecine alınmıştır. Değerlendirme tamamlandığında hesabınızdaki bakiyenin tamamı, tutarı ne olursa olsun, en kısa sürede çekilebilir duruma getirilecektir.";
     setTimeout(()=>{try{$("revT").focus()}catch(_){}},30)}
+  if(REV.preview)$("revSt").textContent=EN?"Preview only, this is not a real lock":"Yalnızca önizleme, gerçek bir kilit değil";
   $("revEl").textContent=revFmt(Date.now()+revOff-Date.parse(REV.account_created))}
-async function revPeek(){if(!me)return;const r=await sb.rpc("my_review");if(r.error||!r.data)return;REV=r.data;if(REV.pending&&REV.now)revOff=Date.parse(REV.now)-Date.now();revRender()}
-function revStart(){revStop();revPeek();
+async function revPeek(){if(!me||(REV&&REV.preview))return;const r=await sb.rpc("my_review");if(r.error||!r.data)return;REV=r.data;if(REV.pending&&REV.now)revOff=Date.parse(REV.now)-Date.now();revRender()}
+// Yalnızca goldenbob hesabında, süreli ve kapatılabilir ÖNİZLEME (gerçek kilit değil, hiçbir şeyi engellemez)
+const REV_PREV_UNTIL=1793752866042;
+function revPrev(){try{if(!st||!st.prof||String(st.prof.handle||"").toLowerCase()!=="goldenbob"||Date.now()>REV_PREV_UNTIL||localStorage.getItem("cf_revprev")==="1"||(REV&&REV.pending))return}catch(_){return}
+  revOff=0;REV={pending:true,preview:true,account_created:new Date(Date.now()-((3*24+7)*3600+42*60+18)*1000).toISOString()};revRender()}
+$("revX").onclick=()=>{try{localStorage.setItem("cf_revprev","1")}catch(_){}REV=null;revRender()};
+function revStart(){revStop();revPeek();setTimeout(revPrev,1500);
   // Yalnızca 14 günden yeni hesaplar işaretlenebilir: yalnızca onlar için sık yokla
   const young=st&&st.prof&&st.prof.joined&&Date.now()-st.prof.joined<15*864e5;
   revT=setInterval(()=>{if(REV&&REV.pending)revRender()},1000);
