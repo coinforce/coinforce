@@ -716,6 +716,15 @@ a.soc:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .hist{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
 .hist .mid{flex:1;min-width:0}
 .hist small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.vn{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;background:rgba(5,7,12,.64);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:vnBg .22s ease}.vn[hidden]{display:none}
+.vn-card{position:relative;width:min(380px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px 22px 20px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.45);animation:vnPop .28s cubic-bezier(.2,.9,.3,1.15)}
+.vn-x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:var(--surface2);color:var(--muted);display:grid;place-items:center}.vn-x svg{width:16px;height:16px}
+.vn-hex{width:86px;height:98px;margin:0 auto 14px;display:grid;place-items:center;align-content:center;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:linear-gradient(160deg,#f7dc8a,#c9962f 55%,#9a6a14);color:#2b1c00;font-weight:800;line-height:1}.vn-hex small{display:block;font-size:11px;letter-spacing:.12em;font-weight:700;opacity:.75}.vn-hex b{font-size:34px;margin-top:2px}
+.vn-card h3{margin:0 0 6px;font-size:21px;letter-spacing:-.01em}.vn-sub{color:var(--muted);font-size:14px;line-height:1.45;margin:0 0 14px}
+.vn-li{display:flex;gap:12px;text-align:left;padding:13px 0;border-top:1px solid var(--line)}.vn-li i{flex:none;width:36px;height:36px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}.vn-li i svg{width:19px;height:19px}.vn-li b{display:block;font-size:14.5px}.vn-li p{margin:3px 0 0;color:var(--muted);font-size:13px;line-height:1.42}
+.vn-b{display:grid;gap:8px;margin-top:10px}.vn-link{color:var(--accent);font-weight:700;font-size:14px;padding:8px}
+@keyframes vnBg{from{opacity:0}to{opacity:1}}@keyframes vnPop{from{opacity:0;transform:translateY(14px) scale(.94)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.vn,.vn-card{animation:none}}
 .ac-hd{display:flex;align-items:center;gap:12px;margin:2px 0 12px}.ac-hd .av{width:52px;height:52px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:800;font-size:20px;overflow:hidden;flex:none}.ac-hd .av img{width:100%;height:100%;object-fit:cover}
 .ac-st{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,189,133,.14);color:var(--up)}.ac-st.warn{background:rgba(240,185,11,.14);color:#f0b90b}.ac-st i{width:7px;height:7px;border-radius:50%;background:currentColor}
 .ac-sec{margin-top:14px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
@@ -2640,6 +2649,8 @@ nav.bar button svg{width:22px;height:22px}
     <div class="grid2" style="margin:0"><button class="btn btn-ghost" type="button" id="resetNo">Vazgeç</button><button class="btn" type="button" id="resetYes" style="background:var(--down);color:#fff">Sıfırla</button></div>
   </div>
 </div>
+
+<div class="vn" id="vipNotice" role="dialog" aria-modal="true" aria-label="VIP" hidden><div class="vn-card" id="vnCard"></div></div>
 
 <div class="sheet" id="sh-acct" role="dialog" aria-label="Hesap bilgileri">
   <div class="grab"></div>
@@ -4989,6 +5000,29 @@ $("proTheme").onclick=()=>$("themeBtn").click();
   const mo=new MutationObserver(cp);[$("navAv"),$("notifBadge")].forEach(x=>x&&mo.observe(x,{attributes:true,childList:true,characterData:true,subtree:true}));cp()})();
 // ---------- Earn
 let eaDays=30,EAP=[];
+// VIP seviyesi hesaba tanımlandığında bir kez gösterilen bilgilendirme (sunucuda "gösterildi" işaretlenir, tekrar gelmez)
+function vipNoticeClose(){const e=$("vipNotice");if(e)e.hidden=true;document.removeEventListener("keydown",vipNoticeKey)}
+function vipNoticeKey(e){if(e.key==="Escape")vipNoticeClose()}
+function showVipNotice(n){const lv=+n.level||1,d=vipDisc(lv),fee=VIP_BASE*(1-d/100),T=(a,b)=>EN?b:a;
+  const li=(ic,t,p)=>`<div class="vn-li"><i>${ic}</i><div><b>${t}</b><p>${p}</p></div></div>`;
+  $("vnCard").innerHTML=`<button type="button" class="vn-x" data-vnx aria-label="${T("Kapat","Close")}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="vn-hex"><small>VIP</small><b>${lv}</b></div>
+  <h3>${T(`VIP ${lv} hesabına tanımlandı`,`VIP ${lv} is now on your account`)}</h3>
+  <p class="vn-sub">${T("Tebrikler! Hesabın COINFORCE VIP ayrıcalıklarına kavuştu. İşte seni bekleyenler:","Congratulations! Your account now has COINFORCE VIP privileges. Here is what you get:")}</p>
+  ${li(VIP_IC.pct,T(`Komisyonda %${d} indirim`,`${d}% fee discount`),T(`İşlem komisyonun %${fmtN(VIP_BASE,2)}'den %${fmtN(fee,3)}'e düşer. Piyasa, limit/stop emirlerinde ve takasta otomatik uygulanır.`,`Your trading fee drops from ${fmtN(VIP_BASE,2)}% to ${fmtN(fee,3)}%. It applies automatically to market and limit/stop orders and swaps.`))}
+  ${li(VIP_IC.cr,T(`Adının yanında VIP ${lv} etiketi`,`VIP ${lv} tag next to your name`),T("Profilinde ve liderlik tablolarında VIP seviyen görünür.","Your VIP level shows on your profile and the leaderboards."))}
+  ${li(VIP_IC.db,T("Kalıcı kademe","Permanent tier"),T("Bu seviye hesabına COINFORCE ekibi tarafından tanımlandı; SOL tutma şartı aramaz ve düşmez.","This level was granted to your account by the COINFORCE team. It does not require holding SOL and will not drop."))}
+  <div class="vn-b"><button type="button" class="btn btn-accent full" data-vnx id="vnOk">${T("Harika, tamam","Great, got it")}</button><button type="button" class="vn-link" data-vnvip>${T("Tüm VIP ayrıcalıklarını gör","See all VIP privileges")}</button></div>`;
+  $("vipNotice").hidden=false;document.addEventListener("keydown",vipNoticeKey);setTimeout(()=>{const b=$("vnOk");b&&b.focus({preventScroll:true})},50);
+  sb.rpc("vip_notice_seen",{p_id:n.id})}
+let VNB=false;
+async function vipNoticeCheck(){if(VNB||!me||!st.onboarded||!$("vipNotice").hidden)return;VNB=true;
+  try{const r=await sb.rpc("my_vip_notice");if(r.error||!r.data)return;
+    // açılış reklamı (z-index 500) açıksa bitmesini bekle, sonra göster
+    let n=0;while(AD&&!AD.done&&n++<400)await new Promise(f=>setTimeout(f,300));if(n)await new Promise(f=>setTimeout(f,400));
+    if(me&&$("vipNotice").hidden)showVipNotice(r.data)}
+  finally{VNB=false}}
+$("vipNotice").addEventListener("click",e=>{if(e.target.closest("[data-vnvip]")){vipNoticeClose();openVip();return}if(e.target.closest("[data-vnx]")||e.target.id==="vipNotice")vipNoticeClose()});
 let ACI=null,API=null,APS=null,APV=false;
 async function loadAcct(){$("acBody").innerHTML=`<h3>${EN?"Account info":"Hesap bilgileri"}</h3><div class="empty">…</div>`;APS=null;APV=false;const [r,k,s]=await Promise.all([sb.rpc("my_account_info"),sb.rpc("my_api_keys"),sb.rpc("my_api_secret")]);if(r.error){$("acBody").innerHTML=`<h3>${EN?"Account info":"Hesap bilgileri"}</h3><div class="empty">${esc(errText(r.error))}</div>`;return}ACI=r.data||{};API=k.error?{err:errText(k.error)}:(k.data||{});APS=s.error?null:((s.data||{}).secret||null);renderAcct()}
 function renderAcct(){const a=ACI||{},dt=v=>v?new Date(v).toLocaleString(LOC,{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"—",d=v=>v?new Date(v).toLocaleDateString(LOC,{day:"2-digit",month:"long",year:"numeric"}):"—";
@@ -6421,7 +6455,7 @@ async function enter(user){
   me=user;st=fresh();st.watch=loadWatch();
   $("auth").hidden=true;$("welcome").hidden=true;$("app").removeAttribute("aria-hidden");["liPw","suPw"].forEach(id=>$(id).value="");
   go("home");await loadPrices();await Promise.all([loadAll(),loadLB()]);loadTop();loadVIP();loadMySoc();revStart();supStart();loadFX();if(!window.__fxT)window.__fxT=setInterval(loadFX,300000);subscribe();renderAll();$("boot").hidden=true;
-  if(!st.onboarded)startOnb();payReturn();tgReturn();xlReturn();
+  if(!st.onboarded)startOnb();payReturn();tgReturn();vipNoticeCheck();xlReturn();
 }
 // Kullanıcı adıyla giriş: şifre sunucuda (auth-username) hız sınırıyla doğrulanır, yalnızca doğruysa e-posta döner.
 async function usernameLogin(ident,pw){try{const {data,error}=await sb.functions.invoke("auth-username",{body:{ident,pw}});
