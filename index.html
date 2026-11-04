@@ -2272,7 +2272,7 @@ nav.bar button svg{width:22px;height:22px}
       <button class="btn btn-accent full" type="submit" id="suGo">Hesap oluştur</button>
       <p class="auth-alt">Zaten hesabın var mı? <button type="button" data-a="login">Oturum aç</button></p>
     </form>
-    <p class="auth-note">COINFORCE sanal parayla çalışan bir alım-satım uygulamasıdır. Gerçek para yatırılamaz veya çekilemez. Hiçbir içerik yatırım tavsiyesi değildir.</p>
+    <p class="auth-note" data-en="On COINFORCE, trades use a volume balance. Volume balance can't be converted to real money or withdrawn. Nothing here is investment advice.">COINFORCE'ta işlemler hacim bakiyesiyle yapılır. Hacim bakiyesi gerçek paraya çevrilemez ve çekilemez. Hiçbir içerik yatırım tavsiyesi değildir.</p>
   </div>
 </div>
 
@@ -2762,8 +2762,7 @@ nav.bar button svg{width:22px;height:22px}
   <div class="grab"></div>
   <h3>COINFORCE hakkında</h3>
   <div class="about" style="margin-top:10px">
-    <p data-en="You can deposit with a card through &lt;b&gt;iyzico&lt;/b&gt;; the amount is added to your account as USDT, and you can request withdrawals up to the total you deposited by card. Withdrawal requests are accepted every day 09:00–17:00 (Turkey time) and sent to your IBAN in TRY once approved.">Kartla <b>iyzico</b> üzerinden yatırdığın tutar hesabına USDT olarak geçer; kartla yatırdığın toplam tutar kadar çekim talebi oluşturabilirsin. Çekim talepleri her gün 09:00–17:00 (Türkiye saati) arasında alınır, onaylanınca IBAN'ına TL olarak gönderilir.</p>
-    <p data-en="Balances loaded by the admin, task and campaign rewards, and invite earnings are virtual; they can't be withdrawn. Crypto prices move and you can lose money.">Yönetici tarafından yüklenen bakiyeler, görev ve kampanya ödülleri ile davet kazançları sanaldır ve çekilemez. Kripto fiyatları değişkendir; para kaybedebilirsin.</p>
+    <p data-en="Your whole balance, including admin top-ups, task and campaign rewards and invite earnings, is trading volume. Volume balance can't be converted to real money or withdrawn. Crypto prices move and your balance can go down.">Hesabındaki bakiye; yönetici yüklemeleri, görev ve kampanya ödülleri ile davet kazançları dahil, işlem hacmidir. Hacim bakiyesi gerçek paraya çevrilemez ve çekilemez. Kripto fiyatları değişkendir; bakiyen azalabilir.</p>
     <p>Fiyat verisi CoinGecko tarafından sağlanır ve yaklaşık 30 saniyede bir güncellenir. Uygulamadaki hiçbir içerik yatırım tavsiyesi değildir.</p>
     <p>Hesabın ve işlemlerin COINFORCE sunucusunda saklanır; her cihazdan aynı hesapla giriş yapabilirsin.</p>
     <p class="muted" style="font-size:12px">Coin logoları ve adları ilgili projelerin markalarıdır; yalnızca coinleri tanıtmak için gösterilir ve bir ortaklık anlamına gelmez. Logolar ve fiyat verisi CoinGecko üzerinden alınır.</p>
@@ -3013,7 +3012,7 @@ nav.bar button svg{width:22px;height:22px}
     <div class="rev-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v5c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-3z"/><path d="M12 8v4.5"/><circle cx="12" cy="15.5" r=".6" fill="currentColor"/></svg></div>
     <h1 id="revT" tabindex="-1">Hesap Değerlendirme Süreci</h1>
     <div class="rev-t"><span id="revEl0">Hesap açılışından bu yana geçen süre</span><b id="revEl">—</b></div>
-    <p id="revTx">Sayın kullanıcımız, hesabınızın açıldığı tarihten itibaren 14 gün dolmadan 1.000 $ üzerinde alım-satım işlemi gerçekleştirdiğiniz tespit edilmiştir. Bu nedenle hesabınız değerlendirme sürecine alınmıştır. Değerlendirme tamamlandığında hesabınızdaki bakiyenin tamamı, tutarı ne olursa olsun, en kısa sürede çekilebilir duruma getirilecektir.</p>
+    <p id="revTx">Sayın kullanıcımız, hesabınızın açıldığı tarihten itibaren 14 gün dolmadan 1.000 $ üzerinde alım-satım işlemi gerçekleştirdiğiniz tespit edilmiştir. Bu nedenle hesabınız değerlendirme sürecine alınmıştır. Değerlendirme tamamlandığında hesabınız yeniden işleme açılacaktır.</p>
     <div class="rev-s"><i></i><span id="revSt">Değerlendirme süreci devam etmektedir</span></div>
     <button type="button" class="btn btn-ghost full" id="revX" hidden>Önizlemeyi kapat</button>
   </div>
@@ -3083,7 +3082,7 @@ var I18N=(function(){
     [/^(.+) bakiye eklendi$/,"$1 balance added"],
     [/^Tek seferde en fazla (.+) yükleyebilirsin\.$/,"You can load at most $1 at a time."],
     [/^@(\S+) hesabına (.+) yüklendi$/,"Loaded $2 to @$1"],
-    [/^Hesabına (.+) sanal bakiye yüklendi\.$/,"$1 of virtual balance was loaded to your account."],
+    [/^Hesabına (.+) bakiye yüklendi\.$/,"$1 was added to your balance."],
     [/^Hesabına (.+) bakiye yüklendi\.$/,"$1 of balance was loaded to your account."],
     [/^Hesabına (.+) bakiye yüklendi$/,"$1 of balance was loaded to your account"],
     [/^(.+) ödül hesabına eklendi$/,"$1 added to your account as a reward"],
@@ -3855,7 +3854,6 @@ function xfList(q,withBal){const Q=q.trim().toUpperCase();const all=[{s:"USDT",n
 // ---- Yatır
 function renderRecv(){const b=$("recvBody");
   if(!recvSym){b.innerHTML=`<div class="xf-h"><h3>Yatır</h3></div><div class="sub" style="margin-bottom:6px">Yatırmak istediğin coini seç. Adresini başka bir COINFORCE kullanıcısına verirsen sana coin gönderebilir.</div>
-    <button type="button" class="cash-card" data-open="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></svg></span><span><b>Kartla yatır (TL)</b><small>iyzico güvenli ödeme · anında USDT</small></span><span>›</span></button>
     ${st.admin?`<button type="button" class="xf-admin" data-open="deposit">Bakiye yükle (yönetici)<span>›</span></button>`:""}
     <div class="xf-search"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="recvQ" placeholder="Coin ara" autocomplete="off" autocapitalize="characters" value="${esc(recvQ)}"></div>
     <div class="xf-list" id="recvList">${xfList(recvQ,false)}</div>`;return}
@@ -4779,6 +4777,11 @@ function wdHead(){const c=CASH;return `<span class="wd-state ${c.open?"open":"cl
   ${+c.held>0?`<div class="wd-pend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><b>${EN?`${fmtN(+c.held,2)} USDT pending under security and compliance checks`:`Güvenlik ve Uyum Kontrolleri Gereğince ${fmtN(+c.held,2)} USDT Beklemede`}</b><small>${EN?`Card deposits become withdrawable ${+c.hold_hours} hours after payment.`:`Kartla yatırılan tutarlar, ödemeden ${+c.hold_hours} saat sonra çekilebilir olur.`}</small></div></div>`:""}${wdKyc()}`}
 function wdList(){const w=CASH.withdrawals||[];if(!w.length)return"";return `<div class="sec-t" style="margin:16px 0 4px">Çekim taleplerin</div>`+w.map(x=>`<div class="wd-row"><div class="mid"><b>${tl(+x.amount_try)}</b> <span class="muted">· ${fmtN(+x.amount_usdt,2)} USDT</span><small>${esc(x.iban)} · ${new Date(x.created_at).toLocaleString(LOC,{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}${x.note?" · "+esc(x.note):""}</small></div>${x.status==="pending"?`<button type="button" class="wd-x" data-wdcancel="${x.id}">İptal</button>`:""}<span class="wd-st ${x.status}">${WD_ST[x.status]||x.status}</span></div>`).join("")}
 function renderWithdraw(){const b=$("wdBody");if(!CASH){b.innerHTML=`<div class="xf-h"><h3>Para çek</h3></div><div class="empty">Bilgiler yüklenemedi.</div>`;return}
+  // Gerçek (kartla yatırılmış) çekilebilir tutar ya da açık talep yoksa IBAN formu gösterilmez: bakiye işlem hacmidir
+  if(!wdSym&&!(+CASH.withdrawable>0||+CASH.held>0||(CASH.withdrawals||[]).length)){
+    b.innerHTML=`<div class="xf-h"><h3>${EN?"Withdraw":"Para çek"}</h3></div><div class="wd-info">${EN?"Your balance is trading volume. Volume balance can't be converted to real money or withdrawn. You can send it to another COINFORCE account with Send.":"Hesabındaki bakiye işlem hacmidir. Hacim bakiyesi gerçek paraya çevrilemez ve çekilemez. Başka bir COINFORCE hesabına göndermek için Gönder'i kullanabilirsin."}</div>
+      <button type="button" class="btn btn-accent full" data-open="send" style="margin-top:14px">${EN?"Send":"Gönder"}</button>
+      ${st.admin?`<button type="button" class="xf-admin" id="wdAdmin" style="margin-top:12px">Bekleyen çekim talepleri (yönetici)<span>›</span></button><div id="wdAdm"></div>`:""}`;return}
   if(!wdSym){const list=xfList("",true);
     b.innerHTML=`<div class="xf-h"><h3>Para çek</h3></div>${wdHead()}
       ${st.admin?`<button type="button" class="xf-admin" id="wdAdmin">Bekleyen çekim talepleri (yönetici)<span>›</span></button><div id="wdAdm"></div>`:""}
@@ -5258,7 +5261,7 @@ function revRender(){const el=$("revLock");if(!el)return;const on=!!(REV&&REV.pe
   if(el.hidden){el.hidden=false;try{closeSheet(true)}catch(_){}
     $("revT").textContent=EN?"Account Review in Progress":"Hesap Değerlendirme Süreci";$("revEl0").textContent=EN?"Time since your account was opened":"Hesap açılışından bu yana geçen süre";
     $("revSt").textContent=EN?"The review is in progress":"Değerlendirme süreci devam etmektedir";
-    $("revTx").textContent=EN?"Dear user, a trade above $1,000 was made within 14 days of your account being opened. Your account has therefore entered the review process. Once the review is complete, your entire balance, whatever the amount, will be made available for withdrawal as soon as possible.":"Sayın kullanıcımız, hesabınızın açıldığı tarihten itibaren 14 gün dolmadan 1.000 $ üzerinde alım-satım işlemi gerçekleştirdiğiniz tespit edilmiştir. Bu nedenle hesabınız değerlendirme sürecine alınmıştır. Değerlendirme tamamlandığında hesabınızdaki bakiyenin tamamı, tutarı ne olursa olsun, en kısa sürede çekilebilir duruma getirilecektir.";
+    $("revTx").textContent=EN?"Dear user, a trade above $1,000 was made within 14 days of your account being opened. Your account has therefore entered the review process. Once the review is complete, your account will be reopened for trading.":"Sayın kullanıcımız, hesabınızın açıldığı tarihten itibaren 14 gün dolmadan 1.000 $ üzerinde alım-satım işlemi gerçekleştirdiğiniz tespit edilmiştir. Bu nedenle hesabınız değerlendirme sürecine alınmıştır. Değerlendirme tamamlandığında hesabınız yeniden işleme açılacaktır.";
     setTimeout(()=>{try{$("revT").focus()}catch(_){}},30)}
   if(REV.preview)$("revSt").textContent=EN?"Preview only, this is not a real lock":"Yalnızca önizleme, gerçek bir kilit değil";
   $("revEl").textContent=revFmt(Date.now()+revOff-Date.parse(REV.account_created))}
@@ -6665,7 +6668,7 @@ function adHeroRf(){const L=(a,b)=>EN?b:a,h=(st&&st.prof&&st.prof.handle)||"",u=
     ${C.map((c,i)=>`<span class="pl" style="--i:${i};left:${c[1]}em;top:${c[2]}em"><b>+${usd(c[0])}</b></span>`).join("")}</div>
     <div class="ad-rfl">${ADI.link}<span>${esc(u)}?r=<b data-adref>${h?esc(h):"…"}</b></span><i>${ADI.copy}</i></div>
   </div></div>`}
-function adsHTML(list){const l=EN?1:0,disc=EN?"Trading uses a virtual balance. Not investment advice.":"Sanal bakiyeyle işlem yapılır. Yatırım tavsiyesi değildir.";
+function adsHTML(list){const l=EN?1:0,disc=EN?"Trades use a volume balance. Not investment advice.":"İşlemler hacim bakiyesiyle yapılır. Yatırım tavsiyesi değildir.";
   return `<div class="ad-top"><div class="ad-seg" aria-hidden="true">${list.map(()=>"<i><b></b></i>").join("")}</div><button type="button" class="ad-skip" id="adSkip" disabled aria-label="${EN?"You can skip in 3 seconds":"3 saniye sonra geçebilirsin"}"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/><circle id="adSkipR" cx="10" cy="10" r="8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" transform="rotate(-90 10 10)"/></svg><span id="adSkipT">3</span></button></div>`
     +list.map((a,i)=>`<section class="ad-sc ad-${a.k}" data-i="${i}" aria-hidden="true"><div class="ad-tx"><div class="ad-eb">${a.eb[l]}${a.nw?`<em>${EN?"New":"Yeni"}</em>`:""}</div><h2 class="ad-h">${a.h[l]}</h2><p class="ad-p">${a.p[l]}</p></div><div class="ad-hero" aria-hidden="true">${a.hero()}</div><button type="button" class="ad-cta" data-adgo="${i}">${a.cta[l]}</button><div class="ad-ft"><div class="ad-brand">${adLogo(i)}COINFORCE</div><small>${a.disc?a.disc[l]:disc}</small></div></section>`).join("")}
 function adsSlot(d){let y,mo,da,h,m;try{const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(d),g=k=>+p.find(x=>x.type===k).value;y=g("year");mo=g("month");da=g("day");h=g("hour")%24;m=g("minute")}
