@@ -1383,6 +1383,7 @@ html[data-mode="lite"] [data-tab="perps"],html[data-mode="lite"] #dAuto,html[dat
 .sp-g{display:flex;align-items:flex-end;gap:8px;margin:10px 0}
 .sp-g.me{justify-content:flex-end}
 .sp-av{flex:none;width:28px;height:28px;margin-bottom:21px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,var(--accent),var(--accent-2));color:var(--accent-ink);font-family:var(--display);font-weight:800;font-size:12px}
+.sp-av.sp-ph{overflow:hidden;background:none}.sp-av.sp-ph img{width:100%;height:100%;object-fit:cover;display:block}
 .sp-av.md{width:38px;height:38px;margin:0;font-size:15px}
 .sp-av.lg{width:42px;height:42px;margin:0;font-size:16px}
 .sp-col{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;max-width:min(80%,420px)}
@@ -5371,7 +5372,8 @@ function supMsgsHTML(list,view){let h="",day="",g=null;const mineK=view==="user"
   flush();return h}
 function supGroup(g,view,lastMine){const mine=view==="user"?g.kind==="user":g.kind==="agent",last=g.items[g.items.length-1];
   const nm=g.kind==="agent"?(g.agent||L("COINFORCE Destek","COINFORCE Support")):view==="agent"?"@"+((SUP.info&&SUP.info.username)||""):"";
-  const av=mine?"":`<span class="sp-av" aria-hidden="true">${esc((nm.replace(/^@/,"")[0]||"C").toUpperCase())}</span>`;
+  const ph=g.kind==="agent"&&view==="user"?safeUrl((SUP.avs||{})[g.agent]):"";
+  const av=mine?"":ph?`<span class="sp-av sp-ph" aria-hidden="true"><img src="${ph}" alt="" decoding="async"></span>`:`<span class="sp-av" aria-hidden="true">${esc((nm.replace(/^@/,"")[0]||"C").toUpperCase())}</span>`;
   const lbl=nm&&(!mine||view==="agent")?`<div class="sp-nm">${esc(nm)}${g.kind==="agent"&&view==="user"?`<em>${L("Destek ekibi","Support team")}</em>`:""}</div>`:"";
   const bub=g.items.map(m=>`<div class="sp-b${m.pend?" pend":""}${m.fail?" fail":""}">${esc(m.body)}</div>`).join("");
   let meta=esc(supHM(new Date(last.at)));
@@ -5396,7 +5398,7 @@ function supPaint(down){const b=$("spBody"),m=SUP.mode;if(m!=="user"&&m!=="ticke
 function supMerge(list){let add=0;for(const m of list||[]){if(SUP.ids.has(m.id))continue;SUP.ids.add(m.id);SUP.msgs.push(m);if(m.id>SUP.after)SUP.after=m.id;add++}if(add)SUP.msgs.sort((a,b)=>a.id-b.id);return add}
 async function supPull(first){if(SUP.mode!=="user")return;const g=SUP.gen;const {data,error}=await sb.rpc("support_thread",{p_after:SUP.after>200?SUP.after-200:0});if(g!==SUP.gen||SUP.mode!=="user")return;
   if(error){if(first)$("spBody").innerHTML=supErr(errText(error));return}
-  const prev=JSON.stringify([SUP.ticket,SUP.online]);SUP.ticket=data.ticket||null;SUP.online=!!data.online;if(data.now)SUP.off=Date.parse(data.now)-Date.now();
+  const prev=JSON.stringify([SUP.ticket,SUP.online]);SUP.ticket=data.ticket||null;SUP.online=!!data.online;SUP.avs=data.avatars||SUP.avs||{};if(data.now)SUP.off=Date.parse(data.now)-Date.now();
   const add=supMerge(data.messages);if(!SUP.agent){SUP.unread=0;supBadge()}
   if(first||add||prev!==JSON.stringify([SUP.ticket,SUP.online])){supHead();supPaint(first||add>0)}}
 async function supTkPull(first){if(SUP.mode!=="ticket")return;const g=SUP.gen,id=SUP.tk;const {data,error}=await sb.rpc("support_ticket",{p_ticket:id,p_after:SUP.after>200?SUP.after-200:0});if(g!==SUP.gen||SUP.mode!=="ticket"||SUP.tk!==id)return;
