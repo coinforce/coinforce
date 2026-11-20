@@ -6596,8 +6596,10 @@ async function enter(user){
 // Kullanıcı adıyla giriş: şifre sunucuda (auth-username) hız sınırıyla doğrulanır, yalnızca doğruysa e-posta döner.
 async function usernameLogin(ident,pw){try{const {data,error}=await sb.functions.invoke("auth-username",{body:{ident,pw}});
   if(error){let b=null;try{b=error.context&&await error.context.json()}catch(_){}
-    if(b&&b.locked)return{error:"Çok fazla hatalı deneme yapıldı. 15 dakika sonra tekrar dene."};return{error:errText(error)}}
-  return{email:data&&data.email}}catch(e){return{error:errText(e)}}}
+    if(b&&b.locked)return{error:"Çok fazla hatalı deneme yapıldı. 15 dakika sonra tekrar dene."};return{error:fnDownText()}}
+  return{email:data&&data.email}}catch(e){return{error:fnDownText()}}}
+// auth-username yalnızca sunucu sorunu olduğunda 2xx dışı döner (yanlış şifre 200 + email:null); İngilizce teknik hata yerine
+function fnDownText(){return navigator.onLine===false?"Sunucuya ulaşılamadı. İnternet bağlantını kontrol et.":"Sunucu şu an yanıt vermiyor. Birkaç dakika sonra tekrar dene."}
 $("loginForm").addEventListener("submit",e=>{e.preventDefault();busy($("liGo"),async()=>{
   const id=$("liId").value.trim().replace(/^@/,""),pw=$("liPw").value,err=$("liErr");
   if(!id||!pw)return err.textContent="E-posta ya da kullanıcı adını ve şifreni gir.";
